@@ -1,1 +1,146 @@
+/****=== Care Provider Use Cases ===****/
+| **UCID** | CP-UC-1 |
+| --- | --- |
+| **Use Case Name** | ViewPatientList |
+| **Participating Actors** | Care Provider |
+| **Goal** | Care Provider views their patient list |
+| **Trigger** | Care provider selects the view patient list option |
+| **Precondition** | Care provider is logged in. |
+| **Postcondition** | On success, there is a list of patients assigned to the care provider. |
+| **Basic Flow** | 1. System displays the list of patients that is assigned to the care provider |
+| **Exceptions** | 1. List fails to load <br> 1.1 System displays error message <br> 1.2 System displays nothing instead |
+| **Qualities** | |
+| **Constraints** | |
+| **Includes** | |
+| **Extends** | | 
+| **Related Artifacts** | [US 06.01.01](User-Stories#us-060101) <br> |
+| **Notes** | |
+| **Open Issues** | |
 
+
+***
+
+
+| **UCID** | CP-UC-1-1 |
+| --- | --- |
+| **Use Case Name** | CareProviderAddAssignedPatient |
+| **Participating Actors** | Care Provider |
+| **Goal** | Care Provider adds a patient to their patient list |
+| **Trigger** | Care provider selects the add new patient option |
+| **Precondition** | Care provider knows the user id of the patient. |
+| **Postcondition** | On success, a new patient is added to the care providers patient list. |
+| **Basic Flow** | 1. System prompts the care provider to type in the user id <br> 2. Care provider types in the user id of the patient <br> 3. System informs the care provider that the patient was added successfully |
+| **Exceptions** | 3 User id is not in the list <br> 3.1 System shows appropriate error message to the care provider <br> 3.2 Returns to step 1  |
+| **Qualities** | |
+| **Constraints** | There already exists a patient with the user id entered |
+| **Includes** | |
+| **Extends** | CP-UC-1 | 
+| **Related Artifacts** | [US 07.01.01](User-Stories#us-070101) <br> |
+| **Notes** | |
+| **Open Issues** | |
+
+
+***
+
+
+| **UCID** | CP-UC-1.2 |
+| --- | --- |
+| **Use Case Name** | ViewPatientProblems |
+| **Participating Actors** | Care Provider |
+| **Goal** | Care Provider views a assigned patients problems |
+| **Trigger** | Care provider selects the patient from the Patient List |
+| **Precondition** | There is at least one patient in the list. |
+| **Postcondition** | On success, the patients problems is displayed to the care provider. |
+| **Basic Flow** | 1. Care provider selects the patient from the list <br> 2. System displays the problems associate with the patient. |
+| **Exceptions** | 2. System fails to load patient problems. <br> 2.1 System displays appropriate error message <br> 2.2 System returns to step 1 |
+| **Qualities** | |
+| **Constraints** | |
+| **Includes** | |
+| **Extends** | CP-UC-1 | 
+| **Related Artifacts** | [US 07.01.02](User-Stories#us-070102) <br> |
+| **Notes** | |
+| **Open Issues** | |
+
+
+***
+
+
+| **UCID** | CP-UC-1.2.1 |
+| --- | --- |
+| **Use Case Name** | AddCommentOnPatientsProblem |
+| **Participating Actors** | Care Provider |
+| **Goal** | Care Provider adds a comment on a patients problem |
+| **Trigger** | Care provider selects the add comment option |
+| **Precondition** | The patient has at least one problem to comment on. |
+| **Postcondition** | On success, a comment is added to the problem. |
+| **Basic Flow** | 1. Care provider selects the add comment option <br> 2. System prompts the care provider to type out a comment <br> 2. Care provider types out a comment <br> 3. System shows that the comment was added successfully |
+| **Exceptions** | 3. System fails to add comment <br> 3.1 System displays error message <br> 3.2 System returns to step 1 |
+| **Qualities** | |
+| **Constraints** | |
+| **Includes** | |
+| **Extends** | CP-UC-1.2 | 
+| **Related Artifacts** | [US 07.01.03](User-Stories#us-070103) <br> |
+| **Notes** | |
+| **Open Issues** | |
+
+
+/****=== User Profile Use Cases ===****/
+| **UCID** | UP-UC-3 |
+| --- | --- |
+| **Use Case Name** | PatientUploadBodyPhotos |
+| **Participating Actors** | Patient |
+| **Goal** | Patient replaces default body photos with ones taken by themselves. |
+| **Trigger** | Patient selects the edit user profile option. |
+| **Precondition** | Patient has at least 2 photos already or a camera. |
+| **Postcondition** | Default body photos are replaced by user taken ones. |
+| **Basic Flow** | 1. Patient selects the body photo on the edit screen <br> 2. System prompts the Patient to select/take at least 2 photos <br> 3. Patient selects/takes at least 2 photos and submits them <br> 4. System displays a success message when the photos are uploaded |
+| **Exceptions** | 3. Patient selects less than two photos <br> 3.1 System displays a message reminding the patient to select/take 2 photos 3.2 System returns to step 2 <br> 4. System fails to upload the photos <br> 4.1 System displays appropriate error message <br> System returns to step 2 |
+| **Qualities** | |
+| **Constraints** | If user is offline, system should save the photos locally and then upload them when internet connection is reestablished. <br> The user should upload front and back photos as the two base photos |
+| **Includes** |  |
+| **Extends** | UP-UC-1 <br> UP-UC-2 | 
+| **Related Artifacts** | [US 11.01.01](User-Stories#us-110101) <br> [US 11.03.01](User-Stories#us-110301) <br> [US 08.01.01](User-Stories#us-080101) |
+| **Notes** | |
+| **Open Issues** | |
+
+
+/****=== Record Details Use Cases ===****/
+| **UCID** | RD-UC-5 |
+| --- | --- |
+| **Use Case Name** | PatientAddProblemBodyLocation |
+| **Participating Actors** | Patient |
+| **Goal** | Patient has a point location on a body-location photo |
+| **Trigger** | Patient selects the add point location option |
+| **Precondition** | Patient knows the location on the body where their problem is |
+| **Postcondition** | A point (pin) is placed on the body-location photo where the problem is |
+| **Basic Flow** | 1. Patient selects the add point location option <br> 2. System brings up the body-location photos and prompts the patient to select a location <br> 3. Patient selects the location <br> 4. System displays a success message |
+| **Exceptions** | 2. System fails to bring up body-location photos <br> 2.1 System displays appropriate error message <br> System returns to step 1 <br> 4. System fails to save point location <br> 4.1 System displays appropriate error message <br> 4.2 System returns to step 1 |
+| **Qualities** | |
+| **Constraints** | If user is offline, the record should be synced to server once network connection has returned. |
+| **Includes** | |
+| **Extends** | RD-UC-1 | 
+| **Related Artifacts** | [US 02.04.01](User-Stories#us-020401) <br> [US 11.02.01](User-Stories#us-110201) <br> [US 08.01.01](User-Stories#us-080101) |
+| **Notes** | |
+| **Open Issues** | |
+
+
+***
+
+
+| **UCID** | RD-UC-6 |
+| --- | --- |
+| **Use Case Name** | PatientViewProblemBodyLocation |
+| **Participating Actors** | Patient |
+| **Goal** | Patient views fullsize image of body-location photos with a point where the problem is. |
+| **Trigger** | Patient selects the body-location photo |
+| **Precondition** | A point has been placed on the body-location photo |
+| **Postcondition** | The body-location photo is blown up to fullsize |
+| **Basic Flow** | 1. Patient selects the body-location photo <br> 2. System blows up the body-location photo to fullsize |
+| **Exceptions** | 2. System cannot load the fullsize body-location photo <br> 2.1 System displays appropriate error message <br> 2.2 System returns to step 1 |
+| **Qualities** | |
+| **Constraints** | |
+| **Includes** | |
+| **Extends** | | 
+| **Related Artifacts** | [US 11.04.01](User-Stories#us-110401) |
+| **Notes** | |
+| **Open Issues** | |
