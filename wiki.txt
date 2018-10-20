@@ -43,19 +43,19 @@
 
 | **UCID** | RD-UC-2 |
 | --- | --- |
-| **Use Case Name** | ViewRecords |
+| **Use Case Name** | ViewRecord |
 | **Participating Actors** | Patient |
-| **Goal** | Patient can browse list of records with all optional details included. |
-| **Trigger** | Patient chooses a problem from the list of problems. |
+| **Goal** | Patient can browse list details for a  record. |
+| **Trigger** | Patient chooses a record from the list of records. |
 | **Precondition** | Patient knows of the problem, has created a record for that problem. |
 | **Postcondition** | |
-| **Basic Flow** | 1. System displays the list of records, each with an edit, delete option. Each record displays the corresponding timstamp and/or some optional information if it was provided.|
-| **Exceptions** | 1. System fails to load list<br> 1.1 System displays error message<br> 1.2 System returns to step 1. |
+| **Basic Flow** | 1. System displays the list of records <br>2. Patient selects a specific record <br>3. System displays all available information and photos from that record.|
+| **Exceptions** | 1. System fails to load list<br> 1.1 System displays error message<br> 1.2 System returns to step 1 to retry. <br>3. Details fail to load <br> 3.1 Systen displays error message. <br> 3.2 System returns to step 1.|
 | **Qualities** | |
 | **Constraints** | If user is offline, system should load the locally stored list. List needs to contain options to edit, delete, and add a record.  |
 | **Includes** | |
-| **Extends** | TB-UC-2 | 
-| **Related Artifacts** | [US 02.01.01](User-Stories#us-020101) <br> [US 02.08.01](User-Stories#us-020801) <br> [US 08.01.01](User-Stories#us-080101) |
+| **Extends** | TB-UC-2-3 | 
+| **Related Artifacts** | [US 02.01.01](User-Stories#us-020101) <br> [US 02.02.01](User-Stories#us-020201) <br>[US 02.03.01](User-Stories#us-020301) <br>[US 02.04.01](User-Stories#us-020401) <br>[US 02.05.01](User-Stories#us-020501) <br>[US 02.06.01](User-Stories#us-020601) <br>[US 02.08.01](User-Stories#us-020801)|
 | **Notes** | |
 | **Open Issues** | |
 
