@@ -1,3 +1,23 @@
+--- Task Basics ---
+| **UCID** | TB-UC-3 |
+| --- | --- |
+| **Use Case Name** | ProblemSlideshow |
+| **Participating Actors** | Patient |
+| **Goal** | Patient browses through sample photos from their records, animating the changes of their medical issue |
+| **Trigger** | Patient chooses the slideshow option while viewing a problem |
+| **Precondition** | Patient knows of the problem, and has provided multiple photos and records. |
+| **Postcondition** | Slideshow starts and patient can tap to swap to next photo |
+| **Basic Flow** | 1. Patient selects a problem from the problem list. <br>2. Patient selects "View slideshow" button. <br>3.System retreives sample photos from all past records <br>4.System displays the images on screen <br>5.User taps on screen to cycle through each photo chronoligically|
+| **Exceptions** | 1. Problem details fail to load. <br> 1.1 System displays an error <br> 1.2 System returns to step 1. <br> 3. System fails to find photos. <br> 5.1 System displays an error <br> 5.2 System returns to step 1. |
+| **Qualities** | |
+| **Constraints** | If the user is offline, the local save will be loaded and used to display the slideshow  |
+| **Includes** | |
+| **Extends** | | 
+| **Related Artifacts** |[US 02.09.01](User-Stories#us-020901)<br> [US 02.10.01](User-Stories#us-021001) <br> [US 08.01.01](User-Stories#us-080101)|
+| **Notes** | |
+| **Open Issues** | |
+
+
 --- Record Details ---
 | **UCID** | RD-UC-1 |
 | --- | --- |
