@@ -1,0 +1,148 @@
+--- Task Basics ---
+| **UCID** | TB-UC-3 |
+| --- | --- |
+| **Use Case Name** | ProblemSlideshow |
+| **Participating Actors** | Patient |
+| **Goal** | Patient browses through sample photos from their records, animating the changes of their medical issue |
+| **Trigger** | Patient chooses the slideshow option while viewing a problem |
+| **Precondition** | Patient knows of the problem, and has provided multiple photos and records. |
+| **Postcondition** | Slideshow starts and patient can tap to swap to next photo |
+| **Basic Flow** | 1. Patient selects a problem from the problem list. <br>2. Patient selects "View slideshow" button. <br>3.System retreives sample photos from all past records <br>4.System displays the images on screen <br>5.User taps on screen to cycle through each photo chronoligically|
+| **Exceptions** | 1. Problem details fail to load. <br> 1.1 System displays an error <br> 1.2 System returns to step 1. <br> 3. System fails to find photos. <br> 5.1 System displays an error <br> 5.2 System returns to step 1. |
+| **Qualities** | |
+| **Constraints** | If the user is offline, the local save will be loaded and used to display the slideshow  |
+| **Includes** | |
+| **Extends** | | 
+| **Related Artifacts** |[US 02.09.01](User-Stories#us-020901)<br> [US 02.10.01](User-Stories#us-021001) <br> [US 08.01.01](User-Stories#us-080101)|
+| **Notes** | |
+| **Open Issues** | |
+
+
+--- Record Details ---
+| **UCID** | RD-UC-1 |
+| --- | --- |
+| **Use Case Name** | AddNewRecord |
+| **Participating Actors** | Patient |
+| **Goal** | Patient adds a new record |
+| **Trigger** | Patient chooses the Add record option while viewing a problem |
+| **Precondition** | Patient knows of the problem, and can provide a photo. |
+| **Postcondition** | On success, patient is informed that record has been saved, and the list of records is updated. |
+| **Basic Flow** | 1. System prompts patient to add a photo. <br>2.The patient then has an option to add a title and comment and geo-location. <br> 3. Patient may enter optional information. <br> 4. Patient chooses Save option. <br> 5. System saves the record. <br> 6. System informs user that the record was saved.|
+| **Exceptions** | 3. If photo fails to take/errors out. <br> 3.1 System displays an error <br> 3.2 System returns to step 1. <br> 5. System fails to save record. <br> 5.1 System displays an error <br> 5.2 System returns to step 1. |
+| **Qualities** | |
+| **Constraints** | If user is offline, the record should be synced to server once network connection has returned.  |
+| **Includes** | |
+| **Extends** | TB-UC-2 | 
+| **Related Artifacts** |[US 02.02.01](User-Stories#us-020201) <br> [US 02.03.01](User-Stories#us-020301) <br>[US 02.04.01](User-Stories#us-020401) <br>[US 02.05.01](User-Stories#us-020501) <br> [US 02.06.01](User-Stories#us-020601) <br> [US 02.08.01](User-Stories#us-020801) <br> [US 08.01.01](User-Stories#us-080101) |
+| **Notes** | |
+| **Open Issues** | |
+
+
+***
+
+
+| **UCID** | RD-UC-2 |
+| --- | --- |
+| **Use Case Name** | ViewRecord |
+| **Participating Actors** | Patient |
+| **Goal** | Patient can browse list details for a  record. |
+| **Trigger** | Patient chooses a record from the list of records. |
+| **Precondition** | Patient knows of the problem, has created a record for that problem. |
+| **Postcondition** | |
+| **Basic Flow** | 1. System displays the list of records <br>2. Patient selects a specific record <br>3. System displays all available information and photos from that record.|
+| **Exceptions** | 1. System fails to load list<br> 1.1 System displays error message<br> 1.2 System returns to step 1 to retry. <br>3. Details fail to load <br> 3.1 Systen displays error message. <br> 3.2 System returns to step 1.|
+| **Qualities** | |
+| **Constraints** | If user is offline, system should load the locally stored list. List needs to contain options to edit, delete, and add a record.  |
+| **Includes** | |
+| **Extends** | TB-UC-2-3 | 
+| **Related Artifacts** | [US 02.01.01](User-Stories#us-020101) <br> [US 02.02.01](User-Stories#us-020201) <br>[US 02.03.01](User-Stories#us-020301) <br>[US 02.04.01](User-Stories#us-020401) <br>[US 02.05.01](User-Stories#us-020501) <br>[US 02.06.01](User-Stories#us-020601) <br>[US 02.08.01](User-Stories#us-020801)|
+| **Notes** | |
+| **Open Issues** | |
+
+
+***
+
+
+| **UCID** | RD-UC-3 |
+| --- | --- |
+| **Use Case Name** | AddPhotosToRecord |
+| **Participating Actors** | Patient |
+| **Goal** | Patient adds photo/s to record. |
+| **Trigger** | Patient chooses add photo button while viewing record. |
+| **Precondition** | Patient knows of the problem, has created a record for that problem. |
+| **Postcondition** | Photo/s appear in the record file. |
+| **Basic Flow** | 1. Patient selects a record <br>2. Patient selects add photos option <br> 3. System propmt patient to take/select photos <br>4.If previous photo record exists, it is displayed to help patient take consistent photos.<br>5. Patient takes/selects photos <br>6. System prompts to confirm <br>7. System inform of success|
+| **Exceptions** | 3. Camera/photo library failed to load <br>3.1 System notifies of error <br>3.2 returns to step 2 <br>6. Fails to save photos<br>6.1 Sytsem informs of error <br>6.2 return to step 2 |
+| **Qualities** | |
+| **Constraints** | Each photo must be no more than 65536 bytes in size. <br>Can select/take up to ten photos. <br>If user is offline, system should load the locally stored list. List needs to contain options to edit, delete, and add a record.  |
+| **Includes** | |
+| **Extends** | RD-UC-2 | 
+| **Related Artifacts** | [US 02.06.01](User-Stories#us-020601) <br>[US 02.09.01](User-Stories#us-020901) <br>[US 09.01.01](User-Stories#us-090101) <br> [US 09.01.02](User-Stories#us-090102) <br> |
+| **Notes** | |
+| **Open Issues** | |
+
+
+***
+
+
+| **UCID** | RD-UC-4 |
+| --- | --- |
+| **Use Case Name** | ViewPhotosInRecord |
+| **Participating Actors** | Patient and care provider |
+| **Goal** | Patient/CP views a photo that is in a record.  |
+| **Trigger** | Patient/CP selects a photo from a record. |
+| **Precondition** | Patient knows of the problem, has created a record for that problem, and has added photos to the record. |
+| **Postcondition** | Photo is blown up to fill screen.|
+| **Basic Flow** | 1. Patient selects a record <br>2. Patient selects a photo from the record <br>3. Photo is blown up to size of screen|
+| **Exceptions** | 1.Record details fail to load <br>1.1 System notifies of error <br>1.2 returns to step 1 <br> |
+| **Qualities** | |
+| **Constraints** | Each photo must be no more than 65536 bytes in size. |
+| **Includes** | |
+| **Extends** | RD-UC-2 | 
+| **Related Artifacts** | [US 02.06.01](User-Stories#us-020601) <br>[US 09.02.01](User-Stories#us-090201) <br> [US 09.03.01](User-Stories#us-090301) <br> |
+| **Notes** | |
+| **Open Issues** | |
+
+
+
+--- User Profile ---
+| **UCID** | UP-UC-1 |
+| --- | --- |
+| **Use Case Name** | CreateUserProfile|
+| **Participating Actors** | Patient |
+| **Goal** | Patient creates a new profile |
+| **Trigger** | Patient opens the app for the first time, or was signed out. |
+| **Precondition** | Patient installs the app and runs it for the first time. |
+| **Postcondition** | On success, patient is signed in using their userid that they just created. All of their credetials are saved and backed up to a cloud server. |
+| **Basic Flow** | 1. System prompts patient to create a UserID, enter their email, and phone number. <br> 2. Patient enters required information. <br> 3. Patient chooses "Create profile" option. <br> 4. System saves the profile. <br> 5. System logs in and displays the problems list.|
+| **Exceptions** | 3. If UserID is not minimum length, or email is invalid, or phone number is invalid <br> 3.1 System displays an error <br> 3.2 System returns to step 1. <br> 4. System fails to save problem. <br> 4.1 System displays an error <br> 4.2 System returns to step 1. |
+| **Qualities** | |
+| **Constraints** | If user is offline, the profile should be synced to server once network connection has returned. <br> UserID should be at least 8 characters long. |
+| **Includes** | |
+| **Extends** | | 
+| **Related Artifacts** | [US 03.01.01](User-Stories#us-030101) <br> [US 03.01.02](User-Stories#us-030102) <br> [US 03.01.03](User-Stories#us-030103) |
+| **Notes** | |
+| **Open Issues** | |
+
+
+***
+
+
+
+| **UCID** | UP-UC-2 |
+| --- | --- |
+| **Use Case Name** | EditUserProfile |
+| **Participating Actors** | Patient |
+| **Goal** | Patient can edit the contact info related to their UserID |
+| **Trigger** | Patient selects edit contact info option. |
+| **Precondition** | Patient has created a profile|
+| **Postcondition** |  |
+| **Basic Flow** |1. System displays various contact pieces of contact info, each editable. <br>2. User can click and edit each peice of info to their liking. <br>3. User selects the save button <br>4. System verifies info is valid <br>5. System displayes a message saying that the user info was updated. |
+| **Exceptions** |1. System fails to retrieve old info <br> 1.1 System displays error message <br> 1.2 System returns to step 1. <br> 4. System detects invalid input <br> 4.1 System displays error message <br> 4.2 System returns to step 1.  |
+| **Qualities** | |
+| **Constraints** | If user is offline, system should load the locally stored list. <br> User info that has been entered must be valid.|
+| **Includes** | |
+| **Extends** | | 
+| **Related Artifacts** |  [US 03.02.01](User-Stories#us-030201)|
+| **Notes** | |
+| **Open Issues** | |
