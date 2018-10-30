@@ -2,7 +2,7 @@
  *
  * Version 1.0
  *
- * 2018-10-27
+ * 2018-10-29
  *
  * This is a group project for CMPUT 301 course at the University of Alberta
  * Copyright (C) 2018  Austin Goebel, Anders Johnson, Alex Li,
@@ -37,7 +37,12 @@ public class ProblemList {
         problemList.add(index, problem);
     }
 
-    public void deleteProblem(Problem problem) {
+    public boolean inList(Problem problem) {
+        return problemList.contains(problem);
+    }
+
+    public void deleteProblem(int index) {
+        Problem problem = problemList.get(index);
         problemList.remove(problem);
     }
 

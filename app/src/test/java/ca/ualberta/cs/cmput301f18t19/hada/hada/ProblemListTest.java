@@ -32,6 +32,7 @@ public class ProblemListTest {
         problem.setTitle("test problem");
         problemList.addProblem(problem);
         assertEquals(problem, problemList.getProblem(0));
+        assertEquals(problem.getTitle(), problemList.getProblem(0).getTitle());
     }
 
     @Test
@@ -51,7 +52,7 @@ public class ProblemListTest {
         problemList.addProblem(problem1);
         problemList.addProblem(problem2);
         assertEquals(2, problemList.getSize());
-        problemList.deleteProblem(problem1);
+        problemList.deleteProblem(0);
         assertEquals(1, problemList.getSize());
         assertEquals(problem2, problemList.getProblem(0));
     }
@@ -64,7 +65,7 @@ public class ProblemListTest {
         problemList.addProblem(problem1);
         problemList.addProblem(problem2);
         assertEquals(1, problemList.getPos(problem2));
-        problemList.deleteProblem(problem2);
+        problemList.deleteProblem(1);
         assertEquals(-1, problemList.getPos(problem2));
     }
 
@@ -77,5 +78,19 @@ public class ProblemListTest {
         problemList.insertProblem(0, problem2);
         assertEquals(0, problemList.getPos(problem2));
         assertEquals(problem2, problemList.getProblem(0));
+    }
+
+    @Test
+    public void testProblemInList() {
+        ProblemList problemList = new ProblemList();
+        Problem problem1 = new Problem();
+        Problem problem2 = new Problem();
+        Problem problem3 = new Problem();
+        problemList.addProblem(problem1);
+        problemList.addProblem(problem2);
+        assertTrue(problemList.inList(problem1));
+        assertFalse(problemList.inList(problem3));
+        problemList.addProblem(problem3);
+        assertTrue(problemList.inList(problem3));
     }
 }
