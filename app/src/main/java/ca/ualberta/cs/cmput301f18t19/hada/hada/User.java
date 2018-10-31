@@ -47,7 +47,6 @@ public abstract class User {
         return this.emailAddress;
     }
 
-    abstract public String getType();
 
 }
 
