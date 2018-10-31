@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 public class PatientListTest {
 
     @Test
-    public void testEmpty() {
+    public void testIsEmpty() {
         PatientList patientList = new PatientList();
         assertTrue(patientList.isEmpty());
     }
