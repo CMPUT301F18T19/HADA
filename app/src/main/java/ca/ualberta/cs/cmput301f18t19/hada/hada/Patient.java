@@ -30,5 +30,4 @@ public class Patient extends User {
     //TODO setFullBodyImage() once we know of the data type/structure.
     //public void setFullBodyImage()
 
-
 }
