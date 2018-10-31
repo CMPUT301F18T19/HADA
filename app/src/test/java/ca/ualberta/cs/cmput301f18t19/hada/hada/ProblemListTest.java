@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 public class ProblemListTest {
 
     @Test
-    public void testEmpty() {
+    public void testIsEmpty() {
         ProblemList problemList = new ProblemList();
         assertEquals(true, problemList.isEmpty());
         Problem problem = new Problem();
