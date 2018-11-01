@@ -19,14 +19,16 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada;
  */
 public class Patient extends User {
 
+    private ProblemList problems = new ProblemList();
 
-    //TODO Figure out a better way to implement this private value.
-    private String type = "Patient";
-
-    @Override
-    public String getType() {
-        return this.type;
+    public void setProblems(ProblemList problems){
+        this.problems = problems;
     }
+
+    public ProblemList getProblems(){
+        return this.problems;
+    }
+
     //TODO setFullBodyImage() once we know of the data type/structure.
     //public void setFullBodyImage()
 
