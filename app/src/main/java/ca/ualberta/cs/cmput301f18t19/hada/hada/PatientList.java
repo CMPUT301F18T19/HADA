@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class PatientList {
 
     private ArrayList<Patient> patientList;
+    protected ArrayList<Listener> listeners;
 
     PatientList() {
         patientList = new ArrayList<Patient>();
@@ -56,5 +57,18 @@ public class PatientList {
 
     public int getPos(Patient patient) {
         return patientList.indexOf(patient);
+    }
+
+    public void notifyListeners(){
+        for (Listener listener : listeners){
+            if(listener != null){
+                listener.update();}
+        }
+    }
+    public void addListener(Listener l){
+        listeners.add(l);
+    }
+    public void removeListener(Listener l){
+        listeners.remove(l);
     }
 }
