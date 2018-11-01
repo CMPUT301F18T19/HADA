@@ -13,6 +13,7 @@ class Problem {
     private String title;
     private LocalDateTime date;
     private String description;
+    private RecordList records = new RecordList();
 
     public void setTitle(String newTitle) {
         this.title = newTitle;
@@ -36,5 +37,13 @@ class Problem {
 
     public String getDesc() {
         return this.description;
+    }
+
+    public void setRecords(RecordList records){
+        this.records = records;
+    }
+
+    public RecordList getRecords(){
+        return this.records;
     }
 }
