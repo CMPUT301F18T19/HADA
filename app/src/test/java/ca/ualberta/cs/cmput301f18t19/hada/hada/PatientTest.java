@@ -53,8 +53,22 @@ public class PatientTest {
     }
 
     @Test
-    public void testGetType(){
+    public void testSetProblems(){
         Patient patient = new Patient();
-        assertEquals("Patient",patient.getType());
+        ProblemList problems = new ProblemList();
+        Problem problem = new Problem();
+        problems.addProblem(problem);
+        patient.setProblems(problems);
+        assertEquals("Should be the ProblemList we set it to", problems, patient.getProblems());
+    }
+
+    @Test
+    public void testGetProblems(){
+        Patient patient = new Patient();
+        ProblemList problems = new ProblemList();
+        Problem problem = new Problem();
+        problems.addProblem(problem);
+        patient.setProblems(problems);
+        assertEquals("Should be the ProblemList we set it to", problems, patient.getProblems());
     }
 }

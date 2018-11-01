@@ -53,9 +53,23 @@ public class CareProviderTest {
     }
 
     @Test
-    public void testGetType(){
+    public void testSetPatients(){
         CareProvider careProvider = new CareProvider();
-        assertEquals("Care Provider",careProvider.getType());
+        PatientList patients = new PatientList();
+        Patient patient = new Patient();
+        patients.addPatient(patient);
+        careProvider.setPatients(patients);
+        assertEquals("Should return the PatientList we added", patients, careProvider.getPatients());
+    }
+
+    @Test
+    public void testGetPatients(){
+        CareProvider careProvider = new CareProvider();
+        PatientList patients = new PatientList();
+        Patient patient = new Patient();
+        patients.addPatient(patient);
+        careProvider.setPatients(patients);
+        assertEquals("Should return the PatientList we added", patients, careProvider.getPatients());
     }
 
 }
