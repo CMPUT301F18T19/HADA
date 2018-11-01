@@ -34,8 +34,8 @@ public class ListManagerRecordsTest {
         factory.setDroidClientConfig(config);
         JestDroidClient client=(JestDroidClient) factory.getObject();
         Search search = new Search.Builder("")
-                .addIndex("shaiful-thursday") //TODO discuss record.ID info.
-                .addType("tweet")
+                .addIndex("hardcode!") //TODO discuss how to uniquely identify records.
+                .addType("AlsoHC")
                 .build();
         try{
             JestResult result = client.execute(search);
