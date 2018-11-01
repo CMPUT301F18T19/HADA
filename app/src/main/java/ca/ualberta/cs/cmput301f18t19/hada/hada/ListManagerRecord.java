@@ -7,9 +7,13 @@ import com.searchly.jestdroid.JestClientFactory;
 import com.searchly.jestdroid.JestDroidClient;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import io.searchbox.client.JestResult;
 import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Index;
+import io.searchbox.core.Search;
 
 public class ListManagerRecord {
     static JestDroidClient client=null;
@@ -44,6 +48,24 @@ public class ListManagerRecord {
             }
 
         return null;
+        }
+    }
+
+    public static class GetRecordTask extends AsyncTask<String, Void, ArrayList<Record>>{
+        @Override
+        protected ArrayList<Record> doInBackground(String... params){
+           setClient();
+           ArrayList<Record> records = new ArrayList<Record>();
+           Search search = new Search.Builder(params[0]).addIndex("hardcode!").addType("AlsoHC").build();
+           try {
+               JestResult result = client.execute(search);
+               if(result.isSucceeded()){
+                   List<Record> recordList;
+                   recordList = result.getSourceAsObjectList(Record.class);
+                   records.addAll(recordList);
+               }
+           }catch (IOException e){} //TODO FIX THIS!
+           return records;
         }
     }
 }

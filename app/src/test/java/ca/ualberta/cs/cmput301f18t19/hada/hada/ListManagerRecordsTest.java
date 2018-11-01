@@ -9,6 +9,8 @@ import com.searchly.jestdroid.JestDroidClient;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import io.searchbox.client.JestResult;
 import io.searchbox.core.Search;
@@ -20,7 +22,7 @@ import static org.junit.Assert.*;
 
 public class ListManagerRecordsTest {
     @Test
-    public void testSaveRecord() { ;
+    public void testSaveRecord() {
         Record record = new Record();
         new ListManagerRecord.AddRecordTask().execute(record);
         //so we gotta check if it is in the db so we should search for it
@@ -40,5 +42,20 @@ public class ListManagerRecordsTest {
 
             assertTrue(result.isSucceeded());
         }catch (IOException e){} //TODO do something here I guess?
+    }
+    @Test
+    public void testGetRecordTask(){
+        Record record = new Record();
+        ArrayList<Record> records = new ArrayList<Record>();
+        new ListManagerRecord.AddRecordTask().execute(record);
+        try {
+            records = new ListManagerRecord.GetRecordTask().execute("").get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertFalse(records.isEmpty());
+
     }
 }
