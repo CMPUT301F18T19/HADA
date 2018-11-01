@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * The type Record.
  */
-public class Record {
+public class Record{
 
     private LocalDateTime timestamp;
     private String title;
@@ -61,7 +61,7 @@ public class Record {
         this.geoLocation = location;
     }
 
-    public void setBodyLocation(int x, int y) {
+    public void setBodyLocation(int x, int y){
         this.bodyLocation = new ArrayList<Integer>();
         this.bodyLocation.add(x);
         this.bodyLocation.add(y);

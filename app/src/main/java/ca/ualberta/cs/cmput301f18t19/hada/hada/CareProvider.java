@@ -18,10 +18,12 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada;
  */
 public class CareProvider extends User {
 
-    private String type = "Care Provider";
+    private PatientList patients = new PatientList();
 
-    @Override
-    public String getType() {
-        return this.type;
+    public void setPatients(PatientList patients){
+        this.patients = patients;
+    }
+    public PatientList getPatients(){
+        return this.patients;
     }
 }
