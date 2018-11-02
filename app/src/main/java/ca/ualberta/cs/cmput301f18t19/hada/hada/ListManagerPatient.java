@@ -29,8 +29,8 @@ public class ListManagerPatient {
                     .build();
 
             JestClientFactory factory = new JestClientFactory();
-        factory.setDroidClientConfig(config);
-        client = (JestDroidClient) factory.getObject();
+            factory.setDroidClientConfig(config);
+            client = (JestDroidClient) factory.getObject();
         }
     }
 
@@ -58,9 +58,8 @@ public class ListManagerPatient {
     public static class GetPatientsTask extends AsyncTask<String, Void, ArrayList<Patient>> {
         @Override
         protected ArrayList<Patient> doInBackground(String... params) {
-            ArrayList<Patient> patients = new ArrayList<Patient>();
             setClient();
-
+            ArrayList<Patient> patients = new ArrayList<Patient>();
             Search search = new Search.Builder(params[0])
                     .addIndex("HARDCODE")
                     .addType("HARDCODE")
@@ -68,7 +67,6 @@ public class ListManagerPatient {
 
             try {
                 JestResult result = client.execute(search);
-
                 if (result.isSucceeded()) {
                     List<Patient> patientList;
                     patientList = result.getSourceAsObjectList(Patient.class);

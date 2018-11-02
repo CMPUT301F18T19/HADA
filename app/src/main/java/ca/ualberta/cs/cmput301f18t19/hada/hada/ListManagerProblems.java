@@ -54,9 +54,8 @@ public class ListManagerProblems {
     public static class GetProblemsTask extends AsyncTask<String, Void, ArrayList<Problem>> {
         @Override
         protected ArrayList<Problem> doInBackground(String... params) {
-            ArrayList<Problem> problems = new ArrayList<Problem>();
             setClient();
-
+            ArrayList<Problem> problems = new ArrayList<Problem>();
             Search search = new Search.Builder(params[0])
                     .addIndex("HARDCODE")
                     .addType("HARDCODE")
@@ -64,7 +63,6 @@ public class ListManagerProblems {
 
             try {
                 JestResult result = client.execute(search);
-
                 if (result.isSucceeded()) {
                     List<Problem> problemList;
                     problemList = result.getSourceAsObjectList(Problem.class);
