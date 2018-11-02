@@ -1,6 +1,9 @@
-package ca.ualberta.cs.cmput301f18t19.hada.hada;
+package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
 import org.junit.Test;
+
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ProblemListController;
 
 import static org.junit.Assert.*;
 
@@ -52,7 +55,7 @@ public class ProblemListControllerTest {
         problemList.addProblem(problem1);
         problemList.addProblem(problem2);
         assertEquals(2, problemList.getSize());
-        problemList.deleteProblem(0);
+        problemList.deleteProblem(problem1);
         assertEquals(1, problemList.getSize());
         assertEquals(problem2, problemList.getProblem(0));
     }
@@ -65,7 +68,7 @@ public class ProblemListControllerTest {
         problemList.addProblem(problem1);
         problemList.addProblem(problem2);
         assertEquals(1, problemList.getPos(problem2));
-        problemList.deleteProblem(1);
+        problemList.deleteProblem(problem2);
         assertEquals(-1, problemList.getPos(problem2));
     }
 

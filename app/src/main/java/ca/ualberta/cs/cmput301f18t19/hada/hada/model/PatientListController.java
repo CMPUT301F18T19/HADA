@@ -8,9 +8,11 @@
  * Copyright (C) 2018  Austin Goebel, Anders Johnson, Alex Li,
  * Cristopher Penner, Joseph Potentier-Neal, Jason Robock
  */
-package ca.ualberta.cs.cmput301f18t19.hada.hada;
+package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
 import java.util.ArrayList;
+
+import ca.ualberta.cs.cmput301f18t19.hada.hada.utility.Listener;
 
 /**
  * @author Christopher Penner
