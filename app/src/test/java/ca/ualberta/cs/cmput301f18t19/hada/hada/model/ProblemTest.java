@@ -3,6 +3,7 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.RecordListController;
@@ -59,7 +60,7 @@ public class ProblemTest{
     @Test
     public void setRecordsTest(){
         Problem problem = new Problem();
-        RecordListController records = new RecordListController();
+        ArrayList<Record> records = new ArrayList();
         problem.setRecords(records);
         assertEquals("Should be same list",records, problem.getRecords());
     }
@@ -67,7 +68,7 @@ public class ProblemTest{
     @Test
     public void getRecordsTest(){
         Problem problem = new Problem();
-        RecordListController records = new RecordListController();
+        ArrayList<Record> records = new ArrayList<>();
         problem.setRecords(records);
         assertEquals("Should be same list",records, problem.getRecords());
     }
