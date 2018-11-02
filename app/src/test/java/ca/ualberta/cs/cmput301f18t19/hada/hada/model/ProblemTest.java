@@ -1,8 +1,11 @@
-package ca.ualberta.cs.cmput301f18t19.hada.hada;
+package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.time.LocalDateTime;
+
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.RecordListController;
 
 public class ProblemTest{
 

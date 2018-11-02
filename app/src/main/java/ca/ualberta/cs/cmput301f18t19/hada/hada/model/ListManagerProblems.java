@@ -1,16 +1,12 @@
-package ca.ualberta.cs.cmput301f18t19.hada.hada;
+package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
-import android.content.AsyncTaskLoader;
-import android.icu.text.AlphabeticIndex;
 import android.os.AsyncTask;
 
-import com.google.gson.Gson;
 import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
 import com.searchly.jestdroid.JestDroidClient;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +15,7 @@ import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 
-public class ListManagerPatient {
+public class ListManagerProblems {
     static JestDroidClient client = null;
 
     public static void setClient(){
@@ -34,12 +30,12 @@ public class ListManagerPatient {
         }
     }
 
-    public static class AddPatientTask extends AsyncTask<Patient, Void, Void>{
+    public static class AddProblemsTask extends AsyncTask<Problem, Void, Void> {
         @Override
-        protected Void doInBackground(Patient... params) {
+        protected Void doInBackground(Problem... params) {
             setClient();
-            Patient patient = params[0];
-            Index index = new Index.Builder(patient)
+            Problem problem = params[0];
+            Index index = new Index.Builder(problem)
                     .index("HARDCODE")
                     .type("HARDCODE")
                     .build();
@@ -55,11 +51,11 @@ public class ListManagerPatient {
         }
     }
 
-    public static class GetPatientsTask extends AsyncTask<String, Void, ArrayList<Patient>> {
+    public static class GetProblemsTask extends AsyncTask<String, Void, ArrayList<Problem>> {
         @Override
-        protected ArrayList<Patient> doInBackground(String... params) {
+        protected ArrayList<Problem> doInBackground(String... params) {
             setClient();
-            ArrayList<Patient> patients = new ArrayList<Patient>();
+            ArrayList<Problem> problems = new ArrayList<Problem>();
             Search search = new Search.Builder(params[0])
                     .addIndex("HARDCODE")
                     .addType("HARDCODE")
@@ -68,16 +64,16 @@ public class ListManagerPatient {
             try {
                 JestResult result = client.execute(search);
                 if (result.isSucceeded()) {
-                    List<Patient> patientList;
-                    patientList = result.getSourceAsObjectList(Patient.class);
-                    patients.addAll(patientList);
+                    List<Problem> problemList;
+                    problemList = result.getSourceAsObjectList(Problem.class);
+                    problems.addAll(problemList);
 
                 }
 
             } catch (IOException e) {
             }
 
-            return patients;
+            return problems;
         }
 
 

@@ -1,4 +1,4 @@
-package ca.ualberta.cs.cmput301f18t19.hada.hada;
+package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
 import android.os.AsyncTask;
 
@@ -15,7 +15,7 @@ import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 
-public class ListManagerProblems {
+public class ListManagerPatient {
     static JestDroidClient client = null;
 
     public static void setClient(){
@@ -30,12 +30,12 @@ public class ListManagerProblems {
         }
     }
 
-    public static class AddProblemsTask extends AsyncTask<Problem, Void, Void> {
+    public static class AddPatientTask extends AsyncTask<Patient, Void, Void>{
         @Override
-        protected Void doInBackground(Problem... params) {
+        protected Void doInBackground(Patient... params) {
             setClient();
-            Problem problem = params[0];
-            Index index = new Index.Builder(problem)
+            Patient patient = params[0];
+            Index index = new Index.Builder(patient)
                     .index("HARDCODE")
                     .type("HARDCODE")
                     .build();
@@ -51,11 +51,11 @@ public class ListManagerProblems {
         }
     }
 
-    public static class GetProblemsTask extends AsyncTask<String, Void, ArrayList<Problem>> {
+    public static class GetPatientsTask extends AsyncTask<String, Void, ArrayList<Patient>> {
         @Override
-        protected ArrayList<Problem> doInBackground(String... params) {
+        protected ArrayList<Patient> doInBackground(String... params) {
             setClient();
-            ArrayList<Problem> problems = new ArrayList<Problem>();
+            ArrayList<Patient> patients = new ArrayList<Patient>();
             Search search = new Search.Builder(params[0])
                     .addIndex("HARDCODE")
                     .addType("HARDCODE")
@@ -64,16 +64,16 @@ public class ListManagerProblems {
             try {
                 JestResult result = client.execute(search);
                 if (result.isSucceeded()) {
-                    List<Problem> problemList;
-                    problemList = result.getSourceAsObjectList(Problem.class);
-                    problems.addAll(problemList);
+                    List<Patient> patientList;
+                    patientList = result.getSourceAsObjectList(Patient.class);
+                    patients.addAll(patientList);
 
                 }
 
             } catch (IOException e) {
             }
 
-            return problems;
+            return patients;
         }
 
 
