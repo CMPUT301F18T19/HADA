@@ -17,12 +17,12 @@ import java.util.ArrayList;
  * @see
  * @version 0.1
  */
-public class PatientList {
+public class PatientListController {
 
     private ArrayList<Patient> patientList;
     protected ArrayList<Listener> listeners;
 
-    PatientList() {
+    PatientListController() {
         patientList = new ArrayList<Patient>();
     }
 
@@ -42,8 +42,7 @@ public class PatientList {
         patientList.add(index, patient);
     }
 
-    public void deletePatient(int index) {
-        Patient patient = patientList.get(index);
+    public void deletePatient(Patient patient) {
         patientList.remove(patient);
     }
 
