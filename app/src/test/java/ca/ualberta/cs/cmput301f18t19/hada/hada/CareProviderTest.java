@@ -55,21 +55,21 @@ public class CareProviderTest {
     @Test
     public void testSetPatients(){
         CareProvider careProvider = new CareProvider();
-        PatientList patients = new PatientList();
+        PatientListController patients = new PatientListController();
         Patient patient = new Patient();
         patients.addPatient(patient);
         careProvider.setPatients(patients);
-        assertEquals("Should return the PatientList we added", patients, careProvider.getPatients());
+        assertEquals("Should return the PatientListController we added", patients, careProvider.getPatients());
     }
 
     @Test
     public void testGetPatients(){
         CareProvider careProvider = new CareProvider();
-        PatientList patients = new PatientList();
+        PatientListController patients = new PatientListController();
         Patient patient = new Patient();
         patients.addPatient(patient);
         careProvider.setPatients(patients);
-        assertEquals("Should return the PatientList we added", patients, careProvider.getPatients());
+        assertEquals("Should return the PatientListController we added", patients, careProvider.getPatients());
     }
 
 }

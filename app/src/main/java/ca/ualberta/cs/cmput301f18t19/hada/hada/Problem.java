@@ -18,7 +18,7 @@ class Problem {
     private String title;
     private LocalDateTime date;
     private String description;
-    private RecordList records = new RecordList();
+    private RecordListController records = new RecordListController();
 
     public void setTitle(String newTitle) {
         this.title = newTitle;
@@ -44,11 +44,11 @@ class Problem {
         return this.description;
     }
 
-    public void setRecords(RecordList records){
+    public void setRecords(RecordListController records){
         this.records = records;
     }
 
-    public RecordList getRecords(){
+    public RecordListController getRecords(){
         return this.records;
     }
 }

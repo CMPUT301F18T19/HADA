@@ -18,12 +18,12 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada;
  */
 public class CareProvider extends User {
 
-    private PatientList patients = new PatientList();
+    private PatientListController patients = new PatientListController();
 
-    public void setPatients(PatientList patients){
+    public void setPatients(PatientListController patients){
         this.patients = patients;
     }
-    public PatientList getPatients(){
+    public PatientListController getPatients(){
         return this.patients;
     }
 }

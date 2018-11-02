@@ -56,7 +56,7 @@ public class ProblemTest{
     @Test
     public void setRecordsTest(){
         Problem problem = new Problem();
-        RecordList records = new RecordList();
+        RecordListController records = new RecordListController();
         problem.setRecords(records);
         assertEquals("Should be same list",records, problem.getRecords());
     }
@@ -64,7 +64,7 @@ public class ProblemTest{
     @Test
     public void getRecordsTest(){
         Problem problem = new Problem();
-        RecordList records = new RecordList();
+        RecordListController records = new RecordListController();
         problem.setRecords(records);
         assertEquals("Should be same list",records, problem.getRecords());
     }
