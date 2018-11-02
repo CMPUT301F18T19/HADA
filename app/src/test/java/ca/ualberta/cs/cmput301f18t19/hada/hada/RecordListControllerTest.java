@@ -4,17 +4,17 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class RecordListTest {
+public class RecordListControllerTest {
 
     @Test
     public void testIsEmpty(){
-        RecordList recordList = new RecordList();
+        RecordListController recordList = new RecordListController();
         assertTrue(recordList.isEmpty());
     }
 
     @Test
     public void testAddRecord(){
-        RecordList recordList = new RecordList();
+        RecordListController recordList = new RecordListController();
         Record record = new Record();
         assertTrue(recordList.isEmpty());
         recordList.addRecord(record);
@@ -23,7 +23,7 @@ public class RecordListTest {
 
     @Test
     public void testGetRecord(){
-        RecordList recordList = new RecordList();
+        RecordListController recordList = new RecordListController();
         Record record = new Record();
         assertTrue(recordList.isEmpty());
         recordList.addRecord(record);
@@ -35,7 +35,7 @@ public class RecordListTest {
 
     @Test
     public void testGetSize(){
-        RecordList recordList = new RecordList();
+        RecordListController recordList = new RecordListController();
         Record record = new Record();
         Record record1 = new Record();
         assertTrue(recordList.isEmpty());
@@ -47,7 +47,7 @@ public class RecordListTest {
 
     @Test
     public void testRecordInList(){
-        RecordList recordList = new RecordList();
+        RecordListController recordList = new RecordListController();
         Record record = new Record();
         Record record1 = new Record();
         Record record2 = new Record();
@@ -65,7 +65,7 @@ public class RecordListTest {
 
     @Test
     public void testGetPosition(){
-        RecordList recordList = new RecordList();
+        RecordListController recordList = new RecordListController();
         Record record = new Record();
         Record record1 = new Record();
         recordList.addRecord(record);
@@ -78,7 +78,7 @@ public class RecordListTest {
 
     @Test
     public void testDeleteRecord(){
-        RecordList recordList = new RecordList();
+        RecordListController recordList = new RecordListController();
         Record record = new Record();
         Record record1 = new Record();
         recordList.addRecord(record);
@@ -95,7 +95,7 @@ public class RecordListTest {
 
     @Test
     public void testInsertRecord(){
-        RecordList recordList = new RecordList();
+        RecordListController recordList = new RecordListController();
         Record record = new Record();
         Record record1 = new Record();
         Record record2 = new Record();

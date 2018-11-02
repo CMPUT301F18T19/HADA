@@ -17,11 +17,12 @@ import java.util.ArrayList;
  * @see
  * @version 0.1
  */
-public class ProblemList {
+public class ProblemListController {
 
     private ArrayList<Problem> problemList;
+    private ArrayList<Listener> listeners;
 
-    ProblemList() {
+    ProblemListController() {
         this.problemList = new ArrayList<Problem>();
     }
 
@@ -41,8 +42,7 @@ public class ProblemList {
         return problemList.contains(problem);
     }
 
-    public void deleteProblem(int index) {
-        Problem problem = problemList.get(index);
+    public void deleteProblem(Problem problem) {
         problemList.remove(problem);
     }
 
@@ -56,5 +56,18 @@ public class ProblemList {
 
     public int getPos(Problem problem) {
         return problemList.indexOf(problem);
+    }
+
+    public void notifyListeners(){
+        for (Listener listener : listeners){
+            if(listener != null){
+                listener.update();}
+        }
+    }
+    public void addListener(Listener l){
+        listeners.add(l);
+    }
+    public void removeListener(Listener l){
+        listeners.remove(l);
     }
 }

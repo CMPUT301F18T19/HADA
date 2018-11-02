@@ -53,5 +53,22 @@ public class ProblemTest{
         assertEquals("This is a second test desc for this problem", returnedDesc);
     }
 
+    @Test
+    public void setRecordsTest(){
+        Problem problem = new Problem();
+        RecordListController records = new RecordListController();
+        problem.setRecords(records);
+        assertEquals("Should be same list",records, problem.getRecords());
+    }
+
+    @Test
+    public void getRecordsTest(){
+        Problem problem = new Problem();
+        RecordListController records = new RecordListController();
+        problem.setRecords(records);
+        assertEquals("Should be same list",records, problem.getRecords());
+    }
+
+
 }
 

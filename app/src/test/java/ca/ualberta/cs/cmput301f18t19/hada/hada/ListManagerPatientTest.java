@@ -7,21 +7,20 @@ import com.searchly.jestdroid.JestDroidClient;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import io.searchbox.client.JestResult;
 import io.searchbox.core.Search;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-
-public class ListManagerProblemsTest {
+public class ListManagerPatientTest {
     @Test
-    public void testSaveProblem() {
-        Problem problem = new Problem();
-        new ListManagerProblems.AddProblemsTask().execute(problem);
+    public void testSavePatient() {
+        Patient patient = new Patient();
+        new ListManagerPatient.AddPatientTask().execute(patient);
 
         DroidClientConfig config = new DroidClientConfig
                 .Builder("http://cmput301.softwareprocess.es:8080/cmput301f18t19test")
@@ -45,19 +44,19 @@ public class ListManagerProblemsTest {
     }
 
     @Test
-    public void testGetProblem() {
-        Problem problem = new Problem();
-        ArrayList<Problem> problems = new ArrayList<Problem>();
-        new ListManagerProblems.AddProblemsTask().execute(problem);
+    public void testGetPatient() {
+        Patient patient = new Patient();
+        ArrayList<Patient> patients = new ArrayList<Patient>();
+        new ListManagerPatient.AddPatientTask().execute(patient);
 
         try {
-            problems = new ListManagerProblems.GetProblemsTask().execute("").get();
+            patients = new ListManagerPatient.GetPatientsTask().execute("").get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertFalse(problems.isEmpty());
+        assertFalse(patients.isEmpty());
 
     }
 }

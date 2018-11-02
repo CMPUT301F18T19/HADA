@@ -19,13 +19,13 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada;
  */
 public class Patient extends User {
 
-    private ProblemList problems = new ProblemList();
+    private ProblemListController problems = new ProblemListController();
 
-    public void setProblems(ProblemList problems){
+    public void setProblems(ProblemListController problems){
         this.problems = problems;
     }
 
-    public ProblemList getProblems(){
+    public ProblemListController getProblems(){
         return this.problems;
     }
 

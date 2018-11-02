@@ -2,12 +2,13 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada;
 
 import java.util.ArrayList;
 
-public class RecordList {
+public class RecordListController {
 
-    private ArrayList<Record> recordList;
+    protected ArrayList<Record> recordList;
+    protected ArrayList<Listener> listeners;
 
-    RecordList(){
-       this.recordList = new ArrayList<Record>();
+    RecordListController(){
+        this.recordList = new ArrayList<>();
     }
 
     public boolean isEmpty() {
@@ -40,5 +41,18 @@ public class RecordList {
 
     public void insertRecord(int index, Record record) {
         this.recordList.add(index, record);
+    }
+
+    public void notifyListeners(){
+        for (Listener listener : listeners){
+            if(listener != null){
+                listener.update();}
+        }
+    }
+    public void addListener(Listener l){
+        listeners.add(l);
+    }
+    public void removeListener(Listener l){
+        listeners.remove(l);
     }
 }
