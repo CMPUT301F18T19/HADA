@@ -17,12 +17,12 @@ import java.util.ArrayList;
  * @see
  * @version 0.1
  */
-public class ProblemList {
+public class ProblemListController {
 
     private ArrayList<Problem> problemList;
     private ArrayList<Listener> listeners;
 
-    ProblemList() {
+    ProblemListController() {
         this.problemList = new ArrayList<Problem>();
     }
 

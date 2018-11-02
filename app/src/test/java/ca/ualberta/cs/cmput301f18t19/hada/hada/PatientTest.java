@@ -55,20 +55,20 @@ public class PatientTest {
     @Test
     public void testSetProblems(){
         Patient patient = new Patient();
-        ProblemList problems = new ProblemList();
+        ProblemListController problems = new ProblemListController();
         Problem problem = new Problem();
         problems.addProblem(problem);
         patient.setProblems(problems);
-        assertEquals("Should be the ProblemList we set it to", problems, patient.getProblems());
+        assertEquals("Should be the ProblemListController we set it to", problems, patient.getProblems());
     }
 
     @Test
     public void testGetProblems(){
         Patient patient = new Patient();
-        ProblemList problems = new ProblemList();
+        ProblemListController problems = new ProblemListController();
         Problem problem = new Problem();
         problems.addProblem(problem);
         patient.setProblems(problems);
-        assertEquals("Should be the ProblemList we set it to", problems, patient.getProblems());
+        assertEquals("Should be the ProblemListController we set it to", problems, patient.getProblems());
     }
 }
