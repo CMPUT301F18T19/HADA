@@ -42,8 +42,7 @@ public class ProblemListController {
         return problemList.contains(problem);
     }
 
-    public void deleteProblem(int index) {
-        Problem problem = problemList.get(index);
+    public void deleteProblem(Problem problem) {
         problemList.remove(problem);
     }
 
