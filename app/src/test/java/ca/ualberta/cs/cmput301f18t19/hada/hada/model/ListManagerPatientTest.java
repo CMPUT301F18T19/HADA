@@ -1,4 +1,4 @@
-package ca.ualberta.cs.cmput301f18t19.hada.hada;
+package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
 import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ListManagerPatient;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
 import io.searchbox.client.JestResult;
 import io.searchbox.core.Search;
 

@@ -1,4 +1,4 @@
-package ca.ualberta.cs.cmput301f18t19.hada.hada;
+package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
 import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
@@ -7,10 +7,11 @@ import com.searchly.jestdroid.JestDroidClient;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ListManagerProblems;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 import io.searchbox.client.JestResult;
 import io.searchbox.core.Search;
 
