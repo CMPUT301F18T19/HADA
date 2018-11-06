@@ -1,7 +1,11 @@
-package ca.ualberta.cs.cmput301f18t19.hada.hada;
+package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ProblemListController;
 import static org.junit.Assert.*;
 
 public class PatientTest {
@@ -55,9 +59,8 @@ public class PatientTest {
     @Test
     public void testSetProblems(){
         Patient patient = new Patient();
-        ProblemListController problems = new ProblemListController();
+        ArrayList<Problem> problems  = new ArrayList<Problem>();
         Problem problem = new Problem();
-        problems.addProblem(problem);
         patient.setProblems(problems);
         assertEquals("Should be the ProblemListController we set it to", problems, patient.getProblems());
     }
@@ -65,9 +68,9 @@ public class PatientTest {
     @Test
     public void testGetProblems(){
         Patient patient = new Patient();
-        ProblemListController problems = new ProblemListController();
+        ArrayList<Problem> problems = new ArrayList<Problem>();
         Problem problem = new Problem();
-        problems.addProblem(problem);
+        patient.setProblems(problems);
         patient.setProblems(problems);
         assertEquals("Should be the ProblemListController we set it to", problems, patient.getProblems());
     }

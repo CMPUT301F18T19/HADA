@@ -9,8 +9,10 @@
  * Cristopher Penner, Joseph Potentier-Neal, Jason Robock
  */
 
-package ca.ualberta.cs.cmput301f18t19.hada.hada;
+package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
+
+import java.util.ArrayList;
 
 /**
  * @author Joseph Potentier-Neal
@@ -19,13 +21,13 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada;
  */
 public class Patient extends User {
 
-    private ProblemListController problems = new ProblemListController();
+    private ArrayList<Problem> problems = new ArrayList<Problem>();
 
-    public void setProblems(ProblemListController problems){
+    public void setProblems(ArrayList<Problem> problems){
         this.problems = problems;
     }
 
-    public ProblemListController getProblems(){
+    public ArrayList<Problem> getProblems(){
         return this.problems;
     }
 

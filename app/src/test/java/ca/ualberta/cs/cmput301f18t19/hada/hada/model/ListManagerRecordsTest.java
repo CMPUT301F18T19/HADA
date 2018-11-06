@@ -1,4 +1,4 @@
-package ca.ualberta.cs.cmput301f18t19.hada.hada;
+package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
 
 
@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ListManagerRecord;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 import io.searchbox.client.JestResult;
 import io.searchbox.core.Search;
 

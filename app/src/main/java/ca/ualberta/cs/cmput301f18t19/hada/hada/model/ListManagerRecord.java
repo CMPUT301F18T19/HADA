@@ -1,4 +1,4 @@
-package ca.ualberta.cs.cmput301f18t19.hada.hada;
+package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
 import android.os.AsyncTask;
 
