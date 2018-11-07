@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">HADA</string>
+    <string name="title_activity_problem_list">ProblemListActivity</string>
 </resources>
