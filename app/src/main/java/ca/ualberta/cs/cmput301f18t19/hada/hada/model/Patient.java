@@ -21,15 +21,39 @@ import java.util.ArrayList;
  */
 public class Patient extends User {
 
-    private ArrayList<Problem> problems = new ArrayList<Problem>();
+    private ArrayList<Problem> problemList = new ArrayList<Problem>();
 
-    public void setProblems(ArrayList<Problem> problems){
-        this.problems = problems;
+  /*Following are the problemList operation*/
+    public void setProblemList(ArrayList<Problem> newProblemList){
+        this.problemList = newProblemList;
     }
 
-    public ArrayList<Problem> getProblems(){
-        return this.problems;
+    public ArrayList<Problem> getProblemList(){
+        return this.problemList;
     }
+
+    public void clearProblemList(){
+        problemList.clear();
+    }
+
+  /*Following are the individual problem operations*/
+    public void addProblem(Problem newProblem){
+      problemList.add(newProblem);
+    }
+
+    public void removeProblem(Problem problem){
+        problemList.remove(problem);
+    }
+
+    public void setProblem(int index, Problem newProblem){
+        problemList.set(index, newProblem);
+    }
+
+    public Problem getProblem(int index){
+        return problemList.get(index);
+    }
+
+
 
     //TODO setFullBodyImage() once we know of the data type/structure.
     //public void setFullBodyImage()
