@@ -67,7 +67,7 @@ public class ListManagerPatient {
                     List<Patient> patientList;
                     patientList = result.getSourceAsObjectList(Patient.class);
                     patients.addAll(patientList);
-
+                    
                 }
 
             } catch (IOException e) {
