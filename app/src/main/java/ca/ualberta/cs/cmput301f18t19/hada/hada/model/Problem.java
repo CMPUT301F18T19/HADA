@@ -9,16 +9,17 @@
  * Cristopher Penner, Joseph Potentier-Neal, Jason Robock
  */
 
-package ca.ualberta.cs.cmput301f18t19.hada.hada;
+package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 class Problem {
 
     private String title;
     private LocalDateTime date;
     private String description;
-    private RecordListController records = new RecordListController();
+    private ArrayList<Record> records;
 
     public void setTitle(String newTitle) {
         this.title = newTitle;
@@ -44,11 +45,11 @@ class Problem {
         return this.description;
     }
 
-    public void setRecords(RecordListController records){
-        this.records = records;
+    public void setRecords(ArrayList Newrecords){
+        this.records = Newrecords;
     }
 
-    public RecordListController getRecords(){
+    public ArrayList<Record> getRecords(){
         return this.records;
     }
 }
