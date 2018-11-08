@@ -45,8 +45,8 @@ class Problem {
         return this.description;
     }
 
-    public void setRecords(ArrayList Newrecords){
-        this.records = Newrecords;
+    public void setRecords(ArrayList<Record> newRecords){
+        this.records = newRecords;
     }
 
     public ArrayList<Record> getRecords(){
