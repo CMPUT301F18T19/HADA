@@ -12,14 +12,68 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ListManagerPatient;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
+
+import static android.provider.Telephony.Mms.Part.FILENAME;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String FILENAME = "file.sav";
+    private EditText usernameInfo;
+    private ArrayList<Patient> patientList = new ArrayList<Patient>();
+    private ArrayList<CareProvider> careProviderList = new ArrayList<CareProvider>();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        usernameInfo = (EditText) findViewById(R.id.username_login);
+        Button patientLogin = findViewById(R.id.patient_login);
+        Button careProviderLogin = findViewById(R.id.doctor_login);
+        Button createUser = findViewById(R.id.create_user);
+
+
+        patientLogin.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                String username = usernameInfo.getText().toString();
+                /**
+                 * Pull patient from username patient ArrayList
+                 */
+            }
+        });
+
+        careProviderLogin.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                String username = usernameInfo.getText().toString();
+                /**
+                 * Pull doctor from username patient ArrayList
+                 */
+            }
+
+        });
+
     }
+
 }
