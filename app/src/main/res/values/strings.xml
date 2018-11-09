@@ -7,4 +7,9 @@
     <string name="title_activity_new_user">NewUserActivity</string>
     <string name="add_front_image">Add Front Image</string>
     <string name="add_back_image">Add Back Image</string>
+    <string name="problem_title">PROBLEM NAME</string>
+    <string name="ViewProblemImage">Location of problem on body.</string>
+    <string name="ViewProblemMapButton">Image of a map.</string>
+    <string name="ViewProblemSlideshowButton">Image of a play button.</string>
+
 </resources>
