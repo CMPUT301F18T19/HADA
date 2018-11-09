@@ -23,7 +23,7 @@ public class Patient extends User {
 
     private ArrayList<Problem> problemList = new ArrayList<Problem>();
 
-  /*Following are the problemList operation*/
+    /*Following are the problemList operation*/
     public void setProblemList(ArrayList<Problem> newProblemList){
         this.problemList = newProblemList;
     }
@@ -36,7 +36,15 @@ public class Patient extends User {
         problemList.clear();
     }
 
-  /*Following are the individual problem operations*/
+    /*Following are the individual problem operations*/
+    public void setProblem(int index, Problem newProblem){
+      problemList.set(index, newProblem);
+    }
+
+    public Problem getProblem(int index){
+        return problemList.get(index);
+    }
+
     public void addProblem(Problem newProblem){
       problemList.add(newProblem);
     }
@@ -45,13 +53,7 @@ public class Patient extends User {
         problemList.remove(problem);
     }
 
-    public void setProblem(int index, Problem newProblem){
-        problemList.set(index, newProblem);
-    }
 
-    public Problem getProblem(int index){
-        return problemList.get(index);
-    }
 
 
 
