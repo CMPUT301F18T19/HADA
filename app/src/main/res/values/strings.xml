@@ -11,5 +11,8 @@
     <string name="ViewProblemImage">Location of problem on body.</string>
     <string name="ViewProblemMapButton">Image of a map.</string>
     <string name="ViewProblemSlideshowButton">Image of a play button.</string>
+    <string name="PatientListTitle">PATIENTS</string>
+    <string name="SearchBoxHint">Search</string>
+    <string name="autoFillHint">AUTOFILL_TYPE_TEXT</string>
 
 </resources>
