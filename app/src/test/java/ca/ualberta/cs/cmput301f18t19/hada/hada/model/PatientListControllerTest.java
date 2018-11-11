@@ -1,20 +1,23 @@
-package ca.ualberta.cs.cmput301f18t19.hada.hada;
+package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
 import org.junit.Test;
 
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.PatientListController;
+
 import static org.junit.Assert.*;
 
-public class PatientListTest {
+public class PatientListControllerTest {
 
     @Test
-    public void testEmpty() {
-        PatientList patientList = new PatientList();
+    public void testIsEmpty() {
+        PatientListController patientList = new PatientListController();
         assertTrue(patientList.isEmpty());
     }
 
     @Test
     public void testAddPatient() {
-        PatientList patientList = new PatientList();
+        PatientListController patientList = new PatientListController();
         Patient patient = new Patient();
         assertTrue(patientList.isEmpty());
         patientList.addPatient(patient);
@@ -23,7 +26,7 @@ public class PatientListTest {
 
     @Test
     public void testGetPatient() {
-        PatientList patientList = new PatientList();
+        PatientListController patientList = new PatientListController();
         Patient patient = new Patient();
         patientList.addPatient(patient);
         assertEquals(patient, patientList.getPatient(0));
@@ -31,7 +34,7 @@ public class PatientListTest {
 
     @Test
     public void testGetSize() {
-        PatientList patientList = new PatientList();
+        PatientListController patientList = new PatientListController();
         Patient patient = new Patient();
         assertEquals(0, patientList.getSize());
         patientList.addPatient(patient);
@@ -40,7 +43,7 @@ public class PatientListTest {
 
     @Test
     public void testPatientInList() {
-        PatientList patientList = new PatientList();
+        PatientListController patientList = new PatientListController();
         Patient patient1 = new Patient();
         Patient patient2 = new Patient();
         assertFalse(patientList.inList(patient1));
@@ -52,7 +55,7 @@ public class PatientListTest {
 
     @Test
     public void testGetPosition() {
-        PatientList patientList = new PatientList();
+        PatientListController patientList = new PatientListController();
         Patient patient1 = new Patient();
         Patient patient2 = new Patient();
         Patient patient3 = new Patient();
@@ -65,7 +68,7 @@ public class PatientListTest {
 
     @Test
     public void testDeletePatient() {
-        PatientList patientList = new PatientList();
+        PatientListController patientList = new PatientListController();
         Patient patient1 = new Patient();
         Patient patient2 = new Patient();
         Patient patient3 = new Patient();
@@ -73,13 +76,13 @@ public class PatientListTest {
         patientList.addPatient(patient2);
         patientList.addPatient(patient3);
         assertTrue(patientList.inList(patient2));
-        patientList.deletePatient(patientList.getPos(patient2));
+        patientList.deletePatient(patient2);
         assertFalse(patientList.inList(patient2));
     }
 
     @Test
     public void testInsertPatient() {
-        PatientList patientList = new PatientList();
+        PatientListController patientList = new PatientListController();
         Patient patient1 = new Patient();
         Patient patient2 = new Patient();
         Patient patient3 = new Patient();

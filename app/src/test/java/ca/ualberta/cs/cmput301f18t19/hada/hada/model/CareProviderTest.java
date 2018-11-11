@@ -1,7 +1,12 @@
-package ca.ualberta.cs.cmput301f18t19.hada.hada;
+package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
 import org.junit.Test;
 
+
+import java.util.ArrayList;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.PatientListController;
 import static org.junit.Assert.*;
 
 public class CareProviderTest {
@@ -53,9 +58,21 @@ public class CareProviderTest {
     }
 
     @Test
-    public void testGetType(){
+    public void testSetPatients(){
         CareProvider careProvider = new CareProvider();
-        assertEquals("Care Provider",careProvider.getType());
+        ArrayList<Patient> patients = new ArrayList<Patient>();
+        Patient patient = new Patient();
+        careProvider.setPatients(patients);
+        assertEquals("Should return the PatientListController we added", patients, careProvider.getPatients());
+    }
+
+    @Test
+    public void testGetPatients(){
+        CareProvider careProvider = new CareProvider();
+        ArrayList<Patient> patients = new ArrayList<Patient>();
+        Patient patient = new Patient();
+        careProvider.setPatients(patients);
+        assertEquals("Should return the PatientListController we added", patients, careProvider.getPatients());
     }
 
 }

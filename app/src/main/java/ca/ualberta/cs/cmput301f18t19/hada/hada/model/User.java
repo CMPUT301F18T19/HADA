@@ -9,7 +9,7 @@
  * Cristopher Penner, Joseph Potentier-Neal, Jason Robock
  */
 
-package ca.ualberta.cs.cmput301f18t19.hada.hada;
+package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
 
 /**
@@ -47,6 +47,6 @@ public abstract class User {
         return this.emailAddress;
     }
 
-    abstract public String getType();
 
 }
+

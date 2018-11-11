@@ -8,8 +8,10 @@
  * Copyright (C) 2018  Austin Goebel, Anders Johnson, Alex Li,
  * Cristopher Penner, Joseph Potentier-Neal, Jason Robock
  */
-package ca.ualberta.cs.cmput301f18t19.hada.hada;
+package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
+
+import java.util.ArrayList;
 
 /**
  * @author Joseph Potentier-Neal
@@ -18,10 +20,12 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada;
  */
 public class CareProvider extends User {
 
-    private String type = "Care Provider";
+    private ArrayList<Patient> patients = new ArrayList<Patient>();
 
-    @Override
-    public String getType() {
-        return this.type;
+    public void setPatients(ArrayList<Patient> patients){
+        this.patients = patients;
+    }
+    public ArrayList<Patient> getPatients(){
+        return this.patients;
     }
 }

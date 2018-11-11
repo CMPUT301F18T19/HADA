@@ -1,18 +1,25 @@
-/*
+/* CMPUT 301 - Fall 2018
+ *
+ * Version 1.0
+ *
+ * 2018-10-27
+ *
  * This is a group project for CMPUT 301 course at the University of Alberta
  * Copyright (C) 2018  Austin Goebel, Anders Johnson, Alex Li,
  * Cristopher Penner, Joseph Potentier-Neal, Jason Robock
  */
 
-package ca.ualberta.cs.cmput301f18t19.hada.hada;
+package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 class Problem {
 
     private String title;
     private LocalDateTime date;
     private String description;
+    private ArrayList<Record> records;
 
     public void setTitle(String newTitle) {
         this.title = newTitle;
@@ -36,5 +43,13 @@ class Problem {
 
     public String getDesc() {
         return this.description;
+    }
+
+    public void setRecords(ArrayList<Record> newRecords){
+        this.records = newRecords;
+    }
+
+    public ArrayList<Record> getRecords(){
+        return this.records;
     }
 }

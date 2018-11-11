@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">HADA</string>
+    <string name="patient_login">Patient Login</string>
+    <string name="doctor_login">Doctor Login</string>
+    <string name="create_user">Create user</string>
+    <string name="enter_username">Username</string>
+    <string name="title_activity_new_user">NewUserActivity</string>
+    <string name="add_front_image">Add Front Image</string>
+    <string name="add_back_image">Add Back Image</string>
+    <string name="problem_title">PROBLEM NAME</string>
+    <string name="ViewProblemImage">Location of problem on body.</string>
+    <string name="ViewProblemMapButton">Image of a map.</string>
+    <string name="ViewProblemSlideshowButton">Image of a play button.</string>
+    <string name="PatientListTitle">PATIENTS</string>
+    <string name="SearchBoxHint">Search</string>
+    <string name="autoFillHint">AUTOFILL_TYPE_TEXT</string>
+
 </resources>

@@ -1,8 +1,12 @@
-package ca.ualberta.cs.cmput301f18t19.hada.hada;
+package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.RecordListController;
 
 public class ProblemTest{
 
@@ -52,4 +56,23 @@ public class ProblemTest{
         String returnedDesc = problem.getDesc();
         assertEquals("This is a second test desc for this problem", returnedDesc);
     }
+
+    @Test
+    public void setRecordsTest(){
+        Problem problem = new Problem();
+        ArrayList<Record> records = new ArrayList();
+        problem.setRecords(records);
+        assertEquals("Should be same list",records, problem.getRecords());
+    }
+
+    @Test
+    public void getRecordsTest(){
+        Problem problem = new Problem();
+        ArrayList<Record> records = new ArrayList<>();
+        problem.setRecords(records);
+        assertEquals("Should be same list",records, problem.getRecords());
+    }
+
+
 }
+

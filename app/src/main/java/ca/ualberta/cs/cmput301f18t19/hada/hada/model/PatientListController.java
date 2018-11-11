@@ -8,20 +8,23 @@
  * Copyright (C) 2018  Austin Goebel, Anders Johnson, Alex Li,
  * Cristopher Penner, Joseph Potentier-Neal, Jason Robock
  */
-package ca.ualberta.cs.cmput301f18t19.hada.hada;
+package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
 import java.util.ArrayList;
+
+import ca.ualberta.cs.cmput301f18t19.hada.hada.utility.Listener;
 
 /**
  * @author Christopher Penner
  * @see
  * @version 0.1
  */
-public class PatientList {
+public class PatientListController {
 
     private ArrayList<Patient> patientList;
+    protected ArrayList<Listener> listeners;
 
-    PatientList() {
+    PatientListController() {
         patientList = new ArrayList<Patient>();
     }
 
@@ -41,8 +44,7 @@ public class PatientList {
         patientList.add(index, patient);
     }
 
-    public void deletePatient(int index) {
-        Patient patient = patientList.get(index);
+    public void deletePatient(Patient patient) {
         patientList.remove(patient);
     }
 
@@ -56,5 +58,18 @@ public class PatientList {
 
     public int getPos(Patient patient) {
         return patientList.indexOf(patient);
+    }
+
+    public void notifyListeners(){
+        for (Listener listener : listeners){
+            if(listener != null){
+                listener.update();}
+        }
+    }
+    public void addListener(Listener l){
+        listeners.add(l);
+    }
+    public void removeListener(Listener l){
+        listeners.remove(l);
     }
 }
