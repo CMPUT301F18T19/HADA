@@ -14,5 +14,9 @@
     <string name="PatientListTitle">PATIENTS</string>
     <string name="SearchBoxHint">Search</string>
     <string name="autoFillHint">AUTOFILL_TYPE_TEXT</string>
+    <string name="add_comment">Add comment</string>
+    <string name="select_photos">Select Photos</string>
+    <string name="save_geo_location">Save Geo location</string>
+    <string name="record_photo">Record photo</string>
 
 </resources>
