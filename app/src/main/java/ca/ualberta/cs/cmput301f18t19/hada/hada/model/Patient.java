@@ -12,6 +12,8 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
 
+import java.util.ArrayList;
+
 /**
  * @author Joseph Potentier-Neal
  * @see
@@ -19,15 +21,41 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
  */
 public class Patient extends User {
 
-    private ProblemListController problems = new ProblemListController();
+    private ArrayList<Problem> problemList = new ArrayList<Problem>();
 
-    public void setProblems(ProblemListController problems){
-        this.problems = problems;
+    /*Following are the problemList operation*/
+    public void setProblemList(ArrayList<Problem> newProblemList){
+        this.problemList = newProblemList;
     }
 
-    public ProblemListController getProblems(){
-        return this.problems;
+    public ArrayList<Problem> getProblemList(){
+        return this.problemList;
     }
+
+    public void clearProblemList(){
+        problemList.clear();
+    }
+
+    /*Following are the individual problem operations*/
+    public void setProblem(int index, Problem newProblem){
+      problemList.set(index, newProblem);
+    }
+
+    public Problem getProblem(int index){
+        return problemList.get(index);
+    }
+
+    public void addProblem(Problem newProblem){
+      problemList.add(newProblem);
+    }
+
+    public void removeProblem(Problem problem){
+        problemList.remove(problem);
+    }
+
+
+
+
 
     //TODO setFullBodyImage() once we know of the data type/structure.
     //public void setFullBodyImage()

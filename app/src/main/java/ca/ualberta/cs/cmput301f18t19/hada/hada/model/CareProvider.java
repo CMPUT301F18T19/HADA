@@ -11,6 +11,8 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
 
+import java.util.ArrayList;
+
 /**
  * @author Joseph Potentier-Neal
  * @see
@@ -18,12 +20,12 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
  */
 public class CareProvider extends User {
 
-    private PatientListController patients = new PatientListController();
+    private ArrayList<Patient> patients = new ArrayList<Patient>();
 
-    public void setPatients(PatientListController patients){
+    public void setPatients(ArrayList<Patient> patients){
         this.patients = patients;
     }
-    public PatientListController getPatients(){
+    public ArrayList<Patient> getPatients(){
         return this.patients;
     }
 }
