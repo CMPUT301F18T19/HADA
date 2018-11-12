@@ -7,4 +7,13 @@
     <string name="title_activity_new_user">NewUserActivity</string>
     <string name="add_front_image">Add Front Image</string>
     <string name="add_back_image">Add Back Image</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
+    <string name="doctor">Doctor</string>
+    <string name="patient">Patient</string>
+    <string name="name">Name</string>
+    <string name="password">Password</string>
+    <string name="search">Search</string>
+    <string name="new_problem">New Problem</string>
+    <string name="user_settings">User Settings</string>
 </resources>
