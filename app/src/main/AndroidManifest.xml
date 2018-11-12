@@ -20,6 +20,7 @@
         <activity android:name=".ui.NewUserActivity" />
         <activity android:name=".ui.PatientListActivity" />
         <activity android:name=".ui.AddRecordActivity" />
+        <activity android:name=".ui.AddPatientActivity"></activity>
     </application>
 
 </manifest>
