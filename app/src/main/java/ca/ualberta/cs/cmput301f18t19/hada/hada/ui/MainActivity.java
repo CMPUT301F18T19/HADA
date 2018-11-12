@@ -50,10 +50,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        usernameInfo = (EditText) findViewById(R.id.username_login);
-        Button patientLogin = findViewById(R.id.patient_login);
-        Button careProviderLogin = findViewById(R.id.doctor_login);
-        Button createUser = findViewById(R.id.create_user);
+        usernameInfo = (EditText) findViewById(R.id.mainActivityUsernameText);
+        Button patientLogin = findViewById(R.id.mainActivityPatientLogin);
+        Button careProviderLogin = findViewById(R.id.mainActivityDoctorLogin);
+        Button createUser = findViewById(R.id.mainActivityCreateUser);
 
 
         patientLogin.setOnClickListener(new View.OnClickListener() {

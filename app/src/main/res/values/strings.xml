@@ -7,6 +7,15 @@
     <string name="title_activity_new_user">NewUserActivity</string>
     <string name="add_front_image">Add Front Image</string>
     <string name="add_back_image">Add Back Image</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
+    <string name="doctor">Doctor</string>
+    <string name="patient">Patient</string>
+    <string name="name">Name</string>
+    <string name="password">Password</string>
+    <string name="search">Search</string>
+    <string name="new_problem">New Problem</string>
+    <string name="user_settings">User Settings</string>
     <string name="problem_title">PROBLEM NAME</string>
     <string name="ViewProblemImage">Location of problem on body.</string>
     <string name="ViewProblemMapButton">Image of a map.</string>
@@ -20,5 +29,4 @@
     <string name="record_photo">Record photo</string>
     <string name="add_patient_id_hint">Patient UserID</string>
     <string name="generic_save">Save</string>
-
 </resources>
