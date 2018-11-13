@@ -7,94 +7,157 @@
     tools:context=".ui.NewUserActivity">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/newUserTextView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_height="14dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/create_user"
+        app:layout_constraintBottom_toTopOf="@+id/newUserEnterUsername"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/enter_username"
+        android:id="@+id/newUserEnterUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:text="@string/enter_username"
+        app:layout_constraintBottom_toTopOf="@+id/newUserEnterName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/newUserTextView" />
 
     <EditText
-        android:id="@+id/enter_name"
+        android:id="@+id/newUserEnterName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:text="@string/name"
+        app:layout_constraintBottom_toTopOf="@+id/newUserEnterPassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enter_username" />
+        app:layout_constraintTop_toBottomOf="@+id/newUserEnterUsername" />
 
     <EditText
-        android:id="@+id/enter_password"
+        android:id="@+id/newUserEnterPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:text="@string/password"
+        app:layout_constraintBottom_toTopOf="@+id/newUserAddFrontImageButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enter_name" />
+        app:layout_constraintTop_toBottomOf="@+id/newUserEnterName" />
 
     <Button
-        android:id="@+id/add_front_image_button"
-        android:layout_width="wrap_content"
+        android:id="@+id/newUserAddFrontImageButton"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
         android:text="@string/add_front_image"
-        app:layout_constraintBottom_toTopOf="@+id/add_back_image_button"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/newUserAddBackImageButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newUserEnterPassword" />
 
     <Button
-        android:id="@+id/add_back_image_button"
-        android:layout_width="wrap_content"
+        android:id="@+id/newUserAddBackImageButton"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
         android:text="@string/add_back_image"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/radioGroup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newUserAddFrontImageButton" />
 
     <TextView
-        android:id="@+id/front_image_name"
+        android:id="@+id/newUserFrontImageName"
         android:layout_width="wrap_content"
         android:layout_height="18dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:text="TextView"
-        app:layout_constraintBaseline_toBaselineOf="@+id/add_front_image_button"
-        app:layout_constraintEnd_toStartOf="@+id/add_front_image_button"
+        android:text="FILL WITH FILENAME"
+        app:layout_constraintBaseline_toBaselineOf="@+id/newUserAddFrontImageButton"
+        app:layout_constraintEnd_toStartOf="@+id/newUserAddFrontImageButton"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/back_image_name"
+        android:id="@+id/newUserBackImageName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:text="TextView"
-        app:layout_constraintBaseline_toBaselineOf="@+id/add_back_image_button"
-        app:layout_constraintEnd_toStartOf="@+id/add_back_image_button"
-        app:layout_constraintHorizontal_bias="0.468"
+        android:text="FILL WITH FILENAME"
+        app:layout_constraintBaseline_toBaselineOf="@+id/newUserAddBackImageButton"
+        app:layout_constraintEnd_toStartOf="@+id/newUserAddBackImageButton"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="240dp"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/newUserConfirm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newUserAddBackImageButton">
+
+        <RadioButton
+            android:id="@+id/newUserPatientRadioButton"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/patient"
+            android:gravity="center"
+            tools:layout_editor_absoluteX="37dp"
+            tools:layout_editor_absoluteY="452dp" />
+
+        <RadioButton
+            android:id="@+id/newUserDoctorRadioButton"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="@string/doctor"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="45dp" />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/newUserConfirm"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/confirm"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/newUserCancel"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+    <Button
+        android:id="@+id/newUserCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/cancel"
+        app:layout_constraintBaseline_toBaselineOf="@+id/newUserConfirm"
+        app:layout_constraintEnd_toStartOf="@+id/newUserConfirm"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
 </android.support.constraint.ConstraintLayout>

@@ -1,13 +1,16 @@
-/* CMPUT 301 - Fall 2018
+/*
+ * CMPUT 301 - Fall 2018
  *
  * Version 1.0
  *
- * 2018-10-27
+ * 10/27/18 12:42 PM
  *
  * This is a group project for CMPUT 301 course at the University of Alberta
  * Copyright (C) 2018  Austin Goebel, Anders Johnson, Alex Li,
  * Cristopher Penner, Joseph Potentier-Neal, Jason Robock
+ * Last modified 11/11/18 10:08 AM
  */
+
 package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 
 import android.support.v7.app.AppCompatActivity;
@@ -47,10 +50,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        usernameInfo = (EditText) findViewById(R.id.username_login);
-        Button patientLogin = findViewById(R.id.patient_login);
-        Button careProviderLogin = findViewById(R.id.doctor_login);
-        Button createUser = findViewById(R.id.create_user);
+        usernameInfo = (EditText) findViewById(R.id.mainActivityUsernameText);
+        Button patientLogin = findViewById(R.id.mainActivityPatientLogin);
+        Button careProviderLogin = findViewById(R.id.mainActivityDoctorLogin);
+        Button createUser = findViewById(R.id.mainActivityCreateUser);
 
 
         patientLogin.setOnClickListener(new View.OnClickListener() {
