@@ -11,16 +11,16 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/Problem_List"
         android:layout_width="395dp"
-        android:layout_height="507dp"
+        android:layout_height="423dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/paitentView" />
 
     <TextView
         android:id="@+id/paitentView"
@@ -29,26 +29,23 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
         android:text="TextView"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/Problem_List"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.15" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/floatingSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
         android:tint="@android:color/transparent"
         app:backgroundTint="@android:color/transparent"
         app:srcCompat="@android:drawable/btn_star_big_on"
-        tools:layout_editor_absoluteX="346dp"
-        tools:layout_editor_absoluteY="16dp"
+        tools:layout_editor_absoluteX="344dp"
+        tools:layout_editor_absoluteY="0dp"
         tools:srcCompat="@drawable/ic_settings_black_24dp" />
 
 </android.support.constraint.ConstraintLayout>
