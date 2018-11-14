@@ -25,39 +25,39 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="@string/enter_username"
         android:inputType="textPersonName"
-        android:text="@string/enter_username"
-        app:layout_constraintBottom_toTopOf="@+id/newUserEnterName"
+        app:layout_constraintBottom_toTopOf="@+id/newUserEnterPhone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newUserTextView" />
 
     <EditText
-        android:id="@+id/newUserEnterName"
+        android:id="@+id/newUserEnterPhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="@string/add_phonenumber_hint"
         android:inputType="textPersonName"
-        android:text="@string/name"
-        app:layout_constraintBottom_toTopOf="@+id/newUserEnterPassword"
+        app:layout_constraintBottom_toTopOf="@+id/newUserEnterEmail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newUserEnterUsername" />
 
     <EditText
-        android:id="@+id/newUserEnterPassword"
+        android:id="@+id/newUserEnterEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="@string/add_email_hint"
         android:inputType="textPersonName"
-        android:text="@string/password"
         app:layout_constraintBottom_toTopOf="@+id/newUserAddFrontImageButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newUserEnterName" />
+        app:layout_constraintTop_toBottomOf="@+id/newUserEnterPhone" />
 
     <Button
         android:id="@+id/newUserAddFrontImageButton"
@@ -67,7 +67,7 @@
         android:text="@string/add_front_image"
         app:layout_constraintBottom_toTopOf="@+id/newUserAddBackImageButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newUserEnterPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/newUserEnterEmail" />
 
     <Button
         android:id="@+id/newUserAddBackImageButton"

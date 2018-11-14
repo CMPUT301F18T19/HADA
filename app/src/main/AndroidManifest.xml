@@ -29,5 +29,5 @@
         <activity android:name=".ui.ViewRecordActivity" />
         <activity android:name=".ui.EditUserSettingsActivity"></activity>
     </application>
-
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

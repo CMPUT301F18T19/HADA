@@ -12,8 +12,8 @@
     <string name="confirm">Confirm</string>
     <string name="doctor">Doctor</string>
     <string name="patient">Patient</string>
-    <string name="name">Name</string>
-    <string name="password">Password</string>
+    <string name="add_phonenumber_hint">Phone Number</string>
+    <string name="add_email_hint">Email Address</string>
     <string name="search">Search</string>
     <string name="new_problem">New Problem</string>
     <string name="user_settings">User Settings</string>
