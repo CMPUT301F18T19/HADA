@@ -13,6 +13,7 @@
 
 package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -75,6 +76,13 @@ public class MainActivity extends AppCompatActivity {
                  */
             }
 
+        });
+
+        createUser.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v){
+                Intent intent = new Intent(MainActivity.this, NewUserActivity.class);
+                startActivity(intent);
+            }
         });
 
     }
