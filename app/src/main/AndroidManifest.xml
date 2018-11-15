@@ -16,13 +16,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.ProblemListActivity"
+            android:label="@string/title_activity_problem_list"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.NewUserActivity" />
-        <activity android:name=".ui.ViewPatientProblemsActivity"></activity>
+        <activity android:name=".ui.ViewPatientProblemsActivity" />
         <activity android:name=".ui.ViewProblemActivity" />
-        <activity android:name=".ui.NewUserActivity" />
         <activity android:name=".ui.PatientListActivity" />
         <activity android:name=".ui.AddRecordActivity" />
-        <activity android:name=".ui.AddPatientActivity"></activity>
+        <activity android:name=".ui.AddPatientActivity" />
+        <activity android:name=".ui.ViewRecordActivity"></activity>
     </application>
 
 </manifest>
