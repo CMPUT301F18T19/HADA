@@ -40,12 +40,16 @@
         android:id="@+id/floatingSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:clickable="true"
         android:tint="@android:color/transparent"
         app:backgroundTint="@android:color/transparent"
+        app:layout_constraintBottom_toTopOf="@+id/Problem_List"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/btn_star_big_on"
-        tools:layout_editor_absoluteX="344dp"
-        tools:layout_editor_absoluteY="0dp"
         tools:srcCompat="@drawable/ic_settings_black_24dp" />
 
 </android.support.constraint.ConstraintLayout>
