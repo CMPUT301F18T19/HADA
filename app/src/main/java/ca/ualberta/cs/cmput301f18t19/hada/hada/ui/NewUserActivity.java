@@ -15,7 +15,6 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,8 +26,7 @@ import java.util.ArrayList;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.User;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserManager;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ElasticSearchUserController;
 
 public class NewUserActivity extends AppCompatActivity {
 
@@ -78,14 +76,8 @@ public class NewUserActivity extends AppCompatActivity {
                         String patientPhone = phonenumber.getText().toString();
                         String patientEmail = email.getText().toString();
                         Patient patient = new Patient(patientID, patientPhone, patientEmail);
-                        new UserManager.AddPatientTask().execute(patient);
-                        /*try{
-                            Patient patient2 = new UserManager.GetPatientTask().execute("string").get();
-                            Log.d("Tast", patient2.getUserID());
-                        }catch (Exception e){
-                            //whatever
-                        }
-                        */
+                        new ElasticSearchUserController.AddPatientTask().execute(patient);
+
 
 
                     }
