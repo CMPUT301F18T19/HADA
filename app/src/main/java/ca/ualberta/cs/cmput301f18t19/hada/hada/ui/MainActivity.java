@@ -17,9 +17,11 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -29,9 +31,11 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ElasticSearchUserController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ListManagerPatient;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
 
@@ -61,9 +65,25 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 String username = usernameInfo.getText().toString();
-                /**
-                 * Pull patient from username patient ArrayList
-                 */
+                ElasticSearchUserController.GetPatientTask patientTask = new ElasticSearchUserController.GetPatientTask();
+                patientTask.execute(username);
+
+                try {
+                    Patient patient = patientTask.get();
+                    if(patient != null){
+                        Log.d("Username logged in", patient.getUserID());
+                        Intent intent = new Intent(MainActivity.this, ProblemListActivity.class);
+                        intent.putExtra("User that is logged in", patient.getUserID());
+                        startActivity(intent);
+                    }
+                    else{Toast.makeText(MainActivity.this, "Username does not exist. Create a new user instead!?", Toast.LENGTH_SHORT).show();}
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+
+
             }
         });
 
