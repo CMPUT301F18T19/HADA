@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">HADA</string>
-    <string name="title_activity_problem_list">ProblemListActivity</string>
     <string name="patient_login">Patient Login</string>
     <string name="doctor_login">Doctor Login</string>
     <string name="create_user">Create user</string>

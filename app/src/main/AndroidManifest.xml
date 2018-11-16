@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.NewUserActivity" />
-        <activity android:name=".ui.ViewPatientProblemsActivity" />
+        <activity android:name=".ui.ViewPatientProblemsActivity"></activity>
         <activity android:name=".ui.ViewProblemActivity" />
         <activity android:name=".ui.PatientListActivity" />
         <activity android:name=".ui.AddRecordActivity" />
@@ -28,5 +28,5 @@
         <activity android:name=".ui.EditUserSettingsActivity" />
         <activity android:name=".ui.ProblemListActivity"></activity>
     </application>
-
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
