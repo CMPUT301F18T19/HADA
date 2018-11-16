@@ -34,7 +34,7 @@ public class ElasticSearchUserController {
 
     public static class GetPatientTask extends AsyncTask<String, Void, Patient> {
         @Override
-        protected Patient doInBackground(String... params) {
+        protected Patient doInBackground(String... params){
             setClient();
 
             String query = "{\"query\": {\"match\": {\"userID\": \"" + params[0] + "\"}}}";
@@ -66,7 +66,10 @@ public class ElasticSearchUserController {
             for(Patient i: matchingPatients){
                 Log.d("Results", i.getUserID());
             }
-            return matchingPatients.get(0);
+            if(matchingPatients.size() == 0){
+                return null;
+            }
+            else{return matchingPatients.get(0);}
         }
     }
 
@@ -157,7 +160,11 @@ public class ElasticSearchUserController {
             for(CareProvider i: matchingCareProviders){
                 Log.d("Results", i.getUserID());
             }
-            return matchingCareProviders.get(0);
+
+            if(matchingCareProviders.size() == 0){
+                return null;
+            }
+            else{return matchingCareProviders.get(0);}
         }
     }
 }

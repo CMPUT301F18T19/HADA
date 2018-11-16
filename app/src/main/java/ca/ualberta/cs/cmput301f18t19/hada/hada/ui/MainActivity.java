@@ -18,9 +18,11 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -73,6 +75,14 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
                     Patient patient = patientTask.get();
+
+                    if(patient != null){
+                        Log.d("Username logged in", patient.getUserID());
+                        Intent intent = new Intent(MainActivity.this, ProblemListActivity.class);
+                        intent.putExtra("User that is logged in", patient.getUserID());
+                        startActivity(intent);
+                    }
+                    else{Toast.makeText(MainActivity.this, "Username does not exist. Create a new user instead!?", Toast.LENGTH_SHORT).show();}
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
@@ -91,6 +101,14 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
                     CareProvider careProvider = careProviderTask.get();
+
+                    if(careProvider != null){
+                        Log.d("Username logged in", careProvider.getUserID());
+                        Intent intent = new Intent(MainActivity.this, PatientListActivity.class);
+                        intent.putExtra("User that is logged in", careProvider.getUserID());
+                        startActivity(intent);
+                    }
+                    else{Toast.makeText(MainActivity.this, "Username does not exist. Create a new user instead!?", Toast.LENGTH_SHORT).show();}
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
