@@ -28,6 +28,14 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ElasticSearchUserController;
 
+/**
+ * Activity for adding new users (patient or care provider).
+ * @author Alex, Anders Johnson
+ * @version 1.1
+ * @see Patient, CareProvider
+ * @date 2018-11-15
+ * @TODO Needs to be able to save to cache. Currently saves directly to ElasticSearch.
+ */
 public class NewUserActivity extends AppCompatActivity {
 
     private EditText username;
@@ -107,6 +115,12 @@ public class NewUserActivity extends AppCompatActivity {
                     }
 
                 }
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
 
