@@ -23,14 +23,12 @@ public class Patient extends User {
     private ArrayList<Problem> problemList = new ArrayList<Problem>();
 
     public Patient(){
-        //Empty constructor... do we need this?
+        super();
+    }
+    public Patient(String userID, String phoneNumber, String emailAddress){
+        super(userID, phoneNumber, emailAddress);
     }
 
-    public Patient(String userID, String phone, String email){
-       this.setUserID(userID);
-       this.setPhoneNumber(phone);
-       this.setEmailAdress(email);
-    }
 
     /*Following are the problemList operation*/
     public void setProblemList(ArrayList<Problem> newProblemList){

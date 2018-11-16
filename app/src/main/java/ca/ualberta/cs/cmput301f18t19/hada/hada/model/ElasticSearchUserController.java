@@ -54,6 +54,7 @@ public class ElasticSearchUserController {
                 if (result.isSucceeded()) {
                     List<Patient> results;
                     results = result.getSourceAsObjectList(Patient.class);
+
                     for(Patient patient:results) {
                         Log.d("bleh", results.toString());
                     }
@@ -69,11 +70,13 @@ public class ElasticSearchUserController {
             if(matchingPatients.size() == 0){
                 return null;
             }
-            else{return matchingPatients.get(0);}
+            else {
+                return matchingPatients.get(0);
+            }
+            }
         }
-    }
 
-    public static class AddPatientTask extends AsyncTask<Patient, Void, Void>{
+        public static class AddPatientTask extends AsyncTask<Patient, Void, Void>{
         @Override
         protected Void doInBackground(Patient... params) {
             setClient();
@@ -83,6 +86,7 @@ public class ElasticSearchUserController {
                 Index index = new Index.Builder(patient)
                         .index(teamIndex)
                         .type("patient")
+                        .id(patient.getUserID())
                         .build();
                 DocumentResult result = client.execute(index);
                 Log.d("index", index.getURI());
@@ -109,6 +113,7 @@ public class ElasticSearchUserController {
                 Index index = new Index.Builder(careProvider)
                         .index(teamIndex)
                         .type("careprovider")
+                        .id(careProvider.getUserID())
                         .build();
                 DocumentResult result = client.execute(index);
                 Log.d("index", index.getURI());

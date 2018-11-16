@@ -18,8 +18,9 @@ public class ViewPatientProblemsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_patient_problems);
 
-        Button userSettings = findViewById(R.id.viewPatientProblemsUserSettings);
-        Button newProblem = findViewById(R.id.viewPatientProblemsNewProblem);
+        //TODO map these buttons correctly
+        //Button userSettings = findViewById(R.id.viewPatientProblemsUserSettings);
+        //Button newProblem = findViewById(R.id.viewPatientProblemsNewProblem);
         searchQuery = (EditText) findViewById(R.id.viewPatientProblemsSearch);
         problemsList = (ListView) findViewById(R.id.viewPatientProblemsList);
 

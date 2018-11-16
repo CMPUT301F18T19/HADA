@@ -10,8 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ListManagerPatient;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
+
 import io.searchbox.client.JestResult;
 import io.searchbox.core.Search;
 

@@ -4,9 +4,8 @@ import org.junit.Test;
 
 
 import java.util.ArrayList;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.PatientListController;
+
+
 import static org.junit.Assert.*;
 
 public class CareProviderTest {
