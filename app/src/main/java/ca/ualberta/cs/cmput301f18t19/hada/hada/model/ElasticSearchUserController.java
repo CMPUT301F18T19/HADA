@@ -160,6 +160,7 @@ public class ElasticSearchUserController {
             for(CareProvider i: matchingCareProviders){
                 Log.d("Results", i.getUserID());
             }
+
             if(matchingCareProviders.size() == 0){
                 return null;
             }

@@ -14,6 +14,7 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -47,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
     private EditText usernameInfo;
     private ArrayList<Patient> patientList = new ArrayList<Patient>();
     private ArrayList<CareProvider> careProviderList = new ArrayList<CareProvider>();
+    private Patient patient;
+    private CareProvider careProvider;
+
 
 
 
@@ -56,9 +60,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         usernameInfo = (EditText) findViewById(R.id.mainActivityUsernameText);
-        Button patientLogin = findViewById(R.id.mainActivityPatientLogin);
+        final Button patientLogin = findViewById(R.id.mainActivityPatientLogin);
         Button careProviderLogin = findViewById(R.id.mainActivityDoctorLogin);
         Button createUser = findViewById(R.id.mainActivityCreateUser);
+
 
 
         patientLogin.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
                     Patient patient = patientTask.get();
+
                     if(patient != null){
                         Log.d("Username logged in", patient.getUserID());
                         Intent intent = new Intent(MainActivity.this, ProblemListActivity.class);
@@ -83,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-
             }
         });
 
@@ -96,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
                     CareProvider careProvider = careProviderTask.get();
+
                     if(careProvider != null){
                         Log.d("Username logged in", careProvider.getUserID());
                         Intent intent = new Intent(MainActivity.this, PatientListActivity.class);
