@@ -7,7 +7,7 @@
     tools:context=".ui.ViewRecordActivity">
 
     <ImageView
-        android:id="@+id/recordImage"
+        android:id="@+id/viewRecordImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -19,7 +19,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
-        android:id="@+id/Edit_Date"
+        android:id="@+id/viewRecordEditDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -29,10 +29,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editComment" />
+        app:layout_constraintTop_toBottomOf="@+id/viewRecordComment" />
 
     <Button
-        android:id="@+id/Edit_Time"
+        android:id="@+id/viewRecordEditTime"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -42,10 +42,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Edit_Date" />
+        app:layout_constraintTop_toBottomOf="@+id/viewRecordEditDate" />
 
     <Button
-        android:id="@+id/Edit_Geolocation"
+        android:id="@+id/viewRecordEditGeolocation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -54,10 +54,10 @@
         android:text="@string/edit_geolocation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Edit_Time" />
+        app:layout_constraintTop_toBottomOf="@+id/viewRecordEditTime" />
 
     <Button
-        android:id="@+id/view_location"
+        android:id="@+id/viewRecordEditLocation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -67,10 +67,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Edit_Geolocation" />
+        app:layout_constraintTop_toBottomOf="@+id/viewRecordEditGeolocation" />
 
     <Button
-        android:id="@+id/photos"
+        android:id="@+id/viewRecordEditPhotos"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -79,10 +79,10 @@
         android:text="@string/add_rem_photos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_location" />
+        app:layout_constraintTop_toBottomOf="@+id/viewRecordEditLocation" />
 
     <EditText
-        android:id="@+id/editComment"
+        android:id="@+id/viewRecordComment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -93,6 +93,6 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recordImage" />
+        app:layout_constraintTop_toBottomOf="@+id/viewRecordImage" />
 
 </android.support.constraint.ConstraintLayout>
