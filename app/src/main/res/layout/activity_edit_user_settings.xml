@@ -7,7 +7,7 @@
     tools:context=".ui.EditUserSettingsActivity">
 
     <TextView
-        android:id="@+id/UserSettings"
+        android:id="@+id/editUserSettingsTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/emailPlainTextBox"
+        android:id="@+id/editUserSettingsEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -34,10 +34,10 @@
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/UserSettings" />
+        app:layout_constraintTop_toBottomOf="@+id/editUserSettingsTextView" />
 
     <EditText
-        android:id="@+id/editUsername"
+        android:id="@+id/editUserSettingsUsername"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -48,10 +48,10 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailPlainTextBox" />
+        app:layout_constraintTop_toBottomOf="@+id/editUserSettingsEmail" />
 
     <EditText
-        android:id="@+id/contactNumberTextBox"
+        android:id="@+id/editUserSettingsContactNumber"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -62,10 +62,10 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editUsername" />
+        app:layout_constraintTop_toBottomOf="@+id/editUserSettingsUsername" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/editUserSettingsBodyRef"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -74,6 +74,6 @@
         android:text="@string/body_image_upload"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contactNumberTextBox" />
+        app:layout_constraintTop_toBottomOf="@+id/editUserSettingsContactNumber" />
 
 </android.support.constraint.ConstraintLayout>

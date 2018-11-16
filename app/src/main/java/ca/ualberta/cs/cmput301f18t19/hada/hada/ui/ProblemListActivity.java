@@ -1,5 +1,6 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,6 +19,15 @@ public class ProblemListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_problem_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        FloatingActionButton settingFab = (FloatingActionButton) findViewById(R.id.floatingSettings);
+        settingFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProblemListActivity.this, EditUserSettingsActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
