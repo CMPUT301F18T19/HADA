@@ -20,8 +20,17 @@ import java.util.ArrayList;
  * @version
  */
 public class Patient extends User {
-
     private ArrayList<Problem> problemList = new ArrayList<Problem>();
+
+    public Patient(){
+        //Empty constructor... do we need this?
+    }
+
+    public Patient(String userID, String phone, String email){
+       this.setUserID(userID);
+       this.setPhoneNumber(phone);
+       this.setEmailAdress(email);
+    }
 
     /*Following are the problemList operation*/
     public void setProblemList(ArrayList<Problem> newProblemList){
@@ -52,6 +61,7 @@ public class Patient extends User {
     public void removeProblem(Problem problem){
         problemList.remove(problem);
     }
+
 
 
 
