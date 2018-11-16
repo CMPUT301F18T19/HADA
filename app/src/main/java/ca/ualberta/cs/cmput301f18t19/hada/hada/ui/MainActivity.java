@@ -14,6 +14,7 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -29,9 +30,11 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ElasticSearchUserController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ListManagerPatient;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
 
@@ -43,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
     private EditText usernameInfo;
     private ArrayList<Patient> patientList = new ArrayList<Patient>();
     private ArrayList<CareProvider> careProviderList = new ArrayList<CareProvider>();
+    private Patient patient;
+    private CareProvider careProvider;
+
 
 
 
@@ -52,18 +58,27 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         usernameInfo = (EditText) findViewById(R.id.mainActivityUsernameText);
-        Button patientLogin = findViewById(R.id.mainActivityPatientLogin);
+        final Button patientLogin = findViewById(R.id.mainActivityPatientLogin);
         Button careProviderLogin = findViewById(R.id.mainActivityDoctorLogin);
         Button createUser = findViewById(R.id.mainActivityCreateUser);
+
 
 
         patientLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
                 String username = usernameInfo.getText().toString();
-                /**
-                 * Pull patient from username patient ArrayList
-                 */
+                ElasticSearchUserController.GetPatientTask patientTask = new ElasticSearchUserController.GetPatientTask();
+                patientTask.execute(username);
+
+                try {
+                    Patient patient = patientTask.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
 
@@ -71,9 +86,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 String username = usernameInfo.getText().toString();
-                /**
-                 * Pull doctor from username patient ArrayList
-                 */
+                ElasticSearchUserController.GetCareProviderTask careProviderTask = new ElasticSearchUserController.GetCareProviderTask();
+                careProviderTask.execute(username);
+
+                try {
+                    CareProvider careProvider = careProviderTask.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
             }
 
         });
