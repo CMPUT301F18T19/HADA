@@ -21,7 +21,12 @@ import java.util.ArrayList;
 public class CareProvider extends User {
 
     private ArrayList<Patient> patients = new ArrayList<Patient>();
-
+    public CareProvider(){}
+    public CareProvider(String userID, String phone, String email){
+        this.setUserID(userID);
+        this.setPhoneNumber(phone);
+        this.setEmailAdress(email);
+    }
     public void setPatients(ArrayList<Patient> patients){
         this.patients = patients;
     }
