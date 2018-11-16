@@ -26,7 +26,8 @@
         <activity android:name=".ui.PatientListActivity" />
         <activity android:name=".ui.AddRecordActivity" />
         <activity android:name=".ui.AddPatientActivity" />
-        <activity android:name=".ui.ViewRecordActivity"></activity>
+        <activity android:name=".ui.ViewRecordActivity" />
+        <activity android:name=".ui.EditUserSettingsActivity"></activity>
     </application>
 
 </manifest>
