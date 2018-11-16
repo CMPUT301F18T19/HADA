@@ -38,6 +38,7 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ElasticSearchUserController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ListManagerPatient;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
 
 import static android.provider.Telephony.Mms.Part.FILENAME;
@@ -78,8 +79,9 @@ public class MainActivity extends AppCompatActivity {
 
                     if(patient != null){
                         Log.d("Username logged in", patient.getUserID());
+                        LoggedInSingleton.getInstance().setLoggedInID(patient.getUserID());
                         Intent intent = new Intent(MainActivity.this, ProblemListActivity.class);
-                        intent.putExtra("User that is logged in", patient.getUserID());
+
                         startActivity(intent);
                     }
                     else{Toast.makeText(MainActivity.this, "Username does not exist. Create a new user instead!?", Toast.LENGTH_SHORT).show();}
@@ -104,8 +106,8 @@ public class MainActivity extends AppCompatActivity {
 
                     if(careProvider != null){
                         Log.d("Username logged in", careProvider.getUserID());
+                        LoggedInSingleton.getInstance().setLoggedInID(careProvider.getUserID());
                         Intent intent = new Intent(MainActivity.this, PatientListActivity.class);
-                        intent.putExtra("User that is logged in", careProvider.getUserID());
                         startActivity(intent);
                     }
                     else{Toast.makeText(MainActivity.this, "Username does not exist. Create a new user instead!?", Toast.LENGTH_SHORT).show();}

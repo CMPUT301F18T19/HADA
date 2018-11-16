@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 
 public class ProblemListActivity extends AppCompatActivity {
 
@@ -14,18 +16,34 @@ public class ProblemListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_problem_list);
-        Intent intent = getIntent();
-        String loggedInUser = (String) intent.getExtras().get("User that is logged in");
 
-        TextView username = findViewById(R.id.problemListUsername);
-        username.setText(loggedInUser);
-        FloatingActionButton settingFab = (FloatingActionButton) findViewById(R.id.problemListFloatingButton);
-        settingFab.setOnClickListener(new View.OnClickListener() {
+        //Sets custom title @author Joe
+        String loggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
+        TextView titleTextView = findViewById(R.id.problemListUsername);
+        String titleText = loggedInUser + "'s Problems";
+        titleTextView.setText(titleText);
+
+
+        //Goes to AddProblemActivity
+        FloatingActionButton addProblem = findViewById(R.id.problemListFloatingButton);
+        addProblem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO DO THINGS!
+                //TODO Add activity name here when AddProblemActivity is done. - Joe
+                //Intent intent = new Intent(ProblemListActivity.this, )
             }
         });
+
+        //Goes to EditUserSettingsActivityroge
+        ImageButton settingsButton = findViewById(R.id.problemListSettingsButton);
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProblemListActivity.this, EditUserSettingsActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
     }
 }
