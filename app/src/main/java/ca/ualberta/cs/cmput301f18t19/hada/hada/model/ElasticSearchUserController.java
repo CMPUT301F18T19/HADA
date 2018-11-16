@@ -16,7 +16,7 @@ import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 
-public class UserManager {
+public class ElasticSearchUserController {
     static JestDroidClient client = null;
     static String teamIndex = "cmput301f18t19test";
 
@@ -76,11 +76,12 @@ public class UserManager {
             setClient();
             Patient patient = params[0];
             Log.d("newPatient", "Id = "+ patient.getUserID() + " Phone = " + patient.getPhoneNumber() +" Email = "+ patient.getEmailAddress());
-            Index index = new Index.Builder(patient)
-                    .index(teamIndex)
-                    .type("patient")
-                    .build();
             try {
+                Index index = new Index.Builder(patient)
+                        .index(teamIndex)
+                        .type("patient")
+                        .id(patient.getUserID())
+                        .build();
                 DocumentResult result = client.execute(index);
                 Log.d("index", index.getURI());
                 Log.d("What is result",result.getJsonString());
