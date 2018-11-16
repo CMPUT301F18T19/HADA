@@ -58,29 +58,52 @@ public class NewUserActivity extends AppCompatActivity {
             public void onClick(View view) {
                 boolean newPatient = false;
                 boolean newCareProvider = false;
+
+                String userID = username.getText().toString();
+                String userPhone = phonenumber.getText().toString();
+                String userEmail = email.getText().toString();
+
                 if(patient.isChecked()){
                     newPatient = true;
                 }
                 if(doctor.isChecked()){
                     newCareProvider = true;
                 }
+
                 if(!newPatient && !newCareProvider){
                     //TODO: Add toast message to strings xml (prevent hardcoding)
                     Toast.makeText(NewUserActivity.this,
                             "Please select a user type.", Toast.LENGTH_SHORT).show();
                 }
+                else if(userID.equals("") || userPhone.equals("") || userEmail.equals("")){
+                    //TODO: Add toast message to strings xml (prevent hardcoding)
+                    Toast.makeText(NewUserActivity.this,
+                            "Please enter a User ID, Phone, and Email",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else if(userID.length() < 8){
+                    //TODO: Add toast message to strings xml (prevent hardcoding)
+                    Toast.makeText(NewUserActivity.this, "User ID must be at least 8 characters.", Toast.LENGTH_SHORT).show();
+                }
+                else if(userID.contains(" ")){
+                    //TODO: Add toast message to strings xml (prevent hardcoding)
+                    Toast.makeText(NewUserActivity.this, "User ID cannot contain spaces.", Toast.LENGTH_SHORT).show();
+                }
                 else{
                     if(newPatient){
-
-                        String patientID = username.getText().toString();
-                        String patientPhone = phonenumber.getText().toString();
-                        String patientEmail = email.getText().toString();
-                        Patient patient = new Patient(patientID, patientPhone, patientEmail);
+                        Patient patient = new Patient(userID, userPhone, userEmail);
                         new ElasticSearchUserController.AddPatientTask().execute(patient);
                         //TODO: Add toast message to strings xml
                         Toast.makeText(NewUserActivity.this, "Patient saved!", Toast.LENGTH_SHORT).show();
                         finish();
 
+                    }
+                    if(newCareProvider){
+                        CareProvider careProvider = new CareProvider(userID, userPhone, userEmail);
+                        new ElasticSearchUserController.AddCareProviderTask().execute(careProvider);
+                        //TODO: Add toast message to strings xml
+                        Toast.makeText(NewUserActivity.this, "Care Provider saved!", Toast.LENGTH_SHORT).show();
+                        finish();
                     }
 
                 }

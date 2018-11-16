@@ -91,9 +91,23 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 String username = usernameInfo.getText().toString();
-                /**
-                 * Pull doctor from username patient ArrayList
-                 */
+                ElasticSearchUserController.GetCareProviderTask careProviderTask = new ElasticSearchUserController.GetCareProviderTask();
+                careProviderTask.execute(username);
+
+                try {
+                    CareProvider careProvider = careProviderTask.get();
+                    if(careProvider != null){
+                        Log.d("Username logged in", careProvider.getUserID());
+                        Intent intent = new Intent(MainActivity.this, PatientListActivity.class);
+                        intent.putExtra("User that is logged in", careProvider.getUserID());
+                        startActivity(intent);
+                    }
+                    else{Toast.makeText(MainActivity.this, "Username does not exist. Create a new user instead!?", Toast.LENGTH_SHORT).show();}
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
             }
 
         });
