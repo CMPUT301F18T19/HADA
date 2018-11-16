@@ -12,8 +12,8 @@
     <string name="confirm">Confirm</string>
     <string name="doctor">Doctor</string>
     <string name="patient">Patient</string>
-    <string name="name">Name</string>
-    <string name="password">Password</string>
+    <string name="add_phonenumber_hint">Phone Number</string>
+    <string name="add_email_hint">Email Address</string>
     <string name="search">Search</string>
     <string name="new_problem">New Problem</string>
     <string name="user_settings">User Settings</string>
@@ -36,4 +36,10 @@
     <string name="view_location">View Location</string>
     <string name="add_rem_photos">Add/Remove Photos</string>
     <string name="edit_comment">Edit Comment</string>
+    <string name="usersettings">USER SETTINGS</string>
+    <string name="email">Email</string>
+    <string name="contact_number">Contact Number</string>
+    <string name="body_image_upload">Upload body reference image</string>
+    <string name="problem_list_username">PATIENT USERNAME</string>
+    <string name="problem_list_setting_button_cd">A button for editing the settings of the user.</string>
 </resources>
