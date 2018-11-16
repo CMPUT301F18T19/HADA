@@ -77,10 +77,12 @@ public class NewUserActivity extends AppCompatActivity {
                         String patientEmail = email.getText().toString();
                         Patient patient = new Patient(patientID, patientPhone, patientEmail);
                         new ElasticSearchUserController.AddPatientTask().execute(patient);
-
-
+                        //TODO: Add toast message to strings xml
+                        Toast.makeText(NewUserActivity.this, "Patient saved!", Toast.LENGTH_SHORT).show();
+                        finish();
 
                     }
+
                 }
             }
         });

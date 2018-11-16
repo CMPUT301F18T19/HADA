@@ -80,7 +80,32 @@ public class ElasticSearchUserController {
                 Index index = new Index.Builder(patient)
                         .index(teamIndex)
                         .type("patient")
-                        .id(patient.getUserID())
+                        .build();
+                DocumentResult result = client.execute(index);
+                Log.d("index", index.getURI());
+                Log.d("What is result",result.getJsonString());
+                if (result.isSucceeded()) {
+                    Log.d("AddPatientTask", "We did it boys");
+                } else {
+                    Log.d("AddPatientTask", "Could not add patient");
+                }
+            } catch (IOException e) {
+                Log.d("AddPatientTask", "Failed to execute");
+            }
+
+            return null;
+        }
+    }
+    public static class AddCareProviderTask extends AsyncTask<CareProvider, Void, Void>{
+        @Override
+        protected Void doInBackground(CareProvider... params) {
+            setClient();
+            CareProvider careProvider = params[0];
+            Log.d("newPatient", "Id = "+ careProvider.getUserID() + " Phone = " + careProvider.getPhoneNumber() +" Email = "+ careProvider.getEmailAddress());
+            try {
+                Index index = new Index.Builder(careProvider)
+                        .index(teamIndex)
+                        .type("careprovider")
                         .build();
                 DocumentResult result = client.execute(index);
                 Log.d("index", index.getURI());
