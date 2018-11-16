@@ -22,7 +22,7 @@ import static org.junit.Assert.*;
 //http://cmput301.softwareprocess.es:8080/cmput301f18t19
 //http://cmput301.softwareprocess.es:8080/cmput301f18t19test
 
-public class ListManagerRecordsTest {
+public class ListManagerRecordsTest{
     @Test
     public void testSaveRecord() {
         Record record = new Record();
