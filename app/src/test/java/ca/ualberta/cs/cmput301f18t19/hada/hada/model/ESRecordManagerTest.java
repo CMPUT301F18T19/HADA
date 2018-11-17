@@ -12,8 +12,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ListManagerRecord;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 import io.searchbox.client.JestResult;
 import io.searchbox.core.Search;
 
@@ -22,11 +20,11 @@ import static org.junit.Assert.*;
 //http://cmput301.softwareprocess.es:8080/cmput301f18t19
 //http://cmput301.softwareprocess.es:8080/cmput301f18t19test
 
-public class ListManagerRecordsTest {
+public class ESRecordManagerTest {
     @Test
     public void testSaveRecord() {
         Record record = new Record();
-        new ListManagerRecord.AddRecordTask().execute(record);
+        new ESRecordManager.AddRecordTask().execute(record);
         //so we gotta check if it is in the db so we should search for it
         DroidClientConfig config= new DroidClientConfig
                 //testing for our group
@@ -49,9 +47,9 @@ public class ListManagerRecordsTest {
     public void testGetRecordTask(){
         Record record = new Record();
         ArrayList<Record> records = new ArrayList<Record>();
-        new ListManagerRecord.AddRecordTask().execute(record);
+        new ESRecordManager.AddRecordTask().execute(record);
         try {
-            records = new ListManagerRecord.GetRecordTask().execute("").get();
+            records = new ESRecordManager.GetRecordTask().execute("").get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

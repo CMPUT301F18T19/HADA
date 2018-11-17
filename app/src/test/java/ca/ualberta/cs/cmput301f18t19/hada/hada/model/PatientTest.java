@@ -3,9 +3,7 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ProblemListController;
+
 import static org.junit.Assert.*;
 
 public class PatientTest {
