@@ -47,8 +47,8 @@
     <string name="problem_list_username">PATIENT USERNAME</string>
     <string name="problem_list_setting_button_cd">A button for editing the settings of the user.</string>
     <string name="add_problem_title">Add Problem</string>
-    <string name="add_problem_hint_title">Problem Title</string>
-    <string name="add_problem_hint_description">Problem Description</string>
-    <string name="add_problem_hint_date">Problem date</string>
+    <string name="add_problem_hint_title">Title</string>
+    <string name="add_problem_hint_description">Description</string>
+    <string name="add_problem_hint_date">date (dd/mm/yyyy)</string>
 
 </resources>
