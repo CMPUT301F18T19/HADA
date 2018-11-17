@@ -34,7 +34,7 @@ public class ProblemListActivity extends AppCompatActivity {
             }
         });
 
-        //Goes to EditUserSettingsActivityroge
+        //Goes to EditUserSettingsActivity
         ImageButton settingsButton = findViewById(R.id.problemListSettingsButton);
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override

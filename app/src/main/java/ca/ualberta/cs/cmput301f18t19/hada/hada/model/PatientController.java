@@ -16,15 +16,29 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.utility.Listener;
 
 /**
  * @author Christopher Penner
- * @see
+ *
  * @version 0.1
+ *
  */
-public class PatientListController {
+public class PatientController {
+
+    /*
+    This class should do any logic that is related to editing patient in any manor.
+    This can include but is not limited to:
+    - Adding/removing patients to ES/local storage by calling on the ESUserManager
+    - Editing patient contact info
+    - Adding patients to the CareProviders list of patients
+
+    If you don't see a function that does what you want, feel free to add it. The
+      activity should not be creating patients etc. We should pass the info into here and
+      create the patient then pass it to ESUserManager.
+
+    */
 
     private ArrayList<Patient> patientList;
     protected ArrayList<Listener> listeners;
 
-    PatientListController() {
+    PatientController() {
         patientList = new ArrayList<Patient>();
     }
 

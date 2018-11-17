@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ElasticSearchUserController;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ESUserManager;
 
 /**
  * Activity for adding new users (patient or care provider).
@@ -100,7 +100,7 @@ public class NewUserActivity extends AppCompatActivity {
                 else{
                     if(newPatient){
                         Patient patient = new Patient(userID, userPhone, userEmail);
-                        new ElasticSearchUserController.AddPatientTask().execute(patient);
+                        new ESUserManager.AddPatientTask().execute(patient);
                         //TODO: Add toast message to strings xml
                         Toast.makeText(NewUserActivity.this, "Patient saved!", Toast.LENGTH_SHORT).show();
                         finish();
@@ -108,7 +108,7 @@ public class NewUserActivity extends AppCompatActivity {
                     }
                     if(newCareProvider){
                         CareProvider careProvider = new CareProvider(userID, userPhone, userEmail);
-                        new ElasticSearchUserController.AddCareProviderTask().execute(careProvider);
+                        new ESUserManager.AddCareProviderTask().execute(careProvider);
                         //TODO: Add toast message to strings xml
                         Toast.makeText(NewUserActivity.this, "Care Provider saved!", Toast.LENGTH_SHORT).show();
                         finish();

@@ -14,34 +14,22 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ElasticSearchUserController;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ListManagerPatient;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ESUserManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
-
-import static android.provider.Telephony.Mms.Part.FILENAME;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -71,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 String username = usernameInfo.getText().toString();
-                ElasticSearchUserController.GetPatientTask patientTask = new ElasticSearchUserController.GetPatientTask();
+                ESUserManager.GetPatientTask patientTask = new ESUserManager.GetPatientTask();
                 patientTask.execute(username);
 
                 try {
@@ -98,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 String username = usernameInfo.getText().toString();
-                ElasticSearchUserController.GetCareProviderTask careProviderTask = new ElasticSearchUserController.GetCareProviderTask();
+                ESUserManager.GetCareProviderTask careProviderTask = new ESUserManager.GetCareProviderTask();
                 careProviderTask.execute(username);
 
                 try {
