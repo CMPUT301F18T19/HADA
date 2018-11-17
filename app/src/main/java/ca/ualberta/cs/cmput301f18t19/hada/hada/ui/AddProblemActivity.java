@@ -2,6 +2,7 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,12 +34,13 @@ public class AddProblemActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String title = addProblemTitle.getText().toString();
                 String date = addProblemDate.getText().toString();
-                String Description = addProblemDescription.toString();
+                String description = addProblemDescription.getText().toString();
                 Toast.makeText(AddProblemActivity.this, "save problem", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "title = " + title);
+                Log.d(TAG, "date = " + date);
+                Log.d(TAG, "description = " + description);
 
                 //TODO: store problem by calling a controller
-
-                finish();
 
             }
         });
