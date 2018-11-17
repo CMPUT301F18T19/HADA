@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ui.AddProblemActivity">
+
+    <TextView
+        android:id="@+id/addProblemActivityTitle"
+        android:layout_width="334dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center_horizontal"
+        android:text="@string/add_problem_title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/addProblemTitle"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="24dp"
+        android:hint="@string/add_problem_hint_title"
+        android:inputType="text"
+        android:singleLine="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addProblemActivityTitle"
+        android:importantForAutofill="no" />
+
+    <EditText
+        android:id="@+id/addProblemDate"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:hint="@string/add_problem_hint_date"
+        android:inputType="date"
+        android:singleLine="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addProblemTitle"
+        android:importantForAutofill="no" />
+
+    <EditText
+        android:id="@+id/addProblemDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="10dp"
+        android:gravity="top|start"
+        android:inputType="textMultiLine"
+        android:hint="@string/add_problem_hint_description"
+        android:background="@null"
+        android:singleLine="true"
+        android:scrollHorizontally="false"
+        android:importantForAutofill="no"
+        android:lines="10"
+        android:maxWidth="200dp"
+        android:maxLines="15"
+        android:minLines="5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addProblemDate" />
+
+    <Button
+        android:id="@+id/addProblemButton"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="40dp"
+        android:text="@string/add_problem_title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>
