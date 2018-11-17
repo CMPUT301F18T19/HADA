@@ -12,16 +12,28 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
 
+import android.util.Log;
+
+import io.searchbox.annotations.JestId;
+
 /**
  * @author Joseph Potentier-Neal
  * @see
  * @version
  */
 public abstract class User {
-
+    @JestId
     private String userID;
     private String phoneNumber;
     private String emailAddress;
+
+    public User(){}
+
+    public User(String userID, String phoneNumber, String emailAddress){
+        this.userID = userID;
+        this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
+    }
 
     public void setUserID(String newID){
         this.userID = newID;

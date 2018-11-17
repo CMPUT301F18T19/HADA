@@ -2,22 +2,19 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
 import org.junit.Test;
 
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.RecordListController;
-
 import static org.junit.Assert.*;
 
-public class RecordListControllerTest {
+public class RecordControllerTest {
 
     @Test
     public void testIsEmpty(){
-        RecordListController recordList = new RecordListController();
+        RecordController recordList = new RecordController();
         assertTrue(recordList.isEmpty());
     }
 
     @Test
     public void testAddRecord(){
-        RecordListController recordList = new RecordListController();
+        RecordController recordList = new RecordController();
         Record record = new Record();
         assertTrue(recordList.isEmpty());
         recordList.addRecord(record);
@@ -26,7 +23,7 @@ public class RecordListControllerTest {
 
     @Test
     public void testGetRecord(){
-        RecordListController recordList = new RecordListController();
+        RecordController recordList = new RecordController();
         Record record = new Record();
         assertTrue(recordList.isEmpty());
         recordList.addRecord(record);
@@ -38,7 +35,7 @@ public class RecordListControllerTest {
 
     @Test
     public void testGetSize(){
-        RecordListController recordList = new RecordListController();
+        RecordController recordList = new RecordController();
         Record record = new Record();
         Record record1 = new Record();
         assertTrue(recordList.isEmpty());
@@ -50,7 +47,7 @@ public class RecordListControllerTest {
 
     @Test
     public void testRecordInList(){
-        RecordListController recordList = new RecordListController();
+        RecordController recordList = new RecordController();
         Record record = new Record();
         Record record1 = new Record();
         Record record2 = new Record();
@@ -68,7 +65,7 @@ public class RecordListControllerTest {
 
     @Test
     public void testGetPosition(){
-        RecordListController recordList = new RecordListController();
+        RecordController recordList = new RecordController();
         Record record = new Record();
         Record record1 = new Record();
         recordList.addRecord(record);
@@ -81,7 +78,7 @@ public class RecordListControllerTest {
 
     @Test
     public void testDeleteRecord(){
-        RecordListController recordList = new RecordListController();
+        RecordController recordList = new RecordController();
         Record record = new Record();
         Record record1 = new Record();
         recordList.addRecord(record);
@@ -98,7 +95,7 @@ public class RecordListControllerTest {
 
     @Test
     public void testInsertRecord(){
-        RecordListController recordList = new RecordListController();
+        RecordController recordList = new RecordController();
         Record record = new Record();
         Record record1 = new Record();
         Record record2 = new Record();

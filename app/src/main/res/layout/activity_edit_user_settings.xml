@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.EditUserSettingsActivity">
+    tools:context=".ui.EditUserSettingsActivity"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <TextView
         android:id="@+id/editUserSettingsTextView"
@@ -28,7 +30,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:contentDescription="@string/email"
+        android:autofillHints="AUTOFILL_HINT_EMAIL"
         android:ems="10"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
@@ -48,7 +50,8 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editUserSettingsEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/editUserSettingsEmail"
+        android:autofillHints="AUTOFILL_HINT_USERNAME"/>
 
     <EditText
         android:id="@+id/editUserSettingsContactNumber"
@@ -57,23 +60,50 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:autofillHints="AUTOFILL_HINT_PHONE"
         android:ems="10"
         android:hint="@string/contact_number"
-        android:inputType="textPersonName"
+        android:inputType="phone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editUserSettingsUsername" />
 
     <Button
-        android:id="@+id/editUserSettingsBodyRef"
+        android:id="@+id/editUserSettingsBodyRefButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/body_image_upload"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="@string/EditUserSettings_UploadImageButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editUserSettingsContactNumber" />
+
+    <Button
+        android:id="@+id/editUserSettingsSaveButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="@string/EditUserSettings_SaveButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/editUserSettingsCancelButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/EditUserSettings_CancelButton"
+        app:layout_constraintBottom_toTopOf="@+id/editUserSettingsSaveButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
