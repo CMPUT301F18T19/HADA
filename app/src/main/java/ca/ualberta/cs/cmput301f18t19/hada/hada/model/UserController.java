@@ -133,6 +133,11 @@ public class UserController {
     }
 
 
+    public void addProblem(Problem problem){
+        Patient patient = getPatient(LoggedInSingleton.getInstance().getLoggedInID());
+        patient.addProblem(problem);
+        new ESUserManager.AddPatientTask().execute(patient);
+    }
     //Edits a given patients email address and updates it by overriding current ES index
     public void editPatientEmail(Patient patient, String email){
         patient.setEmailAdress(email);
