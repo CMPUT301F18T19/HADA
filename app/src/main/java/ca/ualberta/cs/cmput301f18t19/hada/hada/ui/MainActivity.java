@@ -63,11 +63,14 @@ public class MainActivity extends AppCompatActivity {
                 Patient patient = new UserController().getPatient(username);
 
                 if(patient != null){
-                        Log.d("Username logged in", patient.getUserID());
-                        LoggedInSingleton.getInstance().setLoggedInID(patient.getUserID());
-                        Intent intent = new Intent(MainActivity.this, ProblemListActivity.class);
+                    //Sets the user to be patient and it's userId
+                    Log.d("Username logged in", patient.getUserID());
+                    LoggedInSingleton instance = LoggedInSingleton.getInstance();
+                    instance.setLoggedInID(patient.getUserID());
+                    instance.setIsCareProvider(false);
 
-                        startActivity(intent);
+                    Intent intent = new Intent(MainActivity.this, ProblemListActivity.class);
+                    startActivity(intent);
                 }
                 else{Toast.makeText(MainActivity.this, "Username does not exist. Create a new user instead!?", Toast.LENGTH_SHORT).show();}
 
@@ -85,8 +88,12 @@ public class MainActivity extends AppCompatActivity {
                     CareProvider careProvider = careProviderTask.get();
 
                     if(careProvider != null){
+                        //Sets the user to be CP and it's userId
                         Log.d("Username logged in", careProvider.getUserID());
-                        LoggedInSingleton.getInstance().setLoggedInID(careProvider.getUserID());
+                        LoggedInSingleton instance = LoggedInSingleton.getInstance();
+                        instance.setLoggedInID(careProvider.getUserID());
+                        instance.setIsCareProvider(true);
+
                         Intent intent = new Intent(MainActivity.this, PatientListActivity.class);
                         startActivity(intent);
                     }
