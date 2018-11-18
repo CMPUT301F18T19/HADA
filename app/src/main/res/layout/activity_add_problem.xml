@@ -8,9 +8,11 @@
 
     <TextView
         android:id="@+id/addProblemActivityTitle"
-        android:layout_width="334dp"
-        android:layout_height="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:gravity="center_horizontal"
         android:text="@string/add_problem_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
@@ -22,10 +24,10 @@
     <EditText
         android:id="@+id/addProblemTitle"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:hint="@string/add_problem_hint_title"
         android:importantForAutofill="no"
         android:inputType="text"
@@ -35,52 +37,73 @@
         app:layout_constraintTop_toBottomOf="@+id/addProblemActivityTitle" />
 
     <EditText
-        android:id="@+id/addProblemDate"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="16dp"
-        android:hint="@string/add_problem_hint_date"
-        android:importantForAutofill="no"
-        android:inputType="date"
-        android:singleLine="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.514"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addProblemTitle" />
-
-    <EditText
         android:id="@+id/addProblemDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
         android:layout_marginHorizontal="10dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
         android:background="@null"
         android:gravity="top|start"
         android:hint="@string/add_problem_hint_description"
         android:importantForAutofill="no"
         android:inputType="textMultiLine"
         android:lines="10"
-        android:maxWidth="200dp"
         android:maxLines="15"
+        android:maxWidth="200dp"
         android:minLines="5"
         android:scrollHorizontally="false"
         android:singleLine="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addProblemDate" />
+        app:layout_constraintTop_toBottomOf="@+id/addProblemTitle" />
 
     <Button
         android:id="@+id/addProblemButton"
         android:layout_width="250dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="40dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
         android:text="@string/add_problem_title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/changeTimeButton" />
+
+    <TextView
+        android:id="@+id/addProblemDate"
+        android:layout_width="0dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/add_problem_hint_date"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addProblemDescription" />
+
+    <Button
+        android:id="@+id/changeDateButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/add_problem_datepicker_button"
+        app:layout_constraintEnd_toStartOf="@+id/changeTimeButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addProblemDate" />
+
+    <Button
+        android:id="@+id/changeTimeButton"
+        android:layout_width="176dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/add_problem_timepicker_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addProblemDate" />
 
 </android.support.constraint.ConstraintLayout>

@@ -14,13 +14,20 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-class Problem {
+public class Problem {
 
     private String title;
     private LocalDateTime date;
     private String description;
-    private ArrayList<Record> records;
+    private ArrayList<Record> records = new ArrayList<Record>();
 
+    public Problem(){}
+
+    public Problem(String title, LocalDateTime date, String description){
+        this.title = title;
+        this.date = date;
+        this.description = description;
+    }
     public void setTitle(String newTitle) {
         this.title = newTitle;
     }
