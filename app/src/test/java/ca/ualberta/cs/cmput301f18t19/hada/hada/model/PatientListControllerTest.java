@@ -2,19 +2,22 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
 import org.junit.Test;
 
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.PatientListController;
+
 import static org.junit.Assert.*;
 
-public class PatientControllerTest {
+public class PatientListControllerTest {
 
     @Test
     public void testIsEmpty() {
-        UserController patientList = new UserController();
+        PatientListController patientList = new PatientListController();
         assertTrue(patientList.isEmpty());
     }
 
     @Test
     public void testAddPatient() {
-        UserController patientList = new UserController();
+        PatientListController patientList = new PatientListController();
         Patient patient = new Patient();
         assertTrue(patientList.isEmpty());
         patientList.addPatient(patient);
@@ -23,7 +26,7 @@ public class PatientControllerTest {
 
     @Test
     public void testGetPatient() {
-        UserController patientList = new UserController();
+        PatientListController patientList = new PatientListController();
         Patient patient = new Patient();
         patientList.addPatient(patient);
         assertEquals(patient, patientList.getPatient(0));
@@ -31,7 +34,7 @@ public class PatientControllerTest {
 
     @Test
     public void testGetSize() {
-        UserController patientList = new UserController();
+        PatientListController patientList = new PatientListController();
         Patient patient = new Patient();
         assertEquals(0, patientList.getSize());
         patientList.addPatient(patient);
@@ -40,7 +43,7 @@ public class PatientControllerTest {
 
     @Test
     public void testPatientInList() {
-        UserController patientList = new UserController();
+        PatientListController patientList = new PatientListController();
         Patient patient1 = new Patient();
         Patient patient2 = new Patient();
         assertFalse(patientList.inList(patient1));
@@ -52,7 +55,7 @@ public class PatientControllerTest {
 
     @Test
     public void testGetPosition() {
-        UserController patientList = new UserController();
+        PatientListController patientList = new PatientListController();
         Patient patient1 = new Patient();
         Patient patient2 = new Patient();
         Patient patient3 = new Patient();
@@ -65,7 +68,7 @@ public class PatientControllerTest {
 
     @Test
     public void testDeletePatient() {
-        UserController patientList = new UserController();
+        PatientListController patientList = new PatientListController();
         Patient patient1 = new Patient();
         Patient patient2 = new Patient();
         Patient patient3 = new Patient();
@@ -79,7 +82,7 @@ public class PatientControllerTest {
 
     @Test
     public void testInsertPatient() {
-        UserController patientList = new UserController();
+        PatientListController patientList = new PatientListController();
         Patient patient1 = new Patient();
         Patient patient2 = new Patient();
         Patient patient3 = new Patient();

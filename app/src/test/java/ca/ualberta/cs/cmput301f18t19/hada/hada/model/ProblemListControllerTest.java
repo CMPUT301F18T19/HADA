@@ -2,13 +2,16 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
 import org.junit.Test;
 
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ProblemListController;
+
 import static org.junit.Assert.*;
 
-public class ProblemControllerTest {
+public class ProblemListControllerTest {
 
     @Test
     public void testIsEmpty() {
-        ProblemController problemList = new ProblemController();
+        ProblemListController problemList = new ProblemListController();
         assertEquals(true, problemList.isEmpty());
         Problem problem = new Problem();
         problemList.addProblem(problem);
@@ -17,7 +20,7 @@ public class ProblemControllerTest {
 
     @Test
     public void testAddProblem() {
-        ProblemController problemList = new ProblemController();
+        ProblemListController problemList = new ProblemListController();
         assertTrue(problemList.isEmpty());
         Problem problem = new Problem();
         problem.setTitle("test problem");
@@ -27,7 +30,7 @@ public class ProblemControllerTest {
 
     @Test
     public void testGetProblem() {
-        ProblemController problemList = new ProblemController();
+        ProblemListController problemList = new ProblemListController();
         Problem problem = new Problem();
         problem.setTitle("test problem");
         problemList.addProblem(problem);
@@ -37,7 +40,7 @@ public class ProblemControllerTest {
 
     @Test
     public void testGetSize() {
-        ProblemController problemList = new ProblemController();
+        ProblemListController problemList = new ProblemListController();
         assertEquals(0, problemList.getSize());
         Problem problem = new Problem();
         problemList.addProblem(problem);
@@ -46,7 +49,7 @@ public class ProblemControllerTest {
 
     @Test
     public void testDeleteProblem() {
-        ProblemController problemList = new ProblemController();
+        ProblemListController problemList = new ProblemListController();
         Problem problem1 = new Problem();
         Problem problem2 = new Problem();
         problemList.addProblem(problem1);
@@ -59,7 +62,7 @@ public class ProblemControllerTest {
 
     @Test
     public void testGetPosition() {
-        ProblemController problemList = new ProblemController();
+        ProblemListController problemList = new ProblemListController();
         Problem problem1 = new Problem();
         Problem problem2 = new Problem();
         problemList.addProblem(problem1);
@@ -71,7 +74,7 @@ public class ProblemControllerTest {
 
     @Test
     public void testInsertProblem() {
-        ProblemController problemList = new ProblemController();
+        ProblemListController problemList = new ProblemListController();
         Problem problem1 = new Problem();
         Problem problem2 = new Problem();
         problemList.addProblem(problem1);
@@ -82,7 +85,7 @@ public class ProblemControllerTest {
 
     @Test
     public void testProblemInList() {
-        ProblemController problemList = new ProblemController();
+        ProblemListController problemList = new ProblemListController();
         Problem problem1 = new Problem();
         Problem problem2 = new Problem();
         Problem problem3 = new Problem();

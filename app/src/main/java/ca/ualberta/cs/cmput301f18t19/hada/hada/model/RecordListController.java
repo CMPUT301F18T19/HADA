@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.utility.Listener;
 
-public class RecordController {
+public class RecordListController {
 
     protected ArrayList<Record> recordList;
     protected ArrayList<Listener> listeners;
 
-    RecordController(){
+    RecordListController(){
         this.recordList = new ArrayList<>();
     }
 

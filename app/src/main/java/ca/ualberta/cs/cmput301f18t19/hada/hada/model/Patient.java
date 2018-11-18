@@ -20,15 +20,8 @@ import java.util.ArrayList;
  * @version
  */
 public class Patient extends User {
+
     private ArrayList<Problem> problemList = new ArrayList<Problem>();
-
-    public Patient(){
-        super();
-    }
-    public Patient(String userID, String phoneNumber, String emailAddress){
-        super(userID, phoneNumber, emailAddress);
-    }
-
 
     /*Following are the problemList operation*/
     public void setProblemList(ArrayList<Problem> newProblemList){
@@ -59,7 +52,6 @@ public class Patient extends User {
     public void removeProblem(Problem problem){
         problemList.remove(problem);
     }
-
 
 
 
