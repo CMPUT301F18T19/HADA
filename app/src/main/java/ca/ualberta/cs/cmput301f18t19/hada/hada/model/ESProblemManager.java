@@ -15,8 +15,9 @@ import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 
-public class ListManagerProblems {
+public class ESProblemManager {
     static JestDroidClient client = null;
+    static String teamIndex = "cmput301f18t19test";
 
     public static void setClient(){
         if (client==null){
@@ -36,7 +37,7 @@ public class ListManagerProblems {
             setClient();
             Problem problem = params[0];
             Index index = new Index.Builder(problem)
-                    .index("HARDCODE")
+                    .index(teamIndex)
                     .type("HARDCODE")
                     .build();
             try {
@@ -57,7 +58,7 @@ public class ListManagerProblems {
             setClient();
             ArrayList<Problem> problems = new ArrayList<Problem>();
             Search search = new Search.Builder(params[0])
-                    .addIndex("HARDCODE")
+                    .addIndex(teamIndex)
                     .addType("HARDCODE")
                     .build();
 

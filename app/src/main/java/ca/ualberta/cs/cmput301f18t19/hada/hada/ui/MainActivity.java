@@ -60,9 +60,20 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 String username = usernameInfo.getText().toString();
-                /**
-                 * Pull patient from username patient ArrayList
-                 */
+                Patient patient = new UserController().getPatient(username);
+
+                if(patient != null){
+                    //Sets the user to be patient and it's userId
+                    Log.d("Username logged in", patient.getUserID());
+                    LoggedInSingleton instance = LoggedInSingleton.getInstance();
+                    instance.setLoggedInID(patient.getUserID());
+                    instance.setIsCareProvider(false);
+
+                    Intent intent = new Intent(MainActivity.this, ProblemListActivity.class);
+                    startActivity(intent);
+                }
+                else{Toast.makeText(MainActivity.this, "Username does not exist. Create a new user instead!?", Toast.LENGTH_SHORT).show();}
+
             }
         });
 
@@ -70,9 +81,28 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 String username = usernameInfo.getText().toString();
-                /**
-                 * Pull doctor from username patient ArrayList
-                 */
+                ESUserManager.GetCareProviderTask careProviderTask = new ESUserManager.GetCareProviderTask();
+                careProviderTask.execute(username);
+
+                try {
+                    CareProvider careProvider = careProviderTask.get();
+
+                    if(careProvider != null){
+                        //Sets the user to be CP and it's userId
+                        Log.d("Username logged in", careProvider.getUserID());
+                        LoggedInSingleton instance = LoggedInSingleton.getInstance();
+                        instance.setLoggedInID(careProvider.getUserID());
+                        instance.setIsCareProvider(true);
+
+                        Intent intent = new Intent(MainActivity.this, PatientListActivity.class);
+                        startActivity(intent);
+                    }
+                    else{Toast.makeText(MainActivity.this, "Username does not exist. Create a new user instead!?", Toast.LENGTH_SHORT).show();}
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
             }
 
         });

@@ -22,6 +22,13 @@ public class CareProvider extends User {
 
     private ArrayList<Patient> patients = new ArrayList<Patient>();
 
+    public CareProvider(){
+        super();
+    }
+    public CareProvider(String userID, String phoneNumber, String emailAddress){
+        super(userID, phoneNumber, emailAddress);
+    }
+
     public void setPatients(ArrayList<Patient> patients){
         this.patients = patients;
     }
