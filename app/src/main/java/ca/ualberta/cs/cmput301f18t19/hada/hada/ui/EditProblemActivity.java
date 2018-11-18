@@ -158,6 +158,7 @@ public class EditProblemActivity extends AppCompatActivity {
                     Toast.makeText(EditProblemActivity.this, "Please enter a description and title.", Toast.LENGTH_SHORT).show();
                 }
                 else {
+                    //TODO add offline exception
                     oldProblem.setDate(date);
                     oldProblem.setTitle(title);
                     oldProblem.setDesc(description);
