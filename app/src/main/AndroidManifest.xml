@@ -28,6 +28,7 @@
         <activity android:name=".ui.EditUserSettingsActivity" />
         <activity android:name=".ui.ProblemListActivity"/>
         <activity android:name=".ui.AddProblemActivity" />
+        <activity android:name=".ui.EditProblemActivity" />
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

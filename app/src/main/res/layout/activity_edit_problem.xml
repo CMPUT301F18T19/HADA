@@ -7,12 +7,12 @@
     tools:context="ui.AddProblemActivity">
 
     <TextView
-        android:id="@+id/addProblemActivityTitle"
+        android:id="@+id/editProblemAcitivtytitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:gravity="center_horizontal"
         android:text="@string/add_problem_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
@@ -25,16 +25,17 @@
         android:id="@+id/editProblemTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:hint="@string/add_problem_hint_title"
         android:importantForAutofill="no"
         android:inputType="text"
         android:singleLine="true"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addProblemActivityTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/editProblemAcitivtytitle" />
 
     <EditText
         android:id="@+id/editProblemDescription"
@@ -60,12 +61,12 @@
         app:layout_constraintTop_toBottomOf="@+id/editProblemTitle" />
 
     <Button
-        android:id="@+id/addProblemButton"
+        android:id="@+id/editProblemButton"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/add_problem_title"
+        android:layout_marginBottom="8dp"
+        android:text="@string/editProblemSave"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

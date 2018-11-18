@@ -68,4 +68,5 @@
     <string name="NewUserActivity_UserIdSpaces">User ID cannot contain spaces.</string>
     <string name="NewUserActivity_PatientSaved">Patient saved!</string>
     <string name="NewUserActivity_CareProviderSaved">Care Provider saved!</string>
+    <string name="editProblemSave">Save Problem</string>
 </resources>
