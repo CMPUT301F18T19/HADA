@@ -21,7 +21,6 @@ import java.util.Calendar;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
 
 /**
  * Activity for editing problems to a given user's list of problems. edited from NewProblemActivity
@@ -68,8 +67,8 @@ public class EditProblemActivity extends AppCompatActivity {
         editProblemDate = findViewById(R.id.editProblemDate);
         editProblemDescription = findViewById(R.id.editProblemDescription);
         editProblemButton = findViewById(R.id.editProblemButton);
-        changeDateButton = findViewById(R.id.changeDateButton);
-        changeTimeButton = findViewById(R.id.changeTimeButton);
+        changeDateButton = findViewById(R.id.editProblemChangeDateButton);
+        changeTimeButton = findViewById(R.id.editProblemChangeTimeButton);
         //TODO set date/time/description/title based on passed problem
 
         //set date to current date and time

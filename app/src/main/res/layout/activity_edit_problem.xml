@@ -14,7 +14,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:gravity="center_horizontal"
-        android:text="@string/add_problem_title"
+        android:text="@string/Edit_Problem"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -70,7 +70,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/changeTimeButton" />
+        app:layout_constraintTop_toBottomOf="@+id/editProblemChangeTimeButton" />
 
     <TextView
         android:id="@+id/editProblemDate"
@@ -86,19 +86,19 @@
         app:layout_constraintTop_toBottomOf="@+id/editProblemDescription" />
 
     <Button
-        android:id="@+id/changeDateButton"
+        android:id="@+id/editProblemChangeDateButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:text="@string/add_problem_datepicker_button"
-        app:layout_constraintEnd_toStartOf="@+id/changeTimeButton"
+        app:layout_constraintEnd_toStartOf="@+id/editProblemChangeTimeButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editProblemDate" />
 
     <Button
-        android:id="@+id/changeTimeButton"
+        android:id="@+id/editProblemChangeTimeButton"
         android:layout_width="176dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"

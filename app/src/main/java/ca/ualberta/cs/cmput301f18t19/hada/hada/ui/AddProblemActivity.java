@@ -70,7 +70,7 @@ public class AddProblemActivity extends AppCompatActivity {
         addProblemDescription = findViewById(R.id.editProblemDescription);
         addProblemButton = findViewById(R.id.addProblemButton);
         changeDateButton = findViewById(R.id.changeDateButton);
-        changeTimeButton = findViewById(R.id.changeTimeButton);
+        changeTimeButton = findViewById(R.id.editProblemChangeTimeButton);
 
         //set date to current date and time
         final LocalDateTime currentDate = LocalDateTime.now();
