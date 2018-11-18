@@ -59,4 +59,10 @@ public class Problem {
     public ArrayList<Record> getRecords(){
         return this.records;
     }
+
+
+    @Override
+    public String toString(){
+        return this.title;
+    }
 }
