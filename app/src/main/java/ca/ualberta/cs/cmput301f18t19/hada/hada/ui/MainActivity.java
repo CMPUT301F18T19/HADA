@@ -30,6 +30,7 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ESUserManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,25 +60,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 String username = usernameInfo.getText().toString();
-                ESUserManager.GetPatientTask patientTask = new ESUserManager.GetPatientTask();
-                patientTask.execute(username);
+                Patient patient = new UserController().getPatient(username);
 
-                try {
-                    Patient patient = patientTask.get();
-
-                    if(patient != null){
+                if(patient != null){
                         Log.d("Username logged in", patient.getUserID());
                         LoggedInSingleton.getInstance().setLoggedInID(patient.getUserID());
                         Intent intent = new Intent(MainActivity.this, ProblemListActivity.class);
 
                         startActivity(intent);
-                    }
-                    else{Toast.makeText(MainActivity.this, "Username does not exist. Create a new user instead!?", Toast.LENGTH_SHORT).show();}
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
                 }
+                else{Toast.makeText(MainActivity.this, "Username does not exist. Create a new user instead!?", Toast.LENGTH_SHORT).show();}
 
             }
         });
