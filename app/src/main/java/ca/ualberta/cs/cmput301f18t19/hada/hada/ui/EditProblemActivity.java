@@ -60,6 +60,7 @@ public class EditProblemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_problem);
         Intent intent = getIntent();
+        //TODO Might need to change this depending on how we pass the problem.
         final Problem oldProblem = (Problem) intent.getSerializableExtra("problemObject");
 
         // get references for editTexts
@@ -69,7 +70,7 @@ public class EditProblemActivity extends AppCompatActivity {
         editProblemButton = findViewById(R.id.editProblemButton);
         changeDateButton = findViewById(R.id.editProblemChangeDateButton);
         changeTimeButton = findViewById(R.id.editProblemChangeTimeButton);
-        //TODO set date/time/description/title based on passed problem
+
 
         //set date to current date and time
         final LocalDateTime currentDate = oldProblem.getDate();
