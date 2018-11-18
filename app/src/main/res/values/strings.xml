@@ -3,7 +3,7 @@
     <string name="patient_login">Patient Login</string>
     <string name="doctor_login">Doctor Login</string>
     <string name="create_user">Create user</string>
-    <string name="enter_username">Username</string>
+
     <string name="title_activity_new_user">NewUserActivity</string>
     <string name="add_front_image">Add Front Image</string>
     <string name="add_back_image">Add Back Image</string>
@@ -35,20 +35,35 @@
     <string name="view_location">View Location</string>
     <string name="add_rem_photos">Add/Remove Photos</string>
     <string name="edit_comment">Edit Comment</string>
-    <string name="usersettings">USER SETTINGS</string>
-    <string name="email">Email</string>
-    <string name="contact_number">Contact Number</string>
+    <string name="enter_username">Username</string>
+
+    <!-- ProblemListActivity Layout-->
+    <string name="problem_list_username">PATIENT USERNAME</string>
+    <string name="problem_list_setting_button_cd">A button for editing the settings of the user.</string>
+
 
     <!-- EditUserSettingsActivity Layout-->
+    <string name="EditUserSettings_Title">USER SETTINGS</string>
+    <string name="EditUserSettings_Email">Email:</string>
+    <string name="EditUserSettings_Username">Username:</string>
+    <string name="EditUserSettings_ContactNumber">Contact Number:</string>
     <string name="EditUserSettings_UploadImageButton">Upload body reference image</string>
     <string name="EditUserSettings_SaveButton">Save Settings</string>
     <string name="EditUserSettings_CancelButton">Cancel</string>
 
-    <string name="problem_list_username">PATIENT USERNAME</string>
-    <string name="problem_list_setting_button_cd">A button for editing the settings of the user.</string>
+
+    <!-- AddProblemActivity Layout-->
     <string name="add_problem_title">Add Problem</string>
     <string name="add_problem_hint_title">Title</string>
     <string name="add_problem_hint_description">Description</string>
     <string name="add_problem_hint_date">date (dd/mm/yyyy)</string>
 
+
+    <!-- NewUserActivity Layout-->
+    <string name="NewUserActivity_SelectUserType">Please select a user type.</string>
+    <string name="NewUserActivity_EnterAllFields">Please enter a User ID, Phone, and Email.</string>
+    <string name="NewUserActivity_UserIdMin">User ID must be at least 8 characters.</string>
+    <string name="NewUserActivity_UserIdSpaces">User ID cannot contain spaces.</string>
+    <string name="NewUserActivity_PatientSaved">Patient saved!</string>
+    <string name="NewUserActivity_CareProviderSaved">Care Provider saved!</string>
 </resources>

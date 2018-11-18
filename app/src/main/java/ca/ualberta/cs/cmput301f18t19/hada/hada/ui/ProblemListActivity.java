@@ -30,7 +30,8 @@ public class ProblemListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //TODO Add activity name here when AddProblemActivity is done. - Joe
-                //Intent intent = new Intent(ProblemListActivity.this, )
+                Intent intent = new Intent(ProblemListActivity.this, AddProblemActivity.class);
+                startActivity(intent);
             }
         });
 

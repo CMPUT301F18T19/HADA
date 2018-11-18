@@ -9,13 +9,13 @@
     android:focusableInTouchMode="true">
 
     <TextView
-        android:id="@+id/editUserSettingsTextView"
+        android:id="@+id/editUserSettingsTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/usersettings"
+        android:text="@string/EditUserSettings_Title"
         android:textAlignment="center"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -24,48 +24,50 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editUserSettingsEmail"
+        android:id="@+id/editUserSettingsEditTextInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:autofillHints="AUTOFILL_HINT_EMAIL"
         android:ems="10"
-        android:hint="@string/email"
         android:inputType="textEmailAddress"
+        android:textAlignment="textStart"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editUserSettingsTextView" />
+        app:layout_constraintStart_toEndOf="@+id/editUserSettingsEmailTextView"
+        app:layout_constraintTop_toBottomOf="@+id/editUserSettingsTitleTextView" />
 
-    <EditText
+    <TextView
         android:id="@+id/editUserSettingsUsername"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:autofillHints="AUTOFILL_HINT_USERNAME"
         android:ems="10"
-        android:hint="@string/enter_username"
-        android:inputType="textPersonName"
+        android:inputType="none"
+        android:text="Username"
+        android:textAlignment="textStart"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editUserSettingsEmail"
-        android:autofillHints="AUTOFILL_HINT_USERNAME"/>
+        app:layout_constraintStart_toEndOf="@+id/editUserSettingsUsernameTextView"
+        app:layout_constraintTop_toBottomOf="@+id/editUserSettingsEditTextInput" />
 
     <EditText
         android:id="@+id/editUserSettingsContactNumber"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:autofillHints="AUTOFILL_HINT_PHONE"
         android:ems="10"
-        android:hint="@string/contact_number"
         android:inputType="phone"
+        android:textAlignment="textStart"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editUserSettingsContactNumberTextView"
         app:layout_constraintTop_toBottomOf="@+id/editUserSettingsUsername" />
 
     <Button
@@ -105,5 +107,41 @@
         app:layout_constraintBottom_toTopOf="@+id/editUserSettingsSaveButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/editUserSettingsEmailTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/EditUserSettings_Email"
+        android:textAlignment="textStart"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/editUserSettingsEditTextInput"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editUserSettingsEditTextInput" />
+
+    <TextView
+        android:id="@+id/editUserSettingsUsernameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/EditUserSettings_Username"
+        android:textAlignment="textStart"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/editUserSettingsUsername"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editUserSettingsUsername" />
+
+    <TextView
+        android:id="@+id/editUserSettingsContactNumberTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/EditUserSettings_ContactNumber"
+        android:textAlignment="textStart"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/editUserSettingsContactNumber"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editUserSettingsContactNumber" />
 
 </android.support.constraint.ConstraintLayout>
