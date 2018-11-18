@@ -10,19 +10,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ListManagerPatient;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
 import io.searchbox.client.JestResult;
 import io.searchbox.core.Search;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
-public class ListManagerPatientTest {
+
+public class ESProblemManagerTest {
     @Test
-    public void testSavePatient() {
-        Patient patient = new Patient();
-        new ListManagerPatient.AddPatientTask().execute(patient);
+    public void testSaveProblem() {
+        Problem problem = new Problem();
+        new ESProblemManager.AddProblemsTask().execute(problem);
 
         DroidClientConfig config = new DroidClientConfig
                 .Builder("http://cmput301.softwareprocess.es:8080/cmput301f18t19test")
@@ -46,19 +44,19 @@ public class ListManagerPatientTest {
     }
 
     @Test
-    public void testGetPatient() {
-        Patient patient = new Patient();
-        ArrayList<Patient> patients = new ArrayList<Patient>();
-        new ListManagerPatient.AddPatientTask().execute(patient);
+    public void testGetProblem() {
+        Problem problem = new Problem();
+        ArrayList<Problem> problems = new ArrayList<Problem>();
+        new ESProblemManager.AddProblemsTask().execute(problem);
 
         try {
-            patients = new ListManagerPatient.GetPatientsTask().execute("").get();
+            problems = new ESProblemManager.GetProblemsTask().execute("").get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertFalse(patients.isEmpty());
+        assertFalse(problems.isEmpty());
 
     }
 }
