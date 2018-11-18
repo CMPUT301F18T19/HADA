@@ -8,12 +8,7 @@ public class LoggedInSingleton {
 
         private LoggedInSingleton() {}
 
-        private static class LazyHolder {
-            static final LoggedInSingleton INSTANCE = new LoggedInSingleton();
-        }
-        public static LoggedInSingleton getInstance() {
-            return LazyHolder.INSTANCE;
-        }
+    private LoggedInSingleton() {}
 
         public void setLoggedInID(String userID){
             this.loggedInID = userID;
@@ -32,3 +27,24 @@ public class LoggedInSingleton {
 
 
     }
+    public static LoggedInSingleton getInstance() {
+        return LazyHolder.INSTANCE;
+    }
+
+    public void setLoggedInID(String userID){
+        this.loggedInID = userID;
+    }
+    public String getLoggedInID(){
+        return this.loggedInID;
+    }
+
+    //If called then logged in user is a care provider
+    public void setIsCareProvider(Boolean state){
+        this.isCareProvider = state;
+    }
+    public boolean getIsCareProvider(){
+        return isCareProvider;
+    }
+
+
+}

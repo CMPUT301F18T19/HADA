@@ -29,11 +29,9 @@ public class UserController {
     - Adding/removing patients to ES/local storage by calling on the ESUserManager
     - Editing patient contact info
     - Adding patients to the CareProviders list of patients
-
     If you don't see a function that does what you want, feel free to add it. The
       activity should not be creating patients etc. We should pass the info into here and
       create the patient then pass it to ESUserManager.
-
     */
 
     private ArrayList<Patient> patientList;
@@ -44,12 +42,12 @@ public class UserController {
     }
 
     //public Patient getPatient(int index) {
-        //return patientList.get(index);
+    //return patientList.get(index);
     //}
 
     /**@deprecated **/
     //public void addPatient(Patient patient) {
-        //patientList.add(patient);
+    //patientList.add(patient);
     //}
 
     public boolean inList(Patient patient) {

@@ -3,10 +3,19 @@
     <string name="patient_login">Patient Login</string>
     <string name="doctor_login">Doctor Login</string>
     <string name="create_user">Create user</string>
-    <string name="enter_username">Username</string>
+
     <string name="title_activity_new_user">NewUserActivity</string>
     <string name="add_front_image">Add Front Image</string>
     <string name="add_back_image">Add Back Image</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
+    <string name="doctor">Doctor</string>
+    <string name="patient">Patient</string>
+    <string name="add_phonenumber_hint">Phone Number</string>
+    <string name="add_email_hint">Email Address</string>
+    <string name="search">Search</string>
+    <string name="new_problem">New Problem</string>
+    <string name="user_settings">User Settings</string>
     <string name="problem_title">PROBLEM NAME</string>
     <string name="ViewProblemImage">Location of problem on body.</string>
     <string name="ViewProblemMapButton">Image of a map.</string>
@@ -18,6 +27,15 @@
     <string name="select_photos">Select Photos</string>
     <string name="save_geo_location">Save Geo location</string>
     <string name="record_photo">Record photo</string>
+    <string name="add_patient_id_hint">Patient UserID</string>
+    <string name="generic_save">Save</string>
+    <string name="edit_date">Edit Date</string>
+    <string name="edit_time">Edit Time</string>
+    <string name="edit_geolocation">Edit Geolocation</string>
+    <string name="view_location">View Location</string>
+    <string name="add_rem_photos">Add/Remove Photos</string>
+    <string name="edit_comment">Edit Comment</string>
+    <string name="enter_username">Username</string>
 
     <!-- ProblemListActivity Layout-->
     <string name="problem_list_username">PATIENT USERNAME</string>
