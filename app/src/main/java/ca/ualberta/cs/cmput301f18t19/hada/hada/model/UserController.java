@@ -16,7 +16,7 @@ import java.util.concurrent.ExecutionException;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.utility.Listener;
 
 /**
- * @author Christopher Penner
+ * @author Joseph Potentier, Chris Penner
  *
  * @version 0.1
  *
@@ -118,6 +118,20 @@ public class UserController {
         return null;
     }
 
+    public CareProvider getCareProvider(String userId){
+        ESUserManager.GetCareProviderTask CareProviderTask = new ESUserManager.GetCareProviderTask();
+        CareProviderTask.execute(userId);
+        try {
+            CareProvider careProvider = CareProviderTask.get();
+            return careProvider;
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     //Edits a given patients email address and updates it by overriding current ES index
     public void editPatientEmail(Patient patient, String email){
@@ -129,6 +143,18 @@ public class UserController {
     public void editPatientContactNumber(Patient patient, String phoneNumber){
         patient.setPhoneNumber(phoneNumber);
         new ESUserManager.AddPatientTask().execute(patient);
+    }
+
+    //Edits a given care providers email address and updates it by overriding current ES index
+    public void editCareProviderEmail(CareProvider careProvider, String email){
+        careProvider.setEmailAdress(email);
+        new ESUserManager.AddCareProviderTask().execute(careProvider);
+    }
+
+    //Edits a given care providers contact number and updates it by overriding current ES index
+    public void editCareProviderContactNumber(CareProvider careProvider, String phoneNumber){
+        careProvider.setPhoneNumber(phoneNumber);
+        new ESUserManager.AddCareProviderTask().execute(careProvider);
     }
 
 
