@@ -15,7 +15,7 @@ import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 
-public class ESRecordManager {
+public class ListManagerRecord {
     static JestDroidClient client=null;
     public static void setClient(){
         if(client==null){

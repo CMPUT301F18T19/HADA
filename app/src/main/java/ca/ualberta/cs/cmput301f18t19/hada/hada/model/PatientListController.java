@@ -19,45 +19,45 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.utility.Listener;
  * @see
  * @version 0.1
  */
-public class ProblemController {
+public class PatientListController {
 
-    private ArrayList<Problem> problemList;
-    private ArrayList<Listener> listeners;
+    private ArrayList<Patient> patientList;
+    protected ArrayList<Listener> listeners;
 
-    ProblemController() {
-        this.problemList = new ArrayList<Problem>();
+    PatientListController() {
+        patientList = new ArrayList<Patient>();
     }
 
-    public Problem getProblem(int index) {
-        return problemList.get(index);
+    public Patient getPatient(int index) {
+        return patientList.get(index);
     }
 
-    public void addProblem(Problem problem) {
-        problemList.add(problem);
+    public void addPatient(Patient patient) {
+        patientList.add(patient);
     }
 
-    public void insertProblem(int index, Problem problem) {
-        problemList.add(index, problem);
+    public boolean inList(Patient patient) {
+        return patientList.contains(patient);
     }
 
-    public boolean inList(Problem problem) {
-        return problemList.contains(problem);
+    public void insertPatient(int index, Patient patient) {
+        patientList.add(index, patient);
     }
 
-    public void deleteProblem(Problem problem) {
-        problemList.remove(problem);
+    public void deletePatient(Patient patient) {
+        patientList.remove(patient);
     }
 
     public boolean isEmpty() {
-        return problemList.isEmpty();
+        return patientList.isEmpty();
     }
 
     public int getSize() {
-        return problemList.size();
+        return patientList.size();
     }
 
-    public int getPos(Problem problem) {
-        return problemList.indexOf(problem);
+    public int getPos(Patient patient) {
+        return patientList.indexOf(patient);
     }
 
     public void notifyListeners(){

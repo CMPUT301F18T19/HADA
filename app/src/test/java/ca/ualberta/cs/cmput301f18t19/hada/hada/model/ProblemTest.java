@@ -5,6 +5,9 @@ import static org.junit.Assert.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.RecordListController;
+
 public class ProblemTest{
 
     @Test
@@ -65,7 +68,7 @@ public class ProblemTest{
     @Test
     public void getRecordsTest(){
         Problem problem = new Problem();
-        ArrayList<Record> records = new ArrayList<Record>();
+        ArrayList<Record> records = new ArrayList<>();
         problem.setRecords(records);
         assertEquals("Should be same list",records, problem.getRecords());
     }
