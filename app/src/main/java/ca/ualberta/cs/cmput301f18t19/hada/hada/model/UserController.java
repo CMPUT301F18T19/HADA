@@ -18,10 +18,10 @@ import java.util.concurrent.ExecutionException;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.utility.Listener;
 
 /**
+ * A controller object for Patients and CareProviders.
+ *
  * @author Joseph Potentier, Chris Penner
- *
  * @version 0.1
- *
  */
 public class UserController {
 
@@ -38,22 +38,45 @@ public class UserController {
 
     */
 
+    /**
+     * Instantiates a new User controller.
+     */
     public UserController(){}
 
 
-    //Adds user types to ES and/or memory
+    /**
+     * Adds a patient to ElasticSearch when given the appropriate information.
+     *
+     * @param userID    the user id
+     * @param userPhone the user phone
+     * @param userEmail the user email
+     */
+//Adds user types to ES and/or memory
     public void addPatient(String userID, String userPhone, String userEmail){
         Patient patient = new Patient(userID, userPhone, userEmail);
         new ESUserManager.AddPatientTask().execute(patient);
     }
 
+    /**
+     * Adds a CareProvider to ElasticSearch when given the appropriate information.
+     *
+     * @param userID    the user id
+     * @param userPhone the user phone
+     * @param userEmail the user email
+     */
     public void addCareProvider(String userID, String userPhone, String userEmail){
         CareProvider careProvider = new CareProvider(userID, userPhone, userEmail);
         new ESUserManager.AddCareProviderTask().execute(careProvider);
     }
 
 
-    //Retrieves Patient or Care Provider
+    /**
+     * Given a userID, returns the patient associated with the ID (if it exists).
+     *
+     * @param userId the user id
+     * @return the patient
+     */
+//Retrieves Patient or Care Provider
     public Patient getPatient(String userId){
         ESUserManager.GetPatientTask patientTask = new ESUserManager.GetPatientTask();
         patientTask.execute(userId);
@@ -68,6 +91,12 @@ public class UserController {
         return null;
     }
 
+    /**
+     * Given a userID, returns the CareProvider associated with the ID (if it exists).
+     *
+     * @param userId the user id
+     * @return the care provider
+     */
     public CareProvider getCareProvider(String userId){
         ESUserManager.GetCareProviderTask CareProviderTask = new ESUserManager.GetCareProviderTask();
         CareProviderTask.execute(userId);
@@ -82,14 +111,24 @@ public class UserController {
         return null;
     }
 
-    //Adds listener to patient listeners
+    /**
+     * Add a listener to the list of patient listeners.
+     *
+     * @param patient  the patient
+     * @param listener the listener
+     */
+//Adds listener to patient listeners
     public void addListener(Patient patient, Listener listener) {
         new ESUserManager.AddPatientTask().execute(patient);
     }
 
 
-
-    //Adds problem to list of problems
+    /**
+     * Add problem to the logged in patient's problems list.
+     *
+     * @param problem the problem
+     */
+//Adds problem to list of problems
     public void addProblemToList(Problem problem){
         Patient patient = getPatient(LoggedInSingleton.getInstance().getLoggedInID());
         Log.d("problem", problem.getDate().toString());
@@ -97,6 +136,14 @@ public class UserController {
         new ESUserManager.AddPatientTask().execute(patient);
     }
 
+    /**
+     * Checks if patient is in the list of patients associated with the logged in CareProvider.
+     * Adds them to the list if they are not null, and returns a boolean associated with the
+     * success or failure of the operation.
+     *
+     * @param userId the user id
+     * @return the boolean
+     */
     public boolean addPatientToCareProvider(String userId){
         Patient patient = getPatient(userId);
         if(patient != null){
@@ -108,34 +155,60 @@ public class UserController {
         else {return false;}
     }
 
-    //Edits a given patients email address and updates it by overriding current ES index
+    /**
+     * Edit patient email.
+     *
+     * @param patient the patient
+     * @param email   the email
+     */
+//Edits a given patients email address and updates it by overriding current ES index
     public void editPatientEmail(Patient patient, String email){
         patient.setEmailAdress(email);
         new ESUserManager.AddPatientTask().execute(patient);
     }
 
-    //Edits a given patients contact number and updates it by overriding current ES index
+    /**
+     * Edit patient contact number.
+     *
+     * @param patient     the patient
+     * @param phoneNumber the phone number
+     */
+//Edits a given patients contact number and updates it by overriding current ES index
     public void editPatientContactNumber(Patient patient, String phoneNumber){
         patient.setPhoneNumber(phoneNumber);
         new ESUserManager.AddPatientTask().execute(patient);
     }
 
-    //Edits a given care providers email address and updates it by overriding current ES index
+    /**
+     * Edit care provider email.
+     *
+     * @param careProvider the care provider
+     * @param email        the email
+     */
+//Edits a given care providers email address and updates it by overriding current ES index
     public void editCareProviderEmail(CareProvider careProvider, String email){
         careProvider.setEmailAdress(email);
         new ESUserManager.AddCareProviderTask().execute(careProvider);
     }
 
-    //Edits a given care providers contact number and updates it by overriding current ES index
+    /**
+     * Edit care provider contact number.
+     *
+     * @param careProvider the care provider
+     * @param phoneNumber  the phone number
+     */
+//Edits a given care providers contact number and updates it by overriding current ES index
     public void editCareProviderContactNumber(CareProvider careProvider, String phoneNumber){
         careProvider.setPhoneNumber(phoneNumber);
         new ESUserManager.AddCareProviderTask().execute(careProvider);
     }
 
     /**
-     * Adds a record to the problem of the logged in user located at the index given
-     * @param record
-     * @param index
+     * Adds a record to the problem of the logged in user.
+     * Index is the location of the problem in the user's problems list.
+     *
+     * @param record the record
+     * @param index  the index
      */
     public void addRecord(Record record, int index){
         Patient patient = this.getPatient(LoggedInSingleton.getInstance().getLoggedInID());
@@ -143,7 +216,13 @@ public class UserController {
         new ESUserManager.AddPatientTask().execute(patient);
     }
 
-    //Gets a list of patients for a given CareProvider
+    /**
+     * Get patient list array list.
+     *
+     * @param userId the user id
+     * @return the array list
+     */
+//Gets a list of patients for a given CareProvider
     public ArrayList<Patient> getPatientList(String userId){
         CareProvider careProvider = getCareProvider(userId);
         return careProvider.getPatients();
