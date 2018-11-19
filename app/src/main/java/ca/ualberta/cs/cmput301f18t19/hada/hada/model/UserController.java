@@ -38,60 +38,7 @@ public class UserController {
 
     */
 
-    private ArrayList<Patient> patientList;
-    protected ArrayList<Listener> listeners;
-
-    public UserController() {
-        patientList = new ArrayList<Patient>();
-    }
-
-    //public Patient getPatient(int index) {
-        //return patientList.get(index);
-    //}
-
-    /**@deprecated **/
-    //public void addPatient(Patient patient) {
-        //patientList.add(patient);
-    //}
-
-    public boolean inList(Patient patient) {
-        return patientList.contains(patient);
-    }
-
-    public void insertPatient(int index, Patient patient) {
-        patientList.add(index, patient);
-    }
-
-    public void deletePatient(Patient patient) {
-        patientList.remove(patient);
-    }
-
-    public boolean isEmpty() {
-        return patientList.isEmpty();
-    }
-
-    public int getSize() {
-        return patientList.size();
-    }
-
-    public int getPos(Patient patient) {
-        return patientList.indexOf(patient);
-    }
-
-    public void notifyListeners(){
-        for (Listener listener : listeners){
-            if(listener != null){
-                listener.update();}
-        }
-    }
-    public void addListener(Listener l){
-        listeners.add(l);
-    }
-    public void removeListener(Listener l){
-        listeners.remove(l);
-    }
-
-    //List stuff above may be deprocated, new  methods below:
+    public UserController(){}
 
 
     //Adds user types to ES and/or memory
@@ -135,8 +82,15 @@ public class UserController {
         return null;
     }
 
+    //Adds listener to patient listeners
+    public void addListener(Patient patient, Listener listener) {
+        new ESUserManager.AddPatientTask().execute(patient);
+    }
 
-    public void addProblem(Problem problem){
+
+
+    //Adds problem to list of problems
+    public void addProblemToList(Problem problem){
         Patient patient = getPatient(LoggedInSingleton.getInstance().getLoggedInID());
         Log.d("problem", problem.getDate().toString());
         patient.addProblem(problem);
