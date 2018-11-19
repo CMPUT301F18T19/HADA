@@ -67,5 +67,9 @@ public class ProblemController {
         new UserController().addProblemToList(problem);
     }
 
+    public void addProblem(Problem problem){
+        new UserController().addProblemToList(problem);
+    }
+
 
 }
