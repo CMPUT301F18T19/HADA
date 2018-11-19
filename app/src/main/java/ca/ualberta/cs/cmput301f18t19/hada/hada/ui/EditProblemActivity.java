@@ -14,13 +14,21 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import org.apache.commons.lang3.ObjectUtils;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ProblemController;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
 
 /**
  * Activity for editing problems to a given user's list of problems. edited from NewProblemActivity
@@ -28,8 +36,8 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
  * @see Problem, Patient, ProblemListActivity
  * @version 1.0
  */
-public class EditProblemActivity extends AppCompatActivity {
-    private static final String TAG = "AddProblemActivity";
+public class EditProblemActivity extends AppCompatActivity implements Serializable {
+    private static final String TAG = "EditProblemActivity";
     private EditText editProblemTitle;
     private TextView editProblemDate;
     private EditText editProblemDescription;
@@ -60,8 +68,14 @@ public class EditProblemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_problem);
         Intent intent = getIntent();
-        //TODO Might need to change this depending on how we pass the problem.
-        final Problem oldProblem = (Problem) intent.getSerializableExtra("problemObject");
+        int position = (int) intent.getSerializableExtra("problemObject");
+        String loggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
+        Patient patient = new UserController().getPatient(loggedInUser);
+        ArrayList<Problem> problems = new ProblemController().getProblemList(patient);
+        final Problem oldProblem = problems.get(position);
+
+
+
 
         // get references for editTexts
         editProblemTitle = findViewById(R.id.editProblemTitle);
@@ -75,10 +89,13 @@ public class EditProblemActivity extends AppCompatActivity {
         //set date to current date and time
         final LocalDateTime currentDate = oldProblem.getDate();
         String currentDateString = currentDate.format(formatter);
+        Log.d(TAG,currentDateString);
         editProblemDate.setText(currentDateString);
+
         //set title and description to current ones
         editProblemDescription.setText(oldProblem.getDesc());
         editProblemTitle.setText(oldProblem.getTitle());
+
 
 
         //for selecting custom date

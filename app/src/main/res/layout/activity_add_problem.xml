@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editProblemTitle"
+        android:id="@+id/addProblemTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -37,7 +37,7 @@
         app:layout_constraintTop_toBottomOf="@+id/addProblemActivityTitle" />
 
     <EditText
-        android:id="@+id/editProblemDescription"
+        android:id="@+id/addProblemDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -57,7 +57,7 @@
         android:singleLine="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editProblemTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/addProblemTitle" />
 
     <Button
         android:id="@+id/addProblemButton"
@@ -69,10 +69,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editProblemChangeTimeButton" />
+        app:layout_constraintTop_toBottomOf="@+id/changeTimeButton" />
 
     <TextView
-        android:id="@+id/editProblemDate"
+        android:id="@+id/addProblemDate"
         android:layout_width="0dp"
         android:layout_height="36dp"
         android:layout_marginEnd="16dp"
@@ -82,7 +82,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editProblemDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/addProblemDescription" />
 
     <Button
         android:id="@+id/changeDateButton"
@@ -92,18 +92,18 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/add_problem_datepicker_button"
-        app:layout_constraintEnd_toStartOf="@+id/editProblemChangeTimeButton"
+        app:layout_constraintEnd_toStartOf="@+id/changeTimeButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editProblemDate" />
+        app:layout_constraintTop_toBottomOf="@+id/addProblemDate" />
 
     <Button
-        android:id="@+id/editProblemChangeTimeButton"
+        android:id="@+id/changeTimeButton"
         android:layout_width="176dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/add_problem_timepicker_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editProblemDate" />
+        app:layout_constraintTop_toBottomOf="@+id/addProblemDate" />
 
 </android.support.constraint.ConstraintLayout>
