@@ -33,10 +33,13 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
  * via their UserID.
  *
  * @author AndersJ
- * @see PatientListActivity, CareProvider, Patient
  * @version 1.0
+ * @see , PatientListActivityCareProvider, Patient
  */
 public class AddPatientActivity extends AppCompatActivity {
+    /**
+     * The Logged in user.
+     */
     String loggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
 
     @Override

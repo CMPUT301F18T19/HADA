@@ -26,7 +26,17 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.User;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.utility.Listener;
 
+/**
+ * Activity for browsing problems of a given patient.
+ *
+ * @author Joe
+ * @see Patient
+ * @see Problem
+ */
 public class ProblemListActivity extends AppCompatActivity implements Serializable {
+    /**
+     * The userID of the logged in user.
+     */
     String loggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
 
     @Override
