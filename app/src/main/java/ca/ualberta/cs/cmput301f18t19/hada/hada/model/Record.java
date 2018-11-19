@@ -18,11 +18,11 @@ public class Record{
     private ArrayList<Integer> bodyLocation;
 
 
-    Record() {
+    public Record() {
         this.timestamp = LocalDateTime.now();
     }
 
-    Record(LocalDateTime timestamp) {
+    public Record(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
 

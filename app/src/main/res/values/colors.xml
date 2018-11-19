@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574b</color>
-    <color name="colorAccent">#d81b60</color>
+    <color name="colorAccent">#fd0112</color>
     <color name="colorListBackground">#ececec</color>
+    <color name="Disabled_Field">#cccccc</color>
 </resources>

@@ -27,12 +27,18 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+
+import java.util.ArrayList;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ProblemController;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
 
 public class ViewProblemActivity extends AppCompatActivity {
 
@@ -43,15 +49,11 @@ public class ViewProblemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_problem);
 
-        final ArrayList<Problem> problems = new ProblemController().getProblemList(loggedInUser);
-
-/**
         Intent intent = getIntent();
         int position = (int) intent.getSerializableExtra("Position");
         String LoggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
-        final ArrayList<Problem> problems = new ProblemController().getProblemList(loggedInUser);
+        final ArrayList<Problem> problems = new ProblemController().getProblemList(LoggedInUser);
         final Problem oldProblem = problems.get(position);
-*/
 
         problemsList = (ListView) findViewById(R.id.viewPatientProblemsList);
         ImageButton viewMap = (ImageButton) findViewById(R.id.viewProblemMapButton);
@@ -61,8 +63,10 @@ public class ViewProblemActivity extends AppCompatActivity {
         problemsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent =  new Intent(this,)
+                Intent intent =  new Intent(ViewProblemActivity.this, ViewRecordActivity.class);
                 Problem selected_problem = problems.get(position);
+                startActivity(intent);
+
             }
 
         });
@@ -70,6 +74,9 @@ public class ViewProblemActivity extends AppCompatActivity {
         viewMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /**
+                 * Go to map
+                 */
 
             }
         });
@@ -78,12 +85,16 @@ public class ViewProblemActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+
             }
         });
 
         viewSlideshow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /**
+                 * Go to slideshow
+                 */
 
             }
         });
@@ -95,7 +106,6 @@ public class ViewProblemActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
 
     }
 }
