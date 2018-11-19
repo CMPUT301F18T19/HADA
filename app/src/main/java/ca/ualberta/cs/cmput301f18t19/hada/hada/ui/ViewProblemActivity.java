@@ -33,7 +33,7 @@ public class ViewProblemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_problem);
         Intent intent = getIntent();
-        int position = (int) intent.getSerializableExtra("problemObject");
+        int position = (int) intent.getSerializableExtra("Position");
         String loggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
         Patient patient = new UserController().getPatient(loggedInUser);
         final ArrayList<Problem> problems = new ProblemController().getProblemList(patient);
