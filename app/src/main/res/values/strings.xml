@@ -27,7 +27,7 @@
     <string name="select_photos">Select Photos</string>
     <string name="save_geo_location">Save Geo location</string>
     <string name="record_photo">Record photo</string>
-    <string name="add_patient_id_hint">Patient UserID</string>
+    <string name="addPatient_Id_hint">Patient UserID:</string>
     <string name="generic_save">Save</string>
     <string name="edit_date">Edit Date</string>
     <string name="edit_time">Edit Time</string>
@@ -36,6 +36,7 @@
     <string name="add_rem_photos">Add/Remove Photos</string>
     <string name="edit_comment">Edit Comment</string>
     <string name="enter_username">Username</string>
+    <string name="add_title">Add title</string>
 
     <!-- ProblemListActivity Layout-->
     <string name="problem_list_username">PATIENT USERNAME</string>
@@ -68,4 +69,11 @@
     <string name="NewUserActivity_UserIdSpaces">User ID cannot contain spaces.</string>
     <string name="NewUserActivity_PatientSaved">Patient saved!</string>
     <string name="NewUserActivity_CareProviderSaved">Care Provider saved!</string>
+    <string name="editProblemSave">Save Problem</string>
+    <string name="Edit_Problem">Edit Problem</string>
+    <string name="Delete_problem_button">Delete Problem</string>
+    <string name="NewUserActivity_userid_in_use">User ID already in use.</string>
+
+    <!-- AddRecordActivity Layout -->
+    <string name="AddRecordActivity_navigation_title">Add Record</string>
 </resources>

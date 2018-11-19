@@ -2,6 +2,7 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,38 +14,37 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import org.apache.commons.lang3.ObjectUtils;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ESUserManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ProblemController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 
 /**
- * Activity for adding problems to a given user's list of problems.
- * @author Anders, Alex
+ * Activity for editing problems to a given user's list of problems. edited from NewProblemActivity
+ * @author Anders, Alex, Jason
  * @see Problem, Patient, ProblemListActivity
  * @version 1.0
  */
-public class AddProblemActivity extends AppCompatActivity {
-    private static final String TAG = "AddProblemActivity";
-    private EditText addProblemTitle;
-    private TextView addProblemDate;
-    private EditText addProblemDescription;
+public class EditProblemActivity extends AppCompatActivity implements Serializable {
+    private static final String TAG = "EditProblemActivity";
+    private EditText editProblemTitle;
+    private TextView editProblemDate;
+    private EditText editProblemDescription;
     private Button changeDateButton;
     private Button changeTimeButton;
-    private Button addProblemButton;
-    /**
-     * The User controller, which manages adding the problem to the user.
-     */
-    UserController userController = new UserController();
+    private Button editProblemButton;
+    private Button editProblemDelete;
     /**
      * The formatter object for converting localdatetime objects to and from strings.
      */
@@ -67,23 +67,36 @@ public class AddProblemActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_problem);
+        setContentView(R.layout.activity_edit_problem);
+        Intent intent = getIntent();
+        int position = (int) intent.getSerializableExtra("problemObject");
+        String loggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
+        final ArrayList<Problem> problems = new ProblemController().getProblemList(loggedInUser);
+        final Problem oldProblem = problems.get(position);
+
+
+
 
         // get references for editTexts
-        addProblemTitle = findViewById(R.id.addProblemTitle);
-        addProblemDate = findViewById(R.id.addProblemDate);
-        addProblemDescription = findViewById(R.id.addProblemDescription);
-        addProblemButton = findViewById(R.id.addProblemButton);
-        changeDateButton = findViewById(R.id.changeDateButton);
-        changeTimeButton = findViewById(R.id.changeTimeButton);
+        editProblemTitle = findViewById(R.id.editProblemTitle);
+        editProblemDate = findViewById(R.id.editProblemDate);
+        editProblemDescription = findViewById(R.id.editProblemDescription);
+        editProblemButton = findViewById(R.id.editProblemButton);
+        changeDateButton = findViewById(R.id.editProblemChangeDateButton);
+        changeTimeButton = findViewById(R.id.editProblemChangeTimeButton);
+        editProblemDelete = findViewById(R.id.editProblemDelete);
+
 
         //set date to current date and time
-        final LocalDateTime currentDate = LocalDateTime.now();
-
+        final LocalDateTime currentDate = oldProblem.getDate();
         String currentDateString = currentDate.format(formatter);
-        Log.d("test", currentDateString);
-        Log.d("test", currentDateString.getClass().getSimpleName());
-        addProblemDate.setText(currentDate.format(formatter));
+        editProblemDate.setText(currentDateString);
+
+        //set title and description to current ones
+        editProblemDescription.setText(oldProblem.getDesc());
+        editProblemTitle.setText(oldProblem.getTitle());
+
+
 
         //for selecting custom date
         //Based on adj-feelsbook by Anders Johnson
@@ -108,10 +121,10 @@ public class AddProblemActivity extends AppCompatActivity {
                         cal.set(year, month, dayOfMonth, hour, minute, second);
                         LocalDateTime newDate = LocalDateTime.ofInstant(cal.toInstant(), ZoneId.systemDefault());
                         oldCalendar = cal;
-                        addProblemDate.setText(newDate.format(formatter));
+                        editProblemDate.setText(newDate.format(formatter));
                     }
                 };
-                DatePickerDialog dialog = new DatePickerDialog(AddProblemActivity.this,
+                DatePickerDialog dialog = new DatePickerDialog(EditProblemActivity.this,
                         android.R.style.Theme_DeviceDefault_Light_Dialog_Alert, dateSetListener,
                         year, month, day);
                 dialog.show();
@@ -138,10 +151,10 @@ public class AddProblemActivity extends AppCompatActivity {
                         cal.set(year, month, day, hourOfDay, minute, 0);
                         LocalDateTime newDate = LocalDateTime.ofInstant(cal.toInstant(), ZoneId.systemDefault());
                         oldCalendar = cal;
-                        addProblemDate.setText(newDate.format(formatter));
+                        editProblemDate.setText(newDate.format(formatter));
                     }
                 };
-                TimePickerDialog dialog = new TimePickerDialog(AddProblemActivity.this,
+                TimePickerDialog dialog = new TimePickerDialog(EditProblemActivity.this,
                         android.R.style.Theme_DeviceDefault_Light_Dialog_Alert,
                         timeSetListener, hour, minute,
                         true);
@@ -151,26 +164,35 @@ public class AddProblemActivity extends AppCompatActivity {
 
 
         // save problem using a controller when button is pressed
-        addProblemButton.setOnClickListener(new View.OnClickListener() {
+        editProblemButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String title = addProblemTitle.getText().toString();
-                String dateString = addProblemDate.getText().toString();
+                String title = editProblemTitle.getText().toString();
+                String dateString = editProblemDate.getText().toString();
                 LocalDateTime date = LocalDateTime.parse(dateString, formatter);
-                Log.d("debug", "LocalDateTime is"+ date);
-                String description = addProblemDescription.getText().toString();
+                String description = editProblemDescription.getText().toString();
                 if(description.equals("")| title.equals("")){
-                    Toast.makeText(AddProblemActivity.this, "Please enter a description and title.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditProblemActivity.this, "Please enter a description and title.", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Problem problem = new Problem(title, date, description);
+                    //TODO add offline exception
+                    oldProblem.setDate(date);
+                    oldProblem.setTitle(title);
+                    oldProblem.setDesc(description);
+                    Toast.makeText(EditProblemActivity.this, "Problem saved!", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "title = " + title);
                     Log.d(TAG, "date = " + date);
                     Log.d(TAG, "description = " + description);
-                    new ProblemController().addProblem(problem);
-                    Toast.makeText(AddProblemActivity.this, "Problem saved!", Toast.LENGTH_SHORT).show();
                     finish();
                 }
+            }
+        });
+        editProblemDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                problems.remove(oldProblem);
+                //TODO REMOVE PROBLEM FROM ES
+                finish();
             }
         });
     }

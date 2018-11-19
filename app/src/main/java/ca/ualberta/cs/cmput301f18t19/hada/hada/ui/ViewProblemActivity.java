@@ -13,15 +13,36 @@
 
 package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 
+import java.util.ArrayList;
+
+import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ProblemController;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
+
+/**
+ * Activity for viewing a specific problem from a patient's list.
+ *
+ * @author Jason, Austin
+ * @see Problem
+ * @see Patient
+ */
 public class ViewProblemActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_problem);
+        Intent intent = getIntent();
+        int position = (int) intent.getSerializableExtra("Position");
+        String loggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
+        final ArrayList<Problem> problems = new ProblemController().getProblemList(loggedInUser);
+        final Problem oldProblem = problems.get(position);
     }
 }

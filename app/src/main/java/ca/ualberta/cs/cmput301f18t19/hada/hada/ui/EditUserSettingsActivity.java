@@ -14,9 +14,14 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
 
 /**
+ * Activity for editing user settings.
+ *
  * @author Joe Potentier
+ * @see ca.ualberta.cs.cmput301f18t19.hada.hada.model.User
+ * @see Patient
+ * @see CareProvider
+ * @see UserController
  */
-
 //TODO Generalize for all users, only works for patients right now
 public class EditUserSettingsActivity extends AppCompatActivity {
 

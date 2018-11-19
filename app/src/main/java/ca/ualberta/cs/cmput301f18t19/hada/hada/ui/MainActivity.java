@@ -32,6 +32,12 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
 
+/**
+ * Main Acitivity of app. Login screen for users.
+ *
+ * @author Joe, Austin
+ * @see UserController
+ */
 public class MainActivity extends AppCompatActivity {
 
     private static final String FILENAME = "file.sav";
@@ -49,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        usernameInfo = (EditText) findViewById(R.id.mainActivityUsernameText);
+        usernameInfo = findViewById(R.id.mainActivityUsernameText);
         final Button patientLogin = findViewById(R.id.mainActivityPatientLogin);
         Button careProviderLogin = findViewById(R.id.mainActivityDoctorLogin);
         Button createUser = findViewById(R.id.mainActivityCreateUser);
