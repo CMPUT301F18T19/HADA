@@ -89,7 +89,6 @@ public class EditProblemActivity extends AppCompatActivity implements Serializab
         //set date to current date and time
         final LocalDateTime currentDate = oldProblem.getDate();
         String currentDateString = currentDate.format(formatter);
-        Log.d(TAG,currentDateString);
         editProblemDate.setText(currentDateString);
 
         //set title and description to current ones
