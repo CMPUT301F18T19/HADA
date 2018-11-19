@@ -36,6 +36,7 @@
     <string name="add_rem_photos">Add/Remove Photos</string>
     <string name="edit_comment">Edit Comment</string>
     <string name="enter_username">Username</string>
+    <string name="add_title">Add title</string>
 
     <!-- ProblemListActivity Layout-->
     <string name="problem_list_username">PATIENT USERNAME</string>
@@ -68,4 +69,7 @@
     <string name="NewUserActivity_UserIdSpaces">User ID cannot contain spaces.</string>
     <string name="NewUserActivity_PatientSaved">Patient saved!</string>
     <string name="NewUserActivity_CareProviderSaved">Care Provider saved!</string>
+
+    <!-- AddRecordActivity Layout -->
+    <string name="AddRecordActivity_navigation_title">Add Record</string>
 </resources>

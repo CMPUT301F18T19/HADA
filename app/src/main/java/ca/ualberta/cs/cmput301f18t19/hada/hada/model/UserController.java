@@ -10,6 +10,8 @@
  */
 package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -103,6 +105,7 @@ public class UserController {
         new ESUserManager.AddCareProviderTask().execute(careProvider);
     }
 
+
     //Retrieves Patient or Care Provider
     public Patient getPatient(String userId){
         ESUserManager.GetPatientTask patientTask = new ESUserManager.GetPatientTask();
@@ -135,8 +138,12 @@ public class UserController {
 
     public void addProblem(Problem problem){
         Patient patient = getPatient(LoggedInSingleton.getInstance().getLoggedInID());
+        Log.d("problem", problem.getDate().toString());
         patient.addProblem(problem);
         new ESUserManager.AddPatientTask().execute(patient);
+
+        //DEBUG
+
     }
     //Edits a given patients email address and updates it by overriding current ES index
     public void editPatientEmail(Patient patient, String email){
@@ -162,5 +169,15 @@ public class UserController {
         new ESUserManager.AddCareProviderTask().execute(careProvider);
     }
 
+    /**
+     * Adds a record to the problem of the logged in user located at the index given
+     * @param record
+     * @param index
+     */
+    public void addRecord(Record record, int index){
+        Patient patient = this.getPatient(LoggedInSingleton.getInstance().getLoggedInID());
+        patient.getProblemList().get(index).getRecords().add(record);
+        new ESUserManager.AddPatientTask().execute(patient);
+    }
 
 }

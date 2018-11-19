@@ -21,6 +21,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ESUserManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
@@ -153,17 +154,18 @@ public class AddProblemActivity extends AppCompatActivity {
                 String title = addProblemTitle.getText().toString();
                 String dateString = addProblemDate.getText().toString();
                 LocalDateTime date = LocalDateTime.parse(dateString, formatter);
+                Log.d("debug", "LocalDateTime is"+ date);
                 String description = addProblemDescription.getText().toString();
                 if(description.equals("")| title.equals("")){
                     Toast.makeText(AddProblemActivity.this, "Please enter a description and title.", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Problem problem = new Problem(title, date, description);
-                    Toast.makeText(AddProblemActivity.this, "Problem saved!", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "title = " + title);
                     Log.d(TAG, "date = " + date);
                     Log.d(TAG, "description = " + description);
                     userController.addProblem(problem);
+                    Toast.makeText(AddProblemActivity.this, "Problem saved!", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }
