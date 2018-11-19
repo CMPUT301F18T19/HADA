@@ -69,6 +69,9 @@
     <string name="NewUserActivity_UserIdSpaces">User ID cannot contain spaces.</string>
     <string name="NewUserActivity_PatientSaved">Patient saved!</string>
     <string name="NewUserActivity_CareProviderSaved">Care Provider saved!</string>
+    <string name="editProblemSave">Save Problem</string>
+    <string name="Edit_Problem">Edit Problem</string>
+    <string name="Delete_problem_button">Delete Problem</string>
 
     <!-- AddRecordActivity Layout -->
     <string name="AddRecordActivity_navigation_title">Add Record</string>

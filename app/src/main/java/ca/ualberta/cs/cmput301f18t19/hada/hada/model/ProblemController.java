@@ -69,4 +69,11 @@ public class ProblemController {
     public void removeListener(Listener l){
         listeners.remove(l);
     }
+
+    public ArrayList<Problem> getProblemList(Patient patient){
+        ArrayList<Problem> problems = patient.getProblemList();
+        return problems;
+    }
+
+
 }
