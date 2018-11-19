@@ -21,7 +21,7 @@ public class RecordController {
     /**
      * Instantiates a new Record controller with an empty list of records.
      */
-    RecordController(){
+    public RecordController(){
         this.recordList = new ArrayList<>();
     }
 
