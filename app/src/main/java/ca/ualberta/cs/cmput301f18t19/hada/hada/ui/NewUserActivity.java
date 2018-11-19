@@ -94,6 +94,9 @@ public class NewUserActivity extends AppCompatActivity {
                 else if(userID.contains(" ")){
                     Toast.makeText(NewUserActivity.this, getString(R.string.NewUserActivity_UserIdSpaces), Toast.LENGTH_SHORT).show();
                 }
+                else if(new UserController().userExists(userID)){
+                    Toast.makeText(NewUserActivity.this,getString(R.string.NewUserActivity_userid_in_use), Toast.LENGTH_SHORT).show();
+                }
                 else{
                     if(newPatient){
                         new UserController().addPatient(userID, userPhone, userEmail);

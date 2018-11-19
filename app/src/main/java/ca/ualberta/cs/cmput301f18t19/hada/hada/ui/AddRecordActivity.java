@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.RecordController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
