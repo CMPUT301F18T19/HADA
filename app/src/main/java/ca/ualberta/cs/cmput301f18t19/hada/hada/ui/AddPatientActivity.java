@@ -50,7 +50,7 @@ public class AddPatientActivity extends AppCompatActivity {
         titleTextView.setText(titleText);
 
 
-
+        //TODO Check if patient is already on the CP's list of patients
         //Save button
         Button saveButton = findViewById(R.id.addPatientSavePatientButton);
         saveButton.setOnClickListener(new View.OnClickListener() {

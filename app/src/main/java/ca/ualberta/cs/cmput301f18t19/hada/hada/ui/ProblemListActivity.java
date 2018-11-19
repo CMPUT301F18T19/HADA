@@ -97,10 +97,4 @@ public class ProblemListActivity extends AppCompatActivity implements Serializab
         problemArrayAdapter.notifyDataSetChanged();
 
     }
-
-    @Override
-    protected void onResume(){
-        super.onResume();
-
-    }
 }
