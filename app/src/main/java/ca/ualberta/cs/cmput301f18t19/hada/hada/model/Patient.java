@@ -11,8 +11,9 @@
 
 package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
-
 import java.util.ArrayList;
+
+
 
 /**
  * Object which represents a user of type patient.
@@ -21,7 +22,7 @@ import java.util.ArrayList;
  * @see User
  */
 public class Patient extends User {
-    private ArrayList<Problem> problemList = new ArrayList<Problem>();
+    private ArrayList<Problem> problemList = new ArrayList<>();
 
     /**
      * Instantiates a new Patient with no attributes set.
@@ -107,8 +108,11 @@ public class Patient extends User {
         problemList.remove(problem);
     }
 
-
-
+    //Overide toString for ListView usage
+    @Override
+    public String toString(){
+        return this.getUserID();
+    }
 
 
 

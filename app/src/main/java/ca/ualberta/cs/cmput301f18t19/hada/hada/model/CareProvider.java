@@ -58,4 +58,8 @@ public class CareProvider extends User {
     public ArrayList<Patient> getPatients(){
         return this.patients;
     }
+
+    public void addPatient(Patient patient){
+        patients.add(patient);
+    }
 }

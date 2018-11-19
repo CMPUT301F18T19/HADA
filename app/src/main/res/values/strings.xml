@@ -27,7 +27,7 @@
     <string name="select_photos">Select Photos</string>
     <string name="save_geo_location">Save Geo location</string>
     <string name="record_photo">Record photo</string>
-    <string name="add_patient_id_hint">Patient UserID</string>
+    <string name="addPatient_Id_hint">Patient UserID:</string>
     <string name="generic_save">Save</string>
     <string name="edit_date">Edit Date</string>
     <string name="edit_time">Edit Time</string>

@@ -40,14 +40,9 @@ public class ProblemController {
         return problemList.get(index);
     }
 
-    /**
-     * Adds a problem to the problems list.
-     *
-     * @param problem the problem
-     */
-    public void addProblem(Problem problem) {
-        problemList.add(problem);
-    }
+    //public void addProblem(Problem problem) {
+        //problemList.add(problem);
+    //}
 
     /**
      * Inserts a problem at a given index in the list.
@@ -106,44 +101,16 @@ public class ProblemController {
         return problemList.indexOf(problem);
     }
 
-    /**
-     * Notifies any listeners -- likely to be removed
-     */
-    public void notifyListeners(){
-        for (Listener listener : listeners){
-            if(listener != null){
-                listener.update();}
-        }
+
+    public ArrayList<Problem> getProblemList(String userId){
+        Patient patient = new UserController().getPatient(userId);
+        return patient.getProblemList();
     }
 
-    /**
-     * Add listener. -- likely to be removed
-     *
-     * @param l the listener
-     */
-    public void addListener(Listener l){
-        listeners.add(l);
+    public void addProblem(Problem problem){
+        new UserController().addProblemToList(problem);
     }
 
-    /**
-     * Remove listener. -- likely to be removed
-     *
-     * @param l the listener
-     */
-    public void removeListener(Listener l){
-        listeners.remove(l);
-    }
-
-    /**
-     * Returns the list of problems associated with the controller.
-     *
-     * @param patient the patient
-     * @return the array list
-     */
-    public ArrayList<Problem> getProblemList(Patient patient){
-        ArrayList<Problem> problems = patient.getProblemList();
-        return problems;
-    }
 
 
 }
