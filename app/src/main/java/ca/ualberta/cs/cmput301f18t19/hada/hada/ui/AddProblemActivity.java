@@ -68,17 +68,20 @@ public class AddProblemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_problem);
 
         // get references for editTexts
-        addProblemTitle = findViewById(R.id.editProblemTitle);
-        addProblemDate = findViewById(R.id.editProblemDate);
-        addProblemDescription = findViewById(R.id.editProblemDescription);
+        addProblemTitle = findViewById(R.id.addProblemTitle);
+        addProblemDate = findViewById(R.id.addProblemDate);
+        addProblemDescription = findViewById(R.id.addProblemDescription);
         addProblemButton = findViewById(R.id.addProblemButton);
         changeDateButton = findViewById(R.id.changeDateButton);
-        changeTimeButton = findViewById(R.id.editProblemChangeTimeButton);
+        changeTimeButton = findViewById(R.id.changeTimeButton);
 
         //set date to current date and time
         final LocalDateTime currentDate = LocalDateTime.now();
+
         String currentDateString = currentDate.format(formatter);
-        addProblemDate.setText(currentDateString);
+        Log.d("test", currentDateString);
+        Log.d("test", currentDateString.getClass().getSimpleName());
+        addProblemDate.setText(currentDate.format(formatter));
 
         //for selecting custom date
         //Based on adj-feelsbook by Anders Johnson
