@@ -72,6 +72,7 @@
     <string name="editProblemSave">Save Problem</string>
     <string name="Edit_Problem">Edit Problem</string>
     <string name="Delete_problem_button">Delete Problem</string>
+    <string name="NewUserActivity_userid_in_use">User ID already in use.</string>
 
     <!-- AddRecordActivity Layout -->
     <string name="AddRecordActivity_navigation_title">Add Record</string>

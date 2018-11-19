@@ -111,6 +111,16 @@ public class UserController {
         return null;
     }
 
+    public boolean userExists(String userId){
+        Patient patient = getPatient(userId);
+        CareProvider careProvider = getCareProvider(userId);
+        if(patient == null && careProvider == null){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
     /**
      * Add a listener to the list of patient listeners.
      *
