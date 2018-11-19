@@ -11,8 +11,9 @@
 
 package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
-
 import java.util.ArrayList;
+
+
 
 /**
  * @author Joseph Potentier-Neal
@@ -20,7 +21,7 @@ import java.util.ArrayList;
  * @version
  */
 public class Patient extends User {
-    private ArrayList<Problem> problemList = new ArrayList<Problem>();
+    private ArrayList<Problem> problemList = new ArrayList<>();
 
     public Patient(){
         super();
@@ -28,7 +29,6 @@ public class Patient extends User {
     public Patient(String userID, String phoneNumber, String emailAddress){
         super(userID, phoneNumber, emailAddress);
     }
-
 
     /*Following are the problemList operation*/
     public void setProblemList(ArrayList<Problem> newProblemList){
@@ -38,6 +38,7 @@ public class Patient extends User {
     public ArrayList<Problem> getProblemList(){
         return this.problemList;
     }
+
 
     public void clearProblemList(){
         problemList.clear();
@@ -60,8 +61,11 @@ public class Patient extends User {
         problemList.remove(problem);
     }
 
-
-
+    //Overide toString for ListView usage
+    @Override
+    public String toString(){
+        return this.getUserID();
+    }
 
 
 

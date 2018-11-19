@@ -71,8 +71,7 @@ public class EditProblemActivity extends AppCompatActivity implements Serializab
         Intent intent = getIntent();
         int position = (int) intent.getSerializableExtra("problemObject");
         String loggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
-        Patient patient = new UserController().getPatient(loggedInUser);
-        final ArrayList<Problem> problems = new ProblemController().getProblemList(patient);
+        final ArrayList<Problem> problems = new ProblemController().getProblemList(loggedInUser);
         final Problem oldProblem = problems.get(position);
 
 

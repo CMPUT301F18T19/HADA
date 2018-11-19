@@ -29,9 +29,9 @@ public class ProblemController {
         return problemList.get(index);
     }
 
-    public void addProblem(Problem problem) {
-        problemList.add(problem);
-    }
+    //public void addProblem(Problem problem) {
+        //problemList.add(problem);
+    //}
 
     public void insertProblem(int index, Problem problem) {
         problemList.add(index, problem);
@@ -57,23 +57,16 @@ public class ProblemController {
         return problemList.indexOf(problem);
     }
 
-    public void notifyListeners(){
-        for (Listener listener : listeners){
-            if(listener != null){
-                listener.update();}
-        }
-    }
-    public void addListener(Listener l){
-        listeners.add(l);
-    }
-    public void removeListener(Listener l){
-        listeners.remove(l);
+
+    public ArrayList<Problem> getProblemList(String userId){
+        Patient patient = new UserController().getPatient(userId);
+        return patient.getProblemList();
     }
 
-    public ArrayList<Problem> getProblemList(Patient patient){
-        ArrayList<Problem> problems = patient.getProblemList();
-        return problems;
+    public void addProblem(Problem problem){
+        new UserController().addProblemToList(problem);
     }
+
 
 
 }
