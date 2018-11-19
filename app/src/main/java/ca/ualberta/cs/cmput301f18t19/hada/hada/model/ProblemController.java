@@ -58,9 +58,9 @@ public class ProblemController {
     }
 
 
-    public ArrayList<Problem> getProblemList(Patient patient){
-        ArrayList<Problem> problems = patient.getProblemList();
-        return problems;
+    public ArrayList<Problem> getProblemList(String userId){
+        Patient patient = new UserController().getPatient(userId);
+        return patient.getProblemList();
     }
 
     public void addProblem(Problem problem){

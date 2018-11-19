@@ -95,10 +95,19 @@ public class UserController {
         Log.d("problem", problem.getDate().toString());
         patient.addProblem(problem);
         new ESUserManager.AddPatientTask().execute(patient);
-
-        //DEBUG
-
     }
+
+    public boolean addPatientToCareProvider(String userId){
+        Patient patient = getPatient(userId);
+        if(patient != null){
+            CareProvider careProvider = getCareProvider(LoggedInSingleton.getInstance().getLoggedInID());
+            careProvider.addPatient(patient);
+            new ESUserManager.AddCareProviderTask().execute(careProvider);
+            return true;
+        }
+        else {return false;}
+    }
+
     //Edits a given patients email address and updates it by overriding current ES index
     public void editPatientEmail(Patient patient, String email){
         patient.setEmailAdress(email);
@@ -133,5 +142,14 @@ public class UserController {
         patient.getProblemList().get(index).getRecords().add(record);
         new ESUserManager.AddPatientTask().execute(patient);
     }
+
+    //Gets a list of patients for a given CareProvider
+    public ArrayList<Patient> getPatientList(String userId){
+        CareProvider careProvider = getCareProvider(userId);
+        return careProvider.getPatients();
+    }
+
+
+
 
 }

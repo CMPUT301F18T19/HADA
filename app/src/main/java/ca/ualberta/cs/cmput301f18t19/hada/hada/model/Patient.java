@@ -61,6 +61,12 @@ public class Patient extends User {
         problemList.remove(problem);
     }
 
+    //Overide toString for ListView usage
+    @Override
+    public String toString(){
+        return this.getUserID();
+    }
+
 
 
     //TODO setFullBodyImage() once we know of the data type/structure.
