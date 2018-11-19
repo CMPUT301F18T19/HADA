@@ -16,10 +16,28 @@ import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 
+/**
+ * Class resposible for saving and loading users from the ElasticSearch server.
+ *
+ * @version 1.0
+ * @author Anders, Joe
+ * @see Patient
+ * @see CareProvider
+ */
 public class ESUserManager {
+    /**
+     * The JestDroidClient which is built with setClient() each time ESUserManager
+     * performs an action.
+     */
     static JestDroidClient client = null;
+    /**
+     * The index of the ElasticSearch node -- currently set to the test one while app is built.
+     */
     static String teamIndex = "cmput301f18t19test";
 
+    /**
+     * Sets the client to connect to the ElasticSearch node with JestDroid methods.
+     */
     public static void setClient(){
         if(client == null){
             DroidClientConfig config = new DroidClientConfig
@@ -32,6 +50,9 @@ public class ESUserManager {
         }
     }
 
+    /**
+     * Task which loads a patient from the server when given a userID.
+     */
     public static class GetPatientTask extends AsyncTask<String, Void, Patient> {
         @Override
         protected Patient doInBackground(String... params){
@@ -76,7 +97,10 @@ public class ESUserManager {
             }
         }
 
-        public static class AddPatientTask extends AsyncTask<Patient, Void, Void>{
+    /**
+     * Task which adds a Patient to the server, given a Patient object.
+     */
+    public static class AddPatientTask extends AsyncTask<Patient, Void, Void>{
         @Override
         protected Void doInBackground(Patient... params) {
             setClient();
@@ -103,6 +127,10 @@ public class ESUserManager {
             return null;
         }
     }
+
+    /**
+     * Task which adds a Care Provider to the server, given a CareProvider object.
+     */
     public static class AddCareProviderTask extends AsyncTask<CareProvider, Void, Void>{
         @Override
         protected Void doInBackground(CareProvider... params) {
@@ -131,6 +159,9 @@ public class ESUserManager {
         }
     }
 
+    /**
+     * Task which retrieves a CareProvider object from the server given a userID.
+     */
     public static class GetCareProviderTask extends AsyncTask<String, Void, CareProvider> {
         @Override
         protected CareProvider doInBackground(String... params) {
