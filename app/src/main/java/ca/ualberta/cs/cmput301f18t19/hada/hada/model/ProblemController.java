@@ -20,14 +20,11 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.utility.Listener;
  * @version 0.1
  */
 public class ProblemController {
-
     private ArrayList<Problem> problemList;
     private ArrayList<Listener> listeners;
 
-    //ProblemController() {
-        //this.problemList = new ArrayList<Problem>();
-   // }
-
+    public ProblemController(){this.problemList = new ArrayList<Problem>();}
+    
     public Problem getProblem(int index) {
         return problemList.get(index);
     }

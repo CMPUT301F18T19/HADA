@@ -36,6 +36,7 @@
     <string name="add_rem_photos">Add/Remove Photos</string>
     <string name="edit_comment">Edit Comment</string>
     <string name="enter_username">Username</string>
+    <string name="add_title">Add title</string>
 
     <!-- ProblemListActivity Layout-->
     <string name="problem_list_username">PATIENT USERNAME</string>
@@ -71,4 +72,7 @@
     <string name="editProblemSave">Save Problem</string>
     <string name="Edit_Problem">Edit Problem</string>
     <string name="Delete_problem_button">Delete Problem</string>
+
+    <!-- AddRecordActivity Layout -->
+    <string name="AddRecordActivity_navigation_title">Add Record</string>
 </resources>
