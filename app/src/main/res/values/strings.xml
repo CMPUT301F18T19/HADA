@@ -70,4 +70,5 @@
     <string name="NewUserActivity_CareProviderSaved">Care Provider saved!</string>
     <string name="editProblemSave">Save Problem</string>
     <string name="Edit_Problem">Edit Problem</string>
+    <string name="Delete_problem_button">Delete Problem</string>
 </resources>

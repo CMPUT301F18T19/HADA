@@ -44,6 +44,7 @@ public class EditProblemActivity extends AppCompatActivity implements Serializab
     private Button changeDateButton;
     private Button changeTimeButton;
     private Button editProblemButton;
+    private Button editProblemDelete;
     /**
      * The formatter object for converting localdatetime objects to and from strings.
      */
@@ -71,7 +72,7 @@ public class EditProblemActivity extends AppCompatActivity implements Serializab
         int position = (int) intent.getSerializableExtra("problemObject");
         String loggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
         Patient patient = new UserController().getPatient(loggedInUser);
-        ArrayList<Problem> problems = new ProblemController().getProblemList(patient);
+        final ArrayList<Problem> problems = new ProblemController().getProblemList(patient);
         final Problem oldProblem = problems.get(position);
 
 
@@ -84,6 +85,7 @@ public class EditProblemActivity extends AppCompatActivity implements Serializab
         editProblemButton = findViewById(R.id.editProblemButton);
         changeDateButton = findViewById(R.id.editProblemChangeDateButton);
         changeTimeButton = findViewById(R.id.editProblemChangeTimeButton);
+        editProblemDelete = findViewById(R.id.editProblemDelete);
 
 
         //set date to current date and time
@@ -184,6 +186,14 @@ public class EditProblemActivity extends AppCompatActivity implements Serializab
                     Log.d(TAG, "description = " + description);
                     finish();
                 }
+            }
+        });
+        editProblemDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                problems.remove(oldProblem);
+                //TODO REMOVE PROBLEM FROM ES
+                finish();
             }
         });
     }
