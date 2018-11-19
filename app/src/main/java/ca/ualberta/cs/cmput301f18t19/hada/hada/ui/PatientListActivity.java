@@ -32,11 +32,16 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ProblemController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
 
 /**
- * The type Patient list activity.
+ * Activity for viewing list of patients.
+ *
+ * @author Joe
+ * @see ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider
+ * @see Patient
+ *
  */
 public class PatientListActivity extends AppCompatActivity {
     /**
-     * The Logged in user.
+     * The userID of the user currently logged in.
      */
     String loggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
 
