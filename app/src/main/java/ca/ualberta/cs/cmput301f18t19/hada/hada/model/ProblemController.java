@@ -24,9 +24,9 @@ public class ProblemController {
     private ArrayList<Problem> problemList;
     private ArrayList<Listener> listeners;
 
-    ProblemController() {
-        this.problemList = new ArrayList<Problem>();
-    }
+    //ProblemController() {
+        //this.problemList = new ArrayList<Problem>();
+   // }
 
     public Problem getProblem(int index) {
         return problemList.get(index);
@@ -72,4 +72,11 @@ public class ProblemController {
     public void removeListener(Listener l){
         listeners.remove(l);
     }
+
+    public ArrayList<Problem> getProblemList(Patient patient){
+        ArrayList<Problem> problems = patient.getProblemList();
+        return problems;
+    }
+
+
 }
