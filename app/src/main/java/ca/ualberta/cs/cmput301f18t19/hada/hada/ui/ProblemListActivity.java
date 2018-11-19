@@ -100,6 +100,8 @@ public class ProblemListActivity extends AppCompatActivity implements Serializab
     protected void onResume(){
         super.onResume();
         //Displays the list of problems
+
+
         ListView listView = findViewById(R.id.problemListListView);
         ArrayList<Problem> problems = new ProblemController().getProblemList(loggedInUser);
         ArrayAdapter<Problem> problemArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, problems);

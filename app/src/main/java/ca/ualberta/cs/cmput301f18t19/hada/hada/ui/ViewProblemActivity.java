@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -38,6 +39,8 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ProblemController;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.RecordController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
 
 /**
@@ -49,7 +52,10 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
  */
 public class ViewProblemActivity extends AppCompatActivity {
 
-    private ListView problemsList;
+    private ListView recordsList;
+    private ArrayList<Record> records;
+    private Problem oldProblem;
+    private int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,21 +63,22 @@ public class ViewProblemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_problem);
 
         Intent intent = getIntent();
-        int position = (int) intent.getSerializableExtra("Position");
+        position = (int) intent.getSerializableExtra("Position");
         String LoggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
         final ArrayList<Problem> problems = new ProblemController().getProblemList(LoggedInUser);
-        final Problem oldProblem = problems.get(position);
+        oldProblem = problems.get(position);
+        records = oldProblem.getRecords();
 
-        problemsList = (ListView) findViewById(R.id.viewPatientProblemsList);
+        recordsList = (ListView) findViewById(R.id.viewProblemList);
         ImageButton viewMap = (ImageButton) findViewById(R.id.viewProblemMapButton);
         ImageButton addRecord = (ImageButton) findViewById(R.id.viewProblemAddRecordButton);
         ImageButton viewSlideshow = (ImageButton) findViewById(R.id.viewProblemSlideshowButton);
 
-        problemsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        recordsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent =  new Intent(ViewProblemActivity.this, ViewRecordActivity.class);
-                Problem selected_problem = problems.get(position);
+            public void onItemClick(AdapterView<?> parent, View view, int recordPosition, long id) {
+                Intent intent = new Intent(ViewProblemActivity.this, ViewRecordActivity.class);
+                intent.putExtra("Position", recordPosition);
                 startActivity(intent);
 
             }
@@ -91,7 +98,9 @@ public class ViewProblemActivity extends AppCompatActivity {
         addRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(ViewProblemActivity.this, AddRecordActivity.class);
+                intent.putExtra("problem", position);
+                startActivity(intent);
 
             }
         });
@@ -107,12 +116,29 @@ public class ViewProblemActivity extends AppCompatActivity {
         });
 
 
-
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    protected void onResume() {
+        super.onResume();
+        //Displays the list of records
+
+        /**
+         * As 'position' is taken from the previous intent as a way to get the record list, the
+         * 'position' variable can't be used again after a new record is added. PatientController
+         * can return the problem list from the user's id, but there is currently no way to return
+         * the recordlist for a problem from the RecordController
+         *
+         *
+         */
+        
+        ListView listView = findViewById(R.id.viewProblemList);
+        ArrayList<Record> records = oldProblem.getRecords();
+
+        ArrayAdapter<Record> recordArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, records);
+        listView.setAdapter(recordArrayAdapter);
+        recordArrayAdapter.notifyDataSetChanged();
 
     }
+
 }
