@@ -68,6 +68,15 @@ public class ProblemListActivity extends AppCompatActivity implements Serializab
             }
         });
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(ProblemListActivity.this, ViewProblemActivity.class);
+                intent.putExtra("Position", position);
+                startActivity(intent);
+            }
+        });
+
 
 
 

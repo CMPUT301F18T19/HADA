@@ -13,9 +13,18 @@
 
 package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import java.util.ArrayList;
+
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ProblemController;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
 
 public class ViewProblemActivity extends AppCompatActivity {
 
@@ -23,5 +32,11 @@ public class ViewProblemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_problem);
+        Intent intent = getIntent();
+        int position = (int) intent.getSerializableExtra("problemObject");
+        String loggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
+        Patient patient = new UserController().getPatient(loggedInUser);
+        final ArrayList<Problem> problems = new ProblemController().getProblemList(patient);
+        final Problem oldProblem = problems.get(position);
     }
 }
