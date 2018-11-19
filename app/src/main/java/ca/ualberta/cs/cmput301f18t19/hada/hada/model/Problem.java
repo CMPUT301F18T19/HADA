@@ -14,7 +14,7 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-class Problem {
+public class Problem {
 
     private String title;
     private LocalDateTime date;
