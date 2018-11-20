@@ -22,6 +22,13 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.RecordController;
 
 import static android.view.KeyEvent.ACTION_DOWN;
 
+/**
+ * Activity to view a specific record from a problem.
+ *
+ * @author Austin, Jason
+ * @see Record
+ * @see Problem
+ */
 public class ViewRecordActivity extends AppCompatActivity {
 
     private ListView recordsList;
