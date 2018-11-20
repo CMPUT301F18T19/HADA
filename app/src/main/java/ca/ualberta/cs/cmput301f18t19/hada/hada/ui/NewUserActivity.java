@@ -24,9 +24,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.UserController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
 
 /**
  * Activity for adding new users (patient or care provider).

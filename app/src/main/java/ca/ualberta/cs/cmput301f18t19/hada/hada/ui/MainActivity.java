@@ -26,11 +26,11 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.UserController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESUserManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
 
 /**
  * Main Acitivity of app. Login screen for users.
