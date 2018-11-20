@@ -102,8 +102,7 @@ public class AddRecordActivity extends AppCompatActivity {
                         record.setGeoLocation(lastKnownLocation);
                         //TODO: Photos
                         Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " comment=" +record.getComment() + " location="+record.getGeoLocation().toString());
-                        UserController userController = new UserController();
-                        userController.addRecord(record, problemIndex);
+                        new RecordController().addRecord(record, problemIndex);
                         finish();
                     }catch(SecurityException e){
                         Toast.makeText(AddRecordActivity.this, "Unable to save location. Please enable the location permissions.", Toast.LENGTH_SHORT).show();
@@ -116,8 +115,7 @@ public class AddRecordActivity extends AppCompatActivity {
                     record.setTitle(title);
                     //TODO: Photos
                     Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " comment=" +record.getComment());
-                    UserController userController = new UserController();
-                    userController.addRecord(record, problemIndex);
+                    new RecordController().addRecord(record, problemIndex);
                     finish();
                 }
             }

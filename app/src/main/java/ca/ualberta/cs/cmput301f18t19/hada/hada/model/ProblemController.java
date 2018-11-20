@@ -108,7 +108,7 @@ public class ProblemController {
     }
 
     public void addProblem(Problem problem){
-        new UserController().addProblemToList(problem);
+        new UserController().addProblemToPatient(problem);
     }
 
 

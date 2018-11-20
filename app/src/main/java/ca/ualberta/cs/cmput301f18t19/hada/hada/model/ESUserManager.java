@@ -51,6 +51,38 @@ public class ESUserManager {
     }
 
     /**
+     * Task which adds a Patient to the server, given a Patient object.
+     */
+    public static class AddPatientTask extends AsyncTask<Patient, Void, Void>{
+        @Override
+        protected Void doInBackground(Patient... params) {
+            setClient();
+            Patient patient = params[0];
+            Log.d("newPatient", "Id = "+ patient.getUserID() + " Phone = " + patient.getPhoneNumber() +" Email = "+ patient.getEmailAddress());
+            try {
+                Index index = new Index.Builder(patient)
+                        .index(teamIndex)
+                        .type("patient")
+                        .id(patient.getUserID())
+                        .refresh(true)
+                        .build();
+                DocumentResult result = client.execute(index);
+                Log.d("index", index.getURI());
+                Log.d("What is result",result.getJsonString());
+                if (result.isSucceeded()) {
+                    Log.d("AddPatientTask", "We did it boys");
+                } else {
+                    Log.d("AddPatientTask", "Could not add patient");
+                }
+            } catch (IOException e) {
+                Log.d("AddPatientTask", "Failed to execute");
+            }
+
+            return null;
+        }
+    }
+
+    /**
      * Task which loads a patient from the server when given a userID.
      */
     public static class GetPatientTask extends AsyncTask<String, Void, Patient> {
@@ -98,37 +130,6 @@ public class ESUserManager {
         }
 
     /**
-     * Task which adds a Patient to the server, given a Patient object.
-     */
-    public static class AddPatientTask extends AsyncTask<Patient, Void, Void>{
-        @Override
-        protected Void doInBackground(Patient... params) {
-            setClient();
-            Patient patient = params[0];
-            Log.d("newPatient", "Id = "+ patient.getUserID() + " Phone = " + patient.getPhoneNumber() +" Email = "+ patient.getEmailAddress());
-            try {
-                Index index = new Index.Builder(patient)
-                        .index(teamIndex)
-                        .type("patient")
-                        .id(patient.getUserID())
-                        .build();
-                DocumentResult result = client.execute(index);
-                Log.d("index", index.getURI());
-                Log.d("What is result",result.getJsonString());
-                if (result.isSucceeded()) {
-                    Log.d("AddPatientTask", "We did it boys");
-                } else {
-                    Log.d("AddPatientTask", "Could not add patient");
-                }
-            } catch (IOException e) {
-                Log.d("AddPatientTask", "Failed to execute");
-            }
-
-            return null;
-        }
-    }
-
-    /**
      * Task which adds a Care Provider to the server, given a CareProvider object.
      */
     public static class AddCareProviderTask extends AsyncTask<CareProvider, Void, Void>{
@@ -142,6 +143,7 @@ public class ESUserManager {
                         .index(teamIndex)
                         .type("careprovider")
                         .id(careProvider.getUserID())
+                        .refresh(true)
                         .build();
                 DocumentResult result = client.execute(index);
                 Log.d("index", index.getURI());
