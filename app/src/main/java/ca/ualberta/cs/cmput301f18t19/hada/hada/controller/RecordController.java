@@ -8,7 +8,6 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
 
 /**
  * Controller for a given list of records.
