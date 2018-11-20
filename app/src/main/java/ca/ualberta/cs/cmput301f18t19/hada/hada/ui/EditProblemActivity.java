@@ -190,8 +190,7 @@ public class EditProblemActivity extends AppCompatActivity implements Serializab
         editProblemDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                problems.remove(oldProblem);
-                //TODO REMOVE PROBLEM FROM ES
+                new UserController().removeProblemOfPatient(oldProblem);
                 finish();
             }
         });

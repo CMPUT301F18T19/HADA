@@ -153,6 +153,17 @@ public class UserController {
     }
 
     /**
+     * Removes a problem from the patient's problems list.
+     *
+     * @param problem the problem
+     */
+    public void removeProblemOfPatient(Problem problem){
+        Patient patient = getPatient(LoggedInSingleton.getInstance().getLoggedInID());
+        patient.removeProblem(problem);
+        new ESUserManager.AddPatientTask().execute(patient);
+    }
+
+    /**
      * Checks if patient is in the list of patients associated with the logged in CareProvider.
      * Adds them to the list if they are not null, and returns a boolean associated with the
      * success or failure of the operation.

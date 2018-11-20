@@ -99,4 +99,13 @@ public class ProblemListActivityTest {
 
     }
 
+    //Assuming deletion of problems works.
+    @Test
+    public void testDeleteProblem(){
+        Espresso.onData(anything()).inAdapterView(withId(R.id.problemListListView))
+                .atPosition(0).perform(longClick());
+        Espresso.onView(withId(R.id.editProblemDelete)).perform(click());
+        Espresso.onView(withText("testTitle")).check(doesNotExist());
+    }
+
 }
