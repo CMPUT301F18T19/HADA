@@ -6,8 +6,6 @@ import org.junit.Test;
 
 import java.time.LocalDateTime;
 
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
-
 import static org.junit.Assert.*;
 
 /**

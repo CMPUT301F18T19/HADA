@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,17 +13,12 @@ import android.widget.TextView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ESUserManager;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.ProblemController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ProblemController;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.User;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.utility.Listener;
 
 /**
  * Activity for browsing problems of a given patient.
@@ -100,6 +94,8 @@ public class ProblemListActivity extends AppCompatActivity implements Serializab
     protected void onResume(){
         super.onResume();
         //Displays the list of problems
+
+
         ListView listView = findViewById(R.id.problemListListView);
         ArrayList<Problem> problems = new ProblemController().getProblemList(loggedInUser);
         ArrayAdapter<Problem> problemArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, problems);

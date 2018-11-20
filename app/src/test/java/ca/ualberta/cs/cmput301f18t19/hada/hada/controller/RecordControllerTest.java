@@ -1,9 +1,7 @@
-package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
+package ca.ualberta.cs.cmput301f18t19.hada.hada.controller;
 
-import org.junit.Test;
-
-import static org.junit.Assert.*;
-
+//This does not reflect the current RecordController!
+/*
 public class RecordControllerTest {
 
     @Test
@@ -113,4 +111,4 @@ public class RecordControllerTest {
         assertEquals(1, recordList.getPosition(record2));
     }
 
-}
+}*/

@@ -18,6 +18,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,8 +28,6 @@ import java.util.ArrayList;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ProblemController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
 
 /**
@@ -67,6 +66,18 @@ public class PatientListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        //Goes to ViewPatientProblemsActivity
+        ListView listView = findViewById(R.id.patientListListView);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(PatientListActivity.this, ViewPatientProblemsActivity.class);
+                intent.putExtra("Position", position);
+                startActivity(intent);
+            }
+        });
+
 
     }
 

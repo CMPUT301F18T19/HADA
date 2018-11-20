@@ -1,6 +1,8 @@
-package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
+package ca.ualberta.cs.cmput301f18t19.hada.hada.controller;
 
 import org.junit.Test;
+
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 
 import static org.junit.Assert.*;
 

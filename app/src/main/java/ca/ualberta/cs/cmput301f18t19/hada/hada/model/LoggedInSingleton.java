@@ -1,5 +1,7 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
+import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESUserManager;
+
 /**
  * Singleton for dealing with the currently logged in user.
  *

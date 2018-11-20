@@ -27,7 +27,7 @@ import java.util.concurrent.ExecutionException;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ESUserManager;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESUserManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, ProblemListActivity.class);
                     startActivity(intent);
                 }
-                else{Toast.makeText(MainActivity.this, "Username does not exist. Create a new user instead!?", Toast.LENGTH_SHORT).show();}
+                else{Toast.makeText(MainActivity.this, getString(R.string.login_error_message), Toast.LENGTH_SHORT).show();}
 
             }
         });
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(MainActivity.this, PatientListActivity.class);
                         startActivity(intent);
                     }
-                    else{Toast.makeText(MainActivity.this, "Username does not exist. Create a new user instead!?", Toast.LENGTH_SHORT).show();}
+                    else{Toast.makeText(MainActivity.this, getString(R.string.login_error_message), Toast.LENGTH_SHORT).show();}
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {

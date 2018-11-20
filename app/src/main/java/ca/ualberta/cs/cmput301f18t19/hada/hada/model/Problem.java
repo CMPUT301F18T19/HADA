@@ -11,8 +11,6 @@
 
 package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
-import android.util.Log;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -28,7 +26,7 @@ public class Problem {
     private String title;
     private LocalDateTime date;
     private String description;
-    private ArrayList<Record> records = new ArrayList<Record>();
+    private ArrayList<Record> records = new ArrayList<>();
 
     /**
      * Instantiates a new Problem with no attributes given.
