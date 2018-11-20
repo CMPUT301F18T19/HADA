@@ -15,10 +15,10 @@ import java.util.ArrayList;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.ProblemController;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.UserController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
 
 /**
  * Activity for viewing the problems for a given patient in a CareProvider's list of patients.
@@ -68,7 +68,7 @@ public class ViewPatientProblemsActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int problemPosition, long id) {
-                Intent intent = new Intent(ViewPatientProblemsActivity.this, PatientProblemComment.class);
+                Intent intent = new Intent(ViewPatientProblemsActivity.this, PatientProblemCommentActivity.class);
                 intent.putExtra("patientPosition", patientPosition);
                 intent.putExtra("problemPosition", problemPosition);
                 startActivity(intent);
