@@ -131,7 +131,7 @@ public class ViewProblemActivity extends AppCompatActivity {
          *
          *
          */
-        
+
         ListView listView = findViewById(R.id.viewProblemList);
         ArrayList<Record> records = oldProblem.getRecords();
 
