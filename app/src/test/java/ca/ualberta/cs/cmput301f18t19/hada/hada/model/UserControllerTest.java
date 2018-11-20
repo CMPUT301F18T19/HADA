@@ -138,37 +138,6 @@ public class UserControllerTest {
     }
 
     /**
-     * test method for addProblemToList()
-     */
-    @Test
-    public void addProblemToList() {
-        // set up problem and mockLogIn for test
-        String problemTitle = "testProblem";
-        LocalDateTime date =
-                new Date()
-                .toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime();
-        String description = "testDescription";
-        Problem problem = new Problem(problemTitle, date, description);
-        String userID = "testPatient";
-        Patient patient = new Patient(
-                userID,
-                "1234567890",
-                "testPatient@testing.test");
-        mockLogIn.setLoggedInID(userID);
-        mockLogIn.setIsCareProvider(false);
-
-        try{
-            userController.addProblemToList(problem);
-            ESUserManager.GetPatientTask getPatientTask = new ESUserManager.GetPatientTask();
-            getPatientTask.execute(userID);
-            Patient testSubj = getPatientTask.get();
-            assertEquals(problem, testSubj.getProblem(0));
-        }catch (Exception e){}
-    }
-
-    /**
      * test method for addPatientToCareProvider()
      */
     @Test
@@ -194,7 +163,9 @@ public class UserControllerTest {
         } catch (Exception e) {}
     }
 
-
+    /**
+     * test method for editPatientEmail()
+     */
     @Test
     public void editPatientEmail() {
         String userID = "editPatientEmailTest";
