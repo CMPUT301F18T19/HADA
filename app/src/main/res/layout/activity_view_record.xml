@@ -57,7 +57,7 @@
         app:layout_constraintTop_toBottomOf="@+id/viewRecordEditTime" />
 
     <Button
-        android:id="@+id/viewRecordEditLocation"
+        android:id="@+id/viewRecordViewLocation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -79,7 +79,7 @@
         android:text="@string/add_rem_photos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewRecordEditLocation" />
+        app:layout_constraintTop_toBottomOf="@+id/viewRecordViewLocation" />
 
     <EditText
         android:id="@+id/viewRecordComment"
