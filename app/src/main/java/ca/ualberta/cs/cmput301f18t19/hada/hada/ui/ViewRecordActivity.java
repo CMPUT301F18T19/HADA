@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -14,13 +13,10 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.RecordController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ProblemController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.RecordController;
-
-import static android.view.KeyEvent.ACTION_DOWN;
 
 public class ViewRecordActivity extends AppCompatActivity {
 

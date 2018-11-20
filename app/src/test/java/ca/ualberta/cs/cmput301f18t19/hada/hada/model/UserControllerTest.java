@@ -12,15 +12,12 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
 import android.util.Log;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
+
+import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESUserManager;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;

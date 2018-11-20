@@ -1,5 +1,4 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada;
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -8,28 +7,21 @@ import org.junit.runner.RunWith;
 import java.time.LocalDateTime;
 
 import androidx.test.espresso.Espresso;
-import androidx.test.espresso.contrib.PickerActions;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.UserController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.RecordController;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.User;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.ui.MainActivity;
 
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.typeText;
-import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static androidx.test.espresso.matcher.RootMatchers.withDecorView;
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.core.IsNot.not;
 @RunWith(AndroidJUnit4.class)
 public class ViewProblemActivityTest {

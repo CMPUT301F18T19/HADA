@@ -8,10 +8,13 @@
  * Copyright (C) 2018  Austin Goebel, Anders Johnson, Alex Li,
  * Cristopher Penner, Joseph Potentier-Neal, Jason Robock
  */
-package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
+package ca.ualberta.cs.cmput301f18t19.hada.hada.controller;
 
 import java.util.ArrayList;
 
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.utility.Listener;
 
 /**
@@ -29,7 +32,7 @@ public class ProblemController {
      * Instantiates a new Problem controller with an empty list of problems.
      */
     public ProblemController() {
-        this.problemList = new ArrayList<Problem>();
+        this.problemList = new ArrayList<>();
     }
 
     /**

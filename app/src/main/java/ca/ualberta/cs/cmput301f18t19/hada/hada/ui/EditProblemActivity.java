@@ -14,8 +14,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import org.apache.commons.lang3.ObjectUtils;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -24,11 +22,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.ProblemController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ProblemController;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.User;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
 
 /**

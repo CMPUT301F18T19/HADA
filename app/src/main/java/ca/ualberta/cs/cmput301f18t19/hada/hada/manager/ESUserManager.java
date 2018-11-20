@@ -1,4 +1,4 @@
-package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
+package ca.ualberta.cs.cmput301f18t19.hada.hada.manager;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
 import io.searchbox.client.JestResult;
 import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Index;

@@ -11,8 +11,6 @@
 
 package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
-import android.util.Log;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 

@@ -12,8 +12,6 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
 
-import android.util.Log;
-
 import io.searchbox.annotations.JestId;
 
 /**
