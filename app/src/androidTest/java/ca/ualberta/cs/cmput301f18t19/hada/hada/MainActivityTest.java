@@ -8,11 +8,13 @@ import androidx.test.espresso.Espresso;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.ui.MainActivity;
 
 
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -30,43 +32,59 @@ public class MainActivityTest {
             new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void testInvalidLogin(){
+    public void testNoSavedUser(){
         Espresso.onView(withId(R.id.mainActivityUsernameText))
                 .perform(typeText("Hello"), closeSoftKeyboard());
         Espresso.onView(withId(R.id.mainActivityPatientLogin)).perform(click());
 
-        checkToastExists("Username does not exist. Create a new user instead!?");
+        checkToastExists("Username does not exist. Create a new user instead?");
 
     }
 
     @Test
     public void testValidPatientLogin(){
+        new UserController().addPatient("mainactivitytest_pat", "7", "e");
         Espresso.onView(withId(R.id.mainActivityUsernameText))
-                .perform(typeText("testPatient"), closeSoftKeyboard());
+                .perform(typeText("mainactivitytest_pat"), closeSoftKeyboard());
         Espresso.onView(withId(R.id.mainActivityPatientLogin)).perform(click());
-        checkToastDoesNotExist("Username does not exist. Create a new user instead!?");
+        checkToastDoesNotExist("Username does not exist. Create a new user instead?");
 
     }
 
     @Test
     public void testValidCareProviderLogin(){
+        new UserController().addCareProvider("mainactivitytest_doc", "7", "e");
         Espresso.onView(withId(R.id.mainActivityUsernameText))
-                .perform(typeText("testDoctor"), closeSoftKeyboard());
+                .perform(typeText("mainactivitytest_doc"), closeSoftKeyboard());
         Espresso.onView(withId(R.id.mainActivityDoctorLogin)).perform(click());
-        checkToastDoesNotExist("Username does not exist. Create a new user instead!?");
+        checkToastDoesNotExist("Username does not exist. Create a new user instead?");
 
     }
 
     @Test
     public void testNoInput(){
         Espresso.onView(withId(R.id.mainActivityDoctorLogin)).perform(click());
-        checkToastExists("Username does not exist. Create a new user instead!?");
+        checkToastExists("Username does not exist. Create a new user instead?");
 
         Espresso.onView(withId(R.id.mainActivityPatientLogin)).perform(click());
-        checkToastExists("Username does not exist. Create a new user instead!?");
+        checkToastExists("Username does not exist. Create a new user instead?");
 
     }
 
+    @Test
+    public void testWrongLogin(){
+        new UserController().addCareProvider("mainactivitytest_doc", "7", "e");
+        Espresso.onView(withId(R.id.mainActivityUsernameText))
+                .perform(typeText("mainactivitytest_doc"), closeSoftKeyboard());
+        Espresso.onView(withId(R.id.mainActivityPatientLogin)).perform(click());
+        checkToastExists("Username does not exist. Create a new user instead?");
+
+        Espresso.onView(withId(R.id.mainActivityUsernameText))
+                .perform(replaceText("testPatient"), closeSoftKeyboard());
+        Espresso.onView(withId(R.id.mainActivityDoctorLogin)).perform(click());
+        checkToastExists("Username does not exist. Create a new user instead?");
+
+    }
     public void checkToastExists(String message){
         //Thanks to user StefanTo on StackOverflow https://stackoverflow.com/questions/28390574/checking-toast-message-in-android-espresso#comment56063447_28606603
         Espresso.onView(withText(message)).inRoot(withDecorView(not(mActivityRule.getActivity().getWindow().getDecorView()))).check(matches(isDisplayed()));
