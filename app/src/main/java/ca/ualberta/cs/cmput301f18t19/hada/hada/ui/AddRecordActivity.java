@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.RecordController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -101,8 +102,7 @@ public class AddRecordActivity extends AppCompatActivity {
                         record.setGeoLocation(lastKnownLocation);
                         //TODO: Photos
                         Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " comment=" +record.getComment() + " location="+record.getGeoLocation().toString());
-                        UserController userController = new UserController();
-                        userController.addRecord(record, problemIndex);
+                        new RecordController().addRecord(record, problemIndex);
                         finish();
                     }catch(SecurityException e){
                         Toast.makeText(AddRecordActivity.this, "Unable to save location. Please enable the location permissions.", Toast.LENGTH_SHORT).show();
@@ -115,8 +115,7 @@ public class AddRecordActivity extends AppCompatActivity {
                     record.setTitle(title);
                     //TODO: Photos
                     Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " comment=" +record.getComment());
-                    UserController userController = new UserController();
-                    userController.addRecord(record, problemIndex);
+                    new RecordController().addRecord(record, problemIndex);
                     finish();
                 }
             }

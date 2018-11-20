@@ -28,7 +28,9 @@ public class ProblemController {
     /**
      * Instantiates a new Problem controller with an empty list of problems.
      */
-    public ProblemController(){this.problemList = new ArrayList<Problem>();}
+    public ProblemController() {
+        this.problemList = new ArrayList<Problem>();
+    }
 
     /**
      * Returns a problem given an index.
@@ -41,7 +43,7 @@ public class ProblemController {
     }
 
     //public void addProblem(Problem problem) {
-        //problemList.add(problem);
+    //problemList.add(problem);
     //}
 
     /**
@@ -52,6 +54,16 @@ public class ProblemController {
      */
     public void insertProblem(int index, Problem problem) {
         problemList.add(index, problem);
+    }
+
+    /**
+     * Sets problem at a given index.
+     *
+     * @param index   the index
+     * @param problem the problem
+     */
+    public void setProblem(int index, Problem problem) {
+        problemList.set(index, problem);
     }
 
     /**
@@ -102,15 +114,25 @@ public class ProblemController {
     }
 
 
-    public ArrayList<Problem> getProblemList(String userId){
+    /**
+     * Gets problem list.
+     *
+     * @param userId the user id
+     * @return the problem list
+     */
+    public ArrayList<Problem> getProblemList(String userId) {
         Patient patient = new UserController().getPatient(userId);
         return patient.getProblemList();
     }
 
-    public void addProblem(Problem problem){
-        new UserController().addProblemToList(problem);
+    /**
+     * Add problem.
+     *
+     * @param problem the problem
+     */
+    public void addProblem(Problem problem) {
+        new UserController().addProblemToPatient(problem);
     }
-
 
 
 }

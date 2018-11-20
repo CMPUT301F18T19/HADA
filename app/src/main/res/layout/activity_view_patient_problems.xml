@@ -4,12 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ViewPatientProblemsActivity">
+    tools:context=".ui.ViewPatientProblemsActivity"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <ListView
         android:id="@+id/viewPatientProblemsList"
         android:layout_width="0dp"
-        android:layout_height="373dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/viewPatientProblemsSearch"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -18,8 +24,10 @@
 
     <EditText
         android:id="@+id/viewPatientProblemsSearch"
-        android:layout_width="wrap_content"
-        android:layout_height="46dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:ems="10"
         android:inputType="textPersonName"
@@ -38,7 +46,8 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="NAME"
-        android:textSize="32dp"
+        android:textAlignment="center"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/viewPatientProblemsList"
         app:layout_constraintEnd_toStartOf="@+id/viewPAtientProblemsSettingsButton"
         app:layout_constraintStart_toStartOf="parent"

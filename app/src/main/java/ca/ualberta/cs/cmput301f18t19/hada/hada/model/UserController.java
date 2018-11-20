@@ -43,7 +43,6 @@ public class UserController {
      */
     public UserController(){}
 
-
     /**
      * Adds a patient to ElasticSearch when given the appropriate information.
      *
@@ -112,16 +111,21 @@ public class UserController {
     }
 
     /**
-     * Add a listener to the list of patient listeners.
+     * User exists boolean.
      *
-     * @param patient  the patient
-     * @param listener the listener
+     * @param userId the user id
+     * @return the boolean
      */
-//Adds listener to patient listeners
-    public void addListener(Patient patient, Listener listener) {
-        new ESUserManager.AddPatientTask().execute(patient);
+    public boolean userExists(String userId){
+        Patient patient = getPatient(userId);
+        CareProvider careProvider = getCareProvider(userId);
+        if(patient == null && careProvider == null){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
-
 
     /**
      * Add problem to the logged in patient's problems list.
@@ -129,10 +133,33 @@ public class UserController {
      * @param problem the problem
      */
 //Adds problem to list of problems
-    public void addProblemToList(Problem problem){
+    public void addProblemToPatient(Problem problem){
         Patient patient = getPatient(LoggedInSingleton.getInstance().getLoggedInID());
         Log.d("problem", problem.getDate().toString());
         patient.addProblem(problem);
+        new ESUserManager.AddPatientTask().execute(patient);
+    }
+
+    /**
+     * Set problem of patient at a given index.
+     *
+     * @param problem the problem
+     * @param index   the index
+     */
+    public void setProblemOfPatient(Problem problem, int index){
+        Patient patient = getPatient(LoggedInSingleton.getInstance().getLoggedInID());
+        patient.setProblem(index, problem);
+        new ESUserManager.AddPatientTask().execute(patient);
+    }
+
+    /**
+     * Removes a problem from the patient's problems list.
+     *
+     * @param problem the problem
+     */
+    public void removeProblemOfPatient(Problem problem){
+        Patient patient = getPatient(LoggedInSingleton.getInstance().getLoggedInID());
+        patient.removeProblem(problem);
         new ESUserManager.AddPatientTask().execute(patient);
     }
 
@@ -153,6 +180,18 @@ public class UserController {
             return true;
         }
         else {return false;}
+    }
+
+    /**
+     * Get patient list array list.
+     *
+     * @param userId the user id
+     * @return the array list
+     */
+//Gets a list of patients for a given CareProvider
+    public ArrayList<Patient> getPatientList(String userId){
+        CareProvider careProvider = getCareProvider(userId);
+        return careProvider.getPatients();
     }
 
     /**
@@ -202,33 +241,5 @@ public class UserController {
         careProvider.setPhoneNumber(phoneNumber);
         new ESUserManager.AddCareProviderTask().execute(careProvider);
     }
-
-    /**
-     * Adds a record to the problem of the logged in user.
-     * Index is the location of the problem in the user's problems list.
-     *
-     * @param record the record
-     * @param index  the index
-     */
-    public void addRecord(Record record, int index){
-        Patient patient = this.getPatient(LoggedInSingleton.getInstance().getLoggedInID());
-        patient.getProblemList().get(index).getRecords().add(record);
-        new ESUserManager.AddPatientTask().execute(patient);
-    }
-
-    /**
-     * Get patient list array list.
-     *
-     * @param userId the user id
-     * @return the array list
-     */
-//Gets a list of patients for a given CareProvider
-    public ArrayList<Patient> getPatientList(String userId){
-        CareProvider careProvider = getCareProvider(userId);
-        return careProvider.getPatients();
-    }
-
-
-
 
 }

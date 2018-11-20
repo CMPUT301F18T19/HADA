@@ -37,6 +37,7 @@
     <string name="edit_comment">Edit Comment</string>
     <string name="enter_username">Username</string>
     <string name="add_title">Add title</string>
+    <string name="login_error_message">Username does not exist. Create a new user instead?</string>
 
     <!-- ProblemListActivity Layout-->
     <string name="problem_list_username">PATIENT USERNAME</string>
@@ -72,6 +73,7 @@
     <string name="editProblemSave">Save Problem</string>
     <string name="Edit_Problem">Edit Problem</string>
     <string name="Delete_problem_button">Delete Problem</string>
+    <string name="NewUserActivity_userid_in_use">User ID already in use.</string>
 
     <!-- AddRecordActivity Layout -->
     <string name="AddRecordActivity_navigation_title">Add Record</string>

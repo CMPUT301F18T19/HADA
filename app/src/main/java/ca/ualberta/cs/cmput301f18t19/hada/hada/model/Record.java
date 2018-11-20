@@ -171,4 +171,17 @@ public class Record{
     public ArrayList<Integer> getBodyLocation() {
         return this.bodyLocation;
     }
+
+
+    /**
+     * Overrides the default toString() for this object
+     *
+     * @author Joe Potentier
+     * @return A print friendly string
+     */
+    @Override
+    public String toString(){
+        return this.getTitle();
+    }
+
 }
