@@ -28,13 +28,14 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ProblemController;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.User;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
 
 /**
  * Activity for editing problems to a given user's list of problems. edited from NewProblemActivity
  * @author Anders, Alex, Jason
  * @see Problem, Patient, ProblemListActivity
- * @version 1.0
+ * @version 1.1
  */
 public class EditProblemActivity extends AppCompatActivity implements Serializable {
     private static final String TAG = "EditProblemActivity";
@@ -69,7 +70,7 @@ public class EditProblemActivity extends AppCompatActivity implements Serializab
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_problem);
         Intent intent = getIntent();
-        int position = (int) intent.getSerializableExtra("problemObject");
+        final int position = (int) intent.getSerializableExtra("problemObject");
         String loggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
         final ArrayList<Problem> problems = new ProblemController().getProblemList(loggedInUser);
         final Problem oldProblem = problems.get(position);
@@ -176,9 +177,8 @@ public class EditProblemActivity extends AppCompatActivity implements Serializab
                 }
                 else {
                     //TODO add offline exception
-                    oldProblem.setDate(date);
-                    oldProblem.setTitle(title);
-                    oldProblem.setDesc(description);
+                    Problem changedProblem = new Problem(title, date, description);
+                    new UserController().setProblemOfPatient(changedProblem, position);
                     Toast.makeText(EditProblemActivity.this, "Problem saved!", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "title = " + title);
                     Log.d(TAG, "date = " + date);
