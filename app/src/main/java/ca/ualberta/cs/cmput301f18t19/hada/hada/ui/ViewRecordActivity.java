@@ -18,6 +18,13 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 
+/**
+ * Activity to view a specific record from a problem.
+ *
+ * @author Austin, Jason
+ * @see Record
+ * @see Problem
+ */
 public class ViewRecordActivity extends AppCompatActivity {
 
     private ListView recordsList;

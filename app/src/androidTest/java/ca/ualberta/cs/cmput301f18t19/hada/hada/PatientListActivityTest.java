@@ -36,6 +36,7 @@ public class PatientListActivityTest {
                 .perform(typeText("doctor_patientlistactivity"), closeSoftKeyboard());
         Espresso.onView(withId(R.id.mainActivityDoctorLogin)).perform(click());
 
+
         new UserController().addPatient("testPatient", "asd", "asf");
         new UserController().addPatientToCareProvider("testPatient");
 

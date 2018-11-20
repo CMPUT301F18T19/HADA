@@ -43,6 +43,9 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
  * @see Patient
  */
 public class ViewProblemActivity extends AppCompatActivity {
+    /**
+     * The Logged in user.
+     */
     String LoggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
     private ListView recordsList;
     private Problem oldProblem;
