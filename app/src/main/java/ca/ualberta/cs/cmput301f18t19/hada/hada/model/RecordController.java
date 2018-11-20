@@ -128,4 +128,12 @@ public class RecordController {
     public void removeListener(Listener l){
         listeners.remove(l);
     }
+
+    public ArrayList<Record> getRecordList(int index) {
+        ArrayList<Problem> problems = new ProblemController().getProblemList(LoggedInSingleton.getInstance().getLoggedInID());
+        Problem problem = problems.get(index);
+        recordList = problem.getRecords();
+
+        return recordList;
+    }
 }

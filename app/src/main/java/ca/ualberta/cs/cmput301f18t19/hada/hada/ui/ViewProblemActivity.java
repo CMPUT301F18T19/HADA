@@ -15,6 +15,7 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 
 import android.content.Intent;
 import android.media.Image;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -57,6 +58,8 @@ public class ViewProblemActivity extends AppCompatActivity {
     private Problem oldProblem;
     private int position;
 
+    private Record record;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +81,10 @@ public class ViewProblemActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int recordPosition, long id) {
                 Intent intent = new Intent(ViewProblemActivity.this, ViewRecordActivity.class);
-                intent.putExtra("Position", recordPosition);
+                intent.putExtra("ProblemPosition", position);
+                intent.putExtra("RecordPosition", recordPosition);
+                //record = records.get(recordPosition);
+                //intent.putExtra("Records", records);
                 startActivity(intent);
 
             }
