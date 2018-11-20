@@ -9,6 +9,8 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.utility.Listener;
  */
 public class RecordController {
 
+    private ArrayList<Record> recordList;
+
     public Boolean addRecord(Record record, int index){
         Patient patient = new UserController().getPatient(LoggedInSingleton.getInstance().getLoggedInID());
         patient.getProblemList().get(index).getRecords().add(record);

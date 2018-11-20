@@ -123,15 +123,6 @@ public class ViewProblemActivity extends AppCompatActivity {
         super.onResume();
         //Displays the list of records
 
-        /**
-         * As 'position' is taken from the previous intent as a way to get the record list, the
-         * 'position' variable can't be used again after a new record is added. PatientController
-         * can return the problem list from the user's id, but there is currently no way to return
-         * the recordlist for a problem from the RecordController
-         *
-         *
-         */
-
         ListView listView = findViewById(R.id.viewProblemList);
         ArrayList<Problem> problems = new ProblemController().getProblemList(LoggedInUser);
         oldProblem = problems.get(position);

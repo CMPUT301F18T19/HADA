@@ -54,6 +54,7 @@ public class ViewRecordActivity extends AppCompatActivity {
         Button viewLocation = (Button) findViewById(R.id.viewRecordViewLocation);
         Button editPhotos = (Button) findViewById(R.id.viewRecordEditPhotos);
         final EditText editedComment = (EditText) findViewById(R.id.viewRecordComment);
+        editedComment.setHint(record.getComment());
 
         editDate.setOnClickListener(new View.OnClickListener() {
             @Override
