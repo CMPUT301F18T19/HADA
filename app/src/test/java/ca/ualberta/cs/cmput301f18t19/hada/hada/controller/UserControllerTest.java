@@ -1,14 +1,16 @@
-/* CMPUT 301 - Fall 2018
+/*
+ * CMPUT 301 - Fall 2018
  *
  * Version 1.0
  *
- * 2018-11-20
+ * 11/20/18 3:20 PM
  *
  * This is a group project for CMPUT 301 course at the University of Alberta
  * Copyright (C) 2018  Austin Goebel, Anders Johnson, Alex Li,
  * Cristopher Penner, Joseph Potentier-Neal, Jason Robock
+ * Last modified 11/20/18 2:59 PM
  */
-package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
+package ca.ualberta.cs.cmput301f18t19.hada.hada.controller;
 
 import android.util.Log;
 
@@ -18,6 +20,10 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESUserManager;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
