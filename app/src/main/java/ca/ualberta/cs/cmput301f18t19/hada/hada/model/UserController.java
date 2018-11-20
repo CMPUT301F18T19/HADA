@@ -110,6 +110,12 @@ public class UserController {
         return null;
     }
 
+    /**
+     * User exists boolean.
+     *
+     * @param userId the user id
+     * @return the boolean
+     */
     public boolean userExists(String userId){
         Patient patient = getPatient(userId);
         CareProvider careProvider = getCareProvider(userId);
@@ -131,6 +137,29 @@ public class UserController {
         Patient patient = getPatient(LoggedInSingleton.getInstance().getLoggedInID());
         Log.d("problem", problem.getDate().toString());
         patient.addProblem(problem);
+        new ESUserManager.AddPatientTask().execute(patient);
+    }
+
+    /**
+     * Set problem of patient at a given index.
+     *
+     * @param problem the problem
+     * @param index   the index
+     */
+    public void setProblemOfPatient(Problem problem, int index){
+        Patient patient = getPatient(LoggedInSingleton.getInstance().getLoggedInID());
+        patient.setProblem(index, problem);
+        new ESUserManager.AddPatientTask().execute(patient);
+    }
+
+    /**
+     * Removes a problem from the patient's problems list.
+     *
+     * @param problem the problem
+     */
+    public void removeProblemOfPatient(Problem problem){
+        Patient patient = getPatient(LoggedInSingleton.getInstance().getLoggedInID());
+        patient.removeProblem(problem);
         new ESUserManager.AddPatientTask().execute(patient);
     }
 

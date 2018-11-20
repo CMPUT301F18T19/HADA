@@ -17,6 +17,13 @@ public class RecordController {
         new ESUserManager.AddPatientTask().execute(patient);
         return true;
     }
+    public Boolean setRecord(Record record, int index){
+        Patient patient = new UserController().getPatient(LoggedInSingleton.getInstance()
+                .getLoggedInID());
+        patient.getProblemList().get(index).getRecords().set(index, record);
+        new ESUserManager.AddPatientTask().execute(patient);
+        return true;
+    }
   
     public ArrayList<Record> getRecordList(int index) {
         ArrayList<Problem> problems = new ProblemController().getProblemList(LoggedInSingleton.getInstance().getLoggedInID());

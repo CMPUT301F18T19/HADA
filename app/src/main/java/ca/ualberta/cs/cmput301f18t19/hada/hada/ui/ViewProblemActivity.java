@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -66,11 +67,15 @@ public class ViewProblemActivity extends AppCompatActivity {
         Intent intent = getIntent();
         position = (int) intent.getSerializableExtra("Position");
 
+        TextView titleText = (TextView) findViewById(R.id.patientProblemCommentTitle);
         recordsList = (ListView) findViewById(R.id.viewProblemList);
         ImageButton viewMap = (ImageButton) findViewById(R.id.viewProblemMapButton);
         ImageButton addRecord = (ImageButton) findViewById(R.id.viewProblemAddRecordButton);
         ImageButton viewSlideshow = (ImageButton) findViewById(R.id.viewProblemSlideshowButton);
 
+        //Setting title to display the problem title
+        titleText.setText(new UserController().getPatient(LoggedInSingleton.getInstance().getLoggedInID())
+                .getProblem(position).getTitle());
         recordsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int recordPosition, long id) {
