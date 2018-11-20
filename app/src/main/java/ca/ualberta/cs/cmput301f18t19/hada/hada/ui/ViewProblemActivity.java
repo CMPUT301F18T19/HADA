@@ -51,9 +51,8 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
  * @see Patient
  */
 public class ViewProblemActivity extends AppCompatActivity {
-
+    String LoggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
     private ListView recordsList;
-    private ArrayList<Record> records;
     private Problem oldProblem;
     private int position;
 
@@ -61,13 +60,8 @@ public class ViewProblemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_problem);
-
         Intent intent = getIntent();
         position = (int) intent.getSerializableExtra("Position");
-        String LoggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
-        final ArrayList<Problem> problems = new ProblemController().getProblemList(LoggedInUser);
-        oldProblem = problems.get(position);
-        records = oldProblem.getRecords();
 
         recordsList = (ListView) findViewById(R.id.viewProblemList);
         ImageButton viewMap = (ImageButton) findViewById(R.id.viewProblemMapButton);
@@ -133,8 +127,9 @@ public class ViewProblemActivity extends AppCompatActivity {
          */
         
         ListView listView = findViewById(R.id.viewProblemList);
+        ArrayList<Problem> problems = new ProblemController().getProblemList(LoggedInUser);
+        oldProblem = problems.get(position);
         ArrayList<Record> records = oldProblem.getRecords();
-
         ArrayAdapter<Record> recordArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, records);
         listView.setAdapter(recordArrayAdapter);
         recordArrayAdapter.notifyDataSetChanged();
