@@ -21,7 +21,7 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
 
-public class PatientProblemComment extends AppCompatActivity {
+public class PatientProblemCommentActivity extends AppCompatActivity {
     String loggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
     Patient patient;
     Problem problem;
