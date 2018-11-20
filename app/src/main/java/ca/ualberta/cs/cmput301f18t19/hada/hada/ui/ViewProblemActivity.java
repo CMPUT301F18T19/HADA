@@ -15,6 +15,7 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 
 import android.content.Intent;
 import android.media.Image;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -56,6 +57,8 @@ public class ViewProblemActivity extends AppCompatActivity {
     private Problem oldProblem;
     private int position;
 
+    private Record record;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +75,10 @@ public class ViewProblemActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int recordPosition, long id) {
                 Intent intent = new Intent(ViewProblemActivity.this, ViewRecordActivity.class);
-                intent.putExtra("Position", recordPosition);
+                intent.putExtra("ProblemPosition", position);
+                intent.putExtra("RecordPosition", recordPosition);
+                //record = records.get(recordPosition);
+                //intent.putExtra("Records", records);
                 startActivity(intent);
 
             }
@@ -117,15 +123,6 @@ public class ViewProblemActivity extends AppCompatActivity {
         super.onResume();
         //Displays the list of records
 
-        /**
-         * As 'position' is taken from the previous intent as a way to get the record list, the
-         * 'position' variable can't be used again after a new record is added. PatientController
-         * can return the problem list from the user's id, but there is currently no way to return
-         * the recordlist for a problem from the RecordController
-         *
-         *
-         */
-        
         ListView listView = findViewById(R.id.viewProblemList);
         ArrayList<Problem> problems = new ProblemController().getProblemList(LoggedInUser);
         oldProblem = problems.get(position);
