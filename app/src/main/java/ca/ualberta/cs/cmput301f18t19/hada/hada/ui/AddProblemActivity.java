@@ -19,11 +19,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ESUserManager;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ProblemController;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.ProblemController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 

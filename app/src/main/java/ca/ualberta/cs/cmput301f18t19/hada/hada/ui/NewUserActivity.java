@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ESUserManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.UserController;
 
 /**

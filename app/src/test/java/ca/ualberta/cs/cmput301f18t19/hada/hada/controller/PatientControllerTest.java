@@ -1,8 +1,4 @@
-package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
-
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+package ca.ualberta.cs.cmput301f18t19.hada.hada.controller;
 
 public class PatientControllerTest {
 

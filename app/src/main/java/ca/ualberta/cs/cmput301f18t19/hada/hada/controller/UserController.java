@@ -15,7 +15,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-import ca.ualberta.cs.cmput301f18t19.hada.hada.utility.Listener;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESUserManager;
 
 /**
  * A controller object for Patients and CareProviders.
