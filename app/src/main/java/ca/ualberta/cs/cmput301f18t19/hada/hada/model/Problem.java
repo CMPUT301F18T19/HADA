@@ -28,7 +28,7 @@ public class Problem {
     private String title;
     private LocalDateTime date;
     private String description;
-    private ArrayList<Record> records = new ArrayList<Record>();
+    private ArrayList<Record> records = new ArrayList<>();
 
     /**
      * Instantiates a new Problem with no attributes given.
