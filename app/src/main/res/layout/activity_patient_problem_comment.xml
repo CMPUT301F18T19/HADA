@@ -4,35 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ViewProblemActivity">
+    tools:context=".ui.PatientProblemComment">
 
     <TextView
         android:id="@+id/patientProblemCommentTitle"
-        android:layout_width="266dp"
-        android:layout_height="46dp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="@string/problem_title"
         android:textAlignment="center"
         android:textColor="@color/colorPrimary"
-        android:textSize="30sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/viewProblemAddRecordButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:clickable="true"
-        android:scaleType="center"
-        app:fabSize="mini"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_add_circle_outline_white_24dp" />
 
     <ImageView
         android:id="@+id/patientProblemCommentImage"
@@ -48,47 +35,46 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <ListView
-        android:id="@+id/viewProblemList"
+        android:id="@+id/patientProblemCommentList"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="@color/colorListBackground"
+        android:listSelector="@android:color/transparent"
         android:divider="@color/colorPrimaryDark"
         android:headerDividersEnabled="false"
         android:scrollbars="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/viewProblemSlideshowButton"
+        app:layout_constraintBottom_toTopOf="@+id/patientProblemCommentCommentInput"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/patientProblemCommentImage" />
 
-    <ImageButton
-        android:id="@+id/viewProblemMapButton"
+    <Button
+        android:id="@+id/patientProblemCommentbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginEnd="4dp"
         android:layout_marginBottom="8dp"
         android:backgroundTint="@color/colorAccent"
-        android:contentDescription="@string/ViewProblemMapButton"
+        android:text="Add Comment"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_map_white_24dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/patientProblemCommentCommentInput" />
 
-    <ImageButton
-        android:id="@+id/viewProblemSlideshowButton"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/patientProblemCommentCommentInput"
+        android:layout_width="226dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:backgroundTint="@color/colorAccent"
-        android:contentDescription="@string/ViewProblemSlideshowButton"
+        android:ems="10"
+        android:hint="Enter comment"
+        android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/viewProblemAddRecordButton"
-        app:layout_constraintHorizontal_bias="0.481"
-        app:layout_constraintStart_toEndOf="@+id/viewProblemMapButton"
-        app:srcCompat="@drawable/ic_slideshow_white_24dp" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

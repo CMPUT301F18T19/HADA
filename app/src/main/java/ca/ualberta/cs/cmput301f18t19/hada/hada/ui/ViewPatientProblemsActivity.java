@@ -34,7 +34,6 @@ public class ViewPatientProblemsActivity extends AppCompatActivity {
     String loggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
     private ListView problemsList;
     private EditText searchQuery;
-    private int position;
     private Patient patient;
     ListView listView;
 
@@ -44,12 +43,12 @@ public class ViewPatientProblemsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_patient_problems);
-        Intent intent = getIntent();
-        position = (int) intent.getSerializableExtra("Position");
-        ListView listView = findViewById(R.id.viewPatientProblemsList);
+        final Intent intent = getIntent();
+        final int patientPosition = (int) intent.getSerializableExtra("Position");
+        listView = findViewById(R.id.viewPatientProblemsList);
 
         //Gets patient
-        patient = new UserController().getPatientList(loggedInUser).get(position);
+        patient = new UserController().getPatientList(loggedInUser).get(patientPosition);
 
         //Sets custom title @author Joe
         TextView titleTextView = findViewById(R.id.viewPatientProblemsDisplayUsername);
@@ -69,11 +68,11 @@ public class ViewPatientProblemsActivity extends AppCompatActivity {
         //Goes to ViewProblemActivity
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //TODO PatientProblemComment Activity
-                //Intent intent = new Intent(ViewPatientProblemsActivity.this, ViewProblemActivity.class);
-                //intent.putExtra("Position", position);
-                //startActivity(intent);
+            public void onItemClick(AdapterView<?> parent, View view, int problemPosition, long id) {
+                Intent intent = new Intent(ViewPatientProblemsActivity.this, PatientProblemComment.class);
+                intent.putExtra("patientPosition", patientPosition);
+                intent.putExtra("problemPosition", problemPosition);
+                startActivity(intent);
             }
         });
 
