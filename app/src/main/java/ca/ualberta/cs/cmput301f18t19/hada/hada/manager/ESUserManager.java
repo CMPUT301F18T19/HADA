@@ -36,27 +36,26 @@ public class ESUserManager extends ESManager{
         @Override
         protected Void doInBackground(Patient... params) {
             setClient();
-            Patient patient = params[0];
-            Log.d("newPatient", "Id = "+ patient.getUserID() + " Phone = " + patient.getPhoneNumber() +" Email = "+ patient.getEmailAddress());
-            try {
-                Index index = new Index.Builder(patient)
-                        .index(teamIndex)
-                        .type("patient")
-                        .id(patient.getUserID())
-                        .refresh(true)
-                        .build();
-                DocumentResult result = client.execute(index);
-                Log.d("index", index.getURI());
-                Log.d("What is result",result.getJsonString());
-                if (result.isSucceeded()) {
-                    Log.d("AddPatientTask", "We did it boys");
-                } else {
-                    Log.d("AddPatientTask", "Could not add patient");
+            for(Patient patient: params) {
+                Log.d("newPatient", "Id = " + patient.getUserID() + " Phone = " + patient.getPhoneNumber() + " Email = " + patient.getEmailAddress());
+                try {
+                    Index index = new Index.Builder(patient)
+                            .index(teamIndex)
+                            .type("patient")
+                            .id(patient.getUserID())
+                            .refresh(true)
+                            .build();
+                    DocumentResult result = client.execute(index);
+                    if (result.isSucceeded()) {
+                        Log.d("AddPatientTask", "Problem was successfully added.");
+                    } else {
+                        Log.d("AddPatientTask", "Failed to add problem to server.");
+                    }
+                } catch (IOException e) {
+                    Log.d("AddPatientTask", "IOException");
+                    e.printStackTrace();
                 }
-            } catch (IOException e) {
-                Log.d("AddPatientTask", "Failed to execute");
             }
-
             return null;
         }
     }
@@ -64,49 +63,66 @@ public class ESUserManager extends ESManager{
     /**
      * Task which loads a patient from the server when given a userID.
      */
-    public static class GetPatientTask extends AsyncTask<String, Void, Patient> {
+    public static class GetAPatientTask extends AsyncTask<String, Void, Patient> {
         @Override
         protected Patient doInBackground(String... params){
             setClient();
-
-            String query = "{\"query\": {\"match\": {\"userID\": \"" + params[0] + "\"}}}";
-            Log.d("Query", query);
-            //String query = "{\"query\": {\"match\": {\"patient\": {\"userID\": "+ params[0] + "\"}}}}";
-
-            //We use an array to store all matching patients given the userID -- in case we get duplicates
-            ArrayList<Patient> matchingPatients = new ArrayList<Patient>();
+            String userID = params[0];
+            String query = "{\"query\": {\"match\": {\"userID\": \"" + userID + "\"}}}";
+            Patient matchingPatient = null;
             Search search = new Search.Builder(query)
                     .addIndex(teamIndex)
                     .addType("patient")
                     .build();
-
             try {
                 JestResult result = client.execute(search);
 
                 if (result.isSucceeded()) {
                     List<Patient> results;
                     results = result.getSourceAsObjectList(Patient.class);
-
                     for(Patient patient:results) {
-                        Log.d("bleh", results.toString());
+                        Log.d("GetAPatientTask", "Patient loaded:" + patient.toString());
                     }
-                    matchingPatients.addAll(results);
-
+                    matchingPatient = results.get(0);
                 }
             } catch (IOException e) {
+                Log.d("GetAPatientTask", "IOException");
                 e.printStackTrace();
             }
-            for(Patient i: matchingPatients){
-                Log.d("Results", i.getUserID());
-            }
-            if(matchingPatients.size() == 0){
-                return null;
-            }
-            else {
-                return matchingPatients.get(0);
-            }
-            }
+            return matchingPatient;
         }
+
+    }
+
+    public static class GetPatientListTask extends AsyncTask<String, Void, ArrayList<Patient>>{
+        @Override
+        protected ArrayList<Patient> doInBackground(String... params){
+            setClient();
+            String parentId = params[0];
+            String query = "{\"query\": {\"match\": {\"parentId\": \"" + parentId + "\"}}}";
+            ArrayList<Patient> matchingPatients = new ArrayList<>();
+            Search search = new Search.Builder(query)
+                    .addIndex(teamIndex)
+                    .addType("patient")
+                    .build();
+            try{
+                JestResult result = client.execute(search);
+
+                if(result.isSucceeded()){
+                    List<Patient> results;
+                    results = result.getSourceAsObjectList(Patient.class);
+                    for(Patient patient: results){
+                        Log.d("GetPatientListTask", "Patient loaded:" + patient.toString());
+                    }
+                    matchingPatients.addAll(results);
+                }
+            }catch(IOException e){
+                Log.d("GetProblemListTask", "IOException");
+                e.printStackTrace();
+            }
+            return matchingPatients;
+        }
+    }
 
     /**
      * Task which adds a Care Provider to the server, given a CareProvider object.
@@ -115,27 +131,25 @@ public class ESUserManager extends ESManager{
         @Override
         protected Void doInBackground(CareProvider... params) {
             setClient();
-            CareProvider careProvider = params[0];
-            Log.d("newPatient", "Id = "+ careProvider.getUserID() + " Phone = " + careProvider.getPhoneNumber() +" Email = "+ careProvider.getEmailAddress());
-            try {
-                Index index = new Index.Builder(careProvider)
-                        .index(teamIndex)
-                        .type("careprovider")
-                        .id(careProvider.getUserID())
-                        .refresh(true)
-                        .build();
-                DocumentResult result = client.execute(index);
-                Log.d("index", index.getURI());
-                Log.d("What is result",result.getJsonString());
-                if (result.isSucceeded()) {
-                    Log.d("AddPatientTask", "We did it boys");
-                } else {
-                    Log.d("AddPatientTask", "Could not add patient");
+            for(CareProvider careProvider : params) {
+                try {
+                    Index index = new Index.Builder(careProvider)
+                            .index(teamIndex)
+                            .type("careprovider")
+                            .id(careProvider.getUserID())
+                            .refresh(true)
+                            .build();
+                    DocumentResult result = client.execute(index);
+                    if (result.isSucceeded()) {
+                        Log.d("AddCareProviderTask", "Care Provider was successfully added.");
+                    } else {
+                        Log.d("AddCareProviderTask", "Failed to add Care Provider to server.");
+                    }
+                } catch (IOException e) {
+                    Log.d("AddPatientTask", "Failed to execute");
+                    e.printStackTrace();
                 }
-            } catch (IOException e) {
-                Log.d("AddPatientTask", "Failed to execute");
             }
-
             return null;
         }
     }
@@ -143,45 +157,34 @@ public class ESUserManager extends ESManager{
     /**
      * Task which retrieves a CareProvider object from the server given a userID.
      */
-    public static class GetCareProviderTask extends AsyncTask<String, Void, CareProvider> {
+    public static class GetACareProviderTask extends AsyncTask<String, Void, CareProvider> {
         @Override
-        protected CareProvider doInBackground(String... params) {
+        protected CareProvider doInBackground(String... params){
             setClient();
-
-            String query = "{\"query\": {\"match\": {\"userID\": \"" + params[0] + "\"}}}";
-            Log.d("Query", query);
-            //String query = "{\"query\": {\"match\": {\"patient\": {\"userID\": "+ params[0] + "\"}}}}";
-
-            //We use an array to store all matching patients given the userID -- in case we get duplicates
-            ArrayList<CareProvider> matchingCareProviders = new ArrayList<CareProvider>();
+            String userID = params[0];
+            String query = "{\"query\": {\"match\": {\"userID\": \"" + userID + "\"}}}";
+            CareProvider matchingCareProvider = null;
             Search search = new Search.Builder(query)
                     .addIndex(teamIndex)
                     .addType("careprovider")
                     .build();
-
             try {
                 JestResult result = client.execute(search);
 
                 if (result.isSucceeded()) {
                     List<CareProvider> results;
                     results = result.getSourceAsObjectList(CareProvider.class);
-                    for(CareProvider careProvider:results) {
-                        Log.d("bleh", results.toString());
+                    for(CareProvider careProvider :results) {
+                        Log.d("GetACareProviderTask", "Patient loaded:" + careProvider.toString());
                     }
-                    matchingCareProviders.addAll(results);
-
+                    matchingCareProvider = results.get(0);
                 }
             } catch (IOException e) {
+                Log.d("GetAPatientTask", "IOException");
                 e.printStackTrace();
             }
-            for(CareProvider i: matchingCareProviders){
-                Log.d("Results", i.getUserID());
-            }
-
-            if(matchingCareProviders.size() == 0){
-                return null;
-            }
-            else{return matchingCareProviders.get(0);}
+            return matchingCareProvider;
         }
+
     }
 }

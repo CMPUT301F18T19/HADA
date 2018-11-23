@@ -20,6 +20,9 @@ import io.searchbox.core.Search;
  */
 public class ESProblemManager extends ESManager{
 
+    /**
+     * The type Add problem task.
+     */
     public static class AddProblemTask extends AsyncTask<Problem, Void, Void>{
         @Override
         protected Void doInBackground(Problem... params){
@@ -50,6 +53,9 @@ public class ESProblemManager extends ESManager{
         }
     }
 
+    /**
+     * The type Get problem list task.
+     */
     public static class GetProblemListTask extends AsyncTask<String, Void, ArrayList<Problem>>{
         @Override
         protected ArrayList<Problem> doInBackground(String... params){
@@ -80,6 +86,11 @@ public class ESProblemManager extends ESManager{
         }
     }
 
+    /**
+     * The type Get a problem task.
+     *
+     * RETURNS A NULL OBJECT IF IT CANNOT FIND THE OBJECT
+     */
     public static class GetAProblemTask extends AsyncTask<String, Void, Problem>{
         @Override
         protected Problem doInBackground(String... params){
@@ -110,6 +121,9 @@ public class ESProblemManager extends ESManager{
         }
     }
 
+    /**
+     * The type Delete problem task.
+     */
     public static class DeleteProblemTask extends AsyncTask<String, Void, Void> {
         @Override
         protected Void doInBackground(String... params) {
