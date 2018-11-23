@@ -19,7 +19,7 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESUserManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
+
 
 /**
  * A controller object for Patients and CareProviders.
@@ -81,10 +81,8 @@ public class UserController {
      */
 //Retrieves Patient or Care Provider
     public Patient getPatient(String userId){
-        ESUserManager.GetPatientTask patientTask = new ESUserManager.GetPatientTask();
-        patientTask.execute(userId);
         try {
-            Patient patient = patientTask.get();
+            Patient patient = new ESUserManager.GetAPatientTask().execute(userId).get();
             return patient;
         } catch (ExecutionException e) {
             e.printStackTrace();
@@ -101,10 +99,8 @@ public class UserController {
      * @return the care provider
      */
     public CareProvider getCareProvider(String userId){
-        ESUserManager.GetCareProviderTask CareProviderTask = new ESUserManager.GetCareProviderTask();
-        CareProviderTask.execute(userId);
         try {
-            CareProvider careProvider = CareProviderTask.get();
+            CareProvider careProvider = new ESUserManager.GetACareProviderTask().execute(userId).get();
             return careProvider;
         } catch (ExecutionException e) {
             e.printStackTrace();
@@ -132,70 +128,39 @@ public class UserController {
     }
 
     /**
-     * Add problem to the logged in patient's problems list.
+     * Sets the patients parentId to that of the currently logged in Care Provider
+     * This occurs when the CareProvider adds the patient to their assignee list.
      *
-     * @param problem the problem
-     */
-//Adds problem to list of problems
-    public void addProblemToPatient(Problem problem){
-        Patient patient = getPatient(LoggedInSingleton.getInstance().getLoggedInID());
-        Log.d("problem", problem.getDate().toString());
-        patient.addProblem(problem);
-        new ESUserManager.AddPatientTask().execute(patient);
-    }
-
-    /**
-     * Set problem of patient at a given index.
-     *
-     * @param problem the problem
-     * @param index   the index
-     */
-    public void setProblemOfPatient(Problem problem, int index){
-        Patient patient = getPatient(LoggedInSingleton.getInstance().getLoggedInID());
-        patient.setProblem(index, problem);
-        new ESUserManager.AddPatientTask().execute(patient);
-    }
-
-    /**
-     * Removes a problem from the patient's problems list.
-     *
-     * @param problem the problem
-     */
-    public void removeProblemOfPatient(Problem problem){
-        Patient patient = getPatient(LoggedInSingleton.getInstance().getLoggedInID());
-        patient.removeProblem(problem);
-        new ESUserManager.AddPatientTask().execute(patient);
-    }
-
-    /**
-     * Checks if patient is in the list of patients associated with the logged in CareProvider.
-     * Adds them to the list if they are not null, and returns a boolean associated with the
-     * success or failure of the operation.
-     *
-     * @param userId the user id
+     * @param userIdOfPatient self descriptive
      * @return the boolean
      */
-    public boolean addPatientToCareProvider(String userId){
-        Patient patient = getPatient(userId);
+    public void setParentOfPatient(String userIdOfPatient){
+        Patient patient = getPatient(userIdOfPatient);
         if(patient != null){
             CareProvider careProvider = getCareProvider(LoggedInSingleton.getInstance().getLoggedInID());
-            careProvider.addPatient(patient);
-            new ESUserManager.AddCareProviderTask().execute(careProvider);
-            return true;
+            patient.setParentId(careProvider.getUserID());
+            new ESUserManager.AddPatientTask().execute(patient);
         }
-        else {return false;}
+        else{Log.d("setParentOfPatient: ", "Failed to set patient parent.");}
     }
 
     /**
-     * Get patient list array list.
+     * Get patient list array list based on currently logged in Care Provider.
      *
-     * @param userId the user id
      * @return the array list
      */
-//Gets a list of patients for a given CareProvider
-    public ArrayList<Patient> getPatientList(String userId){
-        CareProvider careProvider = getCareProvider(userId);
-        return careProvider.getPatients();
+    //Gets a list of patients for a given CareProvider
+    public ArrayList<Patient> getPatientList(){
+        String careProviderId = LoggedInSingleton.getInstance().getLoggedInID();
+        try {
+            ArrayList<Patient> patients = new ESUserManager.GetPatientListTask().execute(careProviderId).get();
+            return patients;
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**

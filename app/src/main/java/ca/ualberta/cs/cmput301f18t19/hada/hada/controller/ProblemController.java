@@ -10,10 +10,16 @@
  */
 package ca.ualberta.cs.cmput301f18t19.hada.hada.controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
+import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESProblemManager;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESRecordManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.utility.Listener;
 
 /**
@@ -35,103 +41,47 @@ public class ProblemController {
     /**
      * Returns a problem given an index.
      *
-     * @param index the index
+     * @param fileId the file Id that must be retrieved
      * @return the problem
      */
-    public Problem getProblem(int index) {
-
+    public Problem getProblem(String fileId) {
+        try {
+            Problem problem = new ESProblemManager.GetAProblemTask().execute(fileId).get();
+            return problem;
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    //public void addProblem(Problem problem) {
-    //problemList.add(problem);
-    //}
-
-    /**
-     * Inserts a problem at a given index in the list.
-     *
-     * @param index   the index
-     * @param problem the problem
-     */
-    public void insertProblem(int index, Problem problem) {
-
-    }
-
-    /**
-     * Sets problem at a given index.
-     *
-     * @param index   the index
-     * @param problem the problem
-     */
-    public void setProblem(int index, Problem problem) {
-
-    }
-
-    /**
-     * Returns a boolean value for if the problem is in the list.
-     *
-     * @param problem the problem
-     * @return the boolean
-     */
-    public boolean inList(Problem problem) {
-
+    public void addProblem(String title, LocalDateTime date, String description, String parentId) {
+        Problem problem = new Problem(title, date, description);
+        problem.setParentId(parentId);
+        new ESProblemManager.AddProblemTask().execute(problem);
     }
 
     /**
      * Deletes a given problem from the list.
      *
-     * @param problem the problem
+     * @param fileId the problem
      */
-    public void deleteProblem(Problem problem) {
-
+    public void deleteProblem(String fileId) {
+        new ESProblemManager.DeleteProblemTask().execute(fileId);
+        try {
+            //Getting records to delete based on the given parentId.
+            List<Record> recordsToDelete = new ESRecordManager.GetRecordListTask().execute(fileId).get();
+            for(Record record: recordsToDelete){
+                new ESRecordManager.DeleteARecordTask().execute(record.getFileId());
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
-    /**
-     * Returns a boolean for whether the list is empty.
-     *
-     * @return the boolean
-     */
-    public boolean isEmpty() {
-
-    }
-
-    /**
-     * Returns the size of the problem list.
-     *
-     * @return the size
-     */
-    public int getSize(){
-    }
-
-    /**
-     * Returns an index for a problem in the list
-     *
-     * @param problem the problem
-     * @return the index
-     */
-    public int getPos(Problem problem) {
-
-    }
-
-
-    /**
-     * Gets problem list.
-     *
-     * @param userId the user id
-     * @return the problem list
-     */
-    public ArrayList<Problem> getProblemList(String userId) {
-
-    }
-
-    /**
-     * Add problem.
-     *
-     * @param problem the problem
-     */
-    public void addProblem(Problem problem) {
-
-
-    }
-
+    //TODO Add controller methods for changing the values of a given Problem, see UserController.
 
 }
