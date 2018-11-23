@@ -206,7 +206,7 @@ public class UserController {
      */
 //Edits a given patients email address and updates it by overriding current ES index
     public void editPatientEmail(Patient patient, String email){
-        patient.setEmailAdress(email);
+        patient.setEmailAddress(email);
         new ESUserManager.AddPatientTask().execute(patient);
     }
 
@@ -230,7 +230,7 @@ public class UserController {
      */
 //Edits a given care providers email address and updates it by overriding current ES index
     public void editCareProviderEmail(CareProvider careProvider, String email){
-        careProvider.setEmailAdress(email);
+        careProvider.setEmailAddress(email);
         new ESUserManager.AddCareProviderTask().execute(careProvider);
     }
 

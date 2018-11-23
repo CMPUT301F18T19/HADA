@@ -5,16 +5,22 @@ import android.location.Location;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import io.searchbox.annotations.JestId;
+
 /**
  * Object which represents a record of a tracked problem for a given patient.
  *
  * @author Anders
  * @see Problem
- * @see RecordController
+ * @see ca.ualberta.cs.cmput301f18t19.hada.hada.controller.RecordController
  * @see Patient
  * @see CareProvider
  */
 public class Record{
+
+    private String parentId;
+    @JestId
+    private String fileId;
 
     private LocalDateTime timestamp;
     private String title;
@@ -40,12 +46,32 @@ public class Record{
         this.timestamp = timestamp;
     }
 
+
+    //setters
+
+    /**
+     * Sets the id of the parent object
+     *
+     * @param parentId the fileId of parent object
+     */
+    public void setParentId(String parentId){
+        this.parentId = parentId;
+    }
+
+    /**
+     * Sets the id of the parent object
+     *
+     * @param fileId that is used for storing object
+     */
+    public void setFileId(String fileId){
+        this.fileId = fileId;
+    }
+
     /**
      * Sets timestamp of a record.
      *
      * @param timestamp the timestamp
      */
-//setters
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
@@ -75,7 +101,7 @@ public class Record{
      */
     public void addPhoto(String photo) {
         if (this.photos == null) {
-            photos = new ArrayList<String>();
+            photos = new ArrayList<>();
         }
         this.photos.add(photo);
     }
@@ -112,17 +138,38 @@ public class Record{
      * @param y the y
      */
     public void setBodyLocation(int x, int y){
-        this.bodyLocation = new ArrayList<Integer>();
+        this.bodyLocation = new ArrayList<>();
         this.bodyLocation.add(x);
         this.bodyLocation.add(y);
+    }
+
+
+
+    //getters
+
+    /**
+     * Returns the parentId of the record
+     *
+     * @return the parentId
+     */
+    public String getParentId(){
+        return this.parentId;
+    }
+
+    /**
+     * Returns the parentId of the record
+     *
+     * @return the fileId
+     */
+    public String getFileId(){
+        return this.fileId;
     }
 
     /**
      * Returns the timestamp of the record
      *
-     * @return the timestamp
+             * @return the timestamp
      */
-//getters
     public LocalDateTime getTimestamp() {
         return this.timestamp;
     }
