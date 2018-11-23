@@ -19,26 +19,6 @@ import com.searchly.jestdroid.JestDroidClient;
 /**
  * The type Es record manager.
  */
-public class ESRecordManager {
+public class ESRecordManager extends ESManager{
 
-    /**
-     * The Client.
-     */
-    static JestDroidClient client = null;
-
-
-    /**
-     * Set client.
-     */
-    public static void setClient(){
-        if(client == null){
-            DroidClientConfig config = new DroidClientConfig
-                    .Builder("http://cmput301.softwareprocess.es:8080/")
-                    .build();
-
-            JestClientFactory factory = new JestClientFactory();
-            factory.setDroidClientConfig(config);
-            client = (JestDroidClient) factory.getObject();
-        }
-    }
 }

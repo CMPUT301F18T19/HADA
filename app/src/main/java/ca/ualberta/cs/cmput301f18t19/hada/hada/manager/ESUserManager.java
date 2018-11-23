@@ -27,31 +27,7 @@ import io.searchbox.core.Search;
  * @see Patient
  * @see CareProvider
  */
-public class ESUserManager {
-    /**
-     * The JestDroidClient which is built with setClient() each time ESUserManager
-     * performs an action.
-     */
-    static JestDroidClient client = null;
-    /**
-     * The index of the ElasticSearch node -- currently set to the test one while app is built.
-     */
-    static String teamIndex = "cmput301f18t19test";
-
-    /**
-     * Sets the client to connect to the ElasticSearch node with JestDroid methods.
-     */
-    public static void setClient(){
-        if(client == null){
-            DroidClientConfig config = new DroidClientConfig
-                    .Builder("http://cmput301.softwareprocess.es:8080/")
-                    .build();
-
-            JestClientFactory factory = new JestClientFactory();
-            factory.setDroidClientConfig(config);
-            client = (JestDroidClient) factory.getObject();
-        }
-    }
+public class ESUserManager extends ESManager{
 
     /**
      * Task which adds a Patient to the server, given a Patient object.

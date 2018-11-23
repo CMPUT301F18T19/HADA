@@ -24,14 +24,12 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.utility.Listener;
  * @see
  */
 public class ProblemController {
-    private ArrayList<Problem> problemList;
-    private ArrayList<Listener> listeners;
 
     /**
      * Instantiates a new Problem controller with an empty list of problems.
      */
     public ProblemController() {
-        this.problemList = new ArrayList<>();
+
     }
 
     /**
@@ -41,7 +39,7 @@ public class ProblemController {
      * @return the problem
      */
     public Problem getProblem(int index) {
-        return problemList.get(index);
+
     }
 
     //public void addProblem(Problem problem) {
@@ -55,7 +53,7 @@ public class ProblemController {
      * @param problem the problem
      */
     public void insertProblem(int index, Problem problem) {
-        problemList.add(index, problem);
+
     }
 
     /**
@@ -65,7 +63,7 @@ public class ProblemController {
      * @param problem the problem
      */
     public void setProblem(int index, Problem problem) {
-        problemList.set(index, problem);
+
     }
 
     /**
@@ -75,7 +73,7 @@ public class ProblemController {
      * @return the boolean
      */
     public boolean inList(Problem problem) {
-        return problemList.contains(problem);
+
     }
 
     /**
@@ -84,7 +82,7 @@ public class ProblemController {
      * @param problem the problem
      */
     public void deleteProblem(Problem problem) {
-        problemList.remove(problem);
+
     }
 
     /**
@@ -93,7 +91,7 @@ public class ProblemController {
      * @return the boolean
      */
     public boolean isEmpty() {
-        return problemList.isEmpty();
+
     }
 
     /**
@@ -101,8 +99,7 @@ public class ProblemController {
      *
      * @return the size
      */
-    public int getSize() {
-        return problemList.size();
+    public int getSize(){
     }
 
     /**
@@ -112,7 +109,7 @@ public class ProblemController {
      * @return the index
      */
     public int getPos(Problem problem) {
-        return problemList.indexOf(problem);
+
     }
 
 
@@ -123,8 +120,7 @@ public class ProblemController {
      * @return the problem list
      */
     public ArrayList<Problem> getProblemList(String userId) {
-        Patient patient = new UserController().getPatient(userId);
-        return patient.getProblemList();
+
     }
 
     /**
@@ -133,7 +129,8 @@ public class ProblemController {
      * @param problem the problem
      */
     public void addProblem(Problem problem) {
-        new UserController().addProblemToPatient(problem);
+
+
     }
 
 
