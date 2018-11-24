@@ -40,14 +40,6 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private static final String FILENAME = "file.sav";
-    private EditText usernameInfo;
-    private ArrayList<Patient> patientList = new ArrayList<Patient>();
-    private ArrayList<CareProvider> careProviderList = new ArrayList<CareProvider>();
-    private Patient patient;
-    private CareProvider careProvider;
-
-
 
 
     @Override
@@ -55,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        usernameInfo = findViewById(R.id.mainActivityUsernameText);
-        final Button patientLogin = findViewById(R.id.mainActivityPatientLogin);
+        final EditText usernameInfo = findViewById(R.id.mainActivityUsernameText);
+        Button patientLogin = findViewById(R.id.mainActivityPatientLogin);
         Button careProviderLogin = findViewById(R.id.mainActivityDoctorLogin);
         Button createUser = findViewById(R.id.mainActivityCreateUser);
 
@@ -87,30 +79,20 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 String username = usernameInfo.getText().toString();
-                ESUserManager.GetCareProviderTask careProviderTask = new ESUserManager.GetCareProviderTask();
-                careProviderTask.execute(username);
+                CareProvider careProvider = new UserController().getCareProvider(username);
 
-                try {
-                    CareProvider careProvider = careProviderTask.get();
+                if(careProvider != null){
+                    //Sets the user to be CP and it's userId
+                    Log.d("Username logged in", careProvider.getUserID());
+                    LoggedInSingleton instance = LoggedInSingleton.getInstance();
+                    instance.setLoggedInID(careProvider.getUserID());
+                    instance.setIsCareProvider(true);
 
-                    if(careProvider != null){
-                        //Sets the user to be CP and it's userId
-                        Log.d("Username logged in", careProvider.getUserID());
-                        LoggedInSingleton instance = LoggedInSingleton.getInstance();
-                        instance.setLoggedInID(careProvider.getUserID());
-                        instance.setIsCareProvider(true);
-
-                        Intent intent = new Intent(MainActivity.this, PatientListActivity.class);
-                        startActivity(intent);
-                    }
-                    else{Toast.makeText(MainActivity.this, getString(R.string.login_error_message), Toast.LENGTH_SHORT).show();}
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
+                    Intent intent = new Intent(MainActivity.this, PatientListActivity.class);
+                    startActivity(intent);
                 }
+                else{Toast.makeText(MainActivity.this, getString(R.string.login_error_message), Toast.LENGTH_SHORT).show();}
             }
-
         });
 
         createUser.setOnClickListener(new View.OnClickListener() {
