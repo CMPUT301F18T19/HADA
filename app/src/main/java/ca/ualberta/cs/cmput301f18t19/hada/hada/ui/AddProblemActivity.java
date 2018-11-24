@@ -162,7 +162,7 @@ public class AddProblemActivity extends AppCompatActivity {
                     Log.d(TAG, "title = " + title);
                     Log.d(TAG, "date = " + date);
                     Log.d(TAG, "description = " + description);
-                    new ProblemController().addProblem(title, date, description);
+                    new ProblemController().addProblem(title, date, description, parentId);
                     Toast.makeText(AddProblemActivity.this, "Problem saved!", Toast.LENGTH_SHORT).show();
                     finish();
                 }

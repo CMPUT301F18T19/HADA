@@ -40,14 +40,17 @@ public class ESRecordManager extends ESManager{
         protected Void doInBackground(Record... params) {
             setClient();
             for(Record record:params){
-                String fileId = UUID.randomUUID().toString();
-                record.setFileId(fileId);
-                Log.d("AddRecordTask newRecord", "fileId: " + fileId);
+                //Assign a file Id if the object does not contain one.
+                String fileId;
+                if(record.getFileId() == null) {
+                    fileId = UUID.randomUUID().toString();
+                    record.setFileId(fileId);
+                }
                 try {
                     Index index = new Index.Builder(record)
                             .index(teamIndex)
                             .type("record")
-                            .id(fileId)
+                            .id(record.getFileId())
                             .refresh(true)
                             .build();
                     DocumentResult result = client.execute(index);

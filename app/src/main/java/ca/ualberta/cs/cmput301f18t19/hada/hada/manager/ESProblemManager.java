@@ -28,14 +28,17 @@ public class ESProblemManager extends ESManager{
         protected Void doInBackground(Problem... params){
             setClient();
             for(Problem problem : params){
-                //Currently don't check for dupes
-
-                String fileId =  UUID.randomUUID().toString();
+                //Assign a file Id if the object does not contain one.
+                String fileId;
+                if(problem.getFileId() == null) {
+                     fileId = UUID.randomUUID().toString();
+                     problem.setFileId(fileId);
+                }
                 try{
                     Index index = new Index.Builder(problem)
                             .index(teamIndex)
                             .type("problem")
-                            .id(fileId)
+                            .id(problem.getFileId())
                             .refresh(true)
                             .build();
                     DocumentResult result = client.execute(index);
@@ -54,7 +57,7 @@ public class ESProblemManager extends ESManager{
     }
 
     /**
-     * The type Get problem list task.
+     * The type Get problem list based on given parentId
      */
     public static class GetProblemListTask extends AsyncTask<String, Void, ArrayList<Problem>>{
         @Override
