@@ -16,12 +16,17 @@ import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 
 /**
- * The type Es problem manager.
+ * A manager that saves and loads problems to and from ES.
+ *
+ * @author AndersJ
+ * @version 1
+ * @see Problem
+ * @see ESManager
  */
 public class ESProblemManager extends ESManager{
 
     /**
-     * The type Add problem task.
+     * Asyc task for adding a problem to ES in the background.
      */
     public static class AddProblemTask extends AsyncTask<Problem, Void, Void>{
         @Override
@@ -57,7 +62,7 @@ public class ESProblemManager extends ESManager{
     }
 
     /**
-     * The type Get problem list based on given parentId
+     * AsyncTask for retrieving a list of all problems with a matching parentId.
      */
     public static class GetProblemListTask extends AsyncTask<String, Void, ArrayList<Problem>>{
         @Override
@@ -90,8 +95,8 @@ public class ESProblemManager extends ESManager{
     }
 
     /**
-     * The type Get a problem task.
-     *
+     * AsyncTask which retrieves a problem given its fileId.
+     * <p>
      * RETURNS A NULL OBJECT IF IT CANNOT FIND THE OBJECT
      */
     public static class GetAProblemTask extends AsyncTask<String, Void, Problem>{
@@ -125,7 +130,7 @@ public class ESProblemManager extends ESManager{
     }
 
     /**
-     * The type Delete problem task.
+     * Deletes a problem given its fileId.
      */
     public static class DeleteProblemTask extends AsyncTask<String, Void, Void> {
         @Override

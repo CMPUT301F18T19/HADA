@@ -15,9 +15,14 @@ import io.searchbox.annotations.JestId;
  * @see ca.ualberta.cs.cmput301f18t19.hada.hada.controller.RecordController
  * @see Patient
  * @see CareProvider
+ * @version 2.0
  */
 public class Record{
 
+    /**
+     * parentId is the id of it's parent problem
+     * fileId is the id of the record on ES
+     */
     private String parentId;
     @JestId
     private String fileId;

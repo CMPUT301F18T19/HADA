@@ -16,11 +16,30 @@ import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
 import com.searchly.jestdroid.JestDroidClient;
 
+/**
+ * Abstract class ESManager, which defines the ES server to connect to and a common setClient
+ * method for other ESManagers to use to connect.
+ *
+ * @author AndersJ
+ * @see ESProblemManager
+ * @see ESRecordManager
+ * @see ESUserManager
+ * @version 1
+ */
 public abstract class ESManager {
 
+    /**
+     * The JestDroidClient for connecting to ES.
+     */
     static JestDroidClient client = null;
+    /**
+     * The index of the team's ES node.
+     */
     static String teamIndex = "cmput301f18t19test";
 
+    /**
+     * Sets the client to be the defined server..
+     */
     public static void setClient(){
         if(client == null){
             DroidClientConfig config = new DroidClientConfig

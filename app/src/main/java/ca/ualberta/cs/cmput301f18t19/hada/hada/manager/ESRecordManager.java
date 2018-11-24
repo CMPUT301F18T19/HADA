@@ -28,7 +28,12 @@ import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 
 /**
- * The type Es record manager.
+ * A manager that saves and loads Records to ES.
+ *
+ * @author Joe
+ * @version 1
+ * @see ESManager
+ * @see Record
  */
 public class ESRecordManager extends ESManager{
 
@@ -135,7 +140,7 @@ public class ESRecordManager extends ESManager{
 
 
     /**
-     * Task which loads a Record from the server when given a parentId.
+     * Task which loads all records from server with a matching parentId.
      */
     public static class GetRecordListTask extends AsyncTask<String, Void, ArrayList<Record>> {
         @Override
@@ -161,7 +166,7 @@ public class ESRecordManager extends ESManager{
                     results = result.getSourceAsObjectList(Record.class);
 
                     for(Record record:results) {
-                        Log.d("GetRecordListTask Results: ", record.toString());
+                        //Log.d("GetRecordListTask Results: ", record.toString());
                     }
                     matchingRecords.addAll(results);
 
@@ -170,7 +175,7 @@ public class ESRecordManager extends ESManager{
                 e.printStackTrace();
             }
             for(Record record: matchingRecords){
-                Log.d("GetRecordListTask Records: ", record.toString());
+                //Log.d("GetRecordListTask Records: ", record.toString());
             }
             return matchingRecords;
             }

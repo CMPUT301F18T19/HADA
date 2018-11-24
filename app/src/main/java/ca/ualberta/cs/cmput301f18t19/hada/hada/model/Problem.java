@@ -20,11 +20,16 @@ import io.searchbox.annotations.JestId;
  * Object which represents a problem, ie. an issue to be tracked over time, for a given patient.
  *
  * @author Joe
+ * @version 2.0
  * @see Patient
  * @see Record
  */
 public class Problem {
 
+    /**
+     * parentId is the reference to the person who owns the problem.
+     * fileId is the ES id.
+     */
     private String parentId;
     @JestId
     private String fileId;
@@ -53,6 +58,7 @@ public class Problem {
 
 
     //setters
+
     /**
      * Sets the description of the problem.
      *

@@ -18,10 +18,12 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESProblemManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESUserManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 
 
 /**
@@ -105,6 +107,21 @@ public class UserController {
     }
 
 
+
+
+    public void deletePatient(String userId){
+        new ESUserManager.DeletePatientTask().execute(userId);
+        ArrayList<Problem> problemsToDelete = new ProblemController().getListOfProblems(userId);
+        for(Problem problem : problemsToDelete) {
+            new ProblemController().deleteProblem(problem.getFileId());
+        }
+    }
+
+    public void deleteCareProvider(String userId){
+        new ESUserManager.DeleteCareProviderTask().execute(userId);
+        //TODO: Delete care provider comments?
+
+    }
     /**
      * Given a userID, returns the patient associated with the ID (if it exists).
      *

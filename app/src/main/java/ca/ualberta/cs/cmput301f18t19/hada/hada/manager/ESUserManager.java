@@ -23,7 +23,7 @@ import io.searchbox.core.Search;
 /**
  * Class resposible for saving and loading users from the ElasticSearch server.
  *
- * @version 1.0
+ * @version 2.0
  * @author Anders, Joe
  * @see Patient
  * @see CareProvider
@@ -66,7 +66,7 @@ public class ESUserManager extends ESManager{
     }
 
     /**
-     * The type Delete patient task.
+     * Task which deletes a patient given a userId.
      */
     public static class DeletePatientTask extends AsyncTask<String, Void, Void> {
         @Override
@@ -130,7 +130,9 @@ public class ESUserManager extends ESManager{
         }
 
     }
-
+    /**
+     * Task which returns a list of all patients with a common parentId.
+     */
     public static class GetPatientListTask extends AsyncTask<String, Void, ArrayList<Patient>>{
         @Override
         protected ArrayList<Patient> doInBackground(String... params){
@@ -195,7 +197,7 @@ public class ESUserManager extends ESManager{
     }
 
     /**
-     * The type Delete Care Provider task.
+     * Deletes a care provider given its userId.
      */
     public static class DeleteCareProviderTask extends AsyncTask<String, Void, Void> {
         @Override

@@ -1,4 +1,5 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -35,6 +36,7 @@ public class ProblemListActivityTest {
     DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
     Problem problem = new Problem("testTitle", LocalDateTime.now(), "testDesc");
     final String timestamp = problem.getDate().format(formatter);
+
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule =
             new ActivityTestRule<>(MainActivity.class);
@@ -56,6 +58,11 @@ public class ProblemListActivityTest {
         Espresso.onView(withId(R.id.mainActivityPatientLogin)).perform(click());
 
     }
+    @After
+    public void deleteTestPatient(){
+        new UserController().deletePatient("patient_problemlistactivity");
+    }
+
     @Test
     public void testContainsProblemTitle(){
         Espresso.onView(withText("testTitle")).check(matches(isDisplayed()));
@@ -91,7 +98,7 @@ public class ProblemListActivityTest {
         Espresso.onData(anything()).inAdapterView(withId(R.id.problemListListView))
                 .atPosition(0).perform(longClick());
         Espresso.onView(withId(R.id.editProblemTitle)).perform(replaceText(newTitle), closeSoftKeyboard());
-        Espresso.onView(withId(R.id.editProblemButton)).perform(click());
+        Espresso.onView(withId(R.id.editProblemSaveButton)).perform(click());
         Espresso.onView(withText(newTitle)).check(matches(isDisplayed()));
 
 
