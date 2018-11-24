@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import androidx.test.espresso.Espresso;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.ProblemController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.RecordController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.UserController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
@@ -45,8 +46,8 @@ public class ProblemListActivityTest {
                 .perform(typeText("patient_problemlistactivity"), closeSoftKeyboard());
         Espresso.onView(withId(R.id.mainActivityPatientLogin)).perform(click());
 
-        new UserController().addProblemToPatient(problem);
-        new RecordController().addRecord(new Record(), 0);
+        new ProblemController().addProblem("testTitle",LocalDateTime.now(), "testDesc", "patient_problemlistactivity" );
+        new RecordController().addRecord(new Record(), new ProblemController().getListOfProblems("patient_problemlistactivity").get(0).getFileId());
 
 
         //Since we manually added a problem to the patient after we loaded the list, we go back and
