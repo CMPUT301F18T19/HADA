@@ -1,6 +1,7 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada.controller;
 
 
+import android.location.Location;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -49,5 +50,28 @@ public class RecordController {
 
     public void deleteRecord(String fileId){
         new ESRecordManager.DeleteARecordTask().execute(fileId);
+    }
+
+    public void editRecordTitle(Record record, String title){
+        record.setTitle(title);
+        new ESRecordManager.AddRecordTask().execute(record);
+    }
+
+    public void editRecordComment(Record record, String comment){
+        record.setComment(comment);
+        new ESRecordManager.AddRecordTask().execute(record);
+    }
+
+    public void editRecordPhotos(){
+        //TODO: Stub! Implement once we know what we're doing for photos
+    }
+
+    public void editRecordBodyLocation(){
+        //TODO: Stub! Implement once we know what we're doing for bodyLocation
+    }
+
+    public void editRecordGeoLocation(Record record, Location geoLocation){
+        record.setGeoLocation(geoLocation);
+        new ESRecordManager.AddRecordTask().execute(record);
     }
 }
