@@ -39,6 +39,20 @@ public class ProblemController {
     }
 
     /**
+     * Add problem.
+     *
+     * @param title       the title
+     * @param date        the date
+     * @param description the description
+     * @param parentId    the parent id
+     */
+    public void addProblem(String title, LocalDateTime date, String description, String parentId) {
+        Problem problem = new Problem(title, date, description);
+        problem.setParentId(parentId);
+        new ESProblemManager.AddProblemTask().execute(problem);
+    }
+
+    /**
      * Returns a problem given an index.
      *
      * @param fileId the file Id that must be retrieved
@@ -56,10 +70,22 @@ public class ProblemController {
         return null;
     }
 
-    public void addProblem(String title, LocalDateTime date, String description, String parentId) {
-        Problem problem = new Problem(title, date, description);
-        problem.setParentId(parentId);
-        new ESProblemManager.AddProblemTask().execute(problem);
+    /**
+     * Get list of problems for given parentId.
+     *
+     * @param parentId the parent id
+     * @return the array list
+     */
+    public ArrayList<Problem> getListofProblems(String parentId){
+        try {
+            ArrayList<Problem> problems = new ESProblemManager.GetProblemListTask().execute(parentId).get();
+            return problems;
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
@@ -82,6 +108,36 @@ public class ProblemController {
         }
     }
 
-    //TODO Add controller methods for changing the values of a given Problem, see UserController.
+    /**
+     * Edit problem title.
+     *
+     * @param problem the problem
+     * @param title   the title
+     */
+    public void editProblemTitle(Problem problem, String title){
+        problem.setTitle(title);
+        new ESProblemManager.AddProblemTask().execute(problem);
+    }
 
+    /**
+     * Edit problem date.
+     *
+     * @param problem the problem
+     * @param date    the date
+     */
+    public void editProblemDate(Problem problem, LocalDateTime date){
+        problem.setDate(date);
+        new ESProblemManager.AddProblemTask().execute(problem);
+    }
+
+    /**
+     * Edit problem desc.
+     *
+     * @param problem     the problem
+     * @param description the description
+     */
+    public void editProblemDesc(Problem problem, String description){
+        problem.setDesc(description);
+        new ESProblemManager.AddProblemTask().execute(problem);
+    }
 }

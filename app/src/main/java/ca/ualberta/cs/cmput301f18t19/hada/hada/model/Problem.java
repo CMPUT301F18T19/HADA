@@ -67,7 +67,7 @@ public class Problem {
      *
      * @param fileId used for storing object.
      */
-    public void setfileId(String fileId){
+    public void setFileId(String fileId){
         this.fileId = fileId;
     }
 
