@@ -76,7 +76,7 @@ public class ProblemController {
      * @param parentId the parent id
      * @return the array list
      */
-    public ArrayList<Problem> getListofProblems(String parentId){
+    public ArrayList<Problem> getListOfProblems(String parentId){
         try {
             ArrayList<Problem> problems = new ESProblemManager.GetProblemListTask().execute(parentId).get();
             return problems;
