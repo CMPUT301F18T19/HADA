@@ -16,17 +16,14 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESProblemManager;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESRecordManager;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.utility.Listener;
 
 /**
- * A controller with which to manage a list of problems.
+ * A controller that is used when managing problems
  *
- * @author Christopher Penner
- * @version 0.1
+ * @author Joseph Potentier, Christopher Penner
+ * @version 2.0
  * @see
  */
 public class ProblemController {
@@ -39,12 +36,12 @@ public class ProblemController {
     }
 
     /**
-     * Add problem.
+     * Add a problem.
      *
-     * @param title       the title
-     * @param date        the date
-     * @param description the description
-     * @param parentId    the parent id
+     * @param title       problem title
+     * @param date        problem date
+     * @param description problem description
+     * @param parentId    problem parent id
      */
     public void addProblem(String title, LocalDateTime date, String description, String parentId) {
         Problem problem = new Problem(title, date, description);
@@ -53,10 +50,10 @@ public class ProblemController {
     }
 
     /**
-     * Returns a problem given an index.
+     * Returns a problem given the fileId.
      *
-     * @param fileId the file Id that must be retrieved
-     * @return the problem
+     * @param fileId the file Id of the file to retrieve
+     * @return a problem
      */
     public Problem getProblem(String fileId) {
         try {
@@ -74,7 +71,7 @@ public class ProblemController {
      * Get list of problems for given parentId.
      *
      * @param parentId the parent id
-     * @return the array list
+     * @return arrayList of problems
      */
     public ArrayList<Problem> getListOfProblems(String parentId){
         try {
@@ -89,7 +86,7 @@ public class ProblemController {
     }
 
     /**
-     * Deletes a given problem from the list.
+     * Deletes a problem given a fileId.
      *
      * @param fileId the problem
      */

@@ -29,8 +29,8 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 /**
  * A controller object for Patients and CareProviders.
  *
- * @author Joseph Potentier, Chris Penner
- * @version 0.1
+ * @author Joseph Potentier, Chris Penner, Anders J.
+ * @version 2.0
  */
 public class UserController {
 
@@ -49,15 +49,21 @@ public class UserController {
 
     /**
      * Instantiates a new User controller.
+     *
+     * @
      */
     public UserController(){}
 
     /**
-     * Adds a patient to ElasticSearch when given the appropriate information.
+     * Checks given new user info and returns true if all fields are valid.
      *
-     * @param userID    the user id
-     * @param userPhone the user phone
-     * @param userEmail the user email
+     * @param context         the context
+     * @param userID          the user id
+     * @param userPhone       the user phone
+     * @param userEmail       the user email
+     * @param newPatient      the new patient
+     * @param newCareProvider the new care provider
+     * @return the boolean
      */
     public Boolean addNewUser(Context context, String userID, String userPhone, String userEmail, Boolean newPatient, Boolean newCareProvider){
         if(!newPatient && !newCareProvider){
@@ -88,6 +94,14 @@ public class UserController {
 
         }
     }
+
+    /**
+     * Adds a Patient to ElasticSearch when given the appropriate information.
+     *
+     * @param userID    the user id
+     * @param userPhone the user phone
+     * @param userEmail the user email
+     */
 //Adds user types to ES and/or memory
     public void addPatient(String userID, String userPhone, String userEmail){
         Patient patient = new Patient(userID, userPhone, userEmail);
@@ -201,7 +215,7 @@ public class UserController {
      *
      * @return the array list
      */
-    //Gets a list of patients for a given CareProvider
+//Gets a list of patients for a given CareProvider
     public ArrayList<Patient> getPatientList(){
         String careProviderId = LoggedInSingleton.getInstance().getLoggedInID();
         try {

@@ -74,9 +74,4 @@ public class Patient extends User {
         return this.getUserID();
     }
 
-
-
-    //TODO setFullBodyImage() once we know of the data type/structure.
-    //public void setFullBodyImage()
-
 }
