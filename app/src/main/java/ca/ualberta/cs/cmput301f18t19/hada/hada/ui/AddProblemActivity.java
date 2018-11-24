@@ -21,6 +21,7 @@ import java.util.Calendar;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.ProblemController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.UserController;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 
 /**
@@ -162,6 +163,7 @@ public class AddProblemActivity extends AppCompatActivity {
                     Log.d(TAG, "title = " + title);
                     Log.d(TAG, "date = " + date);
                     Log.d(TAG, "description = " + description);
+                    String parentId = LoggedInSingleton.getInstance().getLoggedInID();
                     new ProblemController().addProblem(title, date, description, parentId);
                     Toast.makeText(AddProblemActivity.this, "Problem saved!", Toast.LENGTH_SHORT).show();
                     finish();
