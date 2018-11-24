@@ -18,13 +18,10 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.ProblemController;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.UserController;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 
 /**
@@ -35,13 +32,6 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
  */
 public class EditProblemActivity extends AppCompatActivity implements Serializable {
     private static final String TAG = "EditProblemActivity";
-    private EditText editProblemTitle;
-    private TextView editProblemDate;
-    private EditText editProblemDescription;
-    private Button changeDateButton;
-    private Button changeTimeButton;
-    private Button editProblemButton;
-    private Button editProblemDelete;
     /**
      * The formatter object for converting localdatetime objects to and from strings.
      */
@@ -65,39 +55,30 @@ public class EditProblemActivity extends AppCompatActivity implements Serializab
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_problem);
+
+        //Gets the problem to edit
         Intent intent = getIntent();
-        final int position = (int) intent.getSerializableExtra("problemObject");
-        String loggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
-        final ArrayList<Problem> problems = new ProblemController().getProblemList(loggedInUser);
-        final Problem oldProblem = problems.get(position);
-
-
-
-
-        // get references for editTexts
-        editProblemTitle = findViewById(R.id.editProblemTitle);
-        editProblemDate = findViewById(R.id.editProblemDate);
-        editProblemDescription = findViewById(R.id.editProblemDescription);
-        editProblemButton = findViewById(R.id.editProblemButton);
-        changeDateButton = findViewById(R.id.editProblemChangeDateButton);
-        changeTimeButton = findViewById(R.id.editProblemChangeTimeButton);
-        editProblemDelete = findViewById(R.id.editProblemDelete);
-
+        final String problemFileId = intent.getStringExtra("problemFileId");
+        final Problem problem = new ProblemController().getProblem(problemFileId);
 
         //set date to current date and time
-        final LocalDateTime currentDate = oldProblem.getDate();
+        final TextView editProblemDate = findViewById(R.id.editProblemDate);
+        final LocalDateTime currentDate = problem.getDate();
         String currentDateString = currentDate.format(formatter);
         editProblemDate.setText(currentDateString);
 
         //set title and description to current ones
-        editProblemDescription.setText(oldProblem.getDesc());
-        editProblemTitle.setText(oldProblem.getTitle());
+        final EditText editProblemTitle = findViewById(R.id.editProblemTitle);
+        final EditText editProblemDescription = findViewById(R.id.editProblemDescription);
+        editProblemDescription.setText(problem.getDesc());
+        editProblemTitle.setText(problem.getTitle());
 
 
 
         //for selecting custom date
         //Based on adj-feelsbook by Anders Johnson
         //https://github.com/ColonelSanders21/adj-FeelsBook
+        Button changeDateButton = findViewById(R.id.editProblemChangeDateButton);
         changeDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -131,6 +112,7 @@ public class EditProblemActivity extends AppCompatActivity implements Serializab
         //for selecting custom time
         //Based on adj-feelsbook by Anders Johnson
         //https://github.com/ColonelSanders21/adj-FeelsBook
+        Button changeTimeButton = findViewById(R.id.editProblemChangeTimeButton);
         changeTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -161,20 +143,28 @@ public class EditProblemActivity extends AppCompatActivity implements Serializab
 
 
         // save problem using a controller when button is pressed
-        editProblemButton.setOnClickListener(new View.OnClickListener() {
+        Button editProblemSaveButton = findViewById(R.id.editProblemSaveButton);
+        editProblemSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String title = editProblemTitle.getText().toString();
+                String description = editProblemDescription.getText().toString();
+
+                //Gets date as string and converts
                 String dateString = editProblemDate.getText().toString();
                 LocalDateTime date = LocalDateTime.parse(dateString, formatter);
-                String description = editProblemDescription.getText().toString();
+
                 if(description.equals("")| title.equals("")){
                     Toast.makeText(EditProblemActivity.this, "Please enter a description and title.", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     //TODO add offline exception
-                    Problem changedProblem = new Problem(title, date, description);
-                    new UserController().setProblemOfPatient(changedProblem, position);
+
+                    ProblemController problemController = new ProblemController();
+                    problemController.editProblemTitle(problem, title);
+                    problemController.editProblemDate(problem, date);
+                    problemController.editProblemDesc(problem, description);
+
                     Toast.makeText(EditProblemActivity.this, "Problem saved!", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "title = " + title);
                     Log.d(TAG, "date = " + date);
@@ -183,10 +173,11 @@ public class EditProblemActivity extends AppCompatActivity implements Serializab
                 }
             }
         });
+        Button editProblemDelete = findViewById(R.id.editProblemDelete);
         editProblemDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new UserController().removeProblemOfPatient(oldProblem);
+                new ProblemController().deleteProblem(problemFileId);
                 finish();
             }
         });
