@@ -70,7 +70,7 @@ public class NewUserActivity extends AppCompatActivity {
                 String userID = username.getText().toString();
                 String userPhone = phonenumber.getText().toString();
                 String userEmail = email.getText().toString();
-
+                UserController userController = new UserController();
                 if(patient.isChecked()){
                     newPatient = true;
                 }
@@ -78,37 +78,19 @@ public class NewUserActivity extends AppCompatActivity {
                     newCareProvider = true;
                 }
 
-                if(!newPatient && !newCareProvider){
-                    Toast.makeText(NewUserActivity.this,
-                            getString(R.string.NewUserActivity_SelectUserType), Toast.LENGTH_SHORT).show();
-                }
-                else if(userID.equals("") || userPhone.equals("") || userEmail.equals("")){
-                    Toast.makeText(NewUserActivity.this,
-                            getString(R.string.NewUserActivity_EnterAllFields),
-                            Toast.LENGTH_SHORT).show();
-                }
-                else if(userID.length() < 8){
-                    Toast.makeText(NewUserActivity.this, getString(R.string.NewUserActivity_UserIdMin), Toast.LENGTH_SHORT).show();
-                }
-                else if(userID.contains(" ")){
-                    Toast.makeText(NewUserActivity.this, getString(R.string.NewUserActivity_UserIdSpaces), Toast.LENGTH_SHORT).show();
-                }
-                else if(new UserController().userExists(userID)){
-                    Toast.makeText(NewUserActivity.this,getString(R.string.NewUserActivity_userid_in_use), Toast.LENGTH_SHORT).show();
-                }
-                else{
+                //Check if new user info is valid and then add user if so
+                if(userController.addNewUser(NewUserActivity.this, userID, userPhone, userEmail, newPatient, newCareProvider)){
                     if(newPatient){
-                        new UserController().addPatient(userID, userPhone, userEmail);
+                        userController.addPatient(userID, userPhone, userEmail);
                         Toast.makeText(NewUserActivity.this, getString(R.string.NewUserActivity_PatientSaved), Toast.LENGTH_SHORT).show();
                         finish();
 
                     }
                     if(newCareProvider){
-                        new UserController().addCareProvider(userID, userPhone, userEmail);
+                        userController.addCareProvider(userID, userPhone, userEmail);
                         Toast.makeText(NewUserActivity.this, getString(R.string.NewUserActivity_CareProviderSaved), Toast.LENGTH_SHORT).show();
                         finish();
                     }
-
                 }
             }
         });

@@ -10,15 +10,19 @@
  */
 package ca.ualberta.cs.cmput301f18t19.hada.hada.controller;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
+import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESUserManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.ui.NewUserActivity;
 
 
 /**
@@ -54,6 +58,33 @@ public class UserController {
      * @param userPhone the user phone
      * @param userEmail the user email
      */
+    public Boolean addNewUser(Context context, String userID, String userPhone, String userEmail, Boolean newPatient, Boolean newCareProvider){
+        if(!newPatient && !newCareProvider){
+            Toast.makeText(context,
+                    context.getString(R.string.NewUserActivity_SelectUserType), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if(userID.equals("") || userPhone.equals("") || userEmail.equals("")){
+            Toast.makeText(context,
+                    context.getString(R.string.NewUserActivity_EnterAllFields), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if(userID.length() < 8){
+            Toast.makeText(context, context.getString(R.string.NewUserActivity_UserIdMin), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if(userID.contains(" ")){
+            Toast.makeText(context, context.getString(R.string.NewUserActivity_UserIdSpaces), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if(new UserController().userExists(userID)){
+            Toast.makeText(context,context.getString(R.string.NewUserActivity_userid_in_use), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
 //Adds user types to ES and/or memory
     public void addPatient(String userID, String userPhone, String userEmail){
         Patient patient = new Patient(userID, userPhone, userEmail);
