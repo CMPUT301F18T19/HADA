@@ -39,28 +39,28 @@ import static org.hamcrest.Matchers.not;
 @LargeTest
 public class AddRecordActivityTest {
 
-    @Rule
-    public ActivityTestRule<AddRecordActivity> mActivityRule =
-            new ActivityTestRule<>(AddRecordActivity.class);
-
-    /**
-     * test for properly displayed title
-     */
-    @Test
-    public void testTitleEntry() {
-        onView(withId(R.id.addRecordActivityTitle))
-                .perform(typeText("test record title"))
-                .check(matches(withText("test record title")));
-    }
-
-    /**
-     * test for properly displayed comment
-     */
-    @Test
-    public void testCommentEntry() {
-        onView(withId(R.id.addRecordActivityComment))
-                .perform(typeText("test record comment"))
-                .check(matches(withText("test record comment")));
-    }
+//    @Rule
+//    public ActivityTestRule<AddRecordActivity> mActivityRule =
+//            new ActivityTestRule<>(AddRecordActivity.class);
+//
+//    /**
+//     * test for properly displayed title
+//     */
+//    @Test
+//    public void testTitleEntry() {
+//        onView(withId(R.id.addRecordActivityTitle))
+//                .perform(typeText("test record title"))
+//                .check(matches(withText("test record title")));
+//    }
+//
+//    /**
+//     * test for properly displayed comment
+//     */
+//    @Test
+//    public void testCommentEntry() {
+//        onView(withId(R.id.addRecordActivityComment))
+//                .perform(typeText("test record comment"))
+//                .check(matches(withText("test record comment")));
+//    }
 
 }

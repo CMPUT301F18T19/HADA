@@ -43,9 +43,6 @@ public class ProblemListActivity extends AppCompatActivity implements Serializab
         String titleText = loggedInUser + "'s Problems";
         titleTextView.setText(titleText);
 
-
-
-
         //Goes to AddProblemActivity
         FloatingActionButton addProblem = findViewById(R.id.problemListFloatingButton);
         addProblem.setOnClickListener(new View.OnClickListener() {
@@ -66,14 +63,26 @@ public class ProblemListActivity extends AppCompatActivity implements Serializab
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        //Get listView
+        ListView listView = findViewById(R.id.problemListListView);
+
+        //Displays the list of problems
+        final ArrayList<Problem> problems = new ProblemController().getListOfProblems(loggedInUser);
+        ArrayAdapter<Problem> problemArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, problems);
+        listView.setAdapter(problemArrayAdapter);
+        problemArrayAdapter.notifyDataSetChanged();
 
         //Goes to EditProblemActivity
-        ListView listView = findViewById(R.id.problemListListView);
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(ProblemListActivity.this, EditProblemActivity.class);
-                intent.putExtra("problemObject", position);
+                intent.putExtra("problemFileId", problems.get(position).getFileId());
                 startActivity(intent);
                 return true;
             }
@@ -84,23 +93,10 @@ public class ProblemListActivity extends AppCompatActivity implements Serializab
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(ProblemListActivity.this, ViewProblemActivity.class);
-                intent.putExtra("Position", position);
+                intent.putExtra("problemFileId", problems.get(position).getFileId());
                 startActivity(intent);
             }
         });
-    }
-
-    @Override
-    protected void onResume(){
-        super.onResume();
-        //Displays the list of problems
-
-
-        ListView listView = findViewById(R.id.problemListListView);
-        ArrayList<Problem> problems = new ProblemController().getProblemList(loggedInUser);
-        ArrayAdapter<Problem> problemArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, problems);
-        listView.setAdapter(problemArrayAdapter);
-        problemArrayAdapter.notifyDataSetChanged();
 
     }
 }

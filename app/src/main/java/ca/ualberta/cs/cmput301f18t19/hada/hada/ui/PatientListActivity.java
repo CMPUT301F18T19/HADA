@@ -67,17 +67,6 @@ public class PatientListActivity extends AppCompatActivity {
             }
         });
 
-        //Goes to ViewPatientProblemsActivity
-        ListView listView = findViewById(R.id.patientListListView);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(PatientListActivity.this, ViewPatientProblemsActivity.class);
-                intent.putExtra("Position", position);
-                startActivity(intent);
-            }
-        });
-
 
     }
 
@@ -86,10 +75,21 @@ public class PatientListActivity extends AppCompatActivity {
         super.onResume();
         //Displays the list of problems
         ListView listView = findViewById(R.id.patientListListView);
-        ArrayList<Patient> patients = new UserController().getPatientList(loggedInUser);
+        final ArrayList<Patient> patients = new UserController().getPatientList();
         ArrayAdapter<Patient> patientArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, patients);
         listView.setAdapter(patientArrayAdapter);
         patientArrayAdapter.notifyDataSetChanged();
+
+        //Goes to ViewPatientProblemsActivity
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(PatientListActivity.this, ViewPatientProblemsActivity.class);
+                String patientUserId = patients.get(position).getUserID();
+                intent.putExtra("patientUserId", patientUserId);
+                startActivity(intent);
+            }
+        });
     }
 
 
