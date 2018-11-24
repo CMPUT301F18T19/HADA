@@ -159,11 +159,10 @@ public class AddProblemActivity extends AppCompatActivity {
                     Toast.makeText(AddProblemActivity.this, "Please enter a description and title.", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Problem problem = new Problem(title, date, description);
                     Log.d(TAG, "title = " + title);
                     Log.d(TAG, "date = " + date);
                     Log.d(TAG, "description = " + description);
-                    new ProblemController().addProblem(problem);
+                    new ProblemController().addProblem(title, date, description);
                     Toast.makeText(AddProblemActivity.this, "Problem saved!", Toast.LENGTH_SHORT).show();
                     finish();
                 }

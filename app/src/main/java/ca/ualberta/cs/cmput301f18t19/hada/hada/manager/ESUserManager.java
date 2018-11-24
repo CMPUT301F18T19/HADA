@@ -15,6 +15,7 @@ import java.util.UUID;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
 import io.searchbox.client.JestResult;
+import io.searchbox.core.DeleteByQuery;
 import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
@@ -28,6 +29,10 @@ import io.searchbox.core.Search;
  * @see CareProvider
  */
 public class ESUserManager extends ESManager{
+
+
+
+//Patients
 
     /**
      * Task which adds a Patient to the server, given a Patient object.
@@ -53,6 +58,36 @@ public class ESUserManager extends ESManager{
                     }
                 } catch (IOException e) {
                     Log.d("AddPatientTask", "IOException");
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+    }
+
+    /**
+     * The type Delete patient task.
+     */
+    public static class DeletePatientTask extends AsyncTask<String, Void, Void> {
+        @Override
+        protected Void doInBackground(String... params) {
+            setClient();
+            for (String fileId : params) {
+                String query = "{\"query\": {\"match\": {\"fileId\": \"" + fileId + "\"}}}";
+                DeleteByQuery delete = new DeleteByQuery.Builder(query)
+                        .addIndex(teamIndex)
+                        .addType("patient")
+                        .build();
+                try {
+                    JestResult result = client.execute(delete);
+                    if(result.isSucceeded()) {
+                        Log.d("DeletePatientTask", "Patient deleted.");
+                    }
+                    else{
+                        Log.d("DeletePatientTask", "Patient deletion failed.");
+                    }
+                } catch (IOException e) {
+                    Log.d("DeletePatientTask", "IOException");
                     e.printStackTrace();
                 }
             }
@@ -124,6 +159,9 @@ public class ESUserManager extends ESManager{
         }
     }
 
+
+//care providers
+
     /**
      * Task which adds a Care Provider to the server, given a CareProvider object.
      */
@@ -149,6 +187,36 @@ public class ESUserManager extends ESManager{
                     Log.d("AddPatientTask", "Failed to execute");
                     e.printStackTrace();
                 }
+            }
+            return null;
+        }
+    }
+
+    /**
+     * The type Delete Care Provider task.
+     */
+    public static class DeleteCareProviderTask extends AsyncTask<String, Void, Void> {
+        @Override
+        protected Void doInBackground(String... params) {
+            setClient();
+            String fileId = params[0]; //Prevents mass deletion of Care Providers
+            String query = "{\"query\": {\"match\": {\"fileId\": \"" + fileId + "\"}}}";
+            DeleteByQuery delete = new DeleteByQuery.Builder(query)
+                    .addIndex(teamIndex)
+                    .addType("careprovider")
+                    .build();
+            try {
+                JestResult result = client.execute(delete);
+                if(result.isSucceeded()) {
+                    Log.d("DeleteCareProviderTask", "Care Provider deleted.");
+                }
+                else{
+                    Log.d("DeleteCareProviderTask", "Care Provider deletion failed.");
+                }
+
+            } catch (IOException e) {
+                Log.d("DeleteCareProviderTask", "IOException");
+                e.printStackTrace();
             }
             return null;
         }
