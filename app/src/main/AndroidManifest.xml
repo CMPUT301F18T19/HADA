@@ -36,12 +36,13 @@
         <activity android:name=".ui.ProblemListActivity" />
         <activity android:name=".ui.AddProblemActivity" />
         <activity android:name=".ui.EditProblemActivity" />
-        <activity android:name=".ui.PatientProblemCommentActivity"/>
+        <activity android:name=".ui.PatientProblemCommentActivity" />
 
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
 
+        <activity android:name=".ui.CameraActivity"></activity>
     </application>
 
 </manifest>
