@@ -118,7 +118,9 @@ public class ESUserManager extends ESManager{
                     for(Patient patient:results) {
                         Log.d("GetAPatientTask", "Patient loaded:" + patient.toString());
                     }
-                    matchingPatient = results.get(0);
+                    if(results.size() != 0){
+                        matchingPatient = results.get(0);
+                    }
                 }
             } catch (IOException e) {
                 Log.d("GetAPatientTask", "IOException");
@@ -245,7 +247,9 @@ public class ESUserManager extends ESManager{
                     for(CareProvider careProvider :results) {
                         Log.d("GetACareProviderTask", "Patient loaded:" + careProvider.toString());
                     }
-                    matchingCareProvider = results.get(0);
+                    if(results.size() != 0){
+                        matchingCareProvider = results.get(0);
+                    }
                 }
             } catch (IOException e) {
                 Log.d("GetAPatientTask", "IOException");

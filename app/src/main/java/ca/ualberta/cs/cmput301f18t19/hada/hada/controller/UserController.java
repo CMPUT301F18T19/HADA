@@ -82,7 +82,9 @@ public class UserController {
             return false;
         }
         else {
+            Log.d("addNewUser", "All tests passed");
             return true;
+
         }
     }
 //Adds user types to ES and/or memory
