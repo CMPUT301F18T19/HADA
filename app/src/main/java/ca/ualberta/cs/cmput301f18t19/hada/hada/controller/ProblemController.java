@@ -95,16 +95,10 @@ public class ProblemController {
      */
     public void deleteProblem(String fileId) {
         new ESProblemManager.DeleteProblemTask().execute(fileId);
-        try {
-            //Getting records to delete based on the given parentId.
-            List<Record> recordsToDelete = new ESRecordManager.GetRecordListTask().execute(fileId).get();
-            for(Record record: recordsToDelete){
-                new ESRecordManager.DeleteARecordTask().execute(record.getFileId());
-            }
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        //Getting records to delete based on the given parentId.
+        List<Record> recordsToDelete = new RecordController().getRecordList(fileId);
+        for(Record record: recordsToDelete){
+            new RecordController().deleteRecord(record.getFileId());
         }
     }
 
