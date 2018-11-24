@@ -6,93 +6,108 @@
     android:layout_height="match_parent"
     tools:context=".ui.ViewRecordActivity">
 
-    <ImageView
-        android:id="@+id/viewRecordImage"
+    <TextView
+        android:id="@+id/viewRecordActivityTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/ViewRecordActivity_activity_title"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toStartOf="@+id/viewRecordActivitySettings"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/viewRecordActivitySettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="@color/colorAccent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:srcCompat="@drawable/ic_settings_black_24dp" />
+
+    <ImageView
+        android:id="@+id/viewRecordActivityImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/viewRecordActivityComment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewRecordActivityTitle"
+        app:srcCompat="@mipmap/ic_launcher_foreground" />
+
+    <TextView
+        android:id="@+id/viewRecordActivityComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/viewRecordActivityTimestamp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/viewRecordActivityCommentTitle"
+        app:layout_constraintTop_toBottomOf="@+id/viewRecordActivityImage" />
+
+    <TextView
+        android:id="@+id/viewRecordActivityTimestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/viewRecordActivityViewBodyLocation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/viewRecordActivityTimestampTitle"
+        app:layout_constraintTop_toBottomOf="@+id/viewRecordActivityComment" />
 
     <Button
-        android:id="@+id/viewRecordEditDate"
-        android:layout_width="0dp"
+        android:id="@+id/viewRecordActivityViewBodyLocation"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/edit_date"
+        android:text="@string/ViewRecordActivity_view_photos"
+        app:layout_constraintBottom_toTopOf="@+id/viewRecordActivityViewPhotos"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewRecordComment" />
+        app:layout_constraintTop_toBottomOf="@+id/viewRecordActivityTimestamp" />
 
     <Button
-        android:id="@+id/viewRecordEditTime"
-        android:layout_width="0dp"
+        android:id="@+id/viewRecordActivityViewPhotos"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/edit_time"
+        android:layout_marginBottom="32dp"
+        android:text="@string/ViewRecordActivity_view_geolocation"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewRecordEditDate" />
+        app:layout_constraintTop_toBottomOf="@+id/viewRecordActivityViewBodyLocation" />
 
-    <Button
-        android:id="@+id/viewRecordEditGeolocation"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/viewRecordActivityCommentTitle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/edit_geolocation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewRecordEditTime" />
+        android:text="@string/ViewRecordActivity_comment_title"
+        app:layout_constraintBaseline_toBaselineOf="@+id/viewRecordActivityComment"
+        app:layout_constraintEnd_toStartOf="@+id/viewRecordActivityComment"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/viewRecordViewLocation"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/viewRecordActivityTimestampTitle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/view_location"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewRecordEditGeolocation" />
-
-    <Button
-        android:id="@+id/viewRecordEditPhotos"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/add_rem_photos"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewRecordViewLocation" />
-
-    <EditText
-        android:id="@+id/viewRecordComment"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:hint="@string/edit_comment"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewRecordImage" />
+        android:text="@string/ViewRecordActivity_timestamp_title"
+        app:layout_constraintBaseline_toBaselineOf="@+id/viewRecordActivityTimestamp"
+        app:layout_constraintEnd_toStartOf="@+id/viewRecordActivityTimestamp"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
