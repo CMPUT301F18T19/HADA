@@ -22,7 +22,6 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESUserManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.ui.NewUserActivity;
 
 
 /**

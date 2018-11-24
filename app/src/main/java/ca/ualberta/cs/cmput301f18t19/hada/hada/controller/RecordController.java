@@ -5,7 +5,6 @@ import android.location.Location;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESRecordManager;
 
@@ -28,6 +27,7 @@ public class RecordController {
     }
 
     public void addRecord(Record record, String parentId){
+        record.setParentId(parentId);
         new ESRecordManager.AddRecordTask().execute(record);
     }
 
