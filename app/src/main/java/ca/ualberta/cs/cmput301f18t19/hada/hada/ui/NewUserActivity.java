@@ -54,8 +54,6 @@ public class NewUserActivity extends AppCompatActivity {
         username = findViewById(R.id.newUserEnterUsername);
         phonenumber = findViewById(R.id.newUserEnterPhone);
         email = findViewById(R.id.newUserEnterEmail);
-        Button frontImage = findViewById(R.id.newUserAddFrontImageButton);
-        Button backImage = findViewById(R.id.newUserAddBackImageButton);
         Button confirm = findViewById(R.id.newUserConfirm);
         Button cancel = findViewById(R.id.newUserCancel);
         final RadioButton patient = findViewById(R.id.newUserPatientRadioButton);
