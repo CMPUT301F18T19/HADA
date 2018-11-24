@@ -25,20 +25,20 @@ public class PatientProblemCommentActivity extends AppCompatActivity {
     String loggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
     Patient patient;
     Problem problem;
-    int problemPosition;
-    int patientPosition;
+    String problemFileId;
+    String patientUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_problem_comment);
         Intent intent = getIntent();
-        patientPosition = (int) intent.getSerializableExtra("patientPosition");
-        problemPosition = (int) intent.getSerializableExtra("problemPosition");
+        patientUserId = (String) intent.getSerializableExtra("patientUserId");
+        problemFileId = (String) intent.getSerializableExtra("problemFileId");
 
         //Get patient and problem that are related.
-        patient = new UserController().getPatientList(loggedInUser).get(patientPosition);
-        problem = new ProblemController().getProblemList(patient.getUserID()).get(problemPosition);
+        patient = new UserController().getPatient(patientUserId);
+        problem = new ProblemController().getProblem(problemFileId);
 
         //Sets custom title
         TextView titleTextView = findViewById(R.id.patientProblemCommentTitle);
@@ -52,10 +52,7 @@ public class PatientProblemCommentActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO make record unclickable
-                String inputComment = editText.getText().toString();
-                new RecordController().addCommentRecord(patientPosition, problemPosition, inputComment);
-                finish();
+                //TODO: Determine how to save a care provider comment -- extension of record?
             }
         });
     }
@@ -65,7 +62,7 @@ public class PatientProblemCommentActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         ListView listView = findViewById(R.id.patientProblemCommentList);
-        ArrayList<Record> records = problem.getRecords();
+        ArrayList<Record> records = new RecordController().getRecordList(patientUserId);
         ArrayAdapter<Record> recordArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, records);
         listView.setAdapter(recordArrayAdapter);
         recordArrayAdapter.notifyDataSetChanged();

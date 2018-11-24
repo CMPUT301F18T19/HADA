@@ -43,11 +43,11 @@ public class ViewPatientProblemsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_patient_problems);
         final Intent intent = getIntent();
-        final int patientPosition = (int) intent.getSerializableExtra("Position");
+        final String patientUserId = (String) intent.getSerializableExtra("patientUserId");
         listView = findViewById(R.id.viewPatientProblemsList);
 
         //Gets patient
-        patient = new UserController().getPatientList(loggedInUser).get(patientPosition);
+        patient = new UserController().getPatient(patientUserId);
 
         //Sets custom title @author Joe
         TextView titleTextView = findViewById(R.id.viewPatientProblemsDisplayUsername);
@@ -64,16 +64,7 @@ public class ViewPatientProblemsActivity extends AppCompatActivity {
             }
         });
 
-        //Goes to ViewProblemActivity
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int problemPosition, long id) {
-                Intent intent = new Intent(ViewPatientProblemsActivity.this, PatientProblemCommentActivity.class);
-                intent.putExtra("patientPosition", patientPosition);
-                intent.putExtra("problemPosition", problemPosition);
-                startActivity(intent);
-            }
-        });
+
 
 
     }
@@ -81,9 +72,22 @@ public class ViewPatientProblemsActivity extends AppCompatActivity {
     @Override
     protected  void onResume(){
         super.onResume();
-        ArrayList<Problem> problems = new ProblemController().getProblemList(patient.getUserID());
+        final String patientUserId = patient.getUserID();
+        final ArrayList<Problem> problems = new ProblemController().getListOfProblems(patientUserId);
         ArrayAdapter<Problem> problemArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, problems);
         listView.setAdapter(problemArrayAdapter);
         problemArrayAdapter.notifyDataSetChanged();
+
+        //Goes to ViewProblemActivity
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int problemPosition, long id) {
+                Intent intent = new Intent(ViewPatientProblemsActivity.this, PatientProblemCommentActivity.class);
+                String problemFileId = problems.get(problemPosition).getFileId();
+                intent.putExtra("patientUserId", patientUserId);
+                intent.putExtra("problemFileId", problemFileId);
+                startActivity(intent);
+            }
+        });
     }
 }
