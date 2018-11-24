@@ -82,7 +82,7 @@ public class ProblemListActivity extends AppCompatActivity implements Serializab
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(ProblemListActivity.this, EditProblemActivity.class);
-                intent.putExtra("problemObject", problems.get(position).getFileId());
+                intent.putExtra("problemFileId", problems.get(position).getFileId());
                 startActivity(intent);
                 return true;
             }
@@ -93,7 +93,7 @@ public class ProblemListActivity extends AppCompatActivity implements Serializab
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(ProblemListActivity.this, ViewProblemActivity.class);
-                intent.putExtra("Position", problems.get(position).getFileId());
+                intent.putExtra("problemFileId", problems.get(position).getFileId());
                 startActivity(intent);
             }
         });
