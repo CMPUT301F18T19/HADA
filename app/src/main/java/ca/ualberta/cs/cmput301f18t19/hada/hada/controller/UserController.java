@@ -165,14 +165,17 @@ public class UserController {
      * @param userIdOfPatient self descriptive
      * @return the boolean
      */
-    public void setParentOfPatient(String userIdOfPatient){
+    public Boolean setParentOfPatient(String userIdOfPatient){
+        //TODO remove boolean dependency
         Patient patient = getPatient(userIdOfPatient);
         if(patient != null){
             CareProvider careProvider = getCareProvider(LoggedInSingleton.getInstance().getLoggedInID());
             patient.setParentId(careProvider.getUserID());
             new ESUserManager.AddPatientTask().execute(patient);
+            return true;
         }
-        else{Log.d("setParentOfPatient: ", "Failed to set patient parent.");}
+        else{Log.d("setParentOfPatient: ", "Failed to set patient parent.");
+        return false;}
     }
 
     /**
