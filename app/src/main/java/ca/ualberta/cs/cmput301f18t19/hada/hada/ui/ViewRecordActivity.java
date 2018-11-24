@@ -7,28 +7,25 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-
 
 import java.util.ArrayList;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.RecordController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 
+/**
+ * Activity to view a specific record from a problem.
+ *
+ * @author Austin, Jason
+ * @see Record
+ * @see Problem
+ */
 public class ViewRecordActivity extends AppCompatActivity {
 
-    private ListView recordsList;
     private ArrayList<Record> records;
-    private Problem oldProblem;
-
-    private int position;
-    private int problemPosition;
-    private int recordPosition;
     private Record record;
-    private Problem problem;
 
 
     @Override
@@ -38,18 +35,16 @@ public class ViewRecordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_record);
 
         Intent intent = getIntent();
-        problemPosition = (int) intent.getSerializableExtra("ProblemPosition");
-        recordPosition = (int) intent.getSerializableExtra("RecordPosition");
+        String problemFileId = intent.getStringExtra("problemFileId");
         String LoggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
-        records = new RecordController().getRecordList(problemPosition);
-        record = records.get(recordPosition);
 
-        Button editDate = (Button) findViewById(R.id.viewRecordEditDate);
-        Button editTime = (Button) findViewById(R.id.viewRecordEditTime);
-        Button editLocation = (Button) findViewById(R.id.viewRecordEditGeolocation);
-        Button viewLocation = (Button) findViewById(R.id.viewRecordViewLocation);
-        Button editPhotos = (Button) findViewById(R.id.viewRecordEditPhotos);
-        final EditText editedComment = (EditText) findViewById(R.id.viewRecordComment);
+
+        Button editDate = findViewById(R.id.viewRecordEditDate);
+        Button editTime = findViewById(R.id.viewRecordEditTime);
+        Button editLocation = findViewById(R.id.viewRecordEditGeolocation);
+        Button viewLocation = findViewById(R.id.viewRecordViewLocation);
+        Button editPhotos = findViewById(R.id.viewRecordEditPhotos);
+        final EditText editedComment = findViewById(R.id.viewRecordComment);
         editedComment.setHint(record.getComment());
 
         editDate.setOnClickListener(new View.OnClickListener() {

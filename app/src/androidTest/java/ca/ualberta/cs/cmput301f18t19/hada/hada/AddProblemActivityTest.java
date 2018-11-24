@@ -4,6 +4,7 @@ import android.widget.DatePicker;
 import android.widget.TimePicker;
 
 import org.hamcrest.Matchers;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -43,6 +44,10 @@ public class AddProblemActivityTest {
         Espresso.onView(withId(R.id.problemListFloatingButton)).perform(click());
     }
 
+    @After
+    public void deleteTestPatient(){
+        new UserController().deletePatient("patient_problemlistactivity");
+    }
     @Test
     public void testNoInput(){
         Espresso.onView(withId(R.id.addProblemButton)).perform(click());

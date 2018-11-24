@@ -90,7 +90,7 @@ public abstract class User {
      *
      * @param newEmail the new email
      */
-    public void setEmailAdress(String newEmail){
+    public void setEmailAddress(String newEmail){
         this.emailAddress = newEmail;
     }
 

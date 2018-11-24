@@ -13,18 +13,18 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESUserManager;
  */
 public class LoggedInSingleton {
 
-        //True if careProvider
-        private Boolean isCareProvider = false;
-        private String loggedInID = null;
+    //True if careProvider
+    private Boolean isCareProvider = false;
+    private String loggedInID = null;
 
-        private LoggedInSingleton() {}
+    private LoggedInSingleton() {}
 
-        private static class LazyHolder {
-            /**
-             * An instance of LoggedInSingleton initialized at login.
-             */
-            static final LoggedInSingleton INSTANCE = new LoggedInSingleton();
-        }
+    private static class LazyHolder {
+        /**
+         * An instance of LoggedInSingleton initialized at login.
+         */
+        static final LoggedInSingleton INSTANCE = new LoggedInSingleton();
+    }
 
     /**
      * Returns an instance of LoggedInSingleton to perform other tasks with.
@@ -32,8 +32,8 @@ public class LoggedInSingleton {
      * @return the instance
      */
     public static LoggedInSingleton getInstance() {
-            return LazyHolder.INSTANCE;
-        }
+        return LazyHolder.INSTANCE;
+    }
 
     /**
      * Sets the userID of the user currently logged in.
@@ -41,8 +41,8 @@ public class LoggedInSingleton {
      * @param userID the user id
      */
     public void setLoggedInID(String userID){
-            this.loggedInID = userID;
-        }
+        this.loggedInID = userID;
+    }
 
     /**
      * Returns the userID of the user currently logged in.
@@ -50,8 +50,8 @@ public class LoggedInSingleton {
      * @return the string
      */
     public String getLoggedInID(){
-            return this.loggedInID;
-        }
+        return this.loggedInID;
+    }
 
     /**
      * Sets whether the user is a Patient or a CareProvider via a boolean
@@ -61,9 +61,9 @@ public class LoggedInSingleton {
      * @param state the state
      */
 //If called then logged in user is a care provider
-        public void setIsCareProvider(Boolean state){
-            this.isCareProvider = state;
-        }
+    public void setIsCareProvider(Boolean state){
+        this.isCareProvider = state;
+    }
 
     /**
      * Returns the boolean for whether the user is a CareProvider.
@@ -71,8 +71,8 @@ public class LoggedInSingleton {
      * @return the boolean
      */
     public boolean getIsCareProvider(){
-            return isCareProvider;
-        }
-
-
+        return isCareProvider;
     }
+
+
+}
