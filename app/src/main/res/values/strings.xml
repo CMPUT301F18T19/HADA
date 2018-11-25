@@ -77,4 +77,10 @@
 
     <!-- AddRecordActivity Layout -->
     <string name="AddRecordActivity_navigation_title">Add Record</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_add_geo_to_record">Map</string>
+    <string name="AddRecordActivity_set_location">Set Location</string>
+    <string name="AddRecordActivity_current_selected_location">Location: No Location Selected</string>
+    <string name="maps_activity_select_current_location">Select Current Location</string>
+
 </resources>
