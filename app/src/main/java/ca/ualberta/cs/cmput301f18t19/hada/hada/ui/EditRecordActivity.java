@@ -34,6 +34,7 @@ public class EditRecordActivity extends AppCompatActivity {
     private int position;
     private int problemPosition;
     private int recordPosition;
+    private String recordFileId;
     private Record record;
     private Problem problem;
 
@@ -45,11 +46,10 @@ public class EditRecordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_record);
 
         Intent intent = getIntent();
-        problemPosition = (int) intent.getSerializableExtra("ProblemPosition");
-        recordPosition = (int) intent.getSerializableExtra("RecordPosition");
+        recordFileId = intent.getStringExtra("recordFileId");
         String LoggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
-        records = new RecordController().getRecordList(problemPosition);
-        record = records.get(recordPosition);
+
+        record = new RecordController().getRecord(recordFileId);
 
         Button editDate = (Button) findViewById(R.id.viewRecordEditDate);
         Button editTime = (Button) findViewById(R.id.viewRecordEditTime);

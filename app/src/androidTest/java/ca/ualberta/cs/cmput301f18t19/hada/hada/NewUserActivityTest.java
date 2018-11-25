@@ -8,6 +8,7 @@ import androidx.test.espresso.Espresso;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.UserController;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.User;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.ui.NewUserActivity;
 
 import static androidx.test.espresso.action.ViewActions.click;
@@ -75,9 +76,9 @@ public class NewUserActivityTest {
     }
 
     //As of now, you need to delete the user testString1 before testing.
-    //TODO: Implement deletePatient/deleteCareProvider in UserController
     @Test
     public void testAddNewPatient() {
+        new UserController().deletePatient("testString1");
         Espresso.onView(withId(R.id.newUserEnterUsername))
                 .perform(typeText("testString1"), closeSoftKeyboard());
         Espresso.onView(withId(R.id.newUserEnterPhone))
@@ -106,6 +107,7 @@ public class NewUserActivityTest {
     //As of now, you need to delete the user testString2 before testing.
     @Test
     public void testAddNewCareProvider(){
+        new UserController().deleteCareProvider("testString2");
         Espresso.onView(withId(R.id.newUserEnterUsername))
                 .perform(typeText("testString2"), closeSoftKeyboard());
         Espresso.onView(withId(R.id.newUserEnterPhone))

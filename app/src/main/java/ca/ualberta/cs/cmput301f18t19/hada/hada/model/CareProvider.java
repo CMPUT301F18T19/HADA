@@ -10,9 +10,6 @@
  */
 package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
-
-import java.util.ArrayList;
-
 /**
  * The type Care provider.
  *
@@ -20,9 +17,6 @@ import java.util.ArrayList;
  * @see
  */
 public class CareProvider extends User {
-
-    private ArrayList<Patient> patients = new ArrayList<Patient>();
-
     /**
      * Instantiates a new Care Provider with no parameters.
      */
@@ -39,27 +33,5 @@ public class CareProvider extends User {
      */
     public CareProvider(String userID, String phoneNumber, String emailAddress){
         super(userID, phoneNumber, emailAddress);
-    }
-
-    /**
-     * Sets the list of patients assigned to a Care Provider to a new list.
-     *
-     * @param patients the patients
-     */
-    public void setPatients(ArrayList<Patient> patients){
-        this.patients = patients;
-    }
-
-    /**
-     * Returns the list of patients assigned to a Care Provider.
-     *
-     * @return the array list
-     */
-    public ArrayList<Patient> getPatients(){
-        return this.patients;
-    }
-
-    public void addPatient(Patient patient){
-        patients.add(patient);
     }
 }

@@ -1,4 +1,5 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -10,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 import androidx.test.espresso.Espresso;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.ProblemController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.RecordController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.UserController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
@@ -34,6 +36,7 @@ public class ProblemListActivityTest {
     DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
     Problem problem = new Problem("testTitle", LocalDateTime.now(), "testDesc");
     final String timestamp = problem.getDate().format(formatter);
+
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule =
             new ActivityTestRule<>(MainActivity.class);
@@ -45,8 +48,8 @@ public class ProblemListActivityTest {
                 .perform(typeText("patient_problemlistactivity"), closeSoftKeyboard());
         Espresso.onView(withId(R.id.mainActivityPatientLogin)).perform(click());
 
-        new UserController().addProblemToPatient(problem);
-        new RecordController().addRecord(new Record(), 0);
+        new ProblemController().addProblem("testTitle",LocalDateTime.now(), "testDesc", "patient_problemlistactivity" );
+        new RecordController().addRecord(new Record(), new ProblemController().getListOfProblems("patient_problemlistactivity").get(0).getFileId());
 
 
         //Since we manually added a problem to the patient after we loaded the list, we go back and
@@ -55,6 +58,11 @@ public class ProblemListActivityTest {
         Espresso.onView(withId(R.id.mainActivityPatientLogin)).perform(click());
 
     }
+    @After
+    public void deleteTestPatient(){
+        new UserController().deletePatient("patient_problemlistactivity");
+    }
+
     @Test
     public void testContainsProblemTitle(){
         Espresso.onView(withText("testTitle")).check(matches(isDisplayed()));
@@ -90,7 +98,7 @@ public class ProblemListActivityTest {
         Espresso.onData(anything()).inAdapterView(withId(R.id.problemListListView))
                 .atPosition(0).perform(longClick());
         Espresso.onView(withId(R.id.editProblemTitle)).perform(replaceText(newTitle), closeSoftKeyboard());
-        Espresso.onView(withId(R.id.editProblemButton)).perform(click());
+        Espresso.onView(withId(R.id.editProblemSaveButton)).perform(click());
         Espresso.onView(withText(newTitle)).check(matches(isDisplayed()));
 
 

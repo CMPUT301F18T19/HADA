@@ -47,6 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
+        android:textSize="15sp"
         app:layout_constraintBottom_toTopOf="@+id/viewRecordActivityTimestamp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -59,6 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="TextView"
+        android:textSize="15sp"
         app:layout_constraintBottom_toTopOf="@+id/viewRecordActivityViewBodyLocation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -93,10 +95,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ViewRecordActivity_comment_title"
+        android:textSize="15sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/viewRecordActivityComment"
         app:layout_constraintEnd_toStartOf="@+id/viewRecordActivityComment"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -104,10 +107,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ViewRecordActivity_timestamp_title"
+        android:textSize="15sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/viewRecordActivityTimestamp"
         app:layout_constraintEnd_toStartOf="@+id/viewRecordActivityTimestamp"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

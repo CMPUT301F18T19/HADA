@@ -42,14 +42,14 @@ public class PatientTest {
     @Test
     public void testSetEmailAddress(){
         Patient patient = new Patient();
-        patient.setEmailAdress("test@ualberta.ca");
+        patient.setEmailAddress("test@ualberta.ca");
         assertEquals("test@ualberta.ca", patient.getEmailAddress());
     }
 
     @Test
     public void testGetEmailAddress(){
         Patient patient = new Patient();
-        patient.setEmailAdress("test@ualberta.ca");
+        patient.setEmailAddress("test@ualberta.ca");
         String returnedEmailAddress = patient.getEmailAddress();
         assertEquals("test@ualberta.ca", returnedEmailAddress);
     }
