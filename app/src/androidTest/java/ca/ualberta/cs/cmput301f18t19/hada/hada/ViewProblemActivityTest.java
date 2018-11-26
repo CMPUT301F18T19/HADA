@@ -25,37 +25,37 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
 public class ViewProblemActivityTest {
-    @Rule
-    public ActivityTestRule<MainActivity> mActivityRule =
-            new ActivityTestRule<>(MainActivity.class);
-
-    @Before
-    public void loginTestPatient() {
-        Problem problem = new Problem("testTitle", LocalDateTime.now(), "Desc" );
-        Record record = new Record();
-        record.setTitle("recordTitle");
-        problem.getRecords().add(record);
-        new UserController()
-                .addPatient("patient_problemlistactivity", "789789", "no@email.com");
-
-        Espresso.onView(withId(R.id.mainActivityUsernameText))
-                .perform(typeText("patient_problemlistactivity"), closeSoftKeyboard());
-        Espresso.onView(withId(R.id.mainActivityPatientLogin)).perform(click());
-        new UserController().addProblemToPatient(problem);
-        //Since we manually added a problem to the patient after we loaded the list, we go back and
-        //log in again to force changes
-        Espresso.pressBack();
-        Espresso.onView(withId(R.id.mainActivityPatientLogin)).perform(click());
-        Espresso.onView(withText("testTitle")).perform(click());
-    }
-
-    @Test
-    public void testTitleDisplay(){
-        Espresso.onView(withId(R.id.patientProblemCommentTitle)).check(matches(withText("testTitle")));
-    }
-
-    @Test
-    public void testRecordInList(){
-        Espresso.onView(withText("recordTitle")).check(matches(isDisplayed()));
-    }
+//    @Rule
+//    public ActivityTestRule<MainActivity> mActivityRule =
+//            new ActivityTestRule<>(MainActivity.class);
+//
+//    @Before
+//    public void loginTestPatient() {
+//        Problem problem = new Problem("testTitle", LocalDateTime.now(), "Desc" );
+//        Record record = new Record();
+//        record.setTitle("recordTitle");
+//        problem.getRecords().add(record);
+//        new UserController()
+//                .addPatient("patient_problemlistactivity", "789789", "no@email.com");
+//
+//        Espresso.onView(withId(R.id.mainActivityUsernameText))
+//                .perform(typeText("patient_problemlistactivity"), closeSoftKeyboard());
+//        Espresso.onView(withId(R.id.mainActivityPatientLogin)).perform(click());
+//        new UserController().addProblemToPatient(problem);
+//        //Since we manually added a problem to the patient after we loaded the list, we go back and
+//        //log in again to force changes
+//        Espresso.pressBack();
+//        Espresso.onView(withId(R.id.mainActivityPatientLogin)).perform(click());
+//        Espresso.onView(withText("testTitle")).perform(click());
+//    }
+//
+//    @Test
+//    public void testTitleDisplay(){
+//        Espresso.onView(withId(R.id.patientProblemCommentTitle)).check(matches(withText("testTitle")));
+//    }
+//
+//    @Test
+//    public void testRecordInList(){
+//        Espresso.onView(withText("recordTitle")).check(matches(isDisplayed()));
+//    }
 }

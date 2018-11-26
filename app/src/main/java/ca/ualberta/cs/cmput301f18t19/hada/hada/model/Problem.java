@@ -14,19 +14,29 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import io.searchbox.annotations.JestId;
+
 /**
  * Object which represents a problem, ie. an issue to be tracked over time, for a given patient.
  *
  * @author Joe
+ * @version 2.0
  * @see Patient
  * @see Record
  */
 public class Problem {
 
+    /**
+     * parentId is the reference to the person who owns the problem.
+     * fileId is the ES id.
+     */
+    private String parentId;
+    @JestId
+    private String fileId;
+
     private String title;
     private LocalDateTime date;
     private String description;
-    private ArrayList<Record> records = new ArrayList<>();
 
     /**
      * Instantiates a new Problem with no attributes given.
@@ -46,6 +56,27 @@ public class Problem {
         this.description = description;
     }
 
+
+    //setters
+
+    /**
+     * Sets the description of the problem.
+     *
+     * @param parentId fileId of the parent object.
+     */
+    public void setParentId(String parentId){
+        this.parentId = parentId;
+    }
+
+    /**
+     * Sets the description of the problem.
+     *
+     * @param fileId used for storing object.
+     */
+    public void setFileId(String fileId){
+        this.fileId = fileId;
+    }
+
     /**
      * Sets the title of the problem to a given string.
      *
@@ -53,15 +84,6 @@ public class Problem {
      */
     public void setTitle(String newTitle) {
         this.title = newTitle;
-    }
-
-    /**
-     * Returns the title of a problem.
-     *
-     * @return the title
-     */
-    public String getTitle() {
-        return this.title;
     }
 
     /**
@@ -74,21 +96,52 @@ public class Problem {
     }
 
     /**
-     * Returns the start date of the problem.
-     *
-     * @return the date
-     */
-    public LocalDateTime getDate() {
-        return this.date;
-    }
-
-    /**
      * Sets the description of the problem.
      *
      * @param newDesc the new desc
      */
     public void setDesc(String newDesc) {
         this.description = newDesc;
+    }
+
+
+
+    //getters
+
+    /**
+     * Returns the parentId of the problem
+     *
+     * @return the parentId
+     */
+    public String getParentId(){
+        return this.parentId;
+    }
+
+    /**
+     * Returns the parentId of the problem
+     *
+     * @return the fileId
+     */
+    public String getFileId(){
+        return this.fileId;
+    }
+
+    /**
+     * Returns the title of a problem.
+     *
+     * @return the title
+     */
+    public String getTitle() {
+        return this.title;
+    }
+
+    /**
+     * Returns the start date of the problem.
+     *
+     * @return the date
+     */
+    public LocalDateTime getDate() {
+        return this.date;
     }
 
     /**
@@ -100,25 +153,10 @@ public class Problem {
         return this.description;
     }
 
-    /**
-     * Sets the list of records associated with a problem to a new one supplied.
-     *
-     * @param newRecords the new records
-     */
-    public void setRecords(ArrayList<Record> newRecords){
-        this.records = newRecords;
-    }
-
-    /**
-     * Returns the list of records associated with the problem.
-     *
-     * @return the array list
-     */
-    public ArrayList<Record> getRecords(){
-        return this.records;
-    }
 
 
+
+    //extras
     /**
      * Custom toString that currently displays the title, for easier displaying.
      * @return
