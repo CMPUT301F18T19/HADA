@@ -70,9 +70,9 @@ public class ViewProblemActivity extends AppCompatActivity {
         viewMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /**
-                 * Go to map
-                 */
+                Intent intent = new Intent(ViewProblemActivity.this, ViewRecordLocationsActivity.class);
+                intent.putExtra("problemFileId", problemFileId);
+                startActivity(intent);
 
             }
         });

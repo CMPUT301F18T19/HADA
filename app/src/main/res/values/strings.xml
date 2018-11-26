@@ -83,4 +83,6 @@
     <string name="AddRecordActivity_current_selected_location">Location: No Location Selected</string>
     <string name="maps_activity_select_current_location">Select Current Location</string>
 
+    <string name="title_activity_view_record_locations">Map</string>
+
 </resources>

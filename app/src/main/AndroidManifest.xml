@@ -57,7 +57,10 @@
 
         <activity
             android:name=".ui.AddGeoToRecordActivity"
-            android:label="@string/title_activity_add_geo_to_record"></activity>
+            android:label="@string/title_activity_add_geo_to_record" />
+        <activity
+            android:name=".ui.ViewRecordLocationsActivity"
+            android:label="@string/title_activity_view_record_locations"></activity>
     </application>
 
 </manifest>
