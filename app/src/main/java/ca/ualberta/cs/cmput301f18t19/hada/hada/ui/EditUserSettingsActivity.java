@@ -104,25 +104,27 @@ public class EditUserSettingsActivity extends AppCompatActivity {
 
                     //Update email if changed
                     String newEmail = emailInput.getText().toString();
-                    if(newEmail != patient.getEmailAddress()){
-                        new UserController().editPatientEmail(patient, newEmail);
-                        editedEmail = true;
-                    }
-
-                    //Update contact number if changed
                     String newContactNumber = contactNumberInput.getText().toString();
-                    if(newContactNumber != patient.getPhoneNumber()){
-                        new UserController().editPatientContactNumber(patient, newContactNumber);
-                        editedNumber = true;
+                    if(!newEmail.isEmpty() && !newContactNumber.isEmpty()) {
+                        if (!newEmail.equals(patient.getEmailAddress())) {
+                            new UserController().editPatientEmail(patient, newEmail);
+                            editedEmail = true;
+                        }
+                        //Update contact number if changed
+                        if (!newContactNumber.equals(patient.getPhoneNumber())) {
+                            new UserController().editPatientContactNumber(patient, newContactNumber);
+                            editedNumber = true;
+                        }
+
+
+                        //Checks for changed and displays a Toast for each permutation
+                        //TODO Swap out strings into @strings to avoid hardcoding
+                        if(editedEmail && editedNumber){Toast.makeText(EditUserSettingsActivity.this, "Updated email and contact number.", Toast.LENGTH_SHORT).show();}
+                        else if(editedEmail){Toast.makeText(EditUserSettingsActivity.this, "Updated email.", Toast.LENGTH_SHORT).show();}
+                        else if(editedNumber){Toast.makeText(EditUserSettingsActivity.this, "Updated contact number.", Toast.LENGTH_SHORT).show();}
+                        finish();
                     }
-
-                    //Checks for changed and displays a Toast for each permutation
-                    //TODO Swap out strings into @strings to avoid hardcoding
-                    if(editedEmail && editedNumber){Toast.makeText(EditUserSettingsActivity.this, "Updated email and contact number.", Toast.LENGTH_SHORT).show();}
-                    else if(editedEmail){Toast.makeText(EditUserSettingsActivity.this, "Updated email.", Toast.LENGTH_SHORT).show();}
-                    else if(editedNumber){Toast.makeText(EditUserSettingsActivity.this, "Updated contact number.", Toast.LENGTH_SHORT).show();}
-
-                    finish();
+                    else{Toast.makeText(EditUserSettingsActivity.this, "No empty inputs allowed, contact info not saved.", Toast.LENGTH_SHORT).show();}
                 }
             });
 
