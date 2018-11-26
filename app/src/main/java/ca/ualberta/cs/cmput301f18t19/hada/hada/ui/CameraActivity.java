@@ -57,9 +57,9 @@ public class CameraActivity extends AppCompatActivity {
 
         //verifyPermission(this);
 
-        String imageFilePath = folder + "/" + String.valueOf(System.currentTimeMillis()) + ".jpg";
+        //String imageFilePath = folder + "/" + String.valueOf(System.currentTimeMillis()) + ".jpg";
 
-        File imageFile = new File(folder,"imagetest.jpg");
+        File imageFile = new File(folder,String.valueOf(System.currentTimeMillis()) + ".jpg");
         imageFileUri = Uri.fromFile(imageFile);
 
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageFileUri);
