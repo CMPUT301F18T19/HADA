@@ -103,38 +103,35 @@ public class ViewProblemActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //Displays the list of records
-        ListView recordsList = findViewById(R.id.viewProblemRecordsList);
+        @Override
+        protected void onResume() {
+            super.onResume();
+            //Displays the list of records
+            ListView recordsList = findViewById(R.id.viewProblemRecordsList);
 
-        ArrayList<Record> records = new RecordController().getRecordList(problemFileId);
-        ArrayAdapter<Record> recordArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, records);
-        recordsList.setAdapter(recordArrayAdapter);
-        recordArrayAdapter.notifyDataSetChanged();
+            final ArrayList<Record> records = new RecordController().getRecordList(problemFileId);
+            ArrayAdapter<Record> recordArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, records);
+            recordsList.setAdapter(recordArrayAdapter);
+            recordArrayAdapter.notifyDataSetChanged();
 
-        //Goes to ViewRecordActivity
-        recordsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int recordPosition, long id) {
-                Intent intent = new Intent(ViewProblemActivity.this, ViewRecordActivity.class);
-                intent.putExtra("RecordFileId", recordPosition);
-                startActivity(intent);
+            //Goes to ViewRecordActivity
+            recordsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(ViewProblemActivity.this, ViewRecordActivity.class);
+                    intent.putExtra("recordFileId", records.get(position).getFileId());
+                    startActivity(intent);
+                }
+            });
 
-            }
-
-        });
-
-        //Goes to EditRecordActivity
-        recordsList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                //Go to EditRecordActivity
-                return true;
-            }
-        });
-
+            //Goes to EditRecordActivity
+            recordsList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    //Go to EditRecordActivity
+                    return true;
+                }
+            });
     }
 
 }

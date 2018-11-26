@@ -40,9 +40,8 @@ public class ViewRecordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_record);
         Intent intent = getIntent();
-        problemPosition = (int) intent.getSerializableExtra("ProblemPosition");
-        recordPosition = (int) intent.getSerializableExtra("RecordPosition");
         final String recordFileId = intent.getStringExtra("recordFileId");
+        record = new RecordController().getRecord(recordFileId);
         String LoggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
 
 
@@ -69,10 +68,10 @@ public class ViewRecordActivity extends AppCompatActivity {
         TextView timeText = (TextView) findViewById(R.id.viewRecordActivityTimestamp);
         ImageButton recordSettings = (ImageButton) findViewById(R.id.viewRecordActivitySettings);
 
-        titleText.setText(new RecordController().getRecord(recordFileId).getTitle());
+        titleText.setText(record.getTitle());
 
-        commentText.setText(new RecordController().getRecord(recordFileId).getComment());
-
+        commentText.setText(record.getComment());
+/*
         DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
         LocalDateTime timestamp = new RecordController().getRecord(recordFileId).getTimestamp();
@@ -80,7 +79,7 @@ public class ViewRecordActivity extends AppCompatActivity {
         String time = timestamp.format(formatter);
 
         timeText.setText(time);
-
+*/
         recordSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
