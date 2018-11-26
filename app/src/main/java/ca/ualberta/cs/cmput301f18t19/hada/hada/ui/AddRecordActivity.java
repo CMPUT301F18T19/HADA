@@ -66,6 +66,8 @@ public class AddRecordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO access photos and select them
+                Intent intent = new Intent(AddRecordActivity.this, CameraActivity.class);
+                startActivity(intent);
                 Toast.makeText(AddRecordActivity.this, "Select photos", Toast.LENGTH_SHORT).show();
             }
         });
