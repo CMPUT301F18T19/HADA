@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
+// TODO stub method
 public class CareProviderTest {
 
     @Test
@@ -55,23 +56,4 @@ public class CareProviderTest {
         String returnedEmailAddress = careProvider.getEmailAddress();
         assertEquals("test@ualberta.ca", returnedEmailAddress);
     }
-
-    @Test
-    public void testSetPatients(){
-        CareProvider careProvider = new CareProvider();
-        ArrayList<Patient> patients = new ArrayList<Patient>();
-        Patient patient = new Patient();
-        careProvider.setPatients(patients);
-        assertEquals("Should return the PatientListController we added", patients, careProvider.getPatients());
-    }
-
-    @Test
-    public void testGetPatients(){
-        CareProvider careProvider = new CareProvider();
-        ArrayList<Patient> patients = new ArrayList<Patient>();
-        Patient patient = new Patient();
-        careProvider.setPatients(patients);
-        assertEquals("Should return the PatientListController we added", patients, careProvider.getPatients());
-    }
-
 }

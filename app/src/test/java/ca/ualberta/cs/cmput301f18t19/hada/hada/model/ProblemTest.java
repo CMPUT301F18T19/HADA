@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+// TODO stub method
 public class ProblemTest{
 
     @Test
@@ -53,23 +54,4 @@ public class ProblemTest{
         String returnedDesc = problem.getDesc();
         assertEquals("This is a second test desc for this problem", returnedDesc);
     }
-
-    @Test
-    public void setRecordsTest(){
-        Problem problem = new Problem();
-        ArrayList<Record> records = new ArrayList();
-        problem.setRecords(records);
-        assertEquals("Should be same list",records, problem.getRecords());
-    }
-
-    @Test
-    public void getRecordsTest(){
-        Problem problem = new Problem();
-        ArrayList<Record> records = new ArrayList<Record>();
-        problem.setRecords(records);
-        assertEquals("Should be same list",records, problem.getRecords());
-    }
-
-
 }
-
