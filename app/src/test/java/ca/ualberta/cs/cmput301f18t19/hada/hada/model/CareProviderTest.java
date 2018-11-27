@@ -8,20 +8,26 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
-// TODO stub method
 public class CareProviderTest {
+
+    private CareProvider setup() {
+        CareProvider careProvider = new CareProvider();
+        careProvider.setUserID("Test User Id");
+        careProvider.setPhoneNumber("7801234567");
+        careProvider.setEmailAddress("test@ualberta.ca");
+        return careProvider;
+    }
 
     @Test
     public void testSetUserID(){
-        CareProvider careProvider = new CareProvider();
+        CareProvider careProvider = setup();
         careProvider.setUserID("Test CP User ID");
         assertEquals("Test CP User ID", careProvider.getUserID());
     }
 
     @Test
     public void testGetUserID(){
-        CareProvider careProvider = new CareProvider();
-        careProvider.setUserID("Test User Id");
+        CareProvider careProvider = setup();
         String returnedID = careProvider.getUserID();
         assertEquals("Test User Id",returnedID);
     }
@@ -29,30 +35,28 @@ public class CareProviderTest {
 
     @Test
     public void testSetPhoneNumber(){
-        CareProvider careProvider = new CareProvider();
-        careProvider.setPhoneNumber("7801234567");
-        assertEquals("7801234567", careProvider.getPhoneNumber());
+        CareProvider careProvider = setup();
+        careProvider.setPhoneNumber("1809994466");
+        assertEquals("1809994466", careProvider.getPhoneNumber());
     }
 
     @Test
     public void testGetPhoneNumber(){
-        CareProvider careProvider = new CareProvider();
-        careProvider.setPhoneNumber("7801234567");
+        CareProvider careProvider = setup();
         String returnedPhoneNumber = careProvider.getPhoneNumber();
         assertEquals("7801234567", returnedPhoneNumber);
     }
 
     @Test
     public void testSetEmailAddress(){
-        CareProvider careProvider = new CareProvider();
-        careProvider.setEmailAddress("test@ualberta.ca");
-        assertEquals("test@ualberta.ca", careProvider.getEmailAddress());
+        CareProvider careProvider = setup();
+        careProvider.setEmailAddress("testSet@ualberta.ca");
+        assertEquals("testSet@ualberta.ca", careProvider.getEmailAddress());
     }
 
     @Test
     public void testGetEmailAddress(){
-        CareProvider careProvider = new CareProvider();
-        careProvider.setEmailAddress("test@ualberta.ca");
+        CareProvider careProvider = setup();
         String returnedEmailAddress = careProvider.getEmailAddress();
         assertEquals("test@ualberta.ca", returnedEmailAddress);
     }
