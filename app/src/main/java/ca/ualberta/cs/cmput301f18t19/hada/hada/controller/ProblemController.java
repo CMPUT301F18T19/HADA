@@ -131,4 +131,23 @@ public class ProblemController {
         problem.setDesc(description);
         new ESProblemManager.AddProblemTask().execute(problem);
     }
+
+
+    /**
+     * Search problem with keyword.
+     *
+     * @param parentId the parent id of the problems to search
+     * @param keyword  the keyword to search for
+     */
+    public List<Problem> searchProblemsWithKeywords(String parentId, String keyword){
+        try {
+            return new ESProblemManager.SearchUsingKeywordTask().execute(parentId, keyword).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

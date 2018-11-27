@@ -32,9 +32,6 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 
 public class ViewRecordActivity extends AppCompatActivity {
 
-    private int recordPosition;
-    private int problemPosition;
-    private ArrayList<Record> records;
     private Record record;
 
 
@@ -47,25 +44,20 @@ public class ViewRecordActivity extends AppCompatActivity {
         record = new RecordController().getRecord(recordFileId);
         String LoggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
 
-        TextView titleText = (TextView) findViewById(R.id.viewRecordActivityTitle);
-        TextView commentText = (TextView) findViewById(R.id.viewRecordActivityComment);
-        TextView timeText = (TextView) findViewById(R.id.viewRecordActivityTimestamp);
-        ImageButton recordSettings = (ImageButton) findViewById(R.id.viewRecordActivitySettings);
+        TextView titleText = findViewById(R.id.viewRecordActivityTitle);
+        TextView commentText = findViewById(R.id.viewRecordActivityComment);
+        TextView timeText = findViewById(R.id.viewRecordActivityTimestamp);
+        ImageButton recordSettings = findViewById(R.id.viewRecordActivitySettings);
 
         titleText.setText(record.getTitle());
 
         commentText.setText(record.getComment());
 
-        //TODO FIX TIMESTAMP ISSUES - TIMESTAMP FROM RECORDCONTROLLER DOES NOT RETURN VALID VALUE
-/*
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-
         LocalDateTime timestamp = record.getTimestamp();
 
-        timeText.setText(timestamp.format(formatter)); // Gives null error
+        timeText.setText(timestamp.toString());
 
-        timeText.setText(LocalDateTime.now().format(formatter)); // Works fine
-*/
+
         recordSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -158,4 +158,50 @@ public class ESProblemManager extends ESManager{
             return null;
         }
     }
+
+    public static class SearchUsingKeywordTask extends AsyncTask<String, Void, List<Problem>> {
+        @Override
+        protected List<Problem> doInBackground(String... params) {
+            setClient();
+            String parentId = params[0];
+            String keywords = params[1];
+            String query = "{\n" +
+                    "\t\"query\": {\n" +
+                    "\t\t\"bool\": {\n" +
+                    "\t\t\t\"must\": {\n" +
+                    "\t\t\t\t\"match\": {\"parentId\" : \"" + parentId + "\"}\n" +
+                    "\t\t\t\t},\n" +
+                    "\t\t\t\"should\": [\n" +
+                    "\t\t\t\t{\n" +
+                    "\t\t\t\t\t\"term\" : {\"description\": \"" + keywords + "\"}\n" +
+                    "\t\t\t\t},\n" +
+                    "\t\t\t\t{\n" +
+                    "\t\t\t\t\t\"term\" : {\"title\": \"" + keywords + "\"}\n" +
+                    "\t\t\t\t}\n" +
+                    "\t\t\t]\t\t\n" +
+                    "\t\t}\n" +
+                    "\t}\n" +
+                    "}";
+            Log.d("SearchUsingKeywordTask Query", query);
+            List<Problem> matchingProblems = null;
+            Search search = new Search.Builder(query)
+                    .addIndex(teamIndex)
+                    .addType("problem")
+                    .build();
+            try{
+                JestResult result = client.execute(search);
+
+                if(result.isSucceeded()){
+                    matchingProblems = result.getSourceAsObjectList(Problem.class);
+                    for(Problem problem: matchingProblems){
+                        Log.d("SearchUsingKeywordTask", "Problem found:" + problem.toString());
+                    }
+                }
+            }catch(IOException e){
+                Log.d("GetAProblemTask", "IOException");
+                e.printStackTrace();
+            }
+            return matchingProblems;
+        }
+    }
 }
