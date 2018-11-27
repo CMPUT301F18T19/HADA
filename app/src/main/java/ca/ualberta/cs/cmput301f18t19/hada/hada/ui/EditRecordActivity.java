@@ -30,11 +30,10 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 
 /**
- * Activity to view a specific record from a problem.
+ * Activity to edit a specific record from a problem.
  *
  * @author Austin, Jason
  * @see Record
- * @see Problem
  */
 public class EditRecordActivity extends AppCompatActivity {
 
@@ -91,8 +90,11 @@ public class EditRecordActivity extends AppCompatActivity {
 
         final TextView displayDate = (TextView) findViewById(R.id.editRecordActivityCurrentDateDisplay);
         displayDate.setText("PLACEHOLDER");
+
+        // iterate through "Date" of LocalDateTime string to just display date in TextView displayDate
+
 /*        LocalDateTime timestamp = record.getTimestamp();
-        String date = timestamp.toString();
+        String date = timestamp.toString(); // this line gives error
         String modifiedDate = "";
         for (int i = 0; i < 10; i++) {
             char c = date.charAt(i);
@@ -103,9 +105,12 @@ public class EditRecordActivity extends AppCompatActivity {
 
         final TextView displayTime = (TextView) findViewById(R.id.editRecordActivityCurrentTimeDisplay);
         displayTime.setText("PLACEHOLDER");
-/*        String time = record.getTimestamp().toString();
+
+        // iterate through "Time" of LocalDateTime string to just display time in TextView displayTime
+
+/*        String time = record.getTimestamp().toString(); // this line gives error
         String modifiedTime = "";
-        for (int i = 11; i < time.length(); i++) {
+        for (int i = 10; i < time.length(); i++) {
             char c = date.charAt(i);
             modifiedTime = modifiedTime + c;
         }
@@ -147,6 +152,7 @@ public class EditRecordActivity extends AppCompatActivity {
                         LocalDateTime newDate = LocalDateTime.ofInstant(cal.toInstant(), ZoneId.systemDefault());
                         oldCalendar = cal;
 
+                        // modifies how date is displayed
                         String date = newDate.format(formatter);
                         String modifiedDate = "";
                         for (int i = 0; i < 10; i++) {
@@ -185,6 +191,7 @@ public class EditRecordActivity extends AppCompatActivity {
                         oldCalendar = cal;
                         String time = newDate.format(formatter);
 
+                        // modify how time is displayed
                         String modifiedTime = "";
                         for (int i = 10; i < time.length(); i++) {
                             char c = time.charAt(i);
@@ -246,6 +253,7 @@ public class EditRecordActivity extends AppCompatActivity {
                 if ((editedComment.getText().toString().length() != 0) || (editedComment.getText().toString() != record.getComment())) {
                     new RecordController().editRecordComment(record, editedComment.getText().toString());
                 }
+
 
                 String dateTime = "";
                 for (int i = 0; i < 10; i++) {
