@@ -3,6 +3,7 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -11,8 +12,10 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 import android.widget.EditText;
 
+import java.lang.reflect.Type;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -44,25 +47,6 @@ public class ViewRecordActivity extends AppCompatActivity {
         record = new RecordController().getRecord(recordFileId);
         String LoggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
 
-
-
-        Button editDate = findViewById(R.id.viewRecordEditDate);
-        Button editTime = findViewById(R.id.viewRecordEditTime);
-        Button editLocation = findViewById(R.id.viewRecordEditGeolocation);
-        Button viewLocation = findViewById(R.id.viewRecordViewLocation);
-        Button editPhotos = findViewById(R.id.viewRecordEditPhotos);
-        final EditText editedComment = findViewById(R.id.viewRecordComment);
-        editedComment.setHint(record.getComment());
-
-        editDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /**
-                 * Go to EditDateActivity
-                 */
-            }
-        });
-
         TextView titleText = (TextView) findViewById(R.id.viewRecordActivityTitle);
         TextView commentText = (TextView) findViewById(R.id.viewRecordActivityComment);
         TextView timeText = (TextView) findViewById(R.id.viewRecordActivityTimestamp);
@@ -71,14 +55,16 @@ public class ViewRecordActivity extends AppCompatActivity {
         titleText.setText(record.getTitle());
 
         commentText.setText(record.getComment());
+
+        //TODO FIX TIMESTAMP ISSUES - TIMESTAMP FROM RECORDCONTROLLER DOES NOT RETURN VALID VALUE
 /*
         DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
-        LocalDateTime timestamp = new RecordController().getRecord(recordFileId).getTimestamp();
+        LocalDateTime timestamp = record.getTimestamp();
 
-        String time = timestamp.format(formatter);
+        timeText.setText(timestamp.format(formatter)); // Gives null error
 
-        timeText.setText(time);
+        timeText.setText(LocalDateTime.now().format(formatter)); // Works fine
 */
         recordSettings.setOnClickListener(new View.OnClickListener() {
             @Override
