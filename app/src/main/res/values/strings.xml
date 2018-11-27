@@ -77,4 +77,13 @@
 
     <!-- AddRecordActivity Layout -->
     <string name="AddRecordActivity_navigation_title">Add Record</string>
+
+
+    <!-- ViewRecordActivity Layout -->
+    <string name="ViewRecordActivity_view_geolocation">View GeoLocation</string>
+    <string name="ViewRecordActivity_view_photos">View Photos</string>
+    <string name="ViewRecordActivity_timestamp_title">Time: </string>
+    <string name="ViewRecordActivity_comment_title">Comment: </string>
+    <string name="ViewRecordActivity_activity_title">Record</string>
+
 </resources>

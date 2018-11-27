@@ -29,6 +29,8 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import java.time.LocalDateTime;
+
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.RecordController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
@@ -54,18 +56,14 @@ public class AddRecordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_record);
-        final LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        final EditText addTitle = findViewById(R.id.addRecordActivityTitle);
-        final EditText addComment = findViewById(R.id.addRecordActivityComment);
-        Button addPhotos = findViewById(R.id.addRecordActivitySelectRecordPhotos);
-        Switch geoLocation = findViewById(R.id.addRecordActivityGeoLocationSwitch);
-        Button saveRecord = findViewById(R.id.addRecordActivitySaveButton);
+
+        //Gets parentId
         Intent intent = getIntent();
-        final int problemIndex = intent.getExtras().getInt("problem");
+        final String parentId = intent.getStringExtra("problemFileId");
 
 
-
-
+        //Will open a new activity in order to take/add photos
+        Button addPhotos = findViewById(R.id.addRecordActivitySelectRecordPhotos);
         addPhotos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,6 +72,8 @@ public class AddRecordActivity extends AppCompatActivity {
             }
         });
 
+        //A switch that check if the user would like to save the geo location
+        Switch geoLocation = findViewById(R.id.addRecordActivityGeoLocationSwitch);
         geoLocation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -86,6 +86,11 @@ public class AddRecordActivity extends AppCompatActivity {
             }
         });
 
+        //Saves the record
+        Button saveRecord = findViewById(R.id.addRecordActivitySaveButton);
+        final EditText addTitle = findViewById(R.id.addRecordActivityTitle);
+        final EditText addComment = findViewById(R.id.addRecordActivityComment);
+        final LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         saveRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,9 +104,10 @@ public class AddRecordActivity extends AppCompatActivity {
                         record.setComment(comment);
                         record.setTitle(title);
                         record.setGeoLocation(lastKnownLocation);
+                        record.setTimestamp(LocalDateTime.now());
                         //TODO: Photos
                         Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " comment=" +record.getComment() + " location="+record.getGeoLocation().toString());
-                        new RecordController().addRecord(record, problemIndex);
+                        new RecordController().addRecord(record, parentId);
                         finish();
                     }catch(SecurityException e){
                         Toast.makeText(AddRecordActivity.this, "Unable to save location. Please enable the location permissions.", Toast.LENGTH_SHORT).show();
@@ -114,7 +120,7 @@ public class AddRecordActivity extends AppCompatActivity {
                     record.setTitle(title);
                     //TODO: Photos
                     Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " comment=" +record.getComment());
-                    new RecordController().addRecord(record, problemIndex);
+                    new RecordController().addRecord(record, parentId);
                     finish();
                 }
             }

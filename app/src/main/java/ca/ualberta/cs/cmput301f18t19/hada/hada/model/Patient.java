@@ -11,9 +11,6 @@
 
 package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
-import java.util.ArrayList;
-
-
 
 /**
  * Object which represents a user of type patient.
@@ -22,7 +19,8 @@ import java.util.ArrayList;
  * @see User
  */
 public class Patient extends User {
-    private ArrayList<Problem> problemList = new ArrayList<>();
+
+    private String parentId;
 
     /**
      * Instantiates a new Patient with no attributes set.
@@ -42,81 +40,38 @@ public class Patient extends User {
         super(userID, phoneNumber, emailAddress);
     }
 
+    //setters
 
     /**
-     * Sets the list of problems for a given patient to one supplied.
+     * Set parent id.
      *
-     * @param newProblemList the new problem list
+     * @param parentId id of the parent object
      */
-    /*Following are the problemList operation*/
-    public void setProblemList(ArrayList<Problem> newProblemList){
-        this.problemList = newProblemList;
+    public void setParentId(String parentId){
+        this.parentId = parentId;
     }
 
+    //getters
+
     /**
-     * Returns the list of problems of the patient.
+     * Get parent id string.
      *
-     * @return the array list
+     * @return the parents id
      */
-    public ArrayList<Problem> getProblemList(){
-        return this.problemList;
+    public String getParentId(){
+        return this.parentId;
     }
 
-    /**
-     * Clears the list of problems entirely.
-     */
-    public void clearProblemList(){
-        problemList.clear();
-    }
+    //extras
 
     /**
-     * Sets the problem at a given index to be a new problem.
+     * Overrides the toString() so that listView prints the object correctly.
      *
-     * @param index      the index
-     * @param newProblem the new problem
+     * @return A human readable version of the object
      */
-    /*Following are the individual problem operations*/
-    public void setProblem(int index, Problem newProblem){
-      problemList.set(index, newProblem);
-    }
-
-    /**
-     * Returns a problem given an index.
-     *
-     * @param index the index
-     * @return the problem
-     */
-    public Problem getProblem(int index){
-        return problemList.get(index);
-    }
-
-    /**
-     * Adds a problem to the list given a problem object.
-     *
-     * @param newProblem the new problem
-     */
-    public void addProblem(Problem newProblem){
-      problemList.add(newProblem);
-    }
-
-    /**
-     * Removes a problem from the list given the problem object.
-     *
-     * @param problem the problem
-     */
-    public void removeProblem(Problem problem){
-        problemList.remove(problem);
-    }
-
-    //Overide toString for ListView usage
     @Override
     public String toString(){
         return this.getUserID();
     }
-
-
-
-    //TODO setFullBodyImage() once we know of the data type/structure.
-    //public void setFullBodyImage()
 
 }

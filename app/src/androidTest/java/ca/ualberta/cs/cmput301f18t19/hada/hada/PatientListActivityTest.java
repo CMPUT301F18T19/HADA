@@ -36,8 +36,9 @@ public class PatientListActivityTest {
                 .perform(typeText("doctor_patientlistactivity"), closeSoftKeyboard());
         Espresso.onView(withId(R.id.mainActivityDoctorLogin)).perform(click());
 
+
         new UserController().addPatient("testPatient", "asd", "asf");
-        new UserController().addPatientToCareProvider("testPatient");
+        new UserController().setParentOfPatient("doctor_patientlistactivity");
 
         //Since we manually added a patient to the patient list after we loaded the list, we go back and
         //log in again to force changes

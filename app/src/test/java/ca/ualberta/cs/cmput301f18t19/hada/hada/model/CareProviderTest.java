@@ -44,14 +44,14 @@ public class CareProviderTest {
     @Test
     public void testSetEmailAddress(){
         CareProvider careProvider = new CareProvider();
-        careProvider.setEmailAdress("test@ualberta.ca");
+        careProvider.setEmailAddress("test@ualberta.ca");
         assertEquals("test@ualberta.ca", careProvider.getEmailAddress());
     }
 
     @Test
     public void testGetEmailAddress(){
         CareProvider careProvider = new CareProvider();
-        careProvider.setEmailAdress("test@ualberta.ca");
+        careProvider.setEmailAddress("test@ualberta.ca");
         String returnedEmailAddress = careProvider.getEmailAddress();
         assertEquals("test@ualberta.ca", returnedEmailAddress);
     }
