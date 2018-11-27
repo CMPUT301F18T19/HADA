@@ -86,4 +86,7 @@
     <string name="ViewRecordActivity_comment_title">Comment: </string>
     <string name="ViewRecordActivity_activity_title">Record</string>
 
+    <!-- EditRecordActivity Layout -->
+    <string name="editRecordActivity_save_all">Save Changes</string>
+
 </resources>

@@ -36,6 +36,7 @@ public class ViewRecordActivity extends AppCompatActivity {
     private int problemPosition;
     private ArrayList<Record> records;
     private Record record;
+    private String recordFileId;
 
 
     @Override
@@ -43,29 +44,12 @@ public class ViewRecordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_record);
         Intent intent = getIntent();
-        final String recordFileId = intent.getStringExtra("recordFileId");
-        record = new RecordController().getRecord(recordFileId);
         String LoggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
+        recordFileId = intent.getStringExtra("recordFileId");
+        record = new RecordController().getRecord(recordFileId);
 
-        TextView titleText = (TextView) findViewById(R.id.viewRecordActivityTitle);
-        TextView commentText = (TextView) findViewById(R.id.viewRecordActivityComment);
-        TextView timeText = (TextView) findViewById(R.id.viewRecordActivityTimestamp);
+
         ImageButton recordSettings = (ImageButton) findViewById(R.id.viewRecordActivitySettings);
-
-        titleText.setText(record.getTitle());
-
-        commentText.setText(record.getComment());
-
-        //TODO FIX TIMESTAMP ISSUES - TIMESTAMP FROM RECORDCONTROLLER DOES NOT RETURN VALID VALUE
-/*
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-
-        LocalDateTime timestamp = record.getTimestamp();
-
-        timeText.setText(timestamp.format(formatter)); // Gives null error
-
-        timeText.setText(LocalDateTime.now().format(formatter)); // Works fine
-*/
         recordSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,6 +59,26 @@ public class ViewRecordActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    protected void onResume() {
+        super.onResume();
+
+        record = new RecordController().getRecord(recordFileId);
+        TextView titleText = (TextView) findViewById(R.id.viewRecordActivityTitle);
+        TextView commentText = (TextView) findViewById(R.id.viewRecordActivityComment);
+        TextView timeText = (TextView) findViewById(R.id.viewRecordActivityTimestamp);
+
+        titleText.setText(record.getTitle());
+        commentText.setText(record.getComment());
+
+        //TODO FIX TIMESTAMP ISSUES - TIMESTAMP FROM RECORDCONTROLLER DOES NOT RETURN VALID VALUE
+/*
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        LocalDateTime timestamp = record.getTimestamp();
+        timeText.setText(timestamp.format(formatter)); // Gives null error
+        timeText.setText(LocalDateTime.now().format(formatter)); // Works fine
+*/
 
 
     }

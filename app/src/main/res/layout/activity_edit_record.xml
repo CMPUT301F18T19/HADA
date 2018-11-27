@@ -7,92 +7,139 @@
     tools:context=".ui.EditRecordActivity">
 
     <ImageView
-        android:id="@+id/viewRecordImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:id="@+id/editRecordActivityImage"
+        android:layout_width="108dp"
+        android:layout_height="108dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/editRecordActivitySaveComment"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintTop_toBottomOf="@+id/editRecordActivityTitle"
+        tools:srcCompat="@mipmap/ic_launcher_foreground" />
 
     <Button
-        android:id="@+id/viewRecordEditDate"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:id="@+id/editRecordActivityEditDate"
+        android:layout_width="150dp"
+        android:layout_height="42dp"
         android:text="@string/edit_date"
+        app:layout_constraintBottom_toTopOf="@+id/editRecordActivityEditTime"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewRecordComment" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/editRecordActivityCurrentDateDisplay"
+        app:layout_constraintTop_toBottomOf="@+id/editRecordActivitySaveComment" />
 
     <Button
-        android:id="@+id/viewRecordEditTime"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:id="@+id/editRecordActivityEditTime"
+        android:layout_width="150dp"
+        android:layout_height="42dp"
         android:text="@string/edit_time"
+        app:layout_constraintBottom_toTopOf="@+id/editRecordActivityEditGeolocation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewRecordEditDate" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/editRecordActivityCurrentTimeDisplay"
+        app:layout_constraintTop_toBottomOf="@+id/editRecordActivityEditDate" />
 
     <Button
-        android:id="@+id/viewRecordEditGeolocation"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:id="@+id/editRecordActivityEditGeolocation"
+        android:layout_width="352dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/edit_geolocation"
+        app:layout_constraintBottom_toTopOf="@+id/editRecordActivityEditPhotos"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewRecordEditTime" />
+        app:layout_constraintTop_toBottomOf="@+id/editRecordActivityEditTime" />
 
     <Button
-        android:id="@+id/viewRecordViewLocation"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/view_location"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewRecordEditGeolocation" />
-
-    <Button
-        android:id="@+id/viewRecordEditPhotos"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:id="@+id/editRecordActivityEditPhotos"
+        android:layout_width="352dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/add_rem_photos"
+        app:layout_constraintBottom_toTopOf="@+id/editRecordActivitySaveAllChanges"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewRecordViewLocation" />
+        app:layout_constraintTop_toBottomOf="@+id/editRecordActivityEditGeolocation" />
 
     <EditText
-        android:id="@+id/viewRecordComment"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:id="@+id/editRecordActivityComment"
+        android:layout_width="200dp"
+        android:layout_height="42dp"
         android:ems="10"
         android:hint="@string/edit_comment"
         android:inputType="textPersonName"
+        app:layout_constraintBaseline_toBaselineOf="@+id/editRecordActivitySaveComment"
+        app:layout_constraintEnd_toStartOf="@+id/editRecordActivitySaveComment"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/editRecordActivityTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/editRecordActivityImage"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewRecordImage" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/editRecordActivitySaveComment"
+        android:layout_width="150dp"
+        android:layout_height="42dp"
+        android:text="Save Comment"
+        app:layout_constraintBottom_toTopOf="@+id/editRecordActivityEditDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/editRecordActivityComment"
+        app:layout_constraintTop_toBottomOf="@+id/editRecordActivityImage" />
+
+    <TextView
+        android:id="@+id/editRecordActivityCurrentDateDisplay"
+        android:layout_width="200dp"
+        android:layout_height="32dp"
+        android:text="TextView"
+        android:textSize="15sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/editRecordActivityEditDate"
+        app:layout_constraintEnd_toStartOf="@+id/editRecordActivityEditDate"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/editRecordActivityCurrentTimeDisplay"
+        android:layout_width="200dp"
+        android:layout_height="32dp"
+        android:text="TextView"
+        android:textSize="15sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/editRecordActivityEditTime"
+        app:layout_constraintEnd_toStartOf="@+id/editRecordActivityEditTime"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/editRecordActivitySaveAllChanges"
+        android:layout_width="352dp"
+        android:layout_height="42dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/editRecordActivity_save_all"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editRecordActivityEditPhotos"
+        app:layout_constraintVertical_bias="1.0" />
+
 
 </android.support.constraint.ConstraintLayout>
