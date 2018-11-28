@@ -48,17 +48,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addRecordActivityComment" />
 
-    <Switch
-        android:id="@+id/addRecordActivityGeoLocationSwitch"
-        android:layout_width="250dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="8dp"
-        android:checked="false"
-        android:text="@string/save_geo_location"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addRecordActivitySelectRecordPhotos" />
-
     <ImageView
         android:id="@+id/addRecordActivityImagePreview"
         android:layout_width="240dp"
@@ -88,12 +77,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:layout_marginTop="8dp"
         android:text="@string/generic_save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/addRecordActivityAddGeoButton"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/AddRecordActivity_set_location"
+        app:layout_constraintBottom_toTopOf="@+id/addRecordActivitySaveButton"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addRecordActivityGeoLocationSwitch"
-        app:layout_constraintVertical_bias="0.166" />
+        app:layout_constraintTop_toBottomOf="@+id/AddRecordActivityLocationSelectedTitle" />
+
+    <TextView
+        android:id="@+id/AddRecordActivityLocationSelectedTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="18dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/AddRecordActivity_current_selected_location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addRecordActivitySelectRecordPhotos" />
 
 </android.support.constraint.ConstraintLayout>
