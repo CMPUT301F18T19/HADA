@@ -173,11 +173,11 @@ public class AddRecordActivity extends AppCompatActivity {
                 selectedLoc.setText("Location: "+chosenLatLng.toString());
             }}
             if (requestCode == 100){
-                if(resultCode == RESULT_OK){
+        else if (requestCode == 100) {
                     imageURI = Uri.parse(intent.getStringExtra("URI"));
                 }
             }
-            else{
+            Toast.makeText(this, "An error occurred. Please try again. Request code: " + requestCode, Toast.LENGTH_SHORT).show();
                 Toast.makeText(this, "An error occurred. Please try again", Toast.LENGTH_SHORT).show();
             }
         }
