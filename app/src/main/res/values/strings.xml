@@ -92,4 +92,7 @@
     <string name="viewRecordActivity_comment_title">Comment: </string>
     <string name="viewRecordActivity_title">Title</string>
 
+    <!-- viewPhotosInRecord Layout -->
+    <string name="viewPhotosInRecord_title">Title</string>
+
 </resources>
