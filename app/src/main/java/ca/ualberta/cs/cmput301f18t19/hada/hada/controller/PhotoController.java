@@ -17,6 +17,9 @@ public class PhotoController {
 
     public void addPhoto(Record record, Uri uri){
         //TODO upload image to imgur
+        if (uri == null){
+            return;
+        }
         record.addPhoto(uri, "HTTP GO HERE");
     }
 }
