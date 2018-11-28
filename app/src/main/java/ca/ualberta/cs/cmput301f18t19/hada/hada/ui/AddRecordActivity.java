@@ -19,6 +19,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -47,7 +49,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * @see <a href="https://stackoverflow.com/a/51350622">StackOverflow example by Yashas</a>
  */
 public class AddRecordActivity extends AppCompatActivity {
-
+    private Uri imageURI;
     private boolean saveLocationBoolean;
     private final int REQUEST_LOCATION_PERMISSION = 1;
     @Override
@@ -66,9 +68,18 @@ public class AddRecordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO access photos and select them
-                Intent intent = new Intent(AddRecordActivity.this, CameraActivity.class);
-                startActivity(intent);
+
                 Toast.makeText(AddRecordActivity.this, "Select photos", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Button takePhoto = findViewById(R.id.addRecordActivityTakePhoto);
+        takePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddRecordActivity.this, CameraActivity.class);
+                startActivityForResult(intent, 1);
+                Toast.makeText(AddRecordActivity.this, "Take photos", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -142,6 +153,16 @@ public class AddRecordActivity extends AppCompatActivity {
             Toast.makeText(this, "Permission granted!", Toast.LENGTH_SHORT).show();
         }else{
             EasyPermissions.requestPermissions(this, "Please grant the location permission", REQUEST_LOCATION_PERMISSION, perms);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1){
+            if(resultCode == RESULT_OK){
+                imageURI = Uri.parse(data.getStringExtra("URI"));
+            }
         }
     }
 }

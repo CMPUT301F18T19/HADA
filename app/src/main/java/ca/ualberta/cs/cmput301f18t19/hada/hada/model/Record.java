@@ -1,6 +1,7 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
 import android.location.Location;
+import android.net.Uri;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -30,7 +31,8 @@ public class Record{
     private LocalDateTime timestamp;
     private String title;
     private String comment;
-    private ArrayList<String> photos; //A Base64 encoded String for a photo
+    private ArrayList<Uri> uriPhotos; //A Base64 encoded String for a photo
+    private ArrayList<String> httpPhotos;
     private Location geoLocation;
     private ArrayList<Integer> bodyLocation;
 
@@ -104,11 +106,11 @@ public class Record{
      *
      * @param photo the photo
      */
-    public void addPhoto(String photo) {
-        if (this.photos == null) {
-            photos = new ArrayList<>();
+    public void addPhoto(Uri photo) {
+        if (this.uriPhotos == null) {
+            uriPhotos = new ArrayList<>();
         }
-        this.photos.add(photo);
+        this.uriPhotos.add(photo);
     }
 
     /**

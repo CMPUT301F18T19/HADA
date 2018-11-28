@@ -12,8 +12,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
@@ -39,17 +42,23 @@ public class CameraActivity extends AppCompatActivity implements EasyPermissions
             }
         };
         button.setOnClickListener(listener);
+        final Button savePhoto = findViewById(R.id.cameraActivtySave);
+        savePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveButton();
+            }
+        });
     }
 
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 
-    @AfterPermissionGranted(CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE)
     public void takeAPhoto() {
 
-        String[] perms = {Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE};
+
+        String[] perms = {Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         if (EasyPermissions.hasPermissions(this,perms)){
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
             String folder = Environment.getExternalStorageDirectory().getAbsolutePath() + "/images";
             File folderF = new File(folder);
             if (!folderF.exists()) {
@@ -72,7 +81,7 @@ public class CameraActivity extends AppCompatActivity implements EasyPermissions
             startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         }
         else {
-            EasyPermissions.requestPermissions(this, "We need perms to take pictures", CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+            EasyPermissions.requestPermissions(CameraActivity.this, "We need perms to take pictures", CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE, perms);
         }
 
         //String imageFilePath = folder + "/" + String.valueOf(System.currentTimeMillis()) + ".jpg";
@@ -100,6 +109,7 @@ public class CameraActivity extends AppCompatActivity implements EasyPermissions
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             TextView tv = (TextView) findViewById(R.id.cameraStatus);
+            Toast.makeText(CameraActivity.this, Integer.toString(resultCode), Toast.LENGTH_SHORT).show();
             if (resultCode == RESULT_OK) {
                 tv.setText("Photo OK!");
                 ImageButton button = (ImageButton) findViewById(R.id.cameraImageButton);
@@ -111,4 +121,11 @@ public class CameraActivity extends AppCompatActivity implements EasyPermissions
             }
         }
     }
+    private void saveButton (){
+        Intent intent = new Intent();
+        intent.putExtra("URI",imageFileUri.toString());
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
 }
