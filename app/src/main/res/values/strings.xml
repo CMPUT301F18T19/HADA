@@ -89,4 +89,5 @@
     <string name="ViewRecordActivity_timestamp_title">Time: </string>
     <string name="ViewRecordActivity_comment_title">Comment: </string>
     <string name="ViewRecordActivity_activity_title">Record</string>
+    <string name="title_activity_view_record_locations_for_user">Map</string>
 </resources>

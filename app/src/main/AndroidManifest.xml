@@ -60,7 +60,10 @@
             android:label="@string/title_activity_add_geo_to_record" />
         <activity
             android:name=".ui.ViewRecordLocationsActivity"
-            android:label="@string/title_activity_view_record_locations"></activity>
+            android:label="@string/title_activity_view_record_locations" />
+        <activity
+            android:name=".ui.ViewRecordLocationsForUserActivity"
+            android:label="@string/title_activity_view_record_locations_for_user"></activity>
     </application>
 
 </manifest>
