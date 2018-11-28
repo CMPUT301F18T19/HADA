@@ -28,18 +28,46 @@ import io.searchbox.core.Search;
 import static org.junit.Assert.*;
 
 /**
- * Test class for ESUserManager. Not completed as of now.
+ * Tests for ESUserManager class.
  *
  * @author Christopher Penner
- * @version 0.1
+ * @see ESUserManager
  */
 public class ESUserManagerTest {
 
+    /**
+     * Test get patient task.
+     */
     @Test
-    public void GetPatientTask() {
+    public void TestGetPatientTask() {
         // TODO GetPatientTask
+        assertTrue(false);
     }
-    // TODO public void AddPatientTask() {}
-    // TODO public void AddCareProviderTask() {}
-    // TODO public void GetCareProviderTask() {}
+
+    /**
+     * Test add patient task.
+     */
+    @Test
+    public void TestAddPatientTask() {
+        // TODO implement AddPatientTask
+        assertTrue(false);
+    }
+
+    /**
+     * Test add care provider task.
+     */
+    @Test
+    public void TestAddCareProviderTask() {
+        // TODO implement AddCareProviderTask
+        assertTrue(false);
+    }
+
+    /**
+     * Test get care provider task.
+     */
+    @Test
+    public void TestGetCareProviderTask() {
+        // TODO implement GetCareProviderTask
+        assertTrue(false);
+    }
 }

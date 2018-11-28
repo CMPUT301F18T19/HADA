@@ -25,26 +25,44 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
+/**
+ * Tests for ESRecordManager class.
+ *
+ * @author Christopher Penner
+ * @see ESRecordManager
+ */
 public class ESRecordManagerTest {
 
+    /**
+     * Test add record task.
+     */
     @Test
     public void TestAddRecordTask() {
         // TODO implement TestAddRecordTask
         assertTrue(false);
     }
 
+    /**
+     * Test delete a record task.
+     */
     @Test
     public void TestDeleteARecordTask() {
         // TODO implement TestDeleteARecordTask
         assertTrue(false);
     }
 
+    /**
+     * Test get a record task.
+     */
     @Test
     public void TestGetARecordTask() {
         // TODO implement TestGetARecordTask
         assertTrue(false);
     }
 
+    /**
+     * Test get record list task.
+     */
     @Test
     public void TestGetRecordListTask() {
         // TODO implement TestGetRecordListTask

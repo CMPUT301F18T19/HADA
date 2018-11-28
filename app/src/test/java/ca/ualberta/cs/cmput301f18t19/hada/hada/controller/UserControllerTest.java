@@ -28,9 +28,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
 /**
- * Test class for userController. Tests are passing for now, it needs rework
- * once controllers responsibilities are set in stone. This class is not done,
- * there are a few more methods need to be tested.
+ * Test class for userController.
  *
  * @author Alex Li
  */
