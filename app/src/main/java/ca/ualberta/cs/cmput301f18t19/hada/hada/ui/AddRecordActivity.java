@@ -111,13 +111,14 @@ public class AddRecordActivity extends AppCompatActivity {
                 if(chosenLocation!=null){
                     try {
                         Record record = new Record();
+                        record = new PhotoController().addPhoto(record,imageURI);
                         record.setComment(comment);
                         record.setTitle(title);
                         record.setGeoLocation(chosenLocation);
                         record.setTimestamp(LocalDateTime.now());
-                        new PhotoController().addPhoto(record,imageURI);
+
                         //TODO: Photos
-                        Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " comment=" +record.getComment() + " location="+record.getGeoLocation().toString());
+                        Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " comment=" +record.getComment() + " location="+record.getGeoLocation().toString()+ " timestamp=" +record.getTimestamp().toString());
                         new RecordController().addRecord(record, parentId);
                         finish();
                     }catch(SecurityException e){
@@ -127,11 +128,13 @@ public class AddRecordActivity extends AppCompatActivity {
                 }
                 else{
                     Record record = new Record();
+                    record = new PhotoController().addPhoto(record,imageURI);
+                    Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " timestamp=" +record.getTimestamp().toString());
                     record.setComment(comment);
                     record.setTitle(title);
                     //TODO: Photos
-                    new PhotoController().addPhoto(record,imageURI);
-                    Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " comment=" +record.getComment());
+
+                    Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " comment=" +record.getComment()+ " timestamp=" +record.getTimestamp().toString());
                     new RecordController().addRecord(record, parentId);
                     finish();
                 }

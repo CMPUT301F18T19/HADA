@@ -61,6 +61,7 @@ public class ESRecordManager extends ESManager{
                     DocumentResult result = client.execute(index);
                     Log.d("AddRecordTask index", index.getURI());
                     Log.d("AddRecordTask What is result",result.getJsonString());
+                    Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " comment=" +record.getComment()+ " timestamp=" +record.getTimestamp().toString());
                     if (result.isSucceeded()) {
                         Log.d("AddRecordTask", "Record successfully added.");
                     }
