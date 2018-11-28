@@ -1,0 +1,36 @@
+<!--
+  ~  CMPUT 301 - Fall 2018
+  ~
+  ~  google_maps_api.xml
+  ~
+  ~  11/25/18 12:42 PM
+  ~
+  ~  This is a group project for CMPUT 301 course at the University of Alberta
+  ~  Copyright (C) 2018  Austin Goebel, Anders Johnson, Alex Li,
+  ~  Cristopher Penner, Joseph Potentier-Neal, Jason Robock
+  -->
+
+<resources>
+    <!--
+    TODO: Before you run your application, you need a Google Maps API key.
+
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=5C:EB:8B:5B:E2:D7:7F:46:41:F6:27:B9:A6:E4:B7:30:67:88:60:E8%3Bca.ualberta.cs.cmput301f18t19.hada.hada.ui
+
+    You can also add your credentials to an existing key, using these values:
+
+    Package name:
+    5C:EB:8B:5B:E2:D7:7F:46:41:F6:27:B9:A6:E4:B7:30:67:88:60:E8
+
+    SHA-1 certificate fingerprint:
+    5C:EB:8B:5B:E2:D7:7F:46:41:F6:27:B9:A6:E4:B7:30:67:88:60:E8
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">@string/gmaps_api_key</string>
+</resources>
