@@ -1,6 +1,7 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
 import android.location.Location;
+import android.net.Uri;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -30,7 +31,8 @@ public class Record{
     private LocalDateTime timestamp;
     private String title;
     private String comment;
-    private ArrayList<String> photos; //A Base64 encoded String for a photo
+    private ArrayList<Uri> uriPhotos; //A Base64 encoded String for a photo
+    private ArrayList<String> httpPhotos;
     private Location geoLocation;
     private ArrayList<Integer> bodyLocation;
 
@@ -104,11 +106,15 @@ public class Record{
      *
      * @param photo the photo
      */
-    public void addPhoto(String photo) {
-        if (this.photos == null) {
-            photos = new ArrayList<>();
+    public void addPhoto(Uri photo,String url) {
+        if (this.uriPhotos == null) {
+            uriPhotos = new ArrayList<>();
         }
-        this.photos.add(photo);
+        if (this.httpPhotos == null) {
+            httpPhotos = new ArrayList<>();
+        }
+        this.uriPhotos.add(photo);
+        this.httpPhotos.add(url);
     }
 
     /**
@@ -116,12 +122,16 @@ public class Record{
      *
      * @param photo the photo
      */
-    public void removePhoto(String photo) {
-        if (this.photos == null) {
+    public void removePhoto(Uri photo,String url) {
+        if (this.uriPhotos == null) {
             throw new IllegalStateException();
         }
-        if (this.photos.contains(photo)) {
-            this.photos.remove(photo);
+        if (this.httpPhotos == null) {
+            throw new IllegalStateException();
+        }
+        if (this.uriPhotos.contains(photo) && this.httpPhotos.contains(url)) {
+            this.uriPhotos.remove(photo);
+            this.httpPhotos.remove(url);
         } else {
             throw new IllegalStateException();
         }
@@ -202,8 +212,11 @@ public class Record{
      *
      * @return the photos
      */
-    public ArrayList<String> getPhotos() {
-        return this.photos;
+    public ArrayList<Uri> getUriPhotos() {
+        if (this.uriPhotos == null) {
+            this.uriPhotos = new ArrayList<Uri>();
+        }
+        return this.uriPhotos;
     }
 
     /**

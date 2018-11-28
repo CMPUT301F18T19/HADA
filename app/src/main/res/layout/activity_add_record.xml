@@ -42,11 +42,13 @@
         android:id="@+id/addRecordActivitySelectRecordPhotos"
         android:layout_width="250dp"
         android:layout_height="0dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:text="@string/select_photos"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addRecordActivityComment" />
+        app:layout_constraintTop_toBottomOf="@+id/addRecordActivityTakePhoto" />
+
 
     <ImageView
         android:id="@+id/addRecordActivityImagePreview"
@@ -76,6 +78,7 @@
         android:id="@+id/addRecordActivitySaveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:text="@string/generic_save"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -104,5 +107,29 @@
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addRecordActivitySelectRecordPhotos" />
+
+    <Button
+        android:id="@+id/addRecordActivityTakePhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/take_photo"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/addRecordActivityAddReferenceImage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addRecordActivityComment" />
+
+    <Button
+        android:id="@+id/addRecordActivityAddReferenceImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/take_Reference_Photo"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addRecordActivityComment" />
 
 </android.support.constraint.ConstraintLayout>

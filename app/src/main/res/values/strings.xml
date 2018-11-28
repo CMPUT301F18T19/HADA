@@ -100,4 +100,9 @@
 
     <string name="title_activity_view_record_locations_for_user">Map</string>
     <string name="title_activity_view_single_record_location">Map</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="take_Reference_Photo">Take Reference Photo</string>
+    <string name="camera_save">Save</string>
+    <string name="camera_text_View">Click HADA to take photo</string>
+
 </resources>
