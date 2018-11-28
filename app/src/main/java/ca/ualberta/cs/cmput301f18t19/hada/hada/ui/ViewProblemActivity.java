@@ -128,7 +128,9 @@ public class ViewProblemActivity extends AppCompatActivity {
             recordsList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                    //Go to EditRecordActivity
+                    Intent intent = new Intent (ViewProblemActivity.this, EditRecordActivity.class);
+                    intent.putExtra("recordFileId",records.get(position).getFileId());
+                    startActivity(intent);
                     return true;
                 }
             });

@@ -32,9 +32,20 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.RecordController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 
+/**
+ * The activity for displaying the locations for all records for a given user.
+ *
+ * @author AndersJ
+ * @version 1.0
+ * @see Record
+ * @see ca.ualberta.cs.cmput301f18t19.hada.hada.model.User
+ */
 public class ViewRecordLocationsForUserActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    /**
+     * The User id supplied via the intent.
+     */
     String userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +61,10 @@ public class ViewRecordLocationsForUserActivity extends FragmentActivity impleme
     }
 
 
+    /**
+     * Loads the map and all related records and places pins on the map.
+     * @param googleMap
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;

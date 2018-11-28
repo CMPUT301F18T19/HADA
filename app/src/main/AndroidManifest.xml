@@ -38,6 +38,7 @@
         <activity android:name=".ui.AddProblemActivity" />
         <activity android:name=".ui.EditProblemActivity" />
         <activity android:name=".ui.PatientProblemCommentActivity" />
+        <activity android:name=".ui.EditRecordActivity" />
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -63,7 +64,10 @@
             android:label="@string/title_activity_view_record_locations" />
         <activity
             android:name=".ui.ViewRecordLocationsForUserActivity"
-            android:label="@string/title_activity_view_record_locations_for_user"></activity>
+            android:label="@string/title_activity_view_record_locations_for_user" />
+        <activity
+            android:name=".ui.ViewSingleRecordLocationActivity"
+            android:label="@string/title_activity_view_single_record_location"></activity>
     </application>
 
 </manifest>

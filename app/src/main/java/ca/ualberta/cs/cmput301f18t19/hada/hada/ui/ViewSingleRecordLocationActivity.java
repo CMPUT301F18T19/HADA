@@ -1,9 +1,9 @@
 /*
  *  CMPUT 301 - Fall 2018
  *
- *  ViewRecordLocationsActivity.java
+ *  ViewSingleRecordLocationActivity.java
  *
- *  11/25/18 5:41 PM
+ *  11/27/18 9:47 PM
  *
  *  This is a group project for CMPUT 301 course at the University of Alberta
  *  Copyright (C) 2018  Austin Goebel, Anders Johnson, Alex Li,
@@ -30,27 +30,26 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.RecordController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 
 /**
- * Activity which loads locations for all records in a problem.
+ * Activity for displaying the location for a single record given a record's fileId in the intent.
  *
  * @author AndersJ
  * @version 1.0
  * @see Record
- * @see ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem
- *
  */
-public class ViewRecordLocationsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class ViewSingleRecordLocationActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     /**
-     * The problem file id
+     * The Record file id we get from the intent.
      */
-    String problemFileId;
+    String recordFileId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_record_locations);
         Intent intent = getIntent();
-        problemFileId = intent.getStringExtra("problemFileId");
+        recordFileId = intent.getStringExtra("recordFileId");
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -58,20 +57,20 @@ public class ViewRecordLocationsActivity extends FragmentActivity implements OnM
         mapFragment.getMapAsync(this);
     }
 
+
     /**
-     * Loads the map and places all pins from the records on the map.
+     * onCreate generates the map, we load the record, and put the pin on the map.
      * @param googleMap
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        ArrayList<Record> records = new RecordController().getRecordList(problemFileId);
-        for(Record record: records){
-            if(record.getGeoLocation()!=null){
-                double lat = record.getGeoLocation().getLatitude();
-                double lng = record.getGeoLocation().getLongitude();
-                mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(record.toString()));
-            }
+        Record record = new RecordController().getRecord(recordFileId);
+        if (record.getGeoLocation() != null) {
+            double lat = record.getGeoLocation().getLatitude();
+            double lng = record.getGeoLocation().getLongitude();
+            mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(record.toString()));
         }
     }
 }
+
