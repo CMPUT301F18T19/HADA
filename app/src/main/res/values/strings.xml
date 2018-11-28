@@ -82,7 +82,11 @@
     <string name="AddRecordActivity_set_location">Set Location</string>
     <string name="AddRecordActivity_current_selected_location">Location: No Location Selected</string>
     <string name="maps_activity_select_current_location">Select Current Location</string>
-
     <string name="title_activity_view_record_locations">Map</string>
-
+    <!-- ViewRecordActivity Layout -->
+    <string name="ViewRecordActivity_view_geolocation">View GeoLocation</string>
+    <string name="ViewRecordActivity_view_photos">View Photos</string>
+    <string name="ViewRecordActivity_timestamp_title">Time: </string>
+    <string name="ViewRecordActivity_comment_title">Comment: </string>
+    <string name="ViewRecordActivity_activity_title">Record</string>
 </resources>

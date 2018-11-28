@@ -32,6 +32,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.time.LocalDateTime;
+
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.RecordController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
@@ -94,6 +96,7 @@ public class AddRecordActivity extends AppCompatActivity {
                         record.setComment(comment);
                         record.setTitle(title);
                         record.setGeoLocation(chosenLocation);
+                        record.setTimestamp(LocalDateTime.now());
                         //TODO: Photos
                         Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " comment=" +record.getComment() + " location="+record.getGeoLocation().toString());
                         new RecordController().addRecord(record, parentId);
