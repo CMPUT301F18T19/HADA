@@ -31,6 +31,8 @@ import static org.junit.Assert.*;
  */
 public class RecordTest{
 
+    private Location location = new Location("GeoTest");
+
     /**
      * Setup creates a pre defined Record to test getters
      */
@@ -41,8 +43,9 @@ public class RecordTest{
         record.setTitle("DefaultTitle");
         record.setComment("DefaultComment");
         record.setBodyLocation(999,999);
-        record.addPhoto("www.photo.URL");
-        record.setGeoLocation(new Location("GeoTest"));
+        String photoURL = "www.photo.URL";
+        record.addPhoto(photoURL);
+        record.setGeoLocation(this.location);
         return record;
     }
 
@@ -73,7 +76,7 @@ public class RecordTest{
      * Set comment test.
      */
     @Test
-    public void TestsetComment(){
+    public void TestSetComment(){
         Record record = setup();
         String comment = "This is the new comment!";
         record.setComment(comment);
@@ -182,8 +185,7 @@ public class RecordTest{
     public void TestGetGeoLocation(){
         Record record = setup();
         assertNotNull(record.getGeoLocation());
-        Location location = new Location("GeoTest");
-        assertEquals(location, record.getGeoLocation());
+        assertEquals(this.location, record.getGeoLocation());
 
     }
 
