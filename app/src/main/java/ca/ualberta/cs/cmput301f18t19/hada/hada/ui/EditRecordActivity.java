@@ -82,7 +82,9 @@ public class EditRecordActivity extends AppCompatActivity {
         //Set all pre-defined values for the record
         title.setText(record.getTitle());
         commentInput.setText(record.getComment());
-        dateInput.setText(record.getTimestamp().toString());
+        final LocalDateTime currentDate = record.getTimestamp();
+        String currentDateString = currentDate.format(formatter);
+        dateInput.setText(currentDateString);
 
 
         //for selecting custom date
@@ -124,6 +126,7 @@ public class EditRecordActivity extends AppCompatActivity {
         editTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Calendar calendar = oldCalendar;
                 //The following three are final -- we want date to carry over from what was set before
                 final int year = calendar.get(Calendar.YEAR);

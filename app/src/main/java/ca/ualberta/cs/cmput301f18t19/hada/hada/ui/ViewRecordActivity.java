@@ -55,17 +55,6 @@ public class ViewRecordActivity extends AppCompatActivity {
         recordFileId = intent.getStringExtra("recordFileId");
         record = new RecordController().getRecord(recordFileId);
 
-        // Goes to settings
-        ImageButton recordSettings = (ImageButton) findViewById(R.id.viewRecordActivitySettings);
-        recordSettings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ViewRecordActivity.this, EditRecordActivity.class);
-                intent.putExtra("recordFileId", recordFileId);
-                startActivity(intent);
-            }
-        });
-
         // Goes to view GeoLocation
         Button viewGeoLocation = (Button) findViewById(R.id.viewRecordActivityGeolocation);
         viewGeoLocation.setOnClickListener(new View.OnClickListener() {
@@ -94,21 +83,15 @@ public class ViewRecordActivity extends AppCompatActivity {
         super.onResume();
 
         record = new RecordController().getRecord(recordFileId);
-        TextView titleText = (TextView) findViewById(R.id.viewRecordActivityTitle);
-        TextView commentText = (TextView) findViewById(R.id.viewRecordActivityComment);
-        TextView timeText = (TextView) findViewById(R.id.viewRecordActivityTimestamp);
+        TextView titleText = findViewById(R.id.viewRecordActivityTitle);
+        TextView commentText = findViewById(R.id.viewRecordActivityComment);
+        TextView timeText = findViewById(R.id.viewRecordActivityTimestamp);
 
         titleText.setText(record.getTitle());
         commentText.setText(record.getComment());
 
-        //TODO FIX TIMESTAMP ISSUES - TIMESTAMP FROM RECORDCONTROLLER DOES NOT RETURN VALID VALUE
-/*
         DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
         LocalDateTime timestamp = record.getTimestamp();
-        timeText.setText(timestamp.format(formatter)); // Gives null error
-        timeText.setText(LocalDateTime.now().format(formatter)); // Works fine
-*/
-
-
+        timeText.setText(timestamp.format(formatter));
     }
 }
