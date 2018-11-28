@@ -62,7 +62,7 @@ public class RecordTest{
      * Set title test.
      */
     @Test
-    public void setTitleTest(){
+    public void TestsetTitle(){
         Record record = setup();
         record.setTitle("NewRecordTitle");
         assertEquals(record.getTitle(), "NewRecordTitle");
@@ -73,7 +73,7 @@ public class RecordTest{
      * Set comment test.
      */
     @Test
-    public void setCommentTest(){
+    public void TestsetComment(){
         Record record = setup();
         String comment = "This is the new comment!";
         record.setComment(comment);
@@ -84,7 +84,7 @@ public class RecordTest{
      * Add photo test.
      */
     @Test
-    public void addPhotoTest(){
+    public void TestAddPhoto(){
         Record record = setup();
         String photo1 = "10101";
         record.addPhoto(photo1);
@@ -98,7 +98,7 @@ public class RecordTest{
      * Remove photo test.
      */
     @Test
-    public void removePhotoTest(){
+    public void TestRemovePhoto(){
         Record record = setup();
         String exception= "Not thrown";
         record.removePhoto("www.photo.URL");
@@ -109,7 +109,7 @@ public class RecordTest{
      * Set geo location test.
      */
     @Test
-    public void setGeoLocationTest(){
+    public void TestSetGeoLocation(){
         Record record = setup();
         Location location  = new Location("test");
         record.setGeoLocation(location);
@@ -120,7 +120,7 @@ public class RecordTest{
      * Set body location.
      */
     @Test
-    public void setBodyLocation(){
+    public void TestSetBodyLocation(){
         Record record = setup();
         int bodyX = 0;
         int bodyY = 1;
@@ -133,7 +133,7 @@ public class RecordTest{
      * Get timestamp test.
      */
     @Test
-    public void getTimestampTest(){
+    public void TestGetTimestamp(){
         Record record = setup();
         assertNotNull("Timestamp should not be null", record.getTimestamp());
         //Constructor with specific timestamp test
@@ -147,7 +147,7 @@ public class RecordTest{
      * Get title test.
      */
     @Test
-    public void getTitleTest(){
+    public void TestGetTitle(){
         Record record = setup();
         assertEquals("DefaultTitle", record.getTitle());
     }
@@ -156,7 +156,7 @@ public class RecordTest{
      * Get comment test.
      */
     @Test
-    public void getCommentTest(){
+    public void TestGetComment(){
         Record record = setup();
         assertEquals("DefaultComment", record.getComment());
     }
@@ -165,7 +165,7 @@ public class RecordTest{
      * Get photos test.
      */
     @Test
-    public void getPhotosTest(){
+    public void TestGetPhotos(){
         Record record = setup();
         assertTrue(record.getPhotos().size() == 1);
         String photo = "www.photo2.URL";
@@ -179,7 +179,7 @@ public class RecordTest{
      * Get geo location test.
      */
     @Test
-    public void getGeoLocationTest(){
+    public void TestGetGeoLocation(){
         Record record = setup();
         assertNotNull(record.getGeoLocation());
         Location location = new Location("GeoTest");
@@ -191,7 +191,7 @@ public class RecordTest{
      * Get body location test.
      */
     @Test
-    public void getBodyLocationTest(){
+    public void TestGetBodyLocation(){
         Record record = setup();
         long x = record.getBodyLocation().get(0);
         long y = record.getBodyLocation().get(1);
