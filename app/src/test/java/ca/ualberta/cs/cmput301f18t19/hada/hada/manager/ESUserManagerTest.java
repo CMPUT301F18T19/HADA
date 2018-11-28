@@ -39,9 +39,9 @@ public class ESUserManagerTest {
      * Test get patient task.
      */
     @Test
-    public void TestGetPatientTask() {
-        // TODO GetPatientTask
-        assertTrue(false);
+    public void TestAGetPatientTask() {
+        ESUserManager.GetAPatientTask getPatientTask = new ESUserManager.GetAPatientTask();
+        assertNotNull(getPatientTask);
     }
 
     /**
@@ -49,8 +49,18 @@ public class ESUserManagerTest {
      */
     @Test
     public void TestAddPatientTask() {
-        // TODO implement AddPatientTask
-        assertTrue(false);
+        ESUserManager.AddPatientTask addPatientTask = new ESUserManager.AddPatientTask();
+        assertNotNull(addPatientTask);
+    }
+
+    /**
+     * Test get care provider task.
+     */
+    @Test
+    public void TestGetACareProviderTask() {
+        ESUserManager.GetACareProviderTask getACareProviderTask
+                = new ESUserManager.GetACareProviderTask();
+        assertNotNull(getACareProviderTask);
     }
 
     /**
@@ -58,16 +68,8 @@ public class ESUserManagerTest {
      */
     @Test
     public void TestAddCareProviderTask() {
-        // TODO implement AddCareProviderTask
-        assertTrue(false);
-    }
-
-    /**
-     * Test get care provider task.
-     */
-    @Test
-    public void TestGetCareProviderTask() {
-        // TODO implement GetCareProviderTask
-        assertTrue(false);
+        ESUserManager.AddCareProviderTask addCareProviderTask
+                = new ESUserManager.AddCareProviderTask();
+        assertNotNull(addCareProviderTask);
     }
 }

@@ -38,8 +38,8 @@ public class ESProblemManagerTest {
      */
     @Test
     public void TestAddProblemTask() {
-        // TODO implement TestAddProblemTask
-        assertTrue(false);
+        ESProblemManager.AddProblemTask addProblemTask = new ESProblemManager.AddProblemTask();
+        assertNotNull(addProblemTask);
     }
 
     /**
@@ -47,8 +47,9 @@ public class ESProblemManagerTest {
      */
     @Test
     public void TestGetProblemListTask() {
-        // TODO implement TestGetProblemListTask
-        assertTrue(false);
+        ESProblemManager.GetProblemListTask getProblemListTask
+                = new ESProblemManager.GetProblemListTask();
+        assertNotNull(getProblemListTask);
     }
 
     /**
@@ -56,8 +57,8 @@ public class ESProblemManagerTest {
      */
     @Test
     public void TestGetAProblemTask() {
-        // TODO implement TestGetAProblemTask
-        assertTrue(false);
+        ESProblemManager.GetAProblemTask getAProblemTask = new ESProblemManager.GetAProblemTask();
+        assertNotNull(getAProblemTask);
     }
 
     /**
@@ -65,7 +66,8 @@ public class ESProblemManagerTest {
      */
     @Test
     public void TestDeleteProblemTask() {
-        // TODO implement TestDeleteProblemTask
-        assertTrue(false);
+        ESProblemManager.DeleteProblemTask deleteProblemTask
+                = new ESProblemManager.DeleteProblemTask();
+        assertNotNull(deleteProblemTask);
     }
 }

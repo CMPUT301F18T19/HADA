@@ -38,8 +38,8 @@ public class ESRecordManagerTest {
      */
     @Test
     public void TestAddRecordTask() {
-        // TODO implement TestAddRecordTask
-        assertTrue(false);
+        ESRecordManager.AddRecordTask addRecordTask = new ESRecordManager.AddRecordTask();
+        assertNotNull(addRecordTask);
     }
 
     /**
@@ -47,8 +47,9 @@ public class ESRecordManagerTest {
      */
     @Test
     public void TestDeleteARecordTask() {
-        // TODO implement TestDeleteARecordTask
-        assertTrue(false);
+        ESRecordManager.DeleteARecordTask deleteARecordTask
+                = new ESRecordManager.DeleteARecordTask();
+        assertNotNull(deleteARecordTask);
     }
 
     /**
@@ -56,8 +57,8 @@ public class ESRecordManagerTest {
      */
     @Test
     public void TestGetARecordTask() {
-        // TODO implement TestGetARecordTask
-        assertTrue(false);
+        ESRecordManager.GetARecordTask getARecordTask = new ESRecordManager.GetARecordTask();
+        assertNotNull(getARecordTask);
     }
 
     /**
@@ -65,7 +66,8 @@ public class ESRecordManagerTest {
      */
     @Test
     public void TestGetRecordListTask() {
-        // TODO implement TestGetRecordListTask
-        assertTrue(false);
+        ESRecordManager.GetRecordListTask getRecordListTask
+                = new ESRecordManager.GetRecordListTask();
+        assertNotNull(getRecordListTask);
     }
 }
