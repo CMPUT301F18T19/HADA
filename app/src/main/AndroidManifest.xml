@@ -37,6 +37,7 @@
         <activity android:name=".ui.AddProblemActivity" />
         <activity android:name=".ui.EditProblemActivity" />
         <activity android:name=".ui.PatientProblemCommentActivity" />
+        <activity android:name=".ui.EditRecordActivity"/>
         <activity android:name=".ui.SearchInputActivity" />
         <activity android:name=".ui.SearchResultsActivity"/>
         <uses-library

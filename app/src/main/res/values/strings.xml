@@ -79,11 +79,17 @@
     <string name="AddRecordActivity_navigation_title">Add Record</string>
 
 
-    <!-- ViewRecordActivity Layout -->
-    <string name="ViewRecordActivity_view_geolocation">View GeoLocation</string>
-    <string name="ViewRecordActivity_view_photos">View Photos</string>
-    <string name="ViewRecordActivity_timestamp_title">Time: </string>
-    <string name="ViewRecordActivity_comment_title">Comment: </string>
-    <string name="ViewRecordActivity_activity_title">Record</string>
+    <!-- editRecordActivity Layout -->
+    <string name="editRecordActivity_view_photos">View Photos</string>
+    <string name="editRecordActivity_activity_title">Record</string>
+    <string name="editRecordActivity_save_all">Save Changes</string>
+    <string name="editRecordActivity_save_comment">Save Comment</string>
+
+    <!-- viewRecordActivity Layout -->
+    <string name="viewRecordActivity_view_geolocation">View GeoLocation</string>
+    <string name="viewRecordActivity_view_body_location">View Body Location</string>
+    <string name="viewRecordActivity_timestamp_title">Time: </string>
+    <string name="viewRecordActivity_comment_title">Comment: </string>
+    <string name="viewRecordActivity_title">Title</string>
 
 </resources>

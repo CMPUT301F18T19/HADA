@@ -30,9 +30,17 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.UserController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 
+/**
+ * Activity to view a single record from a problem.
+ *
+ * @author Austin
+ * @see Record
+ *
+ */
 public class ViewRecordActivity extends AppCompatActivity {
 
     private Record record;
+    private String recordFileId;
 
 
     @Override
@@ -40,34 +48,47 @@ public class ViewRecordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_record);
         Intent intent = getIntent();
-        final String recordFileId = intent.getStringExtra("recordFileId");
-        record = new RecordController().getRecord(recordFileId);
         String LoggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
+        recordFileId = intent.getStringExtra("recordFileId");
+        record = new RecordController().getRecord(recordFileId);
 
-        TextView titleText = findViewById(R.id.viewRecordActivityTitle);
-        TextView commentText = findViewById(R.id.viewRecordActivityComment);
-        TextView timeText = findViewById(R.id.viewRecordActivityTimestamp);
-        ImageButton recordSettings = findViewById(R.id.viewRecordActivitySettings);
-
-        titleText.setText(record.getTitle());
-
-        commentText.setText(record.getComment());
-
-        LocalDateTime timestamp = record.getTimestamp();
-
-        timeText.setText(timestamp.toString());
-
-
-        recordSettings.setOnClickListener(new View.OnClickListener() {
+        // Goes to view GeoLocation
+        Button viewGeoLocation = (Button) findViewById(R.id.viewRecordActivityGeolocation);
+        viewGeoLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ViewRecordActivity.this, EditRecordActivity.class);
-                intent.putExtra("recordFileId", recordFileId);
-                startActivity(intent);
+                /**
+                 * Goes to viewGeoLocationActivity
+                 */
             }
         });
 
+        // Goes to view BodyLocation
+        Button viewBodyLocation = (Button) findViewById(R.id.viewRecordActivityViewBodyLocation);
+        viewBodyLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /**
+                 * Goes to viewBodyLocationActivity
+                 */
+            }
+        });
 
+    }
 
+    protected void onResume() {
+        super.onResume();
+
+        record = new RecordController().getRecord(recordFileId);
+        TextView titleText = findViewById(R.id.viewRecordActivityTitle);
+        TextView commentText = findViewById(R.id.viewRecordActivityComment);
+        TextView timeText = findViewById(R.id.viewRecordActivityTimestamp);
+
+        titleText.setText(record.getTitle());
+        commentText.setText(record.getComment());
+
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        LocalDateTime timestamp = record.getTimestamp();
+        timeText.setText(timestamp.format(formatter));
     }
 }
