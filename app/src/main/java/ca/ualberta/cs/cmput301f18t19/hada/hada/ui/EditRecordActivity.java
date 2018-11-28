@@ -10,23 +10,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
-
-
-import org.w3c.dom.Text;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.RecordController;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 
 /**
@@ -61,17 +55,6 @@ public class EditRecordActivity extends AppCompatActivity {
      */
     Calendar oldCalendar = Calendar.getInstance();
 
-    private ListView recordsList;
-    private ArrayList<Record> records;
-    private Problem oldProblem;
-
-    private int position;
-    private int problemPosition;
-    private int recordPosition;
-    private String recordFileId;
-    private Record record;
-    private Problem problem;
-
     //TODO Can't save or access timestamps!
 
     @Override
@@ -81,60 +64,34 @@ public class EditRecordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_record);
 
         Intent intent = getIntent();
-        recordFileId = intent.getStringExtra("recordFileId");
-        String LoggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
+        String recordFileId = intent.getStringExtra("recordFileId");
+        Record record = new RecordController().getRecord(recordFileId);
 
-        record = new RecordController().getRecord(recordFileId);
+        //Get all view from activity
+        TextView title = findViewById(R.id.editRecordTitle);
+        ImageView imageView = findViewById(R.id.editRecordImage);
+        EditText commentInput = findViewById(R.id.editRecordCommentValue);
+        final TextView dateInput = findViewById(R.id.editRecordDateValue);
+        Button editDateButton = findViewById(R.id.editRecordEditDateButton);
+        Button editTimeButton = findViewById(R.id.editRecordEditTimeButton);
+        Button geoLocationButton = findViewById(R.id.editRecordEditGeolocation);
+        Button addRemovePhotosButton = findViewById(R.id.editRecordEditPhotos);
+        Button saveAll = findViewById(R.id.editRecordSaveAllChanges);
 
-        //TODO - FIGURE OUT WHY .toString() APPLIED TO TIMESTAMP RETURNS AN ERROR
 
-        final TextView displayDate = (TextView) findViewById(R.id.editRecordActivityCurrentDateDisplay);
-        displayDate.setText("PLACEHOLDER");
-
-        // iterate through "Date" of LocalDateTime string to just display date in TextView displayDate
-
-/*        LocalDateTime timestamp = record.getTimestamp();
-        String date = timestamp.toString(); // this line gives error
-        String modifiedDate = "";
-        for (int i = 0; i < 10; i++) {
-            char c = date.charAt(i);
-            modifiedDate = modifiedDate + c;
-        }
-        displayDate.setText(modifiedDate);
-*/
-
-        final TextView displayTime = (TextView) findViewById(R.id.editRecordActivityCurrentTimeDisplay);
-        displayTime.setText("PLACEHOLDER");
-
-        // iterate through "Time" of LocalDateTime string to just display time in TextView displayTime
-
-/*        String time = record.getTimestamp().toString(); // this line gives error
-        String modifiedTime = "";
-        for (int i = 10; i < time.length(); i++) {
-            char c = date.charAt(i);
-            modifiedTime = modifiedTime + c;
-        }
-        displayTime.setText(modifiedTime);
-*/
-        final TextView title = (TextView) findViewById(R.id.editRecordActivityTitle);
+        //Set all pre-defined values for the record
         title.setText(record.getTitle());
-
-        Button saveAll = (Button) findViewById(R.id.editRecordActivitySaveAllChanges);
-        Button saveComment = (Button) findViewById(R.id.editRecordActivitySaveComment);
-        final Button editDate = (Button) findViewById(R.id.editRecordActivityEditDate);
-        Button editTime = (Button) findViewById(R.id.editRecordActivityEditTime);
-        Button editLocation = (Button) findViewById(R.id.editRecordActivityEditGeolocation);
-        Button editPhotos = (Button) findViewById(R.id.editRecordActivityEditPhotos);
-        final EditText editedComment = (EditText) findViewById(R.id.editRecordActivityComment);
-        editedComment.setHint(record.getComment());
+        commentInput.setText(record.getComment());
+        dateInput.setText(record.getTimestamp().toString());
 
 
         //for selecting custom date
         //Based on adj-feelsbook by Anders Johnson
         //https://github.com/ColonelSanders21/adj-FeelsBook
-        editDate.setOnClickListener(new View.OnClickListener() {
+        editDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
+
                 Calendar calendar = oldCalendar;
                 int year = calendar.get(Calendar.YEAR);
                 int month = calendar.get(Calendar.MONTH);
@@ -151,15 +108,7 @@ public class EditRecordActivity extends AppCompatActivity {
                         cal.set(year, month, dayOfMonth, hour, minute, second);
                         LocalDateTime newDate = LocalDateTime.ofInstant(cal.toInstant(), ZoneId.systemDefault());
                         oldCalendar = cal;
-
-                        // modifies how date is displayed
-                        String date = newDate.format(formatter);
-                        String modifiedDate = "";
-                        for (int i = 0; i < 10; i++) {
-                            char c = date.charAt(i);
-                            modifiedDate = modifiedDate + c;
-                        }
-                        displayDate.setText(modifiedDate);
+                        dateInput.setText(newDate.format(formatter));
                     }
                 };
                 DatePickerDialog dialog = new DatePickerDialog(EditRecordActivity.this,
@@ -172,9 +121,9 @@ public class EditRecordActivity extends AppCompatActivity {
         //for selecting custom time
         //Based on adj-feelsbook by Anders Johnson
         //https://github.com/ColonelSanders21/adj-FeelsBook
-        editTime.setOnClickListener(new View.OnClickListener() {
+        editTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 Calendar calendar = oldCalendar;
                 //The following three are final -- we want date to carry over from what was set before
                 final int year = calendar.get(Calendar.YEAR);
@@ -189,15 +138,7 @@ public class EditRecordActivity extends AppCompatActivity {
                         cal.set(year, month, day, hourOfDay, minute, 0);
                         LocalDateTime newDate = LocalDateTime.ofInstant(cal.toInstant(), ZoneId.systemDefault());
                         oldCalendar = cal;
-                        String time = newDate.format(formatter);
-
-                        // modify how time is displayed
-                        String modifiedTime = "";
-                        for (int i = 10; i < time.length(); i++) {
-                            char c = time.charAt(i);
-                            modifiedTime = modifiedTime + c;
-                        }
-                        displayTime.setText(modifiedTime);
+                        dateInput.setText(newDate.format(formatter));
                     }
                 };
                 TimePickerDialog dialog = new TimePickerDialog(EditRecordActivity.this,
@@ -209,7 +150,7 @@ public class EditRecordActivity extends AppCompatActivity {
         });
 
 
-        editLocation.setOnClickListener(new View.OnClickListener() {
+        geoLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 /**
@@ -219,7 +160,7 @@ public class EditRecordActivity extends AppCompatActivity {
         });
 
 
-        editPhotos.setOnClickListener(new View.OnClickListener() {
+        addRemovePhotosButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 /**
@@ -227,48 +168,12 @@ public class EditRecordActivity extends AppCompatActivity {
                  */
             }
         });
-        // KeyListener inspired by code on https://code.i-harness.com/en/q/16bbbc
-        editedComment.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                    new RecordController().editRecordComment(record, editedComment.getText().toString());
-                    finish();
-                }
-                return false;
-            }
-        });
-
-        saveComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new RecordController().editRecordComment(record, editedComment.getText().toString());
-                finish();
-            }
-        });
 
         saveAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ((editedComment.getText().toString().length() != 0) || (editedComment.getText().toString() != record.getComment())) {
-                    new RecordController().editRecordComment(record, editedComment.getText().toString());
-                }
 
 
-                String dateTime = "";
-                for (int i = 0; i < 10; i++) {
-                    char c = displayDate.getText().toString().charAt(i);
-                    dateTime = dateTime + c;
-                }
-
-                for (int i = 10; i < displayTime.length(); i++) {
-                    char c = displayTime.getText().toString().charAt(i);
-                    dateTime = dateTime + c;
-                }
-
-                LocalDateTime date = LocalDateTime.parse(dateTime, formatter);
-                record.setTimestamp(date);
-                finish();
             }
         });
 
