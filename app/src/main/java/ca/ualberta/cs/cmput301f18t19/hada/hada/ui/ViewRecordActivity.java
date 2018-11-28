@@ -57,9 +57,9 @@ public class ViewRecordActivity extends AppCompatActivity {
         viewGeoLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /**
-                 * Goes to viewGeoLocationActivity
-                 */
+                Intent intent = new Intent(ViewRecordActivity.this, ViewSingleRecordLocationActivity.class);
+                intent.putExtra("recordFileId", recordFileId);
+                startActivity(intent);
             }
         });
 

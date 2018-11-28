@@ -17,8 +17,12 @@ import android.Manifest;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.Image;
+import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +30,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +40,7 @@ import com.google.android.gms.maps.model.LatLng;
 import java.time.LocalDateTime;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.PhotoController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.RecordController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 import pub.devrel.easypermissions.AfterPermissionGranted;
@@ -52,7 +58,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * @see <a href="https://stackoverflow.com/a/51350622">StackOverflow example by Yashas</a>
  */
 public class AddRecordActivity extends AppCompatActivity {
-
+    private Uri imageURI;
     private final int REQUEST_LOCATION_PERMISSION = 1;
     private String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION};
     private int requestCode = 1;
@@ -73,7 +79,19 @@ public class AddRecordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO access photos and select them
+
                 Toast.makeText(AddRecordActivity.this, "Select photos", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        Button takePhoto = findViewById(R.id.addRecordActivityTakePhoto);
+        takePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddRecordActivity.this, CameraActivity.class);
+                startActivityForResult(intent, 100);
+                Toast.makeText(AddRecordActivity.this, "Take photos", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -97,6 +115,7 @@ public class AddRecordActivity extends AppCompatActivity {
                         record.setTitle(title);
                         record.setGeoLocation(chosenLocation);
                         record.setTimestamp(LocalDateTime.now());
+                        new PhotoController().addPhoto(record,imageURI);
                         //TODO: Photos
                         Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " comment=" +record.getComment() + " location="+record.getGeoLocation().toString());
                         new RecordController().addRecord(record, parentId);
@@ -111,6 +130,7 @@ public class AddRecordActivity extends AppCompatActivity {
                     record.setComment(comment);
                     record.setTitle(title);
                     //TODO: Photos
+                    new PhotoController().addPhoto(record,imageURI);
                     Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " comment=" +record.getComment());
                     new RecordController().addRecord(record, parentId);
                     finish();
@@ -151,11 +171,17 @@ public class AddRecordActivity extends AppCompatActivity {
                 chosenLocation.setLongitude(lon);
                 TextView selectedLoc = findViewById(R.id.AddRecordActivityLocationSelectedTitle);
                 selectedLoc.setText("Location: "+chosenLatLng.toString());
-            }else{
+            }}
+            if (requestCode == 100){
+                if(resultCode == RESULT_OK){
+                    imageURI = Uri.parse(intent.getStringExtra("URI"));
+                }
+            }
+            else{
                 Toast.makeText(this, "An error occurred. Please try again", Toast.LENGTH_SHORT).show();
             }
         }
-    }
+
     //based off of Yasha's answer on StackOverflow https://stackoverflow.com/a/51350622
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantresults){
@@ -174,4 +200,6 @@ public class AddRecordActivity extends AppCompatActivity {
             EasyPermissions.requestPermissions(this, "Please grant the location permission", REQUEST_LOCATION_PERMISSION, perms);
         }
     }
+
+
 }
