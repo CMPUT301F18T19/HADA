@@ -122,12 +122,16 @@ public class Record{
      *
      * @param photo the photo
      */
-    public void removePhoto(Uri photo) {
+    public void removePhoto(Uri photo,String url) {
         if (this.uriPhotos == null) {
             throw new IllegalStateException();
         }
-        if (this.uriPhotos.contains(photo)) {
+        if (this.httpPhotos == null) {
+            throw new IllegalStateException();
+        }
+        if (this.uriPhotos.contains(photo) && this.httpPhotos.contains(url)) {
             this.uriPhotos.remove(photo);
+            this.httpPhotos.remove(url);
         } else {
             throw new IllegalStateException();
         }
@@ -209,6 +213,9 @@ public class Record{
      * @return the photos
      */
     public ArrayList<Uri> getUriPhotos() {
+        if (this.uriPhotos == null) {
+            this.uriPhotos = new ArrayList<Uri>();
+        }
         return this.uriPhotos;
     }
 
