@@ -1,8 +1,11 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -13,6 +16,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
+
+import com.google.android.gms.maps.model.LatLng;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -22,6 +28,8 @@ import java.util.Calendar;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.RecordController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Activity to edit a specific record from a problem.
@@ -55,6 +63,12 @@ public class EditRecordActivity extends AppCompatActivity {
      */
     Calendar oldCalendar = Calendar.getInstance();
 
+
+    private final int REQUEST_LOCATION_PERMISSION = 1;
+    private String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION};
+    private int requestCode = 1;
+    private Location chosenLocation = null;
+
     //TODO Can't save or access timestamps!
 
     @Override
@@ -65,12 +79,12 @@ public class EditRecordActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String recordFileId = intent.getStringExtra("recordFileId");
-        Record record = new RecordController().getRecord(recordFileId);
+        final Record record = new RecordController().getRecord(recordFileId);
 
         //Get all view from activity
-        TextView title = findViewById(R.id.editRecordTitle);
+        final TextView title = findViewById(R.id.editRecordTitle);
         ImageView imageView = findViewById(R.id.editRecordImage);
-        EditText commentInput = findViewById(R.id.editRecordCommentValue);
+        final EditText commentInput = findViewById(R.id.editRecordCommentValue);
         final TextView dateInput = findViewById(R.id.editRecordDateValue);
         Button editDateButton = findViewById(R.id.editRecordEditDateButton);
         Button editTimeButton = findViewById(R.id.editRecordEditTimeButton);
@@ -85,6 +99,7 @@ public class EditRecordActivity extends AppCompatActivity {
         final LocalDateTime currentDate = record.getTimestamp();
         String currentDateString = currentDate.format(formatter);
         dateInput.setText(currentDateString);
+        chosenLocation = record.getGeoLocation();
 
 
         //for selecting custom date
@@ -156,9 +171,13 @@ public class EditRecordActivity extends AppCompatActivity {
         geoLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /**
-                 * Go to EditLocationActivity
-                 */
+                //We check for location permissions here before we load AddGeoToRecordActivity
+                if (!EasyPermissions.hasPermissions(EditRecordActivity.this, perms)) {
+                    requestLocationPermission();
+                } else {
+                    Intent intent = new Intent(EditRecordActivity.this, AddGeoToRecordActivity.class);
+                    startActivityForResult(intent, requestCode);
+                }
             }
         });
 
@@ -175,11 +194,52 @@ public class EditRecordActivity extends AppCompatActivity {
         saveAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                record.setTitle(title.getText().toString());
+                record.setComment(commentInput.getText().toString());
+                record.setGeoLocation(chosenLocation);
+                record.setTimestamp(LocalDateTime.parse(dateInput.getText().toString(),formatter));
+                new RecordController().addRecord(record, record.getParentId());
+                finish();
             }
         });
 
 
     }
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                LatLng chosenLatLng = intent.getExtras().getParcelable("Location");
+                double lat = chosenLatLng.latitude;
+                double lon = chosenLatLng.longitude;
+                chosenLocation = new Location(LocationManager.GPS_PROVIDER);
+                chosenLocation.setLatitude(lat);
+                chosenLocation.setLongitude(lon);
+            }
+        } else {
+            Toast.makeText(this, "An error occurred. Please try again. Request code: " + requestCode, Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
+
+    //based off of Yasha's answer on StackOverflow https://stackoverflow.com/a/51350622
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantresults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantresults);
+
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantresults, this);
+    }
+
+    //based off of Yasha's answer on StackOverflow https://stackoverflow.com/a/51350622
+    @AfterPermissionGranted(REQUEST_LOCATION_PERMISSION)
+    public void requestLocationPermission() {
+        String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION};
+        if (EasyPermissions.hasPermissions(this, perms)) {
+            Toast.makeText(this, "Permission granted!", Toast.LENGTH_SHORT).show();
+        } else {
+            EasyPermissions.requestPermissions(this, "Please grant the location permission", REQUEST_LOCATION_PERMISSION, perms);
+        }
+    }
+
 }
