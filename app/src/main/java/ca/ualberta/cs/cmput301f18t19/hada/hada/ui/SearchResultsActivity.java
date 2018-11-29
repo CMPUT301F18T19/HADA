@@ -15,6 +15,7 @@ import java.util.List;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.ProblemController;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 
 public class SearchResultsActivity extends AppCompatActivity {
@@ -50,25 +51,41 @@ public class SearchResultsActivity extends AppCompatActivity {
         resultsList.setAdapter(problemArrayAdapter);
         problemArrayAdapter.notifyDataSetChanged();
 
-        //Goes to EditProblemActivity
-        resultsList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(SearchResultsActivity.this, EditProblemActivity.class);
-                intent.putExtra("problemFileId", problemsReturned.get(position).getFileId());
-                startActivity(intent);
-                return true;
-            }
-        });
 
-        //Goes to ViewProblemActivity
-        resultsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(SearchResultsActivity.this, ViewProblemActivity.class);
-                intent.putExtra("problemFileId", problemsReturned.get(position).getFileId());
-                startActivity(intent);
-            }
-        });
+        //Goes to PatientProblemCommentActivity
+        if(LoggedInSingleton.getInstance().getIsCareProvider()){
+            resultsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(SearchResultsActivity.this, PatientProblemCommentActivity.class);
+                    Problem problem = problemsReturned.get(position);
+                    intent.putExtra("problemFileId", problem.getFileId());
+                    intent.putExtra("patientUserId",problem.getParentId());
+                    startActivity(intent);
+                }
+            });
+        }
+        else{
+            //Goes to ViewProblemActivity
+            resultsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(SearchResultsActivity.this, PatientProblemCommentActivity.class);
+                    intent.putExtra("problemFileId", problemsReturned.get(position).getFileId());
+                    startActivity(intent);
+                }
+            });
+
+            //Goes to EditProblemActivity
+            resultsList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(SearchResultsActivity.this, EditProblemActivity.class);
+                    intent.putExtra("problemFileId", problemsReturned.get(position).getFileId());
+                    startActivity(intent);
+                    return true;
+                }
+            });
+        }
     }
 }
