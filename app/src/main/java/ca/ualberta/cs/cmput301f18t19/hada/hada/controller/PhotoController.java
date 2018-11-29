@@ -43,7 +43,8 @@ public class PhotoController {
         DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
         LocalDateTime timestamp = record.getTimestamp();
         Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " timestamp=" +timestamp.format(formatter));
-        record.addPhoto(uri.toString(), "HTTP GO HERE");
+        String http = uploadImage(uri);
+        record.addPhoto(uri.toString(), http);
         return record;
     }
     // adapted from https://stackoverflow.com/questions/7111751/uploading-a-photo-via-imgur-on-android-programatically hrickards
@@ -63,6 +64,7 @@ public class PhotoController {
             OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
             String data = URLEncoder.encode("image", "UTF-8") + "=" + URLEncoder.encode(Base64.encode(baos.toByteArray(), Base64.DEFAULT).toString(), "UTF-8");
             data += "&" + URLEncoder.encode("Authorization: Client-ID ", "UTF-8") + "=" + URLEncoder.encode("8d52b0b7c0cd5f1", "UTF-8");
+            Log.d("PC",data);
             wr.write(data);
             wr.flush();
             BufferedReader in = new BufferedReader(
@@ -76,7 +78,6 @@ public class PhotoController {
                     imageUrl = inputLine;
                     return imageUrl;
                 }
-                System.out.println(inputLine);
             in.close();
         }catch (MalformedURLException e){
             e.printStackTrace();

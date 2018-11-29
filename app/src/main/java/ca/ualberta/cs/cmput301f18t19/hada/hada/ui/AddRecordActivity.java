@@ -118,7 +118,7 @@ public class AddRecordActivity extends AppCompatActivity {
                         record.setGeoLocation(chosenLocation);
                         record.setTimestamp(LocalDateTime.now());
                         Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " comment=" +record.getComment() + " location="+record.getGeoLocation().toString()+ " timestamp=" +record.getTimestamp().toString());
-                        new PhotoController().addPhoto(record, imageURI);
+                        record = new PhotoController().addPhoto(record, imageURI);
                         //TODO: Photos
                         new RecordController().addRecord(record, parentId);
                         finish();
@@ -135,7 +135,7 @@ public class AddRecordActivity extends AppCompatActivity {
                     //TODO: Photos
 
                     Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " comment=" +record.getComment()+ " timestamp=" +record.getTimestamp().toString());
-                    new PhotoController().addPhoto(record, imageURI);
+                    record = new PhotoController().addPhoto(record, imageURI);
                     Log.d("AddRecord", "New Record: title=" + record.getTitle() + " comment=" + record.getComment());
                     new RecordController().addRecord(record, parentId);
                     finish();
