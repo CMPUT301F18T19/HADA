@@ -43,8 +43,8 @@ public class PhotoController {
         DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
         LocalDateTime timestamp = record.getTimestamp();
         Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " timestamp=" +timestamp.format(formatter));
-        String http = uploadImage(uri);
-        record.addPhoto(uri.toString(), http);
+        //String http = uploadImage(uri);
+        record.addPhoto(uri.toString(), "stuff");
         return record;
     }
     // adapted from https://stackoverflow.com/questions/7111751/uploading-a-photo-via-imgur-on-android-programatically hrickards
