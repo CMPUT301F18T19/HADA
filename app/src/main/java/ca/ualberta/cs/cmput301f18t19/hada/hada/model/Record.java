@@ -143,7 +143,9 @@ public class Record{
      * @param location the location
      */
     public void setGeoLocation(Location location) {
+
         this.geoLocation = location;
+
     }
 
     /**
