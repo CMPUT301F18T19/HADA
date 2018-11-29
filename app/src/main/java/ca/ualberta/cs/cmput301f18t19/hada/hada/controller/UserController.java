@@ -14,6 +14,8 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -33,7 +35,10 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
  * @version 2.0
  */
 public class UserController {
-
+    /**
+     * Short code length variable.
+     */
+    private int shortCodeLength = 6;
     /*
     This class should do any logic that is related to editing patient in any manor.
     This can include but is not limited to:
@@ -155,6 +160,22 @@ public class UserController {
         return null;
     }
 
+    public Patient getPatientWithShortCode(String shortCode){
+        try{
+            Patient patient = new ESUserManager.GetPatientWithShortCodeTask().execute(shortCode).get();
+            String newShortCode = RandomStringUtils.random(shortCodeLength, true, true);
+            if(shortCodeExists(newShortCode)){
+                newShortCode = RandomStringUtils.random(shortCodeLength, true, true);
+            }
+            patient.setShortCode(newShortCode);
+            new ESUserManager.AddPatientTask().execute(patient);
+            return patient;
+        }catch (Exception e){
+            Log.d("getPatientWithShortCode", "Could not retieve patient from ES.");
+            e.printStackTrace();
+            return null;
+        }
+    }
     /**
      * Given a userID, returns the CareProvider associated with the ID (if it exists).
      *
@@ -190,6 +211,15 @@ public class UserController {
         }
     }
 
+    public boolean shortCodeExists(String shortCode){
+        Patient patient = getPatientWithShortCode(shortCode);
+        if(patient==null){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
     /**
      * Sets the patients parentId to that of the currently logged in Care Provider
      * This occurs when the CareProvider adds the patient to their assignee list.
@@ -210,6 +240,22 @@ public class UserController {
         return false;}
     }
 
+    public Boolean setParentOfPatientWithShortCode(String shortCode){
+        Patient patient = getPatientWithShortCode(shortCode);
+        if(patient != null){
+            CareProvider careProvider = getCareProvider(LoggedInSingleton.getInstance().getLoggedInID());
+            patient.setParentId(careProvider.getUserID());
+            String newShortCode = RandomStringUtils.random(shortCodeLength, true, true);
+            if(shortCodeExists(newShortCode)){
+                newShortCode = RandomStringUtils.random(shortCodeLength, true, true);
+            }
+            patient.setShortCode(newShortCode);
+            new ESUserManager.AddPatientTask().execute(patient);
+            return true;
+        }
+        else{Log.d("setParentOfPatient: ", "Failed to set patient parent.");
+            return false;}
+    }
     /**
      * Get patient list array list based on currently logged in Care Provider.
      *
