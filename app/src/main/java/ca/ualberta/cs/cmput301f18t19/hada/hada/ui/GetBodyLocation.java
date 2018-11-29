@@ -12,8 +12,12 @@
 
 package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 
@@ -23,5 +27,33 @@ public class GetBodyLocation extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_body_location);
+        Button leftLegUpper = findViewById(R.id.getBodyLocationActivityRightLegUpper);
+        leftLegUpper.setVisibility(View.VISIBLE);
+        leftLegUpper.setBackgroundColor(Color.TRANSPARENT);
+        leftLegUpper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(GetBodyLocation.this, "left leg upper",Toast.LENGTH_SHORT).show();
+            }
+        });
+        Button rightLegUpper = findViewById(R.id.getBodyLocationActivityLeftLegUpper);
+        rightLegUpper.setVisibility(View.VISIBLE);
+        rightLegUpper.setBackgroundColor(Color.TRANSPARENT);
+        rightLegUpper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(GetBodyLocation.this, "right leg upper",Toast.LENGTH_SHORT).show();
+            }
+        });
+        Button rightLegLower = findViewById(R.id.getBodyLocationActivityRightLegLower);
+        rightLegLower.setVisibility(View.VISIBLE);
+        rightLegLower.setBackgroundColor(Color.TRANSPARENT);
+        rightLegLower.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(GetBodyLocation.this, "right leg lower",Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }

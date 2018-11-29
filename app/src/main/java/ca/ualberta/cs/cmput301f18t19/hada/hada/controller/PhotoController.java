@@ -64,7 +64,7 @@ public class PhotoController {
             OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
             String data = URLEncoder.encode("image", "UTF-8") + "=" + URLEncoder.encode(Base64.encode(baos.toByteArray(), Base64.DEFAULT).toString(), "UTF-8");
             data += "&" + URLEncoder.encode("Authorization: Client-ID ", "UTF-8") + "=" + URLEncoder.encode("8d52b0b7c0cd5f1", "UTF-8");
-            Log.d("PC",data);
+            Log.d("PhotoController",data);
             wr.write(data);
             wr.flush();
             BufferedReader in = new BufferedReader(
@@ -74,6 +74,7 @@ public class PhotoController {
             String inputLine;
 
             while ((inputLine = in.readLine()) != null)
+                Log.d("PhotoController",inputLine);
                 if (inputLine.contains("link")){
                     imageUrl = inputLine;
                     return imageUrl;

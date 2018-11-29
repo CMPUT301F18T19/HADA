@@ -95,6 +95,14 @@ public class AddRecordActivity extends AppCompatActivity {
                 Toast.makeText(AddRecordActivity.this, "Take photos", Toast.LENGTH_SHORT).show();
             }
         });
+        Button refPhoto = findViewById(R.id.addRecordActivityAddReferenceImage);
+        refPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddRecordActivity.this, GetBodyLocation.class);
+                startActivity(intent);
+            }
+        });
 
 
         //Saves the record
@@ -118,8 +126,6 @@ public class AddRecordActivity extends AppCompatActivity {
                         record.setGeoLocation(chosenLocation);
                         record.setTimestamp(LocalDateTime.now());
                         Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " comment=" +record.getComment() + " location="+record.getGeoLocation().toString()+ " timestamp=" +record.getTimestamp().toString());
-                        record = new PhotoController().addPhoto(record, imageURI);
-                        //TODO: Photos
                         new RecordController().addRecord(record, parentId);
                         finish();
                     } catch (SecurityException e) {
@@ -132,11 +138,7 @@ public class AddRecordActivity extends AppCompatActivity {
                     Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " timestamp=" +record.getTimestamp().toString());
                     record.setComment(comment);
                     record.setTitle(title);
-                    //TODO: Photos
-
                     Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " comment=" +record.getComment()+ " timestamp=" +record.getTimestamp().toString());
-                    record = new PhotoController().addPhoto(record, imageURI);
-                    Log.d("AddRecord", "New Record: title=" + record.getTitle() + " comment=" + record.getComment());
                     new RecordController().addRecord(record, parentId);
                     finish();
                 }
