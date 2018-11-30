@@ -75,8 +75,8 @@ public class ViewRecordLocationsForUserActivity extends FragmentActivity impleme
             String problemFileId = problem.getFileId();
             ArrayList<Record> records = new RecordController().getRecordList(problemFileId);
             for (Record record : records) {
-                if (record.getGeoLocation() != null) {
-                    mMap.addMarker(new MarkerOptions().position(record.getGeoLocation()).title(record.toString()));
+                if (record.getLocation() != null) {
+                    mMap.addMarker(new MarkerOptions().position(record.getLocation()).title(record.toString()));
                 }
             }
         }

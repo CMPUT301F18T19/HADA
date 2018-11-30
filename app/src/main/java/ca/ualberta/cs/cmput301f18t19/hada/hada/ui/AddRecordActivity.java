@@ -114,11 +114,11 @@ public class AddRecordActivity extends AppCompatActivity {
                         Record record = new Record();
                         record.setComment(comment);
                         record.setTitle(title);
-                        record.setGeoLocation(chosenLocation);
+                        record.setLocation(chosenLocation);
                         record.setTimestamp(LocalDateTime.now());
                         new PhotoController().addPhoto(record, imageURI);
                         //TODO: Photos
-                        Log.d("AddRecord", "New Record: title=" + record.getTitle() + " comment=" + record.getComment() + " location=" + record.getGeoLocation().toString());
+                        Log.d("AddRecord", "New Record: title=" + record.getTitle() + " comment=" + record.getComment() + " location=" + record.getLocation().toString());
                         new RecordController().addRecord(record, parentId);
                         finish();
                     } catch (SecurityException e) {

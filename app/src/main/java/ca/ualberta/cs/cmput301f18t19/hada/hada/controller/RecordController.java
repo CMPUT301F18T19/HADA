@@ -129,7 +129,7 @@ public class RecordController {
      * @param geoLocation the geo location
      */
     public void editRecordGeoLocation(Record record, LatLng geoLocation){
-        record.setGeoLocation(geoLocation);
+        record.setLocation(geoLocation);
         new ESRecordManager.AddRecordTask().execute(record);
     }
 }

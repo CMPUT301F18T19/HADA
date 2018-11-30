@@ -144,7 +144,7 @@ public class Record{
      *
      * @param latLng the location
      */
-    public void setGeoLocation(LatLng latLng) {
+    public void setLocation(LatLng latLng) {
 
         this.location = latLng;
 
@@ -228,7 +228,7 @@ public class Record{
      *
      * @return the geo location
      */
-    public LatLng getGeoLocation() {
+    public LatLng getLocation() {
         return this.location;
     }
 

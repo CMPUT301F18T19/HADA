@@ -99,7 +99,7 @@ public class EditRecordActivity extends AppCompatActivity {
         final LocalDateTime currentDate = record.getTimestamp();
         String currentDateString = currentDate.format(formatter);
         dateInput.setText(currentDateString);
-        chosenLocation = record.getGeoLocation();
+        chosenLocation = record.getLocation();
 
 
         //for selecting custom date
@@ -196,7 +196,7 @@ public class EditRecordActivity extends AppCompatActivity {
             public void onClick(View v) {
                 record.setTitle(title.getText().toString());
                 record.setComment(commentInput.getText().toString());
-                record.setGeoLocation(chosenLocation);
+                record.setLocation(chosenLocation);
                 record.setTimestamp(LocalDateTime.parse(dateInput.getText().toString(),formatter));
                 new RecordController().addRecord(record, record.getParentId());
                 finish();
