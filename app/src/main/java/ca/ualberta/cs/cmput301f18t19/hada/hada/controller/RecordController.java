@@ -7,6 +7,7 @@ import android.util.Log;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESRecordManager;
 
@@ -131,5 +132,18 @@ public class RecordController {
     public void editRecordGeoLocation(Record record, LatLng geoLocation){
         record.setLocation(geoLocation);
         new ESRecordManager.AddRecordTask().execute(record);
+    }
+
+    public ArrayList<Record> searchRecordsWithGeo(String parentId, String distance, LatLng location){
+        String lat = Double.toString(location.latitude);
+        String lng = Double.toString(location.longitude);
+        try {
+            return new ESRecordManager.SearchUsingGeoLocationTask().execute(parentId, distance, lat, lng).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 }

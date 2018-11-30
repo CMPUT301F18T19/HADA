@@ -105,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, getString(R.string.login_error_message), Toast.LENGTH_SHORT).show();
         }
         else {
+            Intent intent;
             if (isPatient) {
                 Patient patient = new UserController().getPatient(username);
                 //Sets the user to be patient and it's userId
@@ -112,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
                 LoggedInSingleton instance = LoggedInSingleton.getInstance();
                 instance.setLoggedInID(patient.getUserID());
                 instance.setIsCareProvider(false);
+                intent = new Intent(MainActivity.this, ProblemListActivity.class);
 
             } else {
                 //Care Provider Login
@@ -122,9 +124,9 @@ public class MainActivity extends AppCompatActivity {
                 LoggedInSingleton instance = LoggedInSingleton.getInstance();
                 instance.setLoggedInID(careProvider.getUserID());
                 instance.setIsCareProvider(true);
-
+                intent = new Intent(MainActivity.this, PatientListActivity.class);
             }
-            Intent intent = new Intent(MainActivity.this, ProblemListActivity.class);
+
             startActivity(intent);
         }
     }

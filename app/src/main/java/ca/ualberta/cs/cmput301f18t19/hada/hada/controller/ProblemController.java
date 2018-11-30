@@ -10,6 +10,8 @@
  */
 package ca.ualberta.cs.cmput301f18t19.hada.hada.controller;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -139,7 +141,7 @@ public class ProblemController {
      * @param parentId the parent id of the problems to search
      * @param keyword  the keyword to search for
      */
-    public List<Problem> searchProblemsWithKeywords(String parentId, String keyword){
+    public ArrayList<Problem> searchProblemsWithKeywords(String parentId, String keyword){
         try {
             return new ESProblemManager.SearchUsingKeywordTask().execute(parentId, keyword).get();
         } catch (ExecutionException e) {
@@ -148,6 +150,22 @@ public class ProblemController {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public List<Problem> searchProblemWithGeoLocatioon(String parentId, LatLng location, String distance){
+        ArrayList<Problem> problems = getListOfProblems(parentId);
+        ArrayList<String> validProblems = new ArrayList<>();
+        for(Problem problem: problems){
+            ArrayList<Record> records = new RecordController().searchRecordsWithGeo(problem.getFileId(), distance, location);
+            if(!records.isEmpty()){validProblems.add(problem.getFileId());}
+        }
+        problems.clear(); //Done with problems above so reusing
+        for(String fileId: validProblems){
+            Problem problemMatch = new ProblemController().getProblem(fileId);
+            problems.add(problemMatch);
+
+        }
+        return problems;
     }
 
 }

@@ -254,10 +254,9 @@ public class Record{
     public String toString(){
         DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
         String niceDate = this.timestamp.format(formatter);
-        if(this.title != null){
+        if(!this.title.isEmpty()){
             return this.title + "  |  " + niceDate;
         }
         return niceDate;
     }
-
 }

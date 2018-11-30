@@ -37,7 +37,7 @@ public class SearchInputActivity extends AppCompatActivity {
     private final int REQUEST_LOCATION_PERMISSION = 1;
     private String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION};
     private int requestCode = 200;
-    private Location chosenLocation = null;
+    private LatLng chosenLocation = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class SearchInputActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_input);
 
         Intent intent = getIntent();
-        String searchObjectType = intent.getStringExtra("searchObjectType");
+        final String searchObjectType = intent.getStringExtra("searchObjectType");
         final String parentId = intent.getStringExtra("parentId");
 
         //Get views
@@ -64,16 +64,6 @@ public class SearchInputActivity extends AppCompatActivity {
         final Spinner bodyLocationInput = findViewById(R.id.searchInputBodyLocInput);
         Button searchButton  = findViewById(R.id.searchInputSearchButton);
 
-        //Used if object being searched are problems
-        if(searchObjectType == "problems"){
-            //Disables search types that are not allowed when searching for problems
-            geoLocationRadio.setVisibility(View.GONE);
-            bodyLocationRadio.setVisibility(View.GONE);
-        }
-        //Used if object being searched are records
-        else if(searchObjectType == "records"){
-
-        }
 
         //Swap to EditText if the user selects to search by Keyword (DEFAULT)
         keywordRadio.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +80,7 @@ public class SearchInputActivity extends AppCompatActivity {
             }
         });
 
-        //Swap to Dropdown if the user selects to search by Body-Location
+        //Add input button, three textViews and EditText if the user wants to search by geo-loc
         geoLocationRadio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -149,18 +139,21 @@ public class SearchInputActivity extends AppCompatActivity {
                     }
                     else{
                         valid=true;
-                        intent.putExtra("Search pre-query", toPassToIntent);
-                        intent.putExtra("parentId", parentId);
+                        intent.putExtra("keyword", toPassToIntent);
+
                     }
                 }
                 else if(geoLocationRadio.isChecked()){
                     String distance = geoDistanceInput.getText().toString();
-                    if(chosenLocation != null &&  !distance.isEmpty()){
-                        intent.putExtra("parentId", parentId);
-                        intent.putExtra("location",chosenLocation);
-                        intent.putExtra("distance", geoDistanceInput.getText());
+                    if(chosenLocation == null || distance.isEmpty()){
+                        Toast.makeText(SearchInputActivity.this, "Geo-search requires a pin plus a distance.", Toast.LENGTH_SHORT).show();
                     }
-                    Toast.makeText(SearchInputActivity.this,"Geo-Location searching is currently not supported.", Toast.LENGTH_SHORT).show();
+                    else{
+                        valid=true;
+                        intent.putExtra("location",chosenLocation);
+                        intent.putExtra("distance", geoDistanceInput.getText().toString());
+                    }
+
                 }
                 else if(bodyLocationRadio.isChecked()){
                     //toPassToIntent = bodyLocationInput.getSelectedItem().getID; //TODO Get item from the spinner
@@ -173,6 +166,8 @@ public class SearchInputActivity extends AppCompatActivity {
 
                 //If valid search, start searchResultsActivity
                 if(valid){
+                    intent.putExtra("parentId", parentId);
+                    intent.putExtra("searchObjectType", searchObjectType);
                     startActivity(intent);
                     Toast.makeText(SearchInputActivity.this,"Searching...", Toast.LENGTH_SHORT).show();
                 }
@@ -192,14 +187,9 @@ public class SearchInputActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, intent);
         if (requestCode == 200) {
             if (resultCode == RESULT_OK) {
-                LatLng chosenLatLng = intent.getExtras().getParcelable("Location");
-                double lat = chosenLatLng.latitude;
-                double lon = chosenLatLng.longitude;
-                chosenLocation = new Location(LocationManager.GPS_PROVIDER);
-                chosenLocation.setLatitude(lat);
-                chosenLocation.setLongitude(lon);
+                chosenLocation = intent.getExtras().getParcelable("Location");
                 TextView selectedLoc = findViewById(R.id.searchInputGeoLocationChosen);
-                selectedLoc.setText("Location: " + chosenLatLng.toString());
+                selectedLoc.setText("Location: " + chosenLocation.toString());
             }
         }
         else {

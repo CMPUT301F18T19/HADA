@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 import io.searchbox.client.JestResult;
 import io.searchbox.core.DeleteByQuery;
@@ -180,4 +181,55 @@ public class ESRecordManager extends ESManager{
             return matchingRecords;
             }
         }
+
+    public static class SearchUsingGeoLocationTask extends AsyncTask<String, Void, ArrayList<Record>> {
+        @Override
+        protected ArrayList<Record> doInBackground(String... params) {
+            setClient();
+            String parentId = params[0];
+            String distance = params[1] + "km";
+            String lat = params[2];
+            String lng = params[3];
+            String query = "{\n" +
+                    "\t\"query\": {\n" +
+                    "\t\t\"filtered\": {\n" +
+                    "\t\t\t\"query\": {\n" +
+                    "\t\t\t\t\"match\": {\"parentId\" : \""+parentId+"\"}\n" +
+                    "\t\t\t},\n" +
+                    "\t\t\t\"filter\" : {\n" +
+                    "\t\t\t\t\"geo_distance\" : {\n" +
+                    "\t\t\t\t\t\"distance\" : \""+distance+"\",\n" +
+                    "\t\t\t\t\t\"location\" : {\n" +
+                    "\t\t\t\t\t\t\"lat\" : "+lat+",\n" +
+                    "\t\t\t\t\t\t\"lon\" : "+lng+"\n" +
+                    "\t\t\t\t\t}\n" +
+                    "\t\t\t\t}\n" +
+                    "\t\t\t}\n" +
+                    "\t\t}\n" +
+                    "\t}\n" +
+                    "}";
+            Log.d("SearchUsingGeoLocationTask Query", query);
+            ArrayList<Record> matchingRecords = new ArrayList<>();
+            Search search = new Search.Builder(query)
+                    .addIndex(teamIndex)
+                    .addType("record")
+                    .build();
+            try{
+                JestResult result = client.execute(search);
+
+                if(result.isSucceeded()){
+                    List<Record> results;
+                    results = result.getSourceAsObjectList(Record.class);
+                    for(Record record: results){
+                        Log.d("SearchUsingGeoLocationTask", record.toString());
+                    }
+                    matchingRecords.addAll(results);
+                }
+            }catch(IOException e){
+                Log.d("SearchUsingGeoLocationTask", "IOException");
+                e.printStackTrace();
+            }
+            return matchingRecords;
+        }
+    }
 }
