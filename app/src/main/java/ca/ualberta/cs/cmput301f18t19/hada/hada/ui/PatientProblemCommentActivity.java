@@ -33,8 +33,8 @@ public class PatientProblemCommentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_problem_comment);
         Intent intent = getIntent();
-        patientUserId = (String) intent.getSerializableExtra("patientUserId");
-        problemFileId = (String) intent.getSerializableExtra("problemFileId");
+        patientUserId = intent.getStringExtra("patientUserId");
+        problemFileId = intent.getStringExtra("problemFileId");
 
         //Get patient and problem that are related.
         patient = new UserController().getPatient(patientUserId);
@@ -62,7 +62,7 @@ public class PatientProblemCommentActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         ListView listView = findViewById(R.id.patientProblemCommentList);
-        ArrayList<Record> records = new RecordController().getRecordList(patientUserId);
+        ArrayList<Record> records = new RecordController().getRecordList(problemFileId);
         ArrayAdapter<Record> recordArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, records);
         listView.setAdapter(recordArrayAdapter);
         recordArrayAdapter.notifyDataSetChanged();

@@ -6,6 +6,7 @@ import android.net.Uri;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import io.searchbox.annotations.JestId;
@@ -251,7 +252,11 @@ public class Record{
      */
     @Override
     public String toString(){
-        return this.getTitle();
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
+        String niceDate = this.timestamp.format(formatter);
+        if(!this.title.isEmpty()){
+            return this.title + "  |  " + niceDate;
+        }
+        return niceDate;
     }
-
 }

@@ -158,4 +158,50 @@ public class ESProblemManager extends ESManager{
             return null;
         }
     }
+
+    public static class SearchUsingKeywordTask extends AsyncTask<String, Void, ArrayList<Problem>> {
+        @Override
+        protected ArrayList<Problem> doInBackground(String... params) {
+            setClient();
+            String parentId = params[0];
+            String keywords = params[1];
+            String query = "{\n" +
+                    "\t\"query\": {\n" +
+                    "\t\t\"bool\": {\n" +
+                    "\t\t\t\"must\": {\n" +
+                    "\t\t\t\t\"match\": {\"parentId\" : \""+parentId+"\"}\n" +
+                    "\t\t\t\t},\n" +
+                    "\t\t\t\"should\": [\n" +
+                    "\t\t\t\t{\n" +
+                    "\t\t\t\t\t\"match\" : {\"description\": \""+keywords+"\"}\n" +
+                    "\t\t\t\t},\n" +
+                    "\t\t\t\t{\n" +
+                    "\t\t\t\t\t\"match\" : {\"title\": \""+keywords+"\"}\n" +
+                    "\t\t\t\t}\n" +
+                    "\t\t\t],\n" +
+                    "\t\t\t\"minimum_should_match\" : 1\n" +
+                    "\t\t}\n" +
+                    "\t}\n" +
+                    "}";
+            Log.d("SearchUsingKeywordTask Query", query);
+            ArrayList<Problem> matchingProblems = null;
+            Search search = new Search.Builder(query)
+                    .addIndex(teamIndex)
+                    .addType("problem")
+                    .build();
+            try{
+                JestResult result = client.execute(search);
+
+                if(result.isSucceeded()){
+                    List<Problem> results;
+                    results = result.getSourceAsObjectList(Problem.class);
+                    matchingProblems.addAll(results);
+                }
+            }catch(IOException e){
+                Log.d("SearchUsingKeywordTask", "IOException");
+                e.printStackTrace();
+            }
+            return matchingProblems;
+        }
+    }
 }

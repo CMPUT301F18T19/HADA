@@ -39,9 +39,6 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
  */
 public class ViewRecordActivity extends AppCompatActivity {
 
-    private int recordPosition;
-    private int problemPosition;
-    private ArrayList<Record> records;
     private Record record;
     private String recordFileId;
 

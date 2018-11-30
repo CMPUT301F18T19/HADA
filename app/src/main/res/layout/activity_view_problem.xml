@@ -81,14 +81,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:backgroundTint="@color/colorAccent"
         android:contentDescription="@string/ViewProblemSlideshowButton"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/viewProblemAddRecordButton"
-        app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toEndOf="@+id/viewProblemMapButton"
         app:srcCompat="@drawable/ic_slideshow_white_24dp" />
+
+    <Button
+        android:id="@+id/viewProblemSearchButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="6dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="Search"
+        android:textAllCaps="true"
+        android:textColor="@color/colorListBackground"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/viewProblemAddRecordButton"
+        app:layout_constraintStart_toEndOf="@+id/viewProblemSlideshowButton" />
 
 </android.support.constraint.ConstraintLayout>
