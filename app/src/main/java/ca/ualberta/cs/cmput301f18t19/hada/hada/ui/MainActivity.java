@@ -20,6 +20,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -31,6 +33,7 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESUserManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.User;
 
 /**
  * Main Acitivity of app. Login screen for users.
@@ -40,6 +43,7 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
  */
 public class MainActivity extends AppCompatActivity {
 
+    Boolean isShortCode = false;
 
 
     @Override
@@ -49,51 +53,71 @@ public class MainActivity extends AppCompatActivity {
 
         final EditText usernameInfo = findViewById(R.id.mainActivityUsernameText);
         Button patientLogin = findViewById(R.id.mainActivityPatientLogin);
-        Button careProviderLogin = findViewById(R.id.mainActivityDoctorLogin);
+        //Button careProviderLogin = findViewById(R.id.mainActivityDoctorLogin);
         Button createUser = findViewById(R.id.mainActivityCreateUser);
+        Switch shortCode = findViewById(R.id.mainActivityShortCodeRadioButton);
+
 
 
 
         patientLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
                 String username = usernameInfo.getText().toString();
-                Patient patient = new UserController().getPatient(username);
+                Boolean isPatient = new UserController().isPatient(username);
+                if(isPatient) {
+                    Patient patient = new UserController().getPatient(username);
+                    if (patient != null) {
+                        //Sets the user to be patient and it's userId
+                        Log.d("Username logged in", patient.getUserID());
+                        LoggedInSingleton instance = LoggedInSingleton.getInstance();
+                        instance.setLoggedInID(patient.getUserID());
+                        instance.setIsCareProvider(false);
 
-                if(patient != null){
-                    //Sets the user to be patient and it's userId
-                    Log.d("Username logged in", patient.getUserID());
-                    LoggedInSingleton instance = LoggedInSingleton.getInstance();
-                    instance.setLoggedInID(patient.getUserID());
-                    instance.setIsCareProvider(false);
+                        Intent intent = new Intent(MainActivity.this, ProblemListActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(MainActivity.this, getString(R.string.login_error_message), Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    //Care Provider Login
+                    CareProvider careProvider = new UserController().getCareProvider(username);
 
-                    Intent intent = new Intent(MainActivity.this, ProblemListActivity.class);
-                    startActivity(intent);
+                    if(careProvider != null){
+                        //Sets the user to be CP and it's userId
+                        Log.d("Username logged in", careProvider.getUserID());
+                        LoggedInSingleton instance = LoggedInSingleton.getInstance();
+                        instance.setLoggedInID(careProvider.getUserID());
+                        instance.setIsCareProvider(true);
+
+                        Intent intent = new Intent(MainActivity.this, PatientListActivity.class);
+                        startActivity(intent);
+                    }
+                    else{Toast.makeText(MainActivity.this, getString(R.string.login_error_message), Toast.LENGTH_SHORT).show();}
                 }
-                else{Toast.makeText(MainActivity.this, getString(R.string.login_error_message), Toast.LENGTH_SHORT).show();}
 
             }
         });
 
-        careProviderLogin.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+//        careProviderLogin.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//
+//                String username = usernameInfo.getText().toString();
+//                CareProvider careProvider = new UserController().getCareProvider(username);
+//
+//                if(careProvider != null){
+//                    //Sets the user to be CP and it's userId
+//                    Log.d("Username logged in", careProvider.getUserID());
+//                    LoggedInSingleton instance = LoggedInSingleton.getInstance();
+//                    instance.setLoggedInID(careProvider.getUserID());
+//                    instance.setIsCareProvider(true);
+//
+//                    Intent intent = new Intent(MainActivity.this, PatientListActivity.class);
+//                    startActivity(intent);
+//                }
+//                else{Toast.makeText(MainActivity.this, getString(R.string.login_error_message), Toast.LENGTH_SHORT).show();}
+//            }
+//        });
 
-                String username = usernameInfo.getText().toString();
-                CareProvider careProvider = new UserController().getCareProvider(username);
-
-                if(careProvider != null){
-                    //Sets the user to be CP and it's userId
-                    Log.d("Username logged in", careProvider.getUserID());
-                    LoggedInSingleton instance = LoggedInSingleton.getInstance();
-                    instance.setLoggedInID(careProvider.getUserID());
-                    instance.setIsCareProvider(true);
-
-                    Intent intent = new Intent(MainActivity.this, PatientListActivity.class);
-                    startActivity(intent);
-                }
-                else{Toast.makeText(MainActivity.this, getString(R.string.login_error_message), Toast.LENGTH_SHORT).show();}
-            }
-        });
 
         createUser.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
@@ -101,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        
 
     }
 
