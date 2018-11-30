@@ -4,6 +4,8 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.controller;
 import android.location.Location;
 import android.util.Log;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.ArrayList;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESRecordManager;
@@ -126,8 +128,8 @@ public class RecordController {
      * @param record      the record
      * @param geoLocation the geo location
      */
-    public void editRecordGeoLocation(Record record, Location geoLocation){
-        record.setGeoLocation(geoLocation);
+    public void editRecordGeoLocation(Record record, LatLng geoLocation){
+        record.setLocation(geoLocation);
         new ESRecordManager.AddRecordTask().execute(record);
     }
 }

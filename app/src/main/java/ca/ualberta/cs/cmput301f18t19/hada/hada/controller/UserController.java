@@ -158,15 +158,23 @@ public class UserController {
     public Patient getPatientWithShortCode(String shortCode) {
         try {
             Patient patient = new ESUserManager.GetPatientWithShortCodeTask().execute(shortCode).get();
+            if(patient == null){
+                return null;
+            }
+            String userId = patient.getUserID();
             String newShortCode = RandomStringUtils.random(shortCodeLength, true, true);
             if (shortCodeExists(newShortCode)) {
                 newShortCode = RandomStringUtils.random(shortCodeLength, true, true);
             }
             patient.setShortCode(newShortCode);
             new ESUserManager.AddPatientTask().execute(patient);
-            return patient;
-        } catch (Exception e) {
-            Log.d("getPatientWithShortCode", "Could not retieve patient from ES.");
+            return new ESUserManager.GetAPatientTask().execute(userId).get();
+        } catch (InterruptedException e) {
+            Log.d("getPatientWithShortCode", "Could not retieve patient from ES. INTERRUPTED");
+            e.printStackTrace();
+            return null;
+        }catch (ExecutionException e){
+            Log.d("getPatientWithShortCode", "Could not retieve patient from ES. EXECUTION");
             e.printStackTrace();
             return null;
         }
@@ -206,13 +214,17 @@ public class UserController {
         }
     }
 
+
     public boolean shortCodeExists(String shortCode) {
-        Patient patient = getPatientWithShortCode(shortCode);
-        if (patient == null) {
-            return false;
-        } else {
-            return true;
+        try{
+            Patient patient = new ESUserManager.GetPatientWithShortCodeTask().execute(shortCode).get();
+            if(patient != null){
+                return true;
+            }
+        }catch (Exception e){
+            Log.d("shortCodeExists" ,"Failed to load patient from ES");
         }
+        return false;
     }
 
     /**
