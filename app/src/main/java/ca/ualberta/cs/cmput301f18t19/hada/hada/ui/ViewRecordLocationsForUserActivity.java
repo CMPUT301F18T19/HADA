@@ -76,9 +76,7 @@ public class ViewRecordLocationsForUserActivity extends FragmentActivity impleme
             ArrayList<Record> records = new RecordController().getRecordList(problemFileId);
             for (Record record : records) {
                 if (record.getGeoLocation() != null) {
-                    double lat = record.getGeoLocation().getLatitude();
-                    double lng = record.getGeoLocation().getLongitude();
-                    mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(record.toString()));
+                    mMap.addMarker(new MarkerOptions().position(record.getGeoLocation()).title(record.toString()));
                 }
             }
         }

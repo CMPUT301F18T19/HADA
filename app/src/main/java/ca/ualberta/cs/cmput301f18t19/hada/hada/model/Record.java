@@ -3,6 +3,8 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 import android.location.Location;
 import android.net.Uri;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -33,8 +35,7 @@ public class Record{
     private String comment;
     private ArrayList<Uri> uriPhotos; //A Base64 encoded String for a photo
     private ArrayList<String> httpPhotos;
-    private Location geoLocation;
-    private ArrayList<Double> location;
+    private LatLng location;
     private ArrayList<Integer> bodyLocation;
 
 
@@ -141,14 +142,11 @@ public class Record{
     /**
      * Sets geo location of the record, given a Location object (supplied by Android).
      *
-     * @param location the location
+     * @param latLng the location
      */
-    public void setGeoLocation(Location location) {
+    public void setGeoLocation(LatLng latLng) {
 
-        this.geoLocation = location;
-        this.location = new ArrayList<>();
-        this.location.add(location.getLongitude());
-        this.location.add(location.getLatitude());
+        this.location = latLng;
 
     }
 
@@ -230,8 +228,8 @@ public class Record{
      *
      * @return the geo location
      */
-    public Location getGeoLocation() {
-        return this.geoLocation;
+    public LatLng getGeoLocation() {
+        return this.location;
     }
 
     /**

@@ -67,9 +67,7 @@ public class ViewSingleRecordLocationActivity extends FragmentActivity implement
         mMap = googleMap;
         Record record = new RecordController().getRecord(recordFileId);
         if (record.getGeoLocation() != null) {
-            double lat = record.getGeoLocation().getLatitude();
-            double lng = record.getGeoLocation().getLongitude();
-            mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(record.toString()));
+            mMap.addMarker(new MarkerOptions().position(record.getGeoLocation()).title(record.toString()));
         }
     }
 }

@@ -62,7 +62,7 @@ public class AddRecordActivity extends AppCompatActivity {
     private final int REQUEST_LOCATION_PERMISSION = 1;
     private String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION};
     private int requestCode = 1;
-    private Location chosenLocation = null;
+    private LatLng chosenLocation = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,14 +164,9 @@ public class AddRecordActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, intent);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                LatLng chosenLatLng = intent.getExtras().getParcelable("Location");
-                double lat = chosenLatLng.latitude;
-                double lon = chosenLatLng.longitude;
-                chosenLocation = new Location(LocationManager.GPS_PROVIDER);
-                chosenLocation.setLatitude(lat);
-                chosenLocation.setLongitude(lon);
+                LatLng chosenLocation = intent.getExtras().getParcelable("Location");
                 TextView selectedLoc = findViewById(R.id.AddRecordActivityLocationSelectedTitle);
-                selectedLoc.setText("Location: " + chosenLatLng.toString());
+                selectedLoc.setText("Location: " + chosenLocation.toString());
             }
         }
         else if (requestCode == 100) {
