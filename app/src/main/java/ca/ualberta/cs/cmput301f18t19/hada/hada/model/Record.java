@@ -34,6 +34,7 @@ public class Record{
     private ArrayList<Uri> uriPhotos; //A Base64 encoded String for a photo
     private ArrayList<String> httpPhotos;
     private Location geoLocation;
+    private ArrayList<Double> location;
     private ArrayList<Integer> bodyLocation;
 
 
@@ -145,6 +146,9 @@ public class Record{
     public void setGeoLocation(Location location) {
 
         this.geoLocation = location;
+        this.location = new ArrayList<>();
+        this.location.add(location.getLongitude());
+        this.location.add(location.getLatitude());
 
     }
 
