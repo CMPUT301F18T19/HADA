@@ -27,6 +27,7 @@ public class GetBodyLocation extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_body_location);
+
         Button leftLegUpper = findViewById(R.id.getBodyLocationActivityRightLegUpper);
         leftLegUpper.setVisibility(View.VISIBLE);
         leftLegUpper.setBackgroundColor(Color.TRANSPARENT);
