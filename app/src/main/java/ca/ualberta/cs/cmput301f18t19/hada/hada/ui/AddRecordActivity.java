@@ -126,7 +126,7 @@ public class AddRecordActivity extends AppCompatActivity {
                         record.setLocation(chosenLocation);
                         record.setTimestamp(LocalDateTime.now());
                       
-                        Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " comment=" +record.getComment() + " location="+record.getGeoLocation().toString()+ " timestamp=" +record.getTimestamp().toString());
+                        Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " comment=" +record.getComment() + " location="+record.getLocation().toString()+ " timestamp=" +record.getTimestamp().toString());
 
                         new RecordController().addRecord(record, parentId);
                         finish();

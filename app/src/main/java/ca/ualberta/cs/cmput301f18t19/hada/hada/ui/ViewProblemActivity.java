@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -101,6 +102,17 @@ public class ViewProblemActivity extends AppCompatActivity {
             }
         });
 
+        //Will open searchInputActivity
+        Button searchButton = findViewById(R.id.viewProblemSearchButton);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ViewProblemActivity.this, SearchInputActivity.class);
+                intent.putExtra("searchObjectType", "records");
+                intent.putExtra("parentId", problemFileId);
+                startActivity(intent);
+            }
+        });
     }
 
         @Override

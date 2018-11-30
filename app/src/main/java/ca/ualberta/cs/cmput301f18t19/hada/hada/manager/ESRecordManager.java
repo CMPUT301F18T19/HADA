@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 import io.searchbox.client.JestResult;
 import io.searchbox.core.DeleteByQuery;
@@ -90,13 +89,13 @@ public class ESRecordManager extends ESManager{
                 try {
                     JestResult result = client.execute(delete);
                     if(result.isSucceeded()) {
-                        Log.d("DeleteProblemTask", "Problem deleted.");
+                        Log.d("DeleteRecordTask", "Record deleted.");
                     }
                     else{
-                        Log.d("DeleteProblemTask", "Problem deletion failed.");
+                        Log.d("DeleteRecordTask", "Record deletion failed.");
                     }
                 } catch (IOException e) {
-                    Log.d("DeleteAProblemTask", "IOException");
+                    Log.d("DeleteRecordTask", "IOException");
                     e.printStackTrace();
                 }
             }
@@ -181,6 +180,52 @@ public class ESRecordManager extends ESManager{
             return matchingRecords;
             }
         }
+
+    public static class SearchUsingKeywordTask extends AsyncTask<String, Void, ArrayList<Record>> {
+        @Override
+        protected ArrayList<Record> doInBackground(String... params) {
+            setClient();
+            String parentId = params[0];
+            String keywords = params[1];
+            String query = "{\n" +
+                    "\t\"query\": {\n" +
+                    "\t\t\"bool\": {\n" +
+                    "\t\t\t\"must\": {\n" +
+                    "\t\t\t\t\"match\": {\"parentId\" : \""+parentId+"\"}\n" +
+                    "\t\t\t\t},\n" +
+                    "\t\t\t\"should\": [\n" +
+                    "\t\t\t\t{\n" +
+                    "\t\t\t\t\t\"match\" : {\"comment\": \""+keywords+"\"}\n" +
+                    "\t\t\t\t},\n" +
+                    "\t\t\t\t{\n" +
+                    "\t\t\t\t\t\"match\" : {\"title\": \""+keywords+"\"}\n" +
+                    "\t\t\t\t}\n" +
+                    "\t\t\t],\n" +
+                    "\t\t\t\"minimum_should_match\" : 1\n" +
+                    "\t\t}\n" +
+                    "\t}\n" +
+                    "}";
+            Log.d("SearchUsingKeywordTask Query", query);
+            ArrayList<Record> matchingRecords = new ArrayList<>();
+            Search search = new Search.Builder(query)
+                    .addIndex(teamIndex)
+                    .addType("record")
+                    .build();
+            try{
+                JestResult result = client.execute(search);
+
+                if(result.isSucceeded()){
+                    List<Record> results;
+                    results = result.getSourceAsObjectList(Record.class);
+                    matchingRecords.addAll(results);
+                }
+            }catch(IOException e){
+                Log.d("SearchUsingKeywordTask", "IOException");
+                e.printStackTrace();
+            }
+            return matchingRecords;
+        }
+    }
 
     public static class SearchUsingGeoLocationTask extends AsyncTask<String, Void, ArrayList<Record>> {
         @Override

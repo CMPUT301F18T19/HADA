@@ -62,7 +62,7 @@ public class PatientProblemCommentActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         ListView listView = findViewById(R.id.patientProblemCommentList);
-        ArrayList<Record> records = new RecordController().getRecordList(patientUserId);
+        ArrayList<Record> records = new RecordController().getRecordList(problemFileId);
         ArrayAdapter<Record> recordArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, records);
         listView.setAdapter(recordArrayAdapter);
         recordArrayAdapter.notifyDataSetChanged();

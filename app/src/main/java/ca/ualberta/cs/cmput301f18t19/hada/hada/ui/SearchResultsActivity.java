@@ -18,6 +18,7 @@ import java.util.List;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.ProblemController;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.RecordController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
@@ -71,10 +72,11 @@ public class SearchResultsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         ListView resultsList = findViewById(R.id.searchResultsListView);
-        final List<Problem> problemsReturned;
-        ArrayAdapter<Problem> problemArrayAdapter;
+
         //Setup List and ArrayAdapter
         if(searchObjectType.equals("problems")){
+            final List<Problem> problemsReturned;
+            ArrayAdapter<Problem> problemArrayAdapter;
 
             if(searchType == "keyword"){
                 problemsReturned = new ProblemController().searchProblemsWithKeywords(parentId, keyword);
@@ -82,6 +84,10 @@ public class SearchResultsActivity extends AppCompatActivity {
             }
             else if(searchType == "geo-location"){
                 problemsReturned = new ProblemController().searchProblemWithGeoLocatioon(parentId, geoLocation, geoDistance);
+            }
+            else if(searchType == "body-location"){
+                //TODO get records from body location search
+                problemsReturned = new ArrayList<>();
             }
             else {
                 problemsReturned = null;
@@ -127,8 +133,52 @@ public class SearchResultsActivity extends AppCompatActivity {
             }
         }
         else if(searchObjectType.equals("records")){
-            //List<Record> problemsReturned;
-            //ArrayAdapter<Record> problemArrayAdapter;
+            final List<Record> recordsReturned;
+            ArrayAdapter<Record> recordArrayAdapter;
+            if(searchType == "keyword"){
+                recordsReturned = new RecordController().searchRecordsWithKeywords(parentId, keyword);
+
+            }
+            else if(searchType == "geo-location"){
+                recordsReturned = new RecordController().searchRecordsWithGeo(parentId, geoDistance, geoLocation);
+            }
+            else if(searchType == "body-location"){
+                //TODO get records from body location search
+                recordsReturned = new ArrayList<>();
+            }
+            else {
+                recordsReturned = null;
+            }
+            recordArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, recordsReturned);
+            resultsList.setAdapter(recordArrayAdapter);
+            recordArrayAdapter.notifyDataSetChanged();
+
+            //Goes to PatientProblemCommentActivity
+            if(LoggedInSingleton.getInstance().getIsCareProvider()){
+                //TODO Hook up ViewRecordAsCareProviderActivity
+            }
+            else{
+                //Goes to ViewRecordActivity
+                resultsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(SearchResultsActivity.this, ViewRecordActivity.class);
+                        intent.putExtra("recordFileId", recordsReturned.get(position).getFileId());
+                        startActivity(intent);
+                    }
+                });
+
+                //Goes to EditRecordActivity
+                resultsList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(SearchResultsActivity.this, EditRecordActivity.class);
+                        intent.putExtra("recordFileId", recordsReturned.get(position).getFileId());
+                        startActivity(intent);
+                        return true;
+                    }
+                });
+            }
         }
         else{
             Toast.makeText(this, "SearchObjectType was not detected.", Toast.LENGTH_SHORT).show();
