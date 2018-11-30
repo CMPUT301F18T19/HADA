@@ -34,7 +34,7 @@ public class GetBodyLocation extends AppCompatActivity {
         leftLegUpper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GetBodyLocation.this, "left leg upper",Toast.LENGTH_SHORT).show();
+                Toast.makeText(GetBodyLocation.this, "right leg upper",Toast.LENGTH_SHORT).show();
             }
         });
         Button rightLegUpper = findViewById(R.id.getBodyLocationActivityLeftLegUpper);
@@ -43,7 +43,7 @@ public class GetBodyLocation extends AppCompatActivity {
         rightLegUpper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GetBodyLocation.this, "right leg upper",Toast.LENGTH_SHORT).show();
+                Toast.makeText(GetBodyLocation.this, "left leg upper",Toast.LENGTH_SHORT).show();
             }
         });
         Button rightLegLower = findViewById(R.id.getBodyLocationActivityRightLegLower);
