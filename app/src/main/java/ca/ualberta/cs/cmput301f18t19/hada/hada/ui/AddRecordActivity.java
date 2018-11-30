@@ -164,7 +164,7 @@ public class AddRecordActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, intent);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                LatLng chosenLocation = intent.getExtras().getParcelable("Location");
+                chosenLocation = intent.getExtras().getParcelable("Location");
                 TextView selectedLoc = findViewById(R.id.AddRecordActivityLocationSelectedTitle);
                 selectedLoc.setText("Location: " + chosenLocation.toString());
             }
