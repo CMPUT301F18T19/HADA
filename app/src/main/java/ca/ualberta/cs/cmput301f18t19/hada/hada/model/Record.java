@@ -35,7 +35,7 @@ public class Record{
     private String comment;
     private ArrayList<Uri> uriPhotos; //A Base64 encoded String for a photo
     private ArrayList<String> httpPhotos;
-    private LatLng locationLatLng;
+    private ArrayList<Double> location;
     //private ArrayList<Double> location;
     private ArrayList<Integer> bodyLocation;
 
@@ -146,11 +146,9 @@ public class Record{
      * @param latLng the location
      */
     public void setLocation(LatLng latLng) {
-
-        this.locationLatLng = latLng;
-        //this.location = new ArrayList<>();
-        //this.location.add(this.locationLatLng.longitude);
-        //this.location.add(this.locationLatLng.latitude);
+        location = new ArrayList<>();
+        this.location.add(latLng.longitude);
+        this.location.add(latLng.latitude);
     }
 
     /**
@@ -232,8 +230,7 @@ public class Record{
      * @return the geo location
      */
     public LatLng getLocation() {
-
-        return this.locationLatLng;
+        return new LatLng(location.get(1), location.get(0));
     }
 
     /**
