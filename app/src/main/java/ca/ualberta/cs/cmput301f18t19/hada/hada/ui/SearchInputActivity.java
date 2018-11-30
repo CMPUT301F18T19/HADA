@@ -19,6 +19,7 @@ import android.location.LocationManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -27,6 +28,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import pub.devrel.easypermissions.AfterPermissionGranted;
@@ -123,6 +127,22 @@ public class SearchInputActivity extends AppCompatActivity {
             }
         });
 
+        //Setup spinner
+        ArrayList<String> bodyParts = new ArrayList<>();
+        bodyParts.add("Head");
+        bodyParts.add("Chest");
+        bodyParts.add("left arm upper");
+        bodyParts.add("right arm upper");
+        bodyParts.add("left arm lower");
+        bodyParts.add("right arm lower");
+        bodyParts.add("Stomach");
+        bodyParts.add("left leg upper");
+        bodyParts.add("right leg upper");
+        bodyParts.add("left leg lower");
+        bodyParts.add("right leg lower");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, bodyParts);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        bodyLocationInput.setAdapter(dataAdapter);
 
 
         //Opens the searchResultsActivity
