@@ -54,6 +54,80 @@ public class GetBodyLocation extends AppCompatActivity {
                 Toast.makeText(GetBodyLocation.this, "right leg lower",Toast.LENGTH_SHORT).show();
             }
         });
+        Button leftLegLower = findViewById(R.id.getBodyLocationActivityLeftLegLower);
+        leftLegLower.setVisibility(View.VISIBLE);
+        leftLegLower.setBackgroundColor(Color.TRANSPARENT);
+        leftLegLower.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(GetBodyLocation.this, "left leg lower",Toast.LENGTH_SHORT).show();
+            }
+        });
+        Button stomach = findViewById(R.id.getBodyLocationActivityStomach);
+        stomach.setVisibility(View.VISIBLE);
+        stomach.setBackgroundColor(Color.TRANSPARENT);
+        stomach.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(GetBodyLocation.this, "Stomach",Toast.LENGTH_SHORT).show();
+            }
+        });
+        Button chest = findViewById(R.id.getBodyLocationActivityChest);
+        chest.setVisibility(View.VISIBLE);
+        chest.setBackgroundColor(Color.TRANSPARENT);
+        chest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(GetBodyLocation.this, "Chest",Toast.LENGTH_SHORT).show();
+            }
+        });
+        Button head = findViewById(R.id.getBodyLocationActivityHead);
+        head.setVisibility(View.VISIBLE);
+        head.setBackgroundColor(Color.TRANSPARENT);
+        head.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(GetBodyLocation.this, "Head",Toast.LENGTH_SHORT).show();
+            }
+        });
+        Button rightArmLower = findViewById(R.id.getBodyLocationActivityRightArmLower);
+        rightArmLower.setVisibility(View.VISIBLE);
+        rightArmLower.setBackgroundColor(Color.TRANSPARENT);
+        rightArmLower.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(GetBodyLocation.this, "right arm lower",Toast.LENGTH_SHORT).show();
+            }
+        });
+        Button rightArmUpper = findViewById(R.id.getBodyLocationActivityRightArmUpper);
+        rightArmUpper.setVisibility(View.VISIBLE);
+        rightArmUpper.setBackgroundColor(Color.TRANSPARENT);
+        rightArmUpper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(GetBodyLocation.this, "right arm upper",Toast.LENGTH_SHORT).show();
+            }
+        });
+        Button leftArmLower = findViewById(R.id.getBodyLocationActivityLeftArmLower);
+        leftArmLower.setVisibility(View.VISIBLE);
+        leftArmLower.setBackgroundColor(Color.TRANSPARENT);
+        leftArmLower.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(GetBodyLocation.this, "left arm lower",Toast.LENGTH_SHORT).show();
+            }
+        });
+        Button leftArmUpper = findViewById(R.id.getBodyLocationActivityLeftArmUpper);
+        leftArmUpper.setVisibility(View.VISIBLE);
+        leftArmUpper.setBackgroundColor(Color.TRANSPARENT);
+        leftArmUpper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(GetBodyLocation.this, "left arm upper",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
 
     }
 }
