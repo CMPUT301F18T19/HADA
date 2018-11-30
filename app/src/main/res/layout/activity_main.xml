@@ -10,45 +10,35 @@
         android:id="@+id/mainActivityPatientLogin"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
         android:text="@string/patient_login"
-        app:layout_constraintBottom_toTopOf="@+id/mainActivityDoctorLogin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mainActivityUsernameText" />
-
-    <Button
-        android:id="@+id/mainActivityDoctorLogin"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:text="@string/doctor_login"
         app:layout_constraintBottom_toTopOf="@+id/mainActivityCreateUser"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mainActivityPatientLogin" />
+        app:layout_constraintTop_toBottomOf="@+id/mainActivityShortCodeRadioButton"
+        app:layout_constraintVertical_bias="0.18" />
 
     <Button
         android:id="@+id/mainActivityCreateUser"
         android:layout_width="150dp"
         android:layout_height="48dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="64dp"
         android:text="@string/create_user"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mainActivityDoctorLogin" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/mainActivityUsernameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
         android:ems="10"
         android:hint="@string/enter_username"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/mainActivityPatientLogin"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mainActivityImage" />
 
@@ -63,4 +53,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/ic_launcher_foreground" />
+
+    <Switch
+        android:id="@+id/mainActivityShortCodeRadioButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:text="ShortCode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainActivityUsernameText" />
 </android.support.constraint.ConstraintLayout>

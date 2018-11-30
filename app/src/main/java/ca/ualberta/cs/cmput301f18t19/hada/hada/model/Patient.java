@@ -12,6 +12,10 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
 
+import org.apache.commons.lang3.RandomStringUtils;
+
+import java.util.UUID;
+
 /**
  * Object which represents a user of type patient.
  *
@@ -21,11 +25,14 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 public class Patient extends User {
 
     private String parentId;
+    private String shortCode = RandomStringUtils.random(6, true, true);
+
 
     /**
      * Instantiates a new Patient with no attributes set.
      */
-    public Patient(){
+    public Patient()
+    {
         super();
     }
 
@@ -64,11 +71,21 @@ public class Patient extends User {
 
     //extras
 
+    public void setShortCode(String shortCode) {
+        this.shortCode = shortCode;
+    }
+
+    public String getShortCode() {
+        return shortCode;
+    }
+
     /**
      * Overrides the toString() so that listView prints the object correctly.
      *
      * @return A human readable version of the object
      */
+
+
     @Override
     public String toString(){
         return this.getUserID();

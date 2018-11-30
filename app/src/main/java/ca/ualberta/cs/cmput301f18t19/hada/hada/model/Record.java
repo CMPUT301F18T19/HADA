@@ -34,6 +34,7 @@ public class Record{
     private ArrayList<String> uriPhotos;
     private ArrayList<String> httpPhotos;
     private Location geoLocation;
+    private ArrayList<Double> location;
     private ArrayList<Integer> bodyLocation;
 
 
@@ -143,7 +144,12 @@ public class Record{
      * @param location the location
      */
     public void setGeoLocation(Location location) {
+
         this.geoLocation = location;
+        this.location = new ArrayList<>();
+        this.location.add(location.getLongitude());
+        this.location.add(location.getLatitude());
+
     }
 
     /**
