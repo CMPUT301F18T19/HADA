@@ -149,16 +149,17 @@ public class ESUserManager extends ESManager{
                     List<Patient> results;
                     results = result.getSourceAsObjectList(Patient.class);
                     for(Patient patient:results) {
-                        Log.d("GetAPatientTask", "Patient loaded:" + patient.toString());
+                        Log.d("GetAPatientWithShortCodeTask", "Patient loaded:" + patient.toString());
                     }
                     if(results.size() != 0){
                         matchingPatient = results.get(0);
                     }
                 }
             } catch (IOException e) {
-                Log.d("GetAPatientTask", "IOException");
+                Log.d("GetAPatientWithShortCodeTask", "IOException");
                 e.printStackTrace();
             }
+            Log.d("GetAPatientWithShortCodeTask", "Returning patient " + matchingPatient.toString());
             return matchingPatient;
         }
     }

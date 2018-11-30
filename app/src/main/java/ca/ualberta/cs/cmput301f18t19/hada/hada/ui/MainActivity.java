@@ -43,9 +43,6 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.User;
  */
 public class MainActivity extends AppCompatActivity {
 
-    Boolean isShortCode = false;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         Button patientLogin = findViewById(R.id.mainActivityPatientLogin);
         //Button careProviderLogin = findViewById(R.id.mainActivityDoctorLogin);
         Button createUser = findViewById(R.id.mainActivityCreateUser);
-        Switch shortCode = findViewById(R.id.mainActivityShortCodeRadioButton);
+        final Switch shortCode = findViewById(R.id.mainActivityShortCodeRadioButton);
 
 
 
@@ -63,36 +60,10 @@ public class MainActivity extends AppCompatActivity {
         patientLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String username = usernameInfo.getText().toString();
-                Boolean isPatient = new UserController().isPatient(username);
-                if(isPatient) {
-                    Patient patient = new UserController().getPatient(username);
-                    if (patient != null) {
-                        //Sets the user to be patient and it's userId
-                        Log.d("Username logged in", patient.getUserID());
-                        LoggedInSingleton instance = LoggedInSingleton.getInstance();
-                        instance.setLoggedInID(patient.getUserID());
-                        instance.setIsCareProvider(false);
-
-                        Intent intent = new Intent(MainActivity.this, ProblemListActivity.class);
-                        startActivity(intent);
-                    } else {
-                        Toast.makeText(MainActivity.this, getString(R.string.login_error_message), Toast.LENGTH_SHORT).show();
-                    }
+                if(shortCode.isChecked()){
+                    loginShortCode(username);
                 }else{
-                    //Care Provider Login
-                    CareProvider careProvider = new UserController().getCareProvider(username);
-
-                    if(careProvider != null){
-                        //Sets the user to be CP and it's userId
-                        Log.d("Username logged in", careProvider.getUserID());
-                        LoggedInSingleton instance = LoggedInSingleton.getInstance();
-                        instance.setLoggedInID(careProvider.getUserID());
-                        instance.setIsCareProvider(true);
-
-                        Intent intent = new Intent(MainActivity.this, PatientListActivity.class);
-                        startActivity(intent);
-                    }
-                    else{Toast.makeText(MainActivity.this, getString(R.string.login_error_message), Toast.LENGTH_SHORT).show();}
+                    loginUser(username);
                 }
 
             }
@@ -128,5 +99,46 @@ public class MainActivity extends AppCompatActivity {
         
 
     }
+    public void loginUser(String username){
+        Boolean isPatient = new UserController().isPatient(username);
+        if(!new UserController().userExists(username)){
+            //Case where user does not exist
+            Toast.makeText(MainActivity.this, getString(R.string.login_error_message), Toast.LENGTH_SHORT).show();
+        }
+        else {
+            if (isPatient) {
+                Patient patient = new UserController().getPatient(username);
+                //Sets the user to be patient and it's userId
+                Log.d("Username logged in", patient.getUserID());
+                LoggedInSingleton instance = LoggedInSingleton.getInstance();
+                instance.setLoggedInID(patient.getUserID());
+                instance.setIsCareProvider(false);
 
+            } else {
+                //Care Provider Login
+                CareProvider careProvider = new UserController().getCareProvider(username);
+
+                //Sets the user to be CP and it's userId
+                Log.d("Username logged in", careProvider.getUserID());
+                LoggedInSingleton instance = LoggedInSingleton.getInstance();
+                instance.setLoggedInID(careProvider.getUserID());
+                instance.setIsCareProvider(true);
+
+            }
+            Intent intent = new Intent(MainActivity.this, ProblemListActivity.class);
+            startActivity(intent);
+        }
+    }
+    public void loginShortCode(String shortCode){
+        if(!new UserController().shortCodeExists(shortCode)){
+            Toast.makeText(this, "Shortcode not valid. Try again.", Toast.LENGTH_SHORT).show();
+        }else{
+            Patient patient = new UserController().getPatientWithShortCode(shortCode);
+            LoggedInSingleton instance = LoggedInSingleton.getInstance();
+            instance.setLoggedInID(patient.getUserID());
+            instance.setIsCareProvider(false);
+            Intent intent = new Intent(MainActivity.this, ProblemListActivity.class);
+            startActivity(intent);
+        }
+    }
 }

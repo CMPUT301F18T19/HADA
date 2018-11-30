@@ -165,8 +165,12 @@ public class UserController {
             patient.setShortCode(newShortCode);
             new ESUserManager.AddPatientTask().execute(patient);
             return patient;
-        } catch (Exception e) {
-            Log.d("getPatientWithShortCode", "Could not retieve patient from ES.");
+        } catch (InterruptedException e) {
+            Log.d("getPatientWithShortCode", "Could not retieve patient from ES. INTERRUPTED");
+            e.printStackTrace();
+            return null;
+        }catch (ExecutionException e){
+            Log.d("getPatientWithShortCode", "Could not retieve patient from ES. EXECUTION");
             e.printStackTrace();
             return null;
         }
@@ -205,6 +209,7 @@ public class UserController {
             return true;
         }
     }
+
 
     public boolean shortCodeExists(String shortCode) {
         Patient patient = getPatientWithShortCode(shortCode);
