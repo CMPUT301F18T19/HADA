@@ -159,7 +159,7 @@ public class ESUserManager extends ESManager{
                 Log.d("GetAPatientWithShortCodeTask", "IOException");
                 e.printStackTrace();
             }
-            Log.d("GetAPatientWithShortCodeTask", "Returning patient " + matchingPatient.toString());
+            //Log.d("GetAPatientWithShortCodeTask", "Returning patient " + matchingPatient.toString());
             return matchingPatient;
         }
     }
