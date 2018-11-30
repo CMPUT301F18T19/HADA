@@ -24,6 +24,8 @@ import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -68,27 +70,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        careProviderLogin.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//
-//                String username = usernameInfo.getText().toString();
-//                CareProvider careProvider = new UserController().getCareProvider(username);
-//
-//                if(careProvider != null){
-//                    //Sets the user to be CP and it's userId
-//                    Log.d("Username logged in", careProvider.getUserID());
-//                    LoggedInSingleton instance = LoggedInSingleton.getInstance();
-//                    instance.setLoggedInID(careProvider.getUserID());
-//                    instance.setIsCareProvider(true);
-//
-//                    Intent intent = new Intent(MainActivity.this, PatientListActivity.class);
-//                    startActivity(intent);
-//                }
-//                else{Toast.makeText(MainActivity.this, getString(R.string.login_error_message), Toast.LENGTH_SHORT).show();}
-//            }
-//        });
-
-
         createUser.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
                 Intent intent = new Intent(MainActivity.this, NewUserActivity.class);
@@ -96,7 +77,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         
-
+        shortCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(shortCode.isChecked()){
+                    usernameInfo.setHint(R.string.generic_shortcode);
+                }else{
+                    usernameInfo.setHint(R.string.enter_username);
+                }
+            }
+        });
     }
     public void loginUser(String username){
         Boolean isPatient = new UserController().isPatient(username);
@@ -113,7 +103,8 @@ public class MainActivity extends AppCompatActivity {
                 LoggedInSingleton instance = LoggedInSingleton.getInstance();
                 instance.setLoggedInID(patient.getUserID());
                 instance.setIsCareProvider(false);
-                intent = new Intent(MainActivity.this, ProblemListActivity.class);
+                Intent intent = new Intent(MainActivity.this, ProblemListActivity.class);
+                startActivity(intent);
 
             } else {
                 //Care Provider Login
@@ -124,16 +115,18 @@ public class MainActivity extends AppCompatActivity {
                 LoggedInSingleton instance = LoggedInSingleton.getInstance();
                 instance.setLoggedInID(careProvider.getUserID());
                 instance.setIsCareProvider(true);
-                intent = new Intent(MainActivity.this, PatientListActivity.class);
+                Intent intent = new Intent(MainActivity.this, PatientListActivity.class);
+                startActivity(intent);
+
             }
 
-            startActivity(intent);
         }
     }
     public void loginShortCode(String shortCode){
-        if(!new UserController().shortCodeExists(shortCode)){
+        Boolean shortCodeExists = new UserController().shortCodeExists(shortCode);
+        if(!shortCodeExists){
             Toast.makeText(this, "Shortcode not valid. Try again.", Toast.LENGTH_SHORT).show();
-        }else{
+        }else {
             Patient patient = new UserController().getPatientWithShortCode(shortCode);
             LoggedInSingleton instance = LoggedInSingleton.getInstance();
             instance.setLoggedInID(patient.getUserID());

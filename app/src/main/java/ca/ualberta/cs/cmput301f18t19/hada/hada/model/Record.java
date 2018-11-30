@@ -34,7 +34,7 @@ public class Record{
     private LocalDateTime timestamp;
     private String title;
     private String comment;
-    private ArrayList<Uri> uriPhotos; //A Base64 encoded String for a photo
+    private ArrayList<String> uriPhotos;
     private ArrayList<String> httpPhotos;
     private ArrayList<Double> location;
     //private ArrayList<Double> location;
@@ -110,9 +110,9 @@ public class Record{
      *
      * @param photo the photo
      */
-    public void addPhoto(Uri photo,String url) {
+    public void addPhoto(String photo,String url) {
         if (this.uriPhotos == null) {
-            uriPhotos = new ArrayList<>();
+            uriPhotos = new ArrayList<String>();
         }
         if (this.httpPhotos == null) {
             httpPhotos = new ArrayList<>();
@@ -218,9 +218,9 @@ public class Record{
      *
      * @return the photos
      */
-    public ArrayList<Uri> getUriPhotos() {
+    public ArrayList<String> getUriPhotos() {
         if (this.uriPhotos == null) {
-            this.uriPhotos = new ArrayList<Uri>();
+            this.uriPhotos = new ArrayList<String>();
         }
         return this.uriPhotos;
     }
