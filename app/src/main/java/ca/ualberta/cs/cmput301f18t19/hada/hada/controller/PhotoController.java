@@ -26,15 +26,15 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 public class PhotoController {
     public PhotoController(){}
 
-    public ArrayList<Uri> getPhotos(Record record){
-        ArrayList<String> uriStringList;
-        uriStringList = record.getUriPhotos();
-        ArrayList<Uri> uriList = new ArrayList<Uri>();
-        for (String uri: uriStringList){
-            uriList.add(Uri.parse(uri));
-        }
-        return uriList;
-    }
+    //public ArrayList<Uri> getPhotos(Record record){
+       // ArrayList<String> uriStringList;
+
+        //ArrayList<Uri> uriList = new ArrayList<Uri>();
+        //for (String uri: uriStringList){
+       //     uriList.add(Uri.parse(uri));
+        //}
+        //return uriList;
+    //}
 
     public Record addPhoto(Record record, Uri uri){
         //TODO upload image to imgur
@@ -45,7 +45,7 @@ public class PhotoController {
         LocalDateTime timestamp = record.getTimestamp();
         Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " timestamp=" +timestamp.format(formatter));
         //String http = uploadImage(uri);
-        record.addPhoto(uri.toString(), "stuff");
+        //record.addPhoto(uri.toString(), "stuff");
         return record;
     }
     // adapted from https://stackoverflow.com/questions/7111751/uploading-a-photo-via-imgur-on-android-programatically hrickards
