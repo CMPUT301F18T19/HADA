@@ -29,6 +29,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
+import ca.ualberta.cs.cmput301f18t19.hada.hada.BuildConfig;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.UserController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
@@ -55,8 +56,6 @@ public class MainActivity extends AppCompatActivity {
         //Button careProviderLogin = findViewById(R.id.mainActivityDoctorLogin);
         Button createUser = findViewById(R.id.mainActivityCreateUser);
         final Switch shortCode = findViewById(R.id.mainActivityShortCodeRadioButton);
-
-
 
 
         patientLogin.setOnClickListener(new View.OnClickListener() {

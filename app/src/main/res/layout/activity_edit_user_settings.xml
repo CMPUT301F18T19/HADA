@@ -74,11 +74,13 @@
         android:id="@+id/editUserSettingsBodyRefButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
         android:backgroundTint="@color/colorPrimary"
         android:text="@string/EditUserSettings_UploadImageButton"
+        app:layout_constraintBottom_toTopOf="@+id/editUserSettingsGetShortCodeButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editUserSettingsContactNumber" />
@@ -143,5 +145,17 @@
         app:layout_constraintBottom_toBottomOf="@+id/editUserSettingsContactNumber"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/editUserSettingsContactNumber" />
+
+    <Button
+        android:id="@+id/editUserSettingsGetShortCodeButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:text="@string/EditUserSettings_GetShortCodeButton"
+        app:layout_constraintBottom_toTopOf="@+id/editUserSettingsCancelButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

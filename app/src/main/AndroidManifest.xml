@@ -40,9 +40,10 @@
         <activity android:name=".ui.ProblemListActivity" />
         <activity android:name=".ui.AddProblemActivity" />
         <activity android:name=".ui.EditProblemActivity" />
-        <activity android:name=".ui.PatientProblemCommentActivity" />
-        <activity android:name=".ui.EditRecordActivity" />
         <activity android:name=".ui.CameraActivity" />
+        <activity android:name=".ui.SearchInputActivity" />
+        <activity android:name=".ui.SearchResultsActivity" />
+        <activity android:name=".ui.EditRecordActivity" />
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -71,7 +72,9 @@
         <activity
             android:name=".ui.ViewSingleRecordLocationActivity"
             android:label="@string/title_activity_view_single_record_location" />
-        <activity android:name=".ui.GetBodyLocation"></activity>
+        <activity android:name=".ui.GetBodyLocation" />
+        <activity android:name=".ui.CareProviderAddCommentActivity" />
+        <activity android:name=".ui.ViewShortCodeActivity"></activity>
     </application>
 
 </manifest>

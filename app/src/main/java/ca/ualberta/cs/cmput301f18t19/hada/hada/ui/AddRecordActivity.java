@@ -127,7 +127,14 @@ public class AddRecordActivity extends AppCompatActivity {
                 if (chosenLocation != null) {
                     try {
                         record.setLocation(chosenLocation);
-                        Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " comment=" +record.getComment() + " timestamp=" +record.getTimestamp().toString());
+
+                        record.setTimestamp(LocalDateTime.now());
+                      
+                        Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " comment=" +record.getComment() + " location="+record.getLocation().toString()+ " timestamp=" +record.getTimestamp().toString());
+
+                        new RecordController().addRecord(record, parentId);
+                        finish();
+                      
                     } catch (SecurityException e) {
                         Toast.makeText(AddRecordActivity.this, "Unable to save location. Please enable the location permissions.", Toast.LENGTH_SHORT).show();
                         }

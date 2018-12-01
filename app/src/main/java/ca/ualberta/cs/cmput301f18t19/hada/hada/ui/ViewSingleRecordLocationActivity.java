@@ -66,7 +66,7 @@ public class ViewSingleRecordLocationActivity extends FragmentActivity implement
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         Record record = new RecordController().getRecord(recordFileId);
-        if (record.getLocation() != null) {
+        if (record.getLocationArrayList() != null) {
             mMap.addMarker(new MarkerOptions().position(record.getLocation()).title(record.toString()));
         }
     }
