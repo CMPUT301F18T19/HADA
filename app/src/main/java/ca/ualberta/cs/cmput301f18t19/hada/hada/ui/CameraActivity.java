@@ -40,7 +40,7 @@ public class CameraActivity extends AppCompatActivity implements EasyPermissions
         if (type.equals("400")){
             tv.setText("Take front image by clicking HADA");
         }
-        if (type.equals("400")){
+        if (type.equals("500")){
             tv.setText("Take Rear facing image by clicking HADA");
         }
 
