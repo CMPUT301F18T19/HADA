@@ -95,7 +95,7 @@ public class ViewPatientProblemsActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int problemPosition, long id) {
-                Intent intent = new Intent(ViewPatientProblemsActivity.this, PatientProblemCommentActivity.class);
+                Intent intent = new Intent(ViewPatientProblemsActivity.this, ViewProblemActivity.class);
                 String problemFileId = problems.get(problemPosition).getFileId();
                 intent.putExtra("patientUserId", patientUserId);
                 intent.putExtra("problemFileId", problemFileId);

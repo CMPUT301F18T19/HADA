@@ -184,7 +184,7 @@ public class ESProblemManager extends ESManager{
                     "\t}\n" +
                     "}";
             Log.d("SearchUsingKeywordTask Query", query);
-            ArrayList<Problem> matchingProblems = null;
+            ArrayList<Problem> matchingProblems = new ArrayList<>();
             Search search = new Search.Builder(query)
                     .addIndex(teamIndex)
                     .addType("problem")

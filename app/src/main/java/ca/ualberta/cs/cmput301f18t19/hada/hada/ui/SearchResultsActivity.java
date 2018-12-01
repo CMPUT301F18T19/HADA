@@ -3,7 +3,6 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -96,34 +95,21 @@ public class SearchResultsActivity extends AppCompatActivity {
             resultsList.setAdapter(problemArrayAdapter);
             problemArrayAdapter.notifyDataSetChanged();
 
-            //Goes to PatientProblemCommentActivity
-            if(LoggedInSingleton.getInstance().getIsCareProvider()){
-                resultsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent intent = new Intent(SearchResultsActivity.this, PatientProblemCommentActivity.class);
-                        Problem problem = problemsReturned.get(position);
-                        intent.putExtra("problemFileId", problem.getFileId());
-                        intent.putExtra("patientUserId",problem.getParentId());
-                        startActivity(intent);
-                    }
-                });
-            }
-            else{
-                //Goes to ViewProblemActivity
-                resultsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent intent = new Intent(SearchResultsActivity.this, PatientProblemCommentActivity.class);
-                        intent.putExtra("problemFileId", problemsReturned.get(position).getFileId());
-                        startActivity(intent);
-                    }
-                });
+            //Goes to ViewProblemActivity
+            resultsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(SearchResultsActivity.this, ViewProblemActivity.class);
+                    intent.putExtra("problemFileId", problemsReturned.get(position).getFileId());
+                    startActivity(intent);
+                }
+            });
 
-                //Goes to EditProblemActivity
+            //Goes to EditProblemActivity if user is a patient
+            if(!LoggedInSingleton.getInstance().getIsCareProvider()){
                 resultsList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                     @Override
-                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
                         Intent intent = new Intent(SearchResultsActivity.this, EditProblemActivity.class);
                         intent.putExtra("problemFileId", problemsReturned.get(position).getFileId());
                         startActivity(intent);
@@ -132,6 +118,7 @@ public class SearchResultsActivity extends AppCompatActivity {
                 });
             }
         }
+        //If record type
         else if(searchObjectType.equals("records")){
             final List<Record> recordsReturned;
             ArrayAdapter<Record> recordArrayAdapter;
@@ -153,22 +140,8 @@ public class SearchResultsActivity extends AppCompatActivity {
             resultsList.setAdapter(recordArrayAdapter);
             recordArrayAdapter.notifyDataSetChanged();
 
-            //Goes to PatientProblemCommentActivity
-            if(LoggedInSingleton.getInstance().getIsCareProvider()){
-                //TODO Hook up ViewRecordAsCareProviderActivity
-            }
-            else{
-                //Goes to ViewRecordActivity
-                resultsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent intent = new Intent(SearchResultsActivity.this, ViewRecordActivity.class);
-                        intent.putExtra("recordFileId", recordsReturned.get(position).getFileId());
-                        startActivity(intent);
-                    }
-                });
-
-                //Goes to EditRecordActivity
+            //Goes to EditRecordActivity
+            if(!LoggedInSingleton.getInstance().getIsCareProvider()){
                 resultsList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                     @Override
                     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -179,6 +152,16 @@ public class SearchResultsActivity extends AppCompatActivity {
                     }
                 });
             }
+
+            //Goes to ViewRecordActivity
+            resultsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(SearchResultsActivity.this, ViewRecordActivity.class);
+                    intent.putExtra("recordFileId", recordsReturned.get(position).getFileId());
+                    startActivity(intent);
+                }
+            });
         }
         else{
             Toast.makeText(this, "SearchObjectType was not detected.", Toast.LENGTH_SHORT).show();
