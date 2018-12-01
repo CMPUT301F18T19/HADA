@@ -37,8 +37,8 @@ public class GetBodyLocation extends AppCompatActivity {
         leftLegUpper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GetBodyLocation.this, "right leg upper",Toast.LENGTH_SHORT).show();
-                DoWork("RightLegUpper");
+                Toast.makeText(GetBodyLocation.this, "Right leg upper",Toast.LENGTH_SHORT).show();
+                DoWork("Right leg upper");
             }
         });
         Button rightLegUpper = findViewById(R.id.getBodyLocationActivityLeftLegUpper);
@@ -47,8 +47,8 @@ public class GetBodyLocation extends AppCompatActivity {
         rightLegUpper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GetBodyLocation.this, "left leg upper",Toast.LENGTH_SHORT).show();
-                DoWork("LeftLegUpper");
+                Toast.makeText(GetBodyLocation.this, "Left leg upper",Toast.LENGTH_SHORT).show();
+                DoWork("Left leg upper");
             }
         });
         Button rightLegLower = findViewById(R.id.getBodyLocationActivityRightLegLower);
@@ -57,8 +57,8 @@ public class GetBodyLocation extends AppCompatActivity {
         rightLegLower.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GetBodyLocation.this, "right leg lower",Toast.LENGTH_SHORT).show();
-                DoWork("RightLegLower");
+                Toast.makeText(GetBodyLocation.this, "Right leg lower",Toast.LENGTH_SHORT).show();
+                DoWork("Right leg lower");
             }
         });
         Button leftLegLower = findViewById(R.id.getBodyLocationActivityLeftLegLower);
@@ -67,8 +67,8 @@ public class GetBodyLocation extends AppCompatActivity {
         leftLegLower.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GetBodyLocation.this, "left leg lower",Toast.LENGTH_SHORT).show();
-                DoWork("LeftLegLower");
+                Toast.makeText(GetBodyLocation.this, "Left leg lower",Toast.LENGTH_SHORT).show();
+                DoWork("Left leg lower");
             }
         });
         Button stomach = findViewById(R.id.getBodyLocationActivityStomach);
@@ -107,8 +107,8 @@ public class GetBodyLocation extends AppCompatActivity {
         rightArmLower.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GetBodyLocation.this, "right arm lower",Toast.LENGTH_SHORT).show();
-                DoWork("RightArmLower");
+                Toast.makeText(GetBodyLocation.this, "Right arm lower",Toast.LENGTH_SHORT).show();
+                DoWork("Right arm lower");
             }
         });
         Button rightArmUpper = findViewById(R.id.getBodyLocationActivityRightArmUpper);
@@ -117,8 +117,8 @@ public class GetBodyLocation extends AppCompatActivity {
         rightArmUpper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GetBodyLocation.this, "right arm upper",Toast.LENGTH_SHORT).show();
-                DoWork("RightArmUpper");
+                Toast.makeText(GetBodyLocation.this, "Right arm upper",Toast.LENGTH_SHORT).show();
+                DoWork("Right arm upper");
             }
         });
         Button leftArmLower = findViewById(R.id.getBodyLocationActivityLeftArmLower);
@@ -127,8 +127,8 @@ public class GetBodyLocation extends AppCompatActivity {
         leftArmLower.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GetBodyLocation.this, "left arm lower",Toast.LENGTH_SHORT).show();
-                DoWork("LeftArmLower");
+                Toast.makeText(GetBodyLocation.this, "Left arm lower",Toast.LENGTH_SHORT).show();
+                DoWork("Left arm lower");
             }
         });
         Button leftArmUpper = findViewById(R.id.getBodyLocationActivityLeftArmUpper);
@@ -137,11 +137,10 @@ public class GetBodyLocation extends AppCompatActivity {
         leftArmUpper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GetBodyLocation.this, "left arm upper",Toast.LENGTH_SHORT).show();
-                DoWork("LeftArmUpper");
+                Toast.makeText(GetBodyLocation.this, "Left arm upper",Toast.LENGTH_SHORT).show();
+                DoWork("Left arm upper");
             }
         });
-
 
 
     }
