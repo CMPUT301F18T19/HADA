@@ -16,9 +16,11 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -29,7 +31,7 @@ import android.widget.TextView;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.ProblemController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.RecordController;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.UserController;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
@@ -58,7 +60,7 @@ public class ViewProblemActivity extends AppCompatActivity {
         Intent intent = getIntent();
         problemFileId = intent.getStringExtra("problemFileId");
 
-        TextView titleText = findViewById(R.id.patientProblemCommentTitle);
+        TextView titleText = findViewById(R.id.careProviderPatientProblemTitle);
 
         //Setting title to display the problem title
         final Problem problem = new ProblemController().getProblem(problemFileId);
@@ -82,10 +84,16 @@ public class ViewProblemActivity extends AppCompatActivity {
         addRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ViewProblemActivity.this, AddRecordActivity.class);
-                intent.putExtra("problemFileId", problem.getFileId());
-                startActivity(intent);
-
+                if(LoggedInSingleton.getInstance().getIsCareProvider()){
+                    Intent intent = new Intent(ViewProblemActivity.this, CareProviderAddCommentActivity.class);
+                    intent.putExtra("parentId", problemFileId);
+                    startActivity(intent);
+                }
+                else{
+                    Intent intent = new Intent(ViewProblemActivity.this, AddRecordActivity.class);
+                    intent.putExtra("problemFileId", problemFileId);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -101,6 +109,17 @@ public class ViewProblemActivity extends AppCompatActivity {
             }
         });
 
+        //Will open searchInputActivity
+        Button searchButton = findViewById(R.id.viewProblemSearchButton);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ViewProblemActivity.this, SearchInputActivity.class);
+                intent.putExtra("searchObjectType", "records");
+                intent.putExtra("parentId", problemFileId);
+                startActivity(intent);
+            }
+        });
     }
 
         @Override
@@ -124,16 +143,18 @@ public class ViewProblemActivity extends AppCompatActivity {
                 }
             });
 
-            //Goes to EditRecordActivity
-            recordsList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                @Override
-                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent (ViewProblemActivity.this, EditRecordActivity.class);
-                    intent.putExtra("recordFileId",records.get(position).getFileId());
-                    startActivity(intent);
-                    return true;
-                }
-            });
+            //Goes to EditRecordActivity, only available if you are a patient
+            if(!LoggedInSingleton.getInstance().getIsCareProvider()) {
+                recordsList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(ViewProblemActivity.this, EditRecordActivity.class);
+                        intent.putExtra("recordFileId", records.get(position).getFileId());
+                        startActivity(intent);
+                        return true;
+                    }
+                });
+            }
     }
 
 }

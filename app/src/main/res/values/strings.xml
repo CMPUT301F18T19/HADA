@@ -52,6 +52,7 @@
     <string name="EditUserSettings_UploadImageButton">Upload body reference image</string>
     <string name="EditUserSettings_SaveButton">Save Settings</string>
     <string name="EditUserSettings_CancelButton">Cancel</string>
+    <string name="EditUserSettings_GetShortCodeButton">Get ShortCode</string>
 
 
     <!-- AddProblemActivity Layout-->
@@ -105,4 +106,12 @@
     <string name="camera_save">Save</string>
     <string name="camera_text_View">Click HADA to take photo</string>
 
+    <string name="generic_login">Login</string>
+    <string name="generic_shortcode">ShortCode</string>
+    <string name="title_activity_view_short_code">ViewShortCodeActivity</string>
+
+    <string name="ViewShortCodeActivity_title">ShortCode</string>
+    <string name="ViewShortCode_placeholder">gGgGgG</string>
+
+    <string name="addPatientShortCode_hint">Patient ShortCode:</string>
 </resources>

@@ -4,17 +4,21 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.controller;
 import android.location.Location;
 import android.util.Log;
 
-import java.util.ArrayList;
+import com.google.android.gms.maps.model.LatLng;
 
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+
+import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESProblemManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESRecordManager;
 
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 
 /**
  * Controller for a given list of records.
  *
  * @author Anders J.
- *
  * @version 2.0
  */
 public class RecordController {
@@ -63,16 +67,19 @@ public class RecordController {
         return null;
     }
 
+
     /**
-     * A very specific function for adding comment records to a patient as a CP
+     * Add comment record for care provider use.
      *
-     * @param patientIndex the patient index
-     * @param problemIndex the problem index
-     * @param comment      the comment
-     * @author Joe Potentier
+     * @param parentId the parent id
+     * @param comment  the comment
      */
-    public void addCommentRecord(int patientIndex, int problemIndex, String comment){
-        //TODO: Refactor record to better support comments from care provider
+    public void addCommentRecord(String parentId, String comment){
+        Record commentRecord = new Record();
+        commentRecord.setTitle("-- Care Provider Comment --");
+        commentRecord.setComment(comment);
+        commentRecord.setParentId(parentId);
+        new ESRecordManager.AddRecordTask().execute(commentRecord);
     }
 
     /**
@@ -126,8 +133,32 @@ public class RecordController {
      * @param record      the record
      * @param geoLocation the geo location
      */
-    public void editRecordGeoLocation(Record record, Location geoLocation){
-        record.setGeoLocation(geoLocation);
+    public void editRecordGeoLocation(Record record, LatLng geoLocation){
+        record.setLocation(geoLocation);
         new ESRecordManager.AddRecordTask().execute(record);
+    }
+
+    public ArrayList<Record> searchRecordsWithKeywords(String parentId, String keyword){
+        try {
+            return new ESRecordManager.SearchUsingKeywordTask().execute(parentId, keyword).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList<Record> searchRecordsWithGeo(String parentId, String distance, LatLng location){
+        String lat = Double.toString(location.latitude);
+        String lng = Double.toString(location.longitude);
+        try {
+            return new ESRecordManager.SearchUsingGeoLocationTask().execute(parentId, distance, lat, lng).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 }

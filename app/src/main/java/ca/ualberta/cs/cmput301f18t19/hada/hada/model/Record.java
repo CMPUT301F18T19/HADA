@@ -3,7 +3,10 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 import android.location.Location;
 import android.net.Uri;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import io.searchbox.annotations.JestId;
@@ -31,10 +34,10 @@ public class Record{
     private LocalDateTime timestamp;
     private String title;
     private String comment;
-    private ArrayList<Uri> uriPhotos; //A Base64 encoded String for a photo
-    private ArrayList<String> httpPhotos;
-    private Location geoLocation;
-    private ArrayList<Integer> bodyLocation;
+    private String Photos;
+    private ArrayList<Double> location;
+    //private ArrayList<Double> location;
+    private String bodyLocation;
 
 
     /**
@@ -42,6 +45,14 @@ public class Record{
      */
     public Record() {
         this.timestamp = LocalDateTime.now();
+    }
+
+    public String getPhotos() {
+        return Photos;
+    }
+
+    public void setPhotos(String photos) {
+        Photos = photos;
     }
 
     /**
@@ -101,61 +112,27 @@ public class Record{
         this.comment = comment;
     }
 
-    /**
-     * Add photo to a record. Photo in this instance is a Base64 encoded string.
-     *
-     * @param photo the photo
-     */
-    public void addPhoto(Uri photo,String url) {
-        if (this.uriPhotos == null) {
-            uriPhotos = new ArrayList<>();
-        }
-        if (this.httpPhotos == null) {
-            httpPhotos = new ArrayList<>();
-        }
-        this.uriPhotos.add(photo);
-        this.httpPhotos.add(url);
-    }
-
-    /**
-     * Removes photo from list of photos.
-     *
-     * @param photo the photo
-     */
-    public void removePhoto(Uri photo,String url) {
-        if (this.uriPhotos == null) {
-            throw new IllegalStateException();
-        }
-        if (this.httpPhotos == null) {
-            throw new IllegalStateException();
-        }
-        if (this.uriPhotos.contains(photo) && this.httpPhotos.contains(url)) {
-            this.uriPhotos.remove(photo);
-            this.httpPhotos.remove(url);
-        } else {
-            throw new IllegalStateException();
-        }
-    }
 
     /**
      * Sets geo location of the record, given a Location object (supplied by Android).
      *
-     * @param location the location
+     * @param latLng the location
      */
-    public void setGeoLocation(Location location) {
-        this.geoLocation = location;
+    public void setLocation(LatLng latLng) {
+        location = new ArrayList<>();
+        this.location.add(latLng.longitude);
+        this.location.add(latLng.latitude);
     }
 
     /**
      * Set body location, represented by x and y coordinates.
      *
-     * @param x the x
-     * @param y the y
+     * @param bodyLocation the uuid of bodylocation object (itemID)
+     *
      */
-    public void setBodyLocation(int x, int y){
-        this.bodyLocation = new ArrayList<>();
-        this.bodyLocation.add(x);
-        this.bodyLocation.add(y);
+    public void setBodyLocation(String bodyLocation){
+        this.bodyLocation = bodyLocation;
+
     }
 
 
@@ -207,33 +184,24 @@ public class Record{
         return this.comment;
     }
 
-    /**
-     * Returns the list of photo strings.
-     *
-     * @return the photos
-     */
-    public ArrayList<Uri> getUriPhotos() {
-        if (this.uriPhotos == null) {
-            this.uriPhotos = new ArrayList<Uri>();
-        }
-        return this.uriPhotos;
-    }
 
     /**
      * Returns the Location object associated with the record.
      *
      * @return the geo location
      */
-    public Location getGeoLocation() {
-        return this.geoLocation;
+    public LatLng getLocation() {
+        return new LatLng(location.get(1), location.get(0));
     }
+
+    public ArrayList<Double> getLocationArrayList() { return this.location;}
 
     /**
      * Returns the x, y coords of the body location.
      *
      * @return the body location
      */
-    public ArrayList<Integer> getBodyLocation() {
+    public String getBodyLocation() {
         return this.bodyLocation;
     }
 
@@ -246,7 +214,11 @@ public class Record{
      */
     @Override
     public String toString(){
-        return this.getTitle();
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
+        String niceDate = this.timestamp.format(formatter);
+        if(!this.title.isEmpty()){
+            return this.title + "  |  " + niceDate;
+        }
+        return niceDate;
     }
-
 }

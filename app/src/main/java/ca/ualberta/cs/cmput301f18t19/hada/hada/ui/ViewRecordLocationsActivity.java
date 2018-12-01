@@ -67,10 +67,8 @@ public class ViewRecordLocationsActivity extends FragmentActivity implements OnM
         mMap = googleMap;
         ArrayList<Record> records = new RecordController().getRecordList(problemFileId);
         for(Record record: records){
-            if(record.getGeoLocation()!=null){
-                double lat = record.getGeoLocation().getLatitude();
-                double lng = record.getGeoLocation().getLongitude();
-                mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(record.toString()));
+            if(record.getLocationArrayList()!=null){
+                mMap.addMarker(new MarkerOptions().position(record.getLocation()).title(record.toString()));
             }
         }
     }

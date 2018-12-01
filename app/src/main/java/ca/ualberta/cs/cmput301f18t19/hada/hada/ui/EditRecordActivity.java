@@ -67,7 +67,9 @@ public class EditRecordActivity extends AppCompatActivity {
     private final int REQUEST_LOCATION_PERMISSION = 1;
     private String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION};
     private int requestCode = 1;
-    private Location chosenLocation = null;
+    private LatLng chosenLocation = null;
+    Button geoLocationButton;
+    Record record;
 
     //TODO Can't save or access timestamps!
 
@@ -79,7 +81,7 @@ public class EditRecordActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String recordFileId = intent.getStringExtra("recordFileId");
-        final Record record = new RecordController().getRecord(recordFileId);
+        record = new RecordController().getRecord(recordFileId);
 
         //Get all view from activity
         final TextView title = findViewById(R.id.editRecordTitle);
@@ -88,7 +90,7 @@ public class EditRecordActivity extends AppCompatActivity {
         final TextView dateInput = findViewById(R.id.editRecordDateValue);
         Button editDateButton = findViewById(R.id.editRecordEditDateButton);
         Button editTimeButton = findViewById(R.id.editRecordEditTimeButton);
-        Button geoLocationButton = findViewById(R.id.editRecordEditGeolocation);
+        geoLocationButton = findViewById(R.id.editRecordEditGeolocation);
         Button addRemovePhotosButton = findViewById(R.id.editRecordEditPhotos);
         Button saveAll = findViewById(R.id.editRecordSaveAllChanges);
 
@@ -99,8 +101,9 @@ public class EditRecordActivity extends AppCompatActivity {
         final LocalDateTime currentDate = record.getTimestamp();
         String currentDateString = currentDate.format(formatter);
         dateInput.setText(currentDateString);
-        chosenLocation = record.getGeoLocation();
-
+        if(record.getLocationArrayList() != null){
+            chosenLocation = record.getLocation();
+        }
 
         //for selecting custom date
         //Based on adj-feelsbook by Anders Johnson
@@ -182,6 +185,7 @@ public class EditRecordActivity extends AppCompatActivity {
         });
 
 
+
         addRemovePhotosButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -196,7 +200,7 @@ public class EditRecordActivity extends AppCompatActivity {
             public void onClick(View v) {
                 record.setTitle(title.getText().toString());
                 record.setComment(commentInput.getText().toString());
-                record.setGeoLocation(chosenLocation);
+                if(chosenLocation != null){record.setLocation(chosenLocation);}
                 record.setTimestamp(LocalDateTime.parse(dateInput.getText().toString(),formatter));
                 new RecordController().addRecord(record, record.getParentId());
                 finish();
@@ -205,16 +209,23 @@ public class EditRecordActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        //Check if record location has been set
+        if(chosenLocation != null){
+            geoLocationButton.setText("EDIT GEOLOCATION");
+        }
+        else {geoLocationButton.setText("ADD GEOLOCATION");
+        }
+    }
+
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                LatLng chosenLatLng = intent.getExtras().getParcelable("Location");
-                double lat = chosenLatLng.latitude;
-                double lon = chosenLatLng.longitude;
-                chosenLocation = new Location(LocationManager.GPS_PROVIDER);
-                chosenLocation.setLatitude(lat);
-                chosenLocation.setLongitude(lon);
+                chosenLocation= intent.getExtras().getParcelable("Location");
             }
         } else {
             Toast.makeText(this, "An error occurred. Please try again. Request code: " + requestCode, Toast.LENGTH_SHORT).show();

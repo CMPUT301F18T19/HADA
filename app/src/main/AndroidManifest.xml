@@ -40,22 +40,21 @@
         <activity android:name=".ui.ProblemListActivity" />
         <activity android:name=".ui.AddProblemActivity" />
         <activity android:name=".ui.EditProblemActivity" />
-        <activity android:name=".ui.PatientProblemCommentActivity" />
+        <activity android:name=".ui.CameraActivity" />
+        <activity android:name=".ui.SearchInputActivity" />
+        <activity android:name=".ui.SearchResultsActivity" />
         <activity android:name=".ui.EditRecordActivity" />
-        <activity android:name=".ui.CameraActivity"></activity>
-
 
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
-
-
-             The API key for Google Maps-based APIs is defined as a string resource.
-             (See the file "res/values/google_maps_api.xml").
-             Note that the API key is linked to the encryption key used to sign the APK.
-             You need a different API key for each encryption key, including the release key that is used to
-             sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+        The API key for Google Maps-based APIs is defined as a string resource.
+        (See the file "res/values/google_maps_api.xml").
+        Note that the API key is linked to the encryption key used to sign the APK.
+        You need a different API key for each encryption key, including the release key that is used
+        to
+        sign the APK for publishing.
+        You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -72,8 +71,10 @@
             android:label="@string/title_activity_view_record_locations_for_user" />
         <activity
             android:name=".ui.ViewSingleRecordLocationActivity"
-            android:label="@string/title_activity_view_single_record_location"></activity>
-
+            android:label="@string/title_activity_view_single_record_location" />
+        <activity android:name=".ui.GetBodyLocation" />
+        <activity android:name=".ui.CareProviderAddCommentActivity" />
+        <activity android:name=".ui.ViewShortCodeActivity"></activity>
     </application>
 
 </manifest>
