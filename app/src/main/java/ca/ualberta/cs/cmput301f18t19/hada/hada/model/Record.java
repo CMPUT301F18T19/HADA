@@ -3,7 +3,10 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 import android.location.Location;
 import android.net.Uri;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import io.searchbox.annotations.JestId;
@@ -31,9 +34,10 @@ public class Record{
     private LocalDateTime timestamp;
     private String title;
     private String comment;
-    private ArrayList<Uri> uriPhotos; //A Base64 encoded String for a photo
+    private ArrayList<String> uriPhotos;
     private ArrayList<String> httpPhotos;
-    private Location geoLocation;
+    private ArrayList<Double> location;
+    //private ArrayList<Double> location;
     private ArrayList<Integer> bodyLocation;
 
 
@@ -106,9 +110,9 @@ public class Record{
      *
      * @param photo the photo
      */
-    public void addPhoto(Uri photo,String url) {
+    public void addPhoto(String photo,String url) {
         if (this.uriPhotos == null) {
-            uriPhotos = new ArrayList<>();
+            uriPhotos = new ArrayList<String>();
         }
         if (this.httpPhotos == null) {
             httpPhotos = new ArrayList<>();
@@ -140,10 +144,12 @@ public class Record{
     /**
      * Sets geo location of the record, given a Location object (supplied by Android).
      *
-     * @param location the location
+     * @param latLng the location
      */
-    public void setGeoLocation(Location location) {
-        this.geoLocation = location;
+    public void setLocation(LatLng latLng) {
+        location = new ArrayList<>();
+        this.location.add(latLng.longitude);
+        this.location.add(latLng.latitude);
     }
 
     /**
@@ -212,9 +218,9 @@ public class Record{
      *
      * @return the photos
      */
-    public ArrayList<Uri> getUriPhotos() {
+    public ArrayList<String> getUriPhotos() {
         if (this.uriPhotos == null) {
-            this.uriPhotos = new ArrayList<Uri>();
+            this.uriPhotos = new ArrayList<String>();
         }
         return this.uriPhotos;
     }
@@ -224,9 +230,11 @@ public class Record{
      *
      * @return the geo location
      */
-    public Location getGeoLocation() {
-        return this.geoLocation;
+    public LatLng getLocation() {
+        return new LatLng(location.get(1), location.get(0));
     }
+
+    public ArrayList<Double> getLocationArrayList() { return this.location;}
 
     /**
      * Returns the x, y coords of the body location.
@@ -246,7 +254,11 @@ public class Record{
      */
     @Override
     public String toString(){
-        return this.getTitle();
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
+        String niceDate = this.timestamp.format(formatter);
+        if(!this.title.isEmpty()){
+            return this.title + "  |  " + niceDate;
+        }
+        return niceDate;
     }
-
 }

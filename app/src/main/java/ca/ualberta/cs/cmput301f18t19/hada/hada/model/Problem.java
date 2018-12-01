@@ -12,6 +12,7 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import io.searchbox.annotations.JestId;
@@ -163,6 +164,8 @@ public class Problem {
      */
     @Override
     public String toString(){
-        return this.title;
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
+        String niceDate = this.date.format(formatter);
+        return this.title + "  |  " + niceDate;
     }
 }

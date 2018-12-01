@@ -14,6 +14,8 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -33,7 +35,10 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
  * @version 2.0
  */
 public class UserController {
-
+    /**
+     * Short code length variable.
+     */
+    private int shortCodeLength = 6;
     /*
     This class should do any logic that is related to editing patient in any manor.
     This can include but is not limited to:
@@ -52,7 +57,8 @@ public class UserController {
      *
      * @
      */
-    public UserController(){}
+    public UserController() {
+    }
 
     /**
      * Checks given new user info and returns true if all fields are valid.
@@ -65,30 +71,25 @@ public class UserController {
      * @param newCareProvider the new care provider
      * @return the boolean
      */
-    public Boolean addNewUser(Context context, String userID, String userPhone, String userEmail, Boolean newPatient, Boolean newCareProvider){
-        if(!newPatient && !newCareProvider){
+    public Boolean addNewUser(Context context, String userID, String userPhone, String userEmail, Boolean newPatient, Boolean newCareProvider) {
+        if (!newPatient && !newCareProvider) {
             Toast.makeText(context,
                     context.getString(R.string.NewUserActivity_SelectUserType), Toast.LENGTH_SHORT).show();
             return false;
-        }
-        else if(userID.equals("") || userPhone.equals("") || userEmail.equals("")){
+        } else if (userID.equals("") || userPhone.equals("") || userEmail.equals("")) {
             Toast.makeText(context,
                     context.getString(R.string.NewUserActivity_EnterAllFields), Toast.LENGTH_SHORT).show();
             return false;
-        }
-        else if(userID.length() < 8){
+        } else if (userID.length() < 8) {
             Toast.makeText(context, context.getString(R.string.NewUserActivity_UserIdMin), Toast.LENGTH_SHORT).show();
             return false;
-        }
-        else if(userID.contains(" ")){
+        } else if (userID.contains(" ")) {
             Toast.makeText(context, context.getString(R.string.NewUserActivity_UserIdSpaces), Toast.LENGTH_SHORT).show();
             return false;
-        }
-        else if(new UserController().userExists(userID)){
-            Toast.makeText(context,context.getString(R.string.NewUserActivity_userid_in_use), Toast.LENGTH_SHORT).show();
+        } else if (new UserController().userExists(userID)) {
+            Toast.makeText(context, context.getString(R.string.NewUserActivity_userid_in_use), Toast.LENGTH_SHORT).show();
             return false;
-        }
-        else {
+        } else {
             Log.d("addNewUser", "All tests passed");
             return true;
 
@@ -103,7 +104,7 @@ public class UserController {
      * @param userEmail the user email
      */
 //Adds user types to ES and/or memory
-    public void addPatient(String userID, String userPhone, String userEmail){
+    public void addPatient(String userID, String userPhone, String userEmail) {
         Patient patient = new Patient(userID, userPhone, userEmail);
         new ESUserManager.AddPatientTask().execute(patient);
     }
@@ -115,27 +116,26 @@ public class UserController {
      * @param userPhone the user phone
      * @param userEmail the user email
      */
-    public void addCareProvider(String userID, String userPhone, String userEmail){
+    public void addCareProvider(String userID, String userPhone, String userEmail) {
         CareProvider careProvider = new CareProvider(userID, userPhone, userEmail);
         new ESUserManager.AddCareProviderTask().execute(careProvider);
     }
 
 
-
-
-    public void deletePatient(String userId){
+    public void deletePatient(String userId) {
         new ESUserManager.DeletePatientTask().execute(userId);
         ArrayList<Problem> problemsToDelete = new ProblemController().getListOfProblems(userId);
-        for(Problem problem : problemsToDelete) {
+        for (Problem problem : problemsToDelete) {
             new ProblemController().deleteProblem(problem.getFileId());
         }
     }
 
-    public void deleteCareProvider(String userId){
+    public void deleteCareProvider(String userId) {
         new ESUserManager.DeleteCareProviderTask().execute(userId);
         //TODO: Delete care provider comments?
 
     }
+
     /**
      * Given a userID, returns the patient associated with the ID (if it exists).
      *
@@ -143,7 +143,7 @@ public class UserController {
      * @return the patient
      */
 //Retrieves Patient or Care Provider
-    public Patient getPatient(String userId){
+    public Patient getPatient(String userId) {
         try {
             Patient patient = new ESUserManager.GetAPatientTask().execute(userId).get();
             return patient;
@@ -155,13 +155,38 @@ public class UserController {
         return null;
     }
 
+    public Patient getPatientWithShortCode(String shortCode) {
+        try {
+            Patient patient = new ESUserManager.GetPatientWithShortCodeTask().execute(shortCode).get();
+            if(patient == null){
+                return null;
+            }
+            String userId = patient.getUserID();
+            String newShortCode = RandomStringUtils.random(shortCodeLength, true, true);
+            if (shortCodeExists(newShortCode)) {
+                newShortCode = RandomStringUtils.random(shortCodeLength, true, true);
+            }
+            patient.setShortCode(newShortCode);
+            new ESUserManager.AddPatientTask().execute(patient);
+            return new ESUserManager.GetAPatientTask().execute(userId).get();
+        } catch (InterruptedException e) {
+            Log.d("getPatientWithShortCode", "Could not retieve patient from ES. INTERRUPTED");
+            e.printStackTrace();
+            return null;
+        }catch (ExecutionException e){
+            Log.d("getPatientWithShortCode", "Could not retieve patient from ES. EXECUTION");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     /**
      * Given a userID, returns the CareProvider associated with the ID (if it exists).
      *
      * @param userId the user id
      * @return the care provider
      */
-    public CareProvider getCareProvider(String userId){
+    public CareProvider getCareProvider(String userId) {
         try {
             CareProvider careProvider = new ESUserManager.GetACareProviderTask().execute(userId).get();
             return careProvider;
@@ -179,15 +204,27 @@ public class UserController {
      * @param userId the user id
      * @return the boolean
      */
-    public boolean userExists(String userId){
+    public boolean userExists(String userId) {
         Patient patient = getPatient(userId);
         CareProvider careProvider = getCareProvider(userId);
-        if(patient == null && careProvider == null){
+        if (patient == null && careProvider == null) {
             return false;
-        }
-        else{
+        } else {
             return true;
         }
+    }
+
+
+    public boolean shortCodeExists(String shortCode) {
+        try{
+            Patient patient = new ESUserManager.GetPatientWithShortCodeTask().execute(shortCode).get();
+            if(patient != null){
+                return true;
+            }
+        }catch (Exception e){
+            Log.d("shortCodeExists" ,"Failed to load patient from ES");
+        }
+        return false;
     }
 
     /**
@@ -197,17 +234,36 @@ public class UserController {
      * @param userIdOfPatient self descriptive
      * @return the boolean
      */
-    public Boolean setParentOfPatient(String userIdOfPatient){
+    public Boolean setParentOfPatient(String userIdOfPatient) {
         //TODO remove boolean dependency
         Patient patient = getPatient(userIdOfPatient);
-        if(patient != null){
+        if (patient != null) {
             CareProvider careProvider = getCareProvider(LoggedInSingleton.getInstance().getLoggedInID());
             patient.setParentId(careProvider.getUserID());
             new ESUserManager.AddPatientTask().execute(patient);
             return true;
+        } else {
+            Log.d("setParentOfPatient: ", "Failed to set patient parent.");
+            return false;
         }
-        else{Log.d("setParentOfPatient: ", "Failed to set patient parent.");
-        return false;}
+    }
+
+    public Boolean setParentOfPatientWithShortCode(String shortCode) {
+        Patient patient = getPatientWithShortCode(shortCode);
+        if (patient != null) {
+            CareProvider careProvider = getCareProvider(LoggedInSingleton.getInstance().getLoggedInID());
+            patient.setParentId(careProvider.getUserID());
+            String newShortCode = RandomStringUtils.random(shortCodeLength, true, true);
+            if (shortCodeExists(newShortCode)) {
+                newShortCode = RandomStringUtils.random(shortCodeLength, true, true);
+            }
+            patient.setShortCode(newShortCode);
+            new ESUserManager.AddPatientTask().execute(patient);
+            return true;
+        } else {
+            Log.d("setParentOfPatient: ", "Failed to set patient parent.");
+            return false;
+        }
     }
 
     /**
@@ -216,7 +272,7 @@ public class UserController {
      * @return the array list
      */
 //Gets a list of patients for a given CareProvider
-    public ArrayList<Patient> getPatientList(){
+    public ArrayList<Patient> getPatientList() {
         String careProviderId = LoggedInSingleton.getInstance().getLoggedInID();
         try {
             ArrayList<Patient> patients = new ESUserManager.GetPatientListTask().execute(careProviderId).get();
@@ -236,7 +292,7 @@ public class UserController {
      * @param email   the email
      */
 //Edits a given patients email address and updates it by overriding current ES index
-    public void editPatientEmail(Patient patient, String email){
+    public void editPatientEmail(Patient patient, String email) {
         patient.setEmailAddress(email);
         new ESUserManager.AddPatientTask().execute(patient);
     }
@@ -248,7 +304,7 @@ public class UserController {
      * @param phoneNumber the phone number
      */
 //Edits a given patients contact number and updates it by overriding current ES index
-    public void editPatientContactNumber(Patient patient, String phoneNumber){
+    public void editPatientContactNumber(Patient patient, String phoneNumber) {
         patient.setPhoneNumber(phoneNumber);
         new ESUserManager.AddPatientTask().execute(patient);
     }
@@ -260,7 +316,7 @@ public class UserController {
      * @param email        the email
      */
 //Edits a given care providers email address and updates it by overriding current ES index
-    public void editCareProviderEmail(CareProvider careProvider, String email){
+    public void editCareProviderEmail(CareProvider careProvider, String email) {
         careProvider.setEmailAddress(email);
         new ESUserManager.AddCareProviderTask().execute(careProvider);
     }
@@ -272,9 +328,22 @@ public class UserController {
      * @param phoneNumber  the phone number
      */
 //Edits a given care providers contact number and updates it by overriding current ES index
-    public void editCareProviderContactNumber(CareProvider careProvider, String phoneNumber){
+    public void editCareProviderContactNumber(CareProvider careProvider, String phoneNumber) {
         careProvider.setPhoneNumber(phoneNumber);
         new ESUserManager.AddCareProviderTask().execute(careProvider);
     }
 
+
+    public Boolean isPatient(String userId) {
+        try {
+            Patient patient = new ESUserManager.GetAPatientTask().execute(userId).get();
+            if (patient != null) {
+                return true;
+            }
+        } catch (Exception e) {
+            Log.d("isPatient", "Failed checking if it was a patient");
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

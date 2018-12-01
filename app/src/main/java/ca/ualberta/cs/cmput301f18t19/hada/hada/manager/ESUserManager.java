@@ -130,6 +130,41 @@ public class ESUserManager extends ESManager{
         }
 
     }
+
+    public static class GetPatientWithShortCodeTask extends AsyncTask<String, Void, Patient>{
+        @Override
+        protected Patient doInBackground(String... params){
+            setClient();
+            String shortCode = params[0];
+            String query = "{\"query\": {\"match\": {\"shortCode\": \"" + shortCode + "\"}}}";
+            Patient matchingPatient = null;
+            Search search = new Search.Builder(query)
+                    .addIndex(teamIndex)
+                    .addType("patient")
+                    .build();
+            try {
+                JestResult result = client.execute(search);
+
+                if (result.isSucceeded()) {
+                    List<Patient> results;
+                    results = result.getSourceAsObjectList(Patient.class);
+                    for(Patient patient:results) {
+                        Log.d("GetAPatientWithShortCodeTask", "Patient loaded:" + patient.toString());
+                    }
+                    if(results.size() != 0){
+                        matchingPatient = results.get(0);
+                    }
+                }
+            } catch (IOException e) {
+                Log.d("GetAPatientWithShortCodeTask", "IOException");
+                e.printStackTrace();
+            }
+            //Log.d("GetAPatientWithShortCodeTask", "Returning patient " + matchingPatient.toString());
+            return matchingPatient;
+        }
+    }
+
+
     /**
      * Task which returns a list of all patients with a common parentId.
      */

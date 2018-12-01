@@ -67,7 +67,7 @@ public class EditRecordActivity extends AppCompatActivity {
     private final int REQUEST_LOCATION_PERMISSION = 1;
     private String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION};
     private int requestCode = 1;
-    private Location chosenLocation = null;
+    private LatLng chosenLocation = null;
 
     //TODO Can't save or access timestamps!
 
@@ -99,7 +99,7 @@ public class EditRecordActivity extends AppCompatActivity {
         final LocalDateTime currentDate = record.getTimestamp();
         String currentDateString = currentDate.format(formatter);
         dateInput.setText(currentDateString);
-        chosenLocation = record.getGeoLocation();
+        chosenLocation = record.getLocation();
 
 
         //for selecting custom date
@@ -196,7 +196,7 @@ public class EditRecordActivity extends AppCompatActivity {
             public void onClick(View v) {
                 record.setTitle(title.getText().toString());
                 record.setComment(commentInput.getText().toString());
-                record.setGeoLocation(chosenLocation);
+                record.setLocation(chosenLocation);
                 record.setTimestamp(LocalDateTime.parse(dateInput.getText().toString(),formatter));
                 new RecordController().addRecord(record, record.getParentId());
                 finish();
@@ -209,12 +209,7 @@ public class EditRecordActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, intent);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                LatLng chosenLatLng = intent.getExtras().getParcelable("Location");
-                double lat = chosenLatLng.latitude;
-                double lon = chosenLatLng.longitude;
-                chosenLocation = new Location(LocationManager.GPS_PROVIDER);
-                chosenLocation.setLatitude(lat);
-                chosenLocation.setLongitude(lon);
+                chosenLocation= intent.getExtras().getParcelable("Location");
             }
         } else {
             Toast.makeText(this, "An error occurred. Please try again. Request code: " + requestCode, Toast.LENGTH_SHORT).show();
