@@ -234,6 +234,8 @@ public class Record{
         return new LatLng(location.get(1), location.get(0));
     }
 
+    public ArrayList<Double> getLocationArrayList() { return this.location;}
+
     /**
      * Returns the x, y coords of the body location.
      *

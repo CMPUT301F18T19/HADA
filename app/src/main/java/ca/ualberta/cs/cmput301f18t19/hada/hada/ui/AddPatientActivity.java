@@ -60,8 +60,8 @@ public class AddPatientActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 EditText testInput = findViewById(R.id.addPatientTextInput);
-                String userId = testInput.getText().toString();
-                Boolean success = new UserController().setParentOfPatient(userId);
+                String shortCode = testInput.getText().toString();
+                Boolean success = new UserController().setParentOfPatientWithShortCode(shortCode);
                 if(success){
                     Toast.makeText(AddPatientActivity.this, "Patient Added", Toast.LENGTH_SHORT).show();
                     finish();
