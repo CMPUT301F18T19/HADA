@@ -12,11 +12,26 @@
 
 package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
+import java.util.UUID;
+
 public class BodyLocation {
     private String photoUri;
     private String photoHTTP;
     private String bodyLocation;
     private String parentID;
+    private String fileID;
+
+    public BodyLocation(){
+        this.setFileID(UUID.randomUUID().toString());
+    }
+
+    public String getFileID() {
+        return fileID;
+    }
+
+    public void setFileID(String fileID) {
+        this.fileID = fileID;
+    }
 
     public String getPhotoUri() {
         return photoUri;

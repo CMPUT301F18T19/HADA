@@ -59,6 +59,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  */
 public class AddRecordActivity extends AppCompatActivity {
     private Uri imageURI;
+    private String uuid;
     private final int REQUEST_LOCATION_PERMISSION = 1;
     private String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION};
     private int requestCode = 1;
@@ -100,7 +101,7 @@ public class AddRecordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AddRecordActivity.this, GetBodyLocation.class);
-                startActivity(intent);
+                startActivityForResult(intent,200);
             }
         });
 
@@ -117,33 +118,33 @@ public class AddRecordActivity extends AppCompatActivity {
                 String title = addTitle.getText().toString();
                 String comment = addComment.getText().toString();
                 //TODO: Saving photos
+                Record record = new Record();
+                record = new PhotoController().addPhoto(record,imageURI);
+                Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " timestamp=" +record.getTimestamp().toString());
+                record.setComment(comment);
+                record.setTitle(title);
+                Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " comment=" +record.getComment()+ " timestamp=" +record.getTimestamp().toString());
                 if (chosenLocation != null) {
                     try {
-                        Record record = new Record();
-                        record = new PhotoController().addPhoto(record,imageURI);
-                        record.setComment(comment);
-                        record.setTitle(title);
                         record.setLocation(chosenLocation);
+
                         record.setTimestamp(LocalDateTime.now());
                       
                         Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " comment=" +record.getComment() + " location="+record.getLocation().toString()+ " timestamp=" +record.getTimestamp().toString());
 
                         new RecordController().addRecord(record, parentId);
                         finish();
+                      
                     } catch (SecurityException e) {
                         Toast.makeText(AddRecordActivity.this, "Unable to save location. Please enable the location permissions.", Toast.LENGTH_SHORT).show();
-
-                    }
-                } else {
-                    Record record = new Record();
-                    record = new PhotoController().addPhoto(record,imageURI);
-                    Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " timestamp=" +record.getTimestamp().toString());
-                    record.setComment(comment);
-                    record.setTitle(title);
-                    Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " comment=" +record.getComment()+ " timestamp=" +record.getTimestamp().toString());
-                    new RecordController().addRecord(record, parentId);
-                    finish();
+                        }
                 }
+                if (uuid != null){
+                    record.setBodyLocation(uuid);
+                }
+                new RecordController().addRecord(record, parentId);
+                finish();
+
             }
         });
 
@@ -181,6 +182,11 @@ public class AddRecordActivity extends AppCompatActivity {
         else if (requestCode == 100) {
             if (resultCode == RESULT_OK) {
                 imageURI = Uri.parse(intent.getStringExtra("URI"));
+            }
+        }
+        else if (requestCode == 200) {
+            if (resultCode == RESULT_OK){
+                uuid = intent.getStringExtra("UUID");
             }
         } else {
             Toast.makeText(this, "An error occurred. Please try again. Request code: " + requestCode, Toast.LENGTH_SHORT).show();
