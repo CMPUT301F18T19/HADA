@@ -34,11 +34,10 @@ public class Record{
     private LocalDateTime timestamp;
     private String title;
     private String comment;
-    private ArrayList<String> uriPhotos;
-    private ArrayList<String> httpPhotos;
+    private String Photos;
     private ArrayList<Double> location;
     //private ArrayList<Double> location;
-    private ArrayList<Integer> bodyLocation;
+    private String bodyLocation;
 
 
     /**
@@ -46,6 +45,14 @@ public class Record{
      */
     public Record() {
         this.timestamp = LocalDateTime.now();
+    }
+
+    public String getPhotos() {
+        return Photos;
+    }
+
+    public void setPhotos(String photos) {
+        Photos = photos;
     }
 
     /**
@@ -105,41 +112,6 @@ public class Record{
         this.comment = comment;
     }
 
-    /**
-     * Add photo to a record. Photo in this instance is a Base64 encoded string.
-     *
-     * @param photo the photo
-     */
-    public void addPhoto(String photo,String url) {
-        if (this.uriPhotos == null) {
-            uriPhotos = new ArrayList<String>();
-        }
-        if (this.httpPhotos == null) {
-            httpPhotos = new ArrayList<>();
-        }
-        this.uriPhotos.add(photo);
-        this.httpPhotos.add(url);
-    }
-
-    /**
-     * Removes photo from list of photos.
-     *
-     * @param photo the photo
-     */
-    public void removePhoto(Uri photo,String url) {
-        if (this.uriPhotos == null) {
-            throw new IllegalStateException();
-        }
-        if (this.httpPhotos == null) {
-            throw new IllegalStateException();
-        }
-        if (this.uriPhotos.contains(photo) && this.httpPhotos.contains(url)) {
-            this.uriPhotos.remove(photo);
-            this.httpPhotos.remove(url);
-        } else {
-            throw new IllegalStateException();
-        }
-    }
 
     /**
      * Sets geo location of the record, given a Location object (supplied by Android).
@@ -155,13 +127,12 @@ public class Record{
     /**
      * Set body location, represented by x and y coordinates.
      *
-     * @param x the x
-     * @param y the y
+     * @param bodyLocation the uuid of bodylocation object (itemID)
+     *
      */
-    public void setBodyLocation(int x, int y){
-        this.bodyLocation = new ArrayList<>();
-        this.bodyLocation.add(x);
-        this.bodyLocation.add(y);
+    public void setBodyLocation(String bodyLocation){
+        this.bodyLocation = bodyLocation;
+
     }
 
 
@@ -213,17 +184,6 @@ public class Record{
         return this.comment;
     }
 
-    /**
-     * Returns the list of photo strings.
-     *
-     * @return the photos
-     */
-    public ArrayList<String> getUriPhotos() {
-        if (this.uriPhotos == null) {
-            this.uriPhotos = new ArrayList<String>();
-        }
-        return this.uriPhotos;
-    }
 
     /**
      * Returns the Location object associated with the record.
@@ -241,7 +201,7 @@ public class Record{
      *
      * @return the body location
      */
-    public ArrayList<Integer> getBodyLocation() {
+    public String getBodyLocation() {
         return this.bodyLocation;
     }
 
