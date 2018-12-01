@@ -19,7 +19,6 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
  * Controller for a given list of records.
  *
  * @author Anders J.
- *
  * @version 2.0
  */
 public class RecordController {
@@ -68,16 +67,19 @@ public class RecordController {
         return null;
     }
 
+
     /**
-     * A very specific function for adding comment records to a patient as a CP
+     * Add comment record for care provider use.
      *
-     * @param patientIndex the patient index
-     * @param problemIndex the problem index
-     * @param comment      the comment
-     * @author Joe Potentier
+     * @param parentId the parent id
+     * @param comment  the comment
      */
-    public void addCommentRecord(int patientIndex, int problemIndex, String comment){
-        //TODO: Refactor record to better support comments from care provider
+    public void addCommentRecord(String parentId, String comment){
+        Record commentRecord = new Record();
+        commentRecord.setTitle("-- Care Provider Comment --");
+        commentRecord.setComment(comment);
+        commentRecord.setParentId(parentId);
+        new ESRecordManager.AddRecordTask().execute(commentRecord);
     }
 
     /**
