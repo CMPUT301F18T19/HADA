@@ -152,7 +152,7 @@ public class ProblemController {
         return null;
     }
 
-    public List<Problem> searchProblemWithGeoLocatioon(String parentId, LatLng location, String distance){
+    public List<Problem> searchProblemWithGeoLocation(String parentId, LatLng location, String distance){
         ArrayList<Problem> problems = getListOfProblems(parentId);
         ArrayList<String> validProblems = new ArrayList<>();
         for(Problem problem: problems){
