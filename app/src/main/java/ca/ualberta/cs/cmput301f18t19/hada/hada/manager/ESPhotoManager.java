@@ -32,10 +32,10 @@ public class ESPhotoManager extends ESManager {
         @Override
         protected Void doInBackground(Photos... params) {
             setClient();
-            for(Photos photo:params){
+            for (Photos photo : params) {
                 //Assign a file Id if the object does not contain one.
                 String fileId;
-                if(photo.getFileID() == null) {
+                if (photo.getFileID() == null) {
                     fileId = UUID.randomUUID().toString();
                     photo.setFileID(fileId);
                 }
@@ -48,7 +48,7 @@ public class ESPhotoManager extends ESManager {
                             .build();
                     DocumentResult result = client.execute(index);
                     Log.d("AddPhotos", index.getURI());
-                    Log.d("AddPhotos",result.getJsonString());
+                    Log.d("AddPhotos", result.getJsonString());
                     if (result.isSucceeded()) {
                         Log.d("AddPhotos", "Record successfully added.");
                     }
@@ -64,7 +64,7 @@ public class ESPhotoManager extends ESManager {
     /**
      * Deletes a body location for a given fileId
      */
-    public static class DeletePhotosTask extends AsyncTask<String, Void, Void>{
+    public static class DeletePhotosTask extends AsyncTask<String, Void, Void> {
         @Override
         protected Void doInBackground(String... params) {
             setClient();
@@ -76,10 +76,9 @@ public class ESPhotoManager extends ESManager {
                         .build();
                 try {
                     JestResult result = client.execute(delete);
-                    if(result.isSucceeded()) {
+                    if (result.isSucceeded()) {
                         Log.d("DeletePhotosTask", "Photo deleted deleted.");
-                    }
-                    else{
+                    } else {
                         Log.d("DeletePhotosTask", "Problem deletion failed.");
                     }
                 } catch (IOException e) {
@@ -99,10 +98,9 @@ public class ESPhotoManager extends ESManager {
         @Override
         protected Photos doInBackground(String... params) {
             setClient();
-            String query = "{\"query\": {\"match\": {\"fileId\": \"" + params[0] + "\"}}}";
-            Photos matchingLocation = null;
-            Log.d("GetPhotoTask: ", query);
-
+            String fileId = params[0];
+            String query = "{\"query\": {\"match\": {\"fileId\": \"" + fileId + "\"}}}";
+            Photos matchingProblem = null;
             Search search = new Search.Builder(query)
                     .addIndex(teamIndex)
                     .addType("Photos")
@@ -113,17 +111,17 @@ public class ESPhotoManager extends ESManager {
                 if (result.isSucceeded()) {
                     List<Photos> results;
                     results = result.getSourceAsObjectList(Photos.class);
-                    for(Photos photo: results){
-                        Log.d("GetARecordTask Results: ", photo.toString());
+                    for (Photos photo : results) {
+                        Log.d("GetProblemListTask", "Problem loaded:" + photo.toString());
                     }
-                    matchingLocation = results.get(0);
-
+                    matchingProblem = results.get(0);
                 }
             } catch (IOException e) {
+                Log.d("GetAProblemTask", "IOException");
                 e.printStackTrace();
             }
-            return matchingLocation;
+            return matchingProblem;
         }
-    }
 
+    }
 }
