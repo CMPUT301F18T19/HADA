@@ -12,6 +12,7 @@
 
 package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -149,7 +150,10 @@ public class GetBodyLocation extends AppCompatActivity {
         bodyLocation.setBodyLocation(type);
         String uuid = bodyLocation.getFileID();
         //TODO Camera stuff
-        //TODO return uuid to link to record
         new ESBodyLocationManager.AddBodyLocationTask().execute(bodyLocation);
+        Intent intent = new Intent();
+        intent.putExtra("UUID",uuid);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }

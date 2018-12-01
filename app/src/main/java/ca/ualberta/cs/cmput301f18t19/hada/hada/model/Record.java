@@ -37,7 +37,7 @@ public class Record{
     private ArrayList<String> httpPhotos;
     private ArrayList<Double> location;
     //private ArrayList<Double> location;
-    private ArrayList<Integer> bodyLocation;
+    private String bodyLocation;
 
 
     /**
@@ -154,13 +154,12 @@ public class Record{
     /**
      * Set body location, represented by x and y coordinates.
      *
-     * @param x the x
-     * @param y the y
+     * @param bodyLocation the uuid of bodylocation object (itemID)
+     *
      */
-    public void setBodyLocation(int x, int y){
-        this.bodyLocation = new ArrayList<>();
-        this.bodyLocation.add(x);
-        this.bodyLocation.add(y);
+    public void setBodyLocation(String bodyLocation){
+        this.bodyLocation = bodyLocation;
+
     }
 
 
@@ -238,7 +237,7 @@ public class Record{
      *
      * @return the body location
      */
-    public ArrayList<Integer> getBodyLocation() {
+    public String getBodyLocation() {
         return this.bodyLocation;
     }
 
