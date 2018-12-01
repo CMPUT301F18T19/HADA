@@ -16,11 +16,19 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             resValue 'string', "gmaps_api_key", GMaps_Api_Key
+            resValue 'string', "imgur_client_id", Imgur_Client_Id
+            resValue 'string', "imgur_client_secret", Imgur_Client_Secret
+            buildConfigField 'String', "ImgurClientId", Imgur_Client_Id
+            buildConfigField 'String', "ImgurClientSecret", Imgur_Client_Secret
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             resValue 'string', "gmaps_api_key", GMaps_Api_Key
+            resValue 'string', "imgur_client_id", Imgur_Client_Id
+            resValue 'string', "imgur_client_secret", Imgur_Client_Secret
+            buildConfigField 'String', "ImgurClientId", Imgur_Client_Id
+            buildConfigField 'String', "ImgurClientSecret", Imgur_Client_Secret
         }
     }
     testOptions {

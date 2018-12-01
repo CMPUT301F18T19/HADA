@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import ca.ualberta.cs.cmput301f18t19.hada.hada.BuildConfig;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 
 public class PhotoController {
@@ -63,7 +64,7 @@ public class PhotoController {
             conn.setDoOutput(true);
             OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
             String data = URLEncoder.encode("image", "UTF-8") + "=" + URLEncoder.encode(Base64.encode(baos.toByteArray(), Base64.DEFAULT).toString(), "UTF-8");
-            data += "&" + URLEncoder.encode("Authorization: Client-ID ", "UTF-8") + "=" + URLEncoder.encode("8d52b0b7c0cd5f1", "UTF-8");
+            data += "&" + URLEncoder.encode("Authorization: Client-ID ", "UTF-8") + "=" + URLEncoder.encode(BuildConfig.ImgurClientId, "UTF-8");
             Log.d("PhotoController",data);
             wr.write(data);
             wr.flush();
