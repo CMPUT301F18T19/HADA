@@ -82,7 +82,7 @@ public class SearchResultsActivity extends AppCompatActivity {
 
             }
             else if(searchType == "geo-location"){
-                problemsReturned = new ProblemController().searchProblemWithGeoLocatioon(parentId, geoLocation, geoDistance);
+                problemsReturned = new ProblemController().searchProblemWithGeoLocation(parentId, geoLocation, geoDistance);
             }
             else if(searchType == "body-location"){
                 //TODO get records from body location search

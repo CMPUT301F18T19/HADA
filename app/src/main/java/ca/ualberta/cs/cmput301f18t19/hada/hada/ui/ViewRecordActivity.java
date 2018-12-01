@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.lang.reflect.Type;
 import java.sql.Time;
@@ -53,24 +54,33 @@ public class ViewRecordActivity extends AppCompatActivity {
         record = new RecordController().getRecord(recordFileId);
 
         // Goes to view GeoLocation
-        Button viewGeoLocation = (Button) findViewById(R.id.viewRecordActivityGeolocation);
+        Button viewGeoLocation = findViewById(R.id.viewRecordActivityGeolocation);
         viewGeoLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ViewRecordActivity.this, ViewSingleRecordLocationActivity.class);
-                intent.putExtra("recordFileId", recordFileId);
-                startActivity(intent);
+                if(record.getLocationArrayList() != null) {
+                    Intent intent = new Intent(ViewRecordActivity.this, ViewSingleRecordLocationActivity.class);
+                    intent.putExtra("recordFileId", recordFileId);
+                    startActivity(intent);
+                }
+                else{
+                    Toast.makeText(ViewRecordActivity.this, "This record does not have a geo location.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         // Goes to view BodyLocation
-        Button viewBodyLocation = (Button) findViewById(R.id.viewRecordActivityViewBodyLocation);
+        Button viewBodyLocation = findViewById(R.id.viewRecordActivityViewBodyLocation);
         viewBodyLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /**
-                 * Goes to viewBodyLocationActivity
-                 */
+                //A check that bodyLocation has been set for the record
+                if(record.getBodyLocation() != null){
+
+                }
+                else{
+                    Toast.makeText(ViewRecordActivity.this, "This record does not have a body location.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
