@@ -1,5 +1,6 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -34,6 +35,7 @@ public class EditUserSettingsActivity extends AppCompatActivity {
         final TextView emailInput = findViewById(R.id.editUserSettingsEditTextInput);
         TextView usernameInput = findViewById(R.id.editUserSettingsUsername);
         final TextView contactNumberInput = findViewById(R.id.editUserSettingsContactNumber);
+        Button getShortCode = findViewById(R.id.editUserSettingsGetShortCodeButton);
 
         //Get current logged in user
         LoggedInSingleton instance = LoggedInSingleton.getInstance();
@@ -49,6 +51,9 @@ public class EditUserSettingsActivity extends AppCompatActivity {
             emailInput.setText(careProvider.getEmailAddress());
             usernameInput.setText(careProvider.getUserID());
             contactNumberInput.setText(careProvider.getPhoneNumber());
+
+            //Hides shortcode button
+            getShortCode.setVisibility(View.INVISIBLE);
 
             //Save button actions
             Button saveButton = findViewById(R.id.editUserSettingsSaveButton);
@@ -125,6 +130,15 @@ public class EditUserSettingsActivity extends AppCompatActivity {
                         finish();
                     }
                     else{Toast.makeText(EditUserSettingsActivity.this, "No empty inputs allowed, contact info not saved.", Toast.LENGTH_SHORT).show();}
+                }
+            });
+
+            //Get shortcode button actions
+            getShortCode.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(EditUserSettingsActivity.this, ViewShortCodeActivity.class);
+                    startActivity(intent);
                 }
             });
 

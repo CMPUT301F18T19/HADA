@@ -73,7 +73,8 @@
             android:name=".ui.ViewSingleRecordLocationActivity"
             android:label="@string/title_activity_view_single_record_location" />
         <activity android:name=".ui.GetBodyLocation" />
-        <activity android:name=".ui.CareProviderAddCommentActivity"></activity>
+        <activity android:name=".ui.CareProviderAddCommentActivity" />
+        <activity android:name=".ui.ViewShortCodeActivity"></activity>
     </application>
 
 </manifest>
