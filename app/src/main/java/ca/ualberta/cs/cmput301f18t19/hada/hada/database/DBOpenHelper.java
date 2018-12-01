@@ -36,8 +36,11 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                         patientTable.COL_USERID + " TEXT," +
                         patientTable.COL_PHONE + " TEXT," +
                         patientTable.COL_EMAIL + " TEXT," +
-                "PRIMARY KEY (" + patientTable.COL_USERID + ")" +
-                ")"
+                        "PRIMARY KEY (" + patientTable.COL_USERID + ")," +
+                        "FOREIGN KEY (" + patientTable.COL_PARENTID + ") " +
+                        "REFERENCES " + careProviderTable.TABLE_NAME +
+                        "(" + careProviderTable.COL_USERID + ")" +
+                        " ON DELETE CASCADE)"
         );
 
         // create problems table
@@ -48,8 +51,12 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                         problemTable.COL_TITLE + " TEXT," +
                         problemTable.COL_DATE + " TEXT," +
                         problemTable.COL_DESC + " TEXT," +
-                        "PRIMARY KEY (" + problemTable.COL_FILEID + ")" +
-                        ")"
+                        "PRIMARY KEY (" + problemTable.COL_FILEID + ")," +
+                        "FOREIGN KEY (" + problemTable.COL_PARENTID + ") " +
+                        "REFERENCES " + patientTable.TABLE_NAME +
+                        "(" + patientTable.COL_USERID + ")" +
+                        " ON DELETE CASCADE)"
+
         );
 
         // create records table
@@ -64,14 +71,18 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                         recordTable.COL_HTTP_PHOTOS + " TEXT," +
                         recordTable.COL_GEOLOCATION + " TEXT," +
                         recordTable.COL_BODDLOC + " TEXT," +
-                        "PRIMARY KEY (" + recordTable.COL_FILEID + ")" +
-                        ")"
+                        "PRIMARY KEY (" + recordTable.COL_FILEID + ")," +
+                        "FOREIGN KEY (" + recordTable.COL_PARENTID + ") " +
+                        "REFERENCES " + problemTable.TABLE_NAME +
+                        "(" + problemTable.COL_FILEID + ")" +
+                        " ON DELETE CASCADE)"
         );
 
     }
 
     @Override
     public void onConfigure(SQLiteDatabase db) {
+        super.onConfigure(db);
         db.setForeignKeyConstraintsEnabled(true);
     }
 
