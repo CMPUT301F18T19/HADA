@@ -13,7 +13,12 @@
 
 package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,13 +45,14 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
  */
 public class MainActivity extends AppCompatActivity {
 
-
+    BroadcastReceiver broadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        installListener();
         final EditText usernameInfo = findViewById(R.id.mainActivityUsernameText);
         Button patientLogin = findViewById(R.id.mainActivityPatientLogin);
         Button careProviderLogin = findViewById(R.id.mainActivityDoctorLogin);
@@ -103,5 +109,48 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+    @Override
+    protected void onDestroy(){
+        unregisterReceiver(broadcastReceiver);
+        super.onDestroy();
+    }
 
+
+    private void installListener() {
+        //based on https://stackoverflow.com/a/3142590
+
+        if (broadcastReceiver == null) {
+
+            broadcastReceiver = new BroadcastReceiver() {
+
+                @Override
+                public void onReceive(Context context, Intent intent) {
+
+                    Bundle extras = intent.getExtras();
+
+                    NetworkInfo info = (NetworkInfo) extras
+                            .getParcelable("networkInfo");
+
+                    NetworkInfo.State state = info.getState();
+                    Log.d("InternalBroadcastReceiver", info.toString() + " "
+                            + state.toString());
+
+                    if (state == NetworkInfo.State.CONNECTED) {
+                        //INSERT SYNC FUNCTION HERE
+                        Log.d("networktest", "Network connected!");
+
+                    } else {
+
+                        Log.d("networktest", "Network disconnected!");
+
+                    }
+
+                }
+            };
+
+            final IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+            registerReceiver(broadcastReceiver, intentFilter);
+        }
+    }
 }
