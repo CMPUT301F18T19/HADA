@@ -29,7 +29,7 @@ public class AddPatientActivityTest {
                 .addCareProvider("doctor_patientlistactivity", "789789", "no@email.com");
         Espresso.onView(withId(R.id.mainActivityUsernameText))
                 .perform(typeText("doctor_patientlistactivity"), closeSoftKeyboard());
-        Espresso.onView(withId(R.id.mainActivityDoctorLogin)).perform(click());
+        Espresso.onView(withId(R.id.mainActivityPatientLogin)).perform(click());
         new UserController()
                 .addPatient("testPatient", "asd", "asf");
 

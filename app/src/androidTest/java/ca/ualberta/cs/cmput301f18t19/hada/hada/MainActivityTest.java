@@ -56,14 +56,14 @@ public class MainActivityTest {
         new UserController().addCareProvider("mainactivitytest_doc", "7", "e");
         Espresso.onView(withId(R.id.mainActivityUsernameText))
                 .perform(typeText("mainactivitytest_doc"), closeSoftKeyboard());
-        Espresso.onView(withId(R.id.mainActivityDoctorLogin)).perform(click());
+        Espresso.onView(withId(R.id.mainActivityPatientLogin)).perform(click());
         checkToastDoesNotExist("Username does not exist. Create a new user instead?");
 
     }
 
     @Test
     public void testNoInput(){
-        Espresso.onView(withId(R.id.mainActivityDoctorLogin)).perform(click());
+        Espresso.onView(withId(R.id.mainActivityPatientLogin)).perform(click());
         checkToastExists("Username does not exist. Create a new user instead?");
 
         Espresso.onView(withId(R.id.mainActivityPatientLogin)).perform(click());
@@ -81,7 +81,7 @@ public class MainActivityTest {
 
         Espresso.onView(withId(R.id.mainActivityUsernameText))
                 .perform(replaceText("testPatient"), closeSoftKeyboard());
-        Espresso.onView(withId(R.id.mainActivityDoctorLogin)).perform(click());
+        Espresso.onView(withId(R.id.mainActivityPatientLogin)).perform(click());
         checkToastExists("Username does not exist. Create a new user instead?");
 
     }
