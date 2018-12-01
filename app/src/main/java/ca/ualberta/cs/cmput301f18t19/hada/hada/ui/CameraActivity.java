@@ -34,6 +34,15 @@ public class CameraActivity extends AppCompatActivity implements EasyPermissions
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+        Intent intent = getIntent();
+        String type = intent.getStringExtra("TYPE");
+        TextView tv = (TextView) findViewById(R.id.cameraStatus);
+        if (type.equals("400")){
+            tv.setText("Take front image by clicking HADA");
+        }
+        if (type.equals("400")){
+            tv.setText("Take Rear facing image by clicking HADA");
+        }
 
         ImageButton button = (ImageButton) findViewById(R.id.cameraImageButton);
         View.OnClickListener listener = new View.OnClickListener() {
