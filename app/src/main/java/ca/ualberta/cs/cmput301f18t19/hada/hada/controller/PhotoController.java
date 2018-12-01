@@ -21,26 +21,36 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.BuildConfig;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESPhotoManager;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Photos;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 
 public class PhotoController {
     public PhotoController(){}
 
-    //public ArrayList<Uri> getPhotos(Record record){
-       // ArrayList<String> uriStringList;
-
-        //ArrayList<Uri> uriList = new ArrayList<Uri>();
-        //for (String uri: uriStringList){
-       //     uriList.add(Uri.parse(uri));
-        //}
-        //return uriList;
-    //}
+    public ArrayList<Uri> getPhotos(String photosID){
+       ArrayList <Uri> uriList = new ArrayList<Uri>();
+       return uriList;
+    }
 
     public Record addPhoto(Record record, Uri uri){
         //TODO upload image to imgur
         if (uri == null){
             return record;
         }
+        if (record.getPhotos() == null){
+            Photos photo = new Photos();
+        }
+        else {
+            String photosId = record.getPhotos();
+            try {
+                Photos photo = new ESPhotoManager().GetPhotoTask().execute(photosId).get();
+            } catch (Exception e){
+                Log.d("addPhoto","Couldn't retrieve record list from ES");
+                e.printStackTrace();
+            }
+        }
+        //ArrayList<Uri> uriList = photo.getUriPhotos;
         DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
         LocalDateTime timestamp = record.getTimestamp();
         Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " timestamp=" +timestamp.format(formatter));

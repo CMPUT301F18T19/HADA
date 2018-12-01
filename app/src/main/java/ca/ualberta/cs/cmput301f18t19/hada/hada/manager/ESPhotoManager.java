@@ -1,9 +1,9 @@
 /*
  *  CMPUT 301 - Fall 2018
  *
- *  ESBodyLocationManager.java
+ *  ESPhotoManager.java
  *
- *  30/11/18 12:42 PM
+ *  12/1/18 1:09 PM
  *
  *  This is a group project for CMPUT 301 course at the University of Alberta
  *  Copyright (C) 2018  Austin Goebel, Anders Johnson, Alex Li,
@@ -16,49 +16,44 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.BodyLocation;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Photos;
 import io.searchbox.client.JestResult;
 import io.searchbox.core.DeleteByQuery;
 import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 
+public class ESPhotoManager extends ESManager {
 
-public class ESBodyLocationManager extends ESManager{
-    /**
-     * Task which adds a Record to the server, given a Record object.
-     */
-    public static class AddBodyLocationTask extends AsyncTask<BodyLocation, Void, Void> {
+    public static class AddPhotosTask extends AsyncTask<Photos, Void, Void> {
         @Override
-        protected Void doInBackground(BodyLocation... params) {
+        protected Void doInBackground(Photos... params) {
             setClient();
-            for(BodyLocation bodyLocation:params){
+            for(Photos photo:params){
                 //Assign a file Id if the object does not contain one.
                 String fileId;
-                if(bodyLocation.getFileID() == null) {
+                if(photo.getFileID() == null) {
                     fileId = UUID.randomUUID().toString();
-                    bodyLocation.setFileID(fileId);
+                    photo.setFileID(fileId);
                 }
                 try {
-                    Index index = new Index.Builder(bodyLocation)
+                    Index index = new Index.Builder(photo)
                             .index(teamIndex)
-                            .type("bodylocation")
-                            .id(bodyLocation.getParentID())
+                            .type("Photos")
+                            .id(photo.getParentId())
                             .refresh(true)
                             .build();
                     DocumentResult result = client.execute(index);
-                    Log.d("AddBodyLocation", index.getURI());
-                    Log.d("AddBodyLocation",result.getJsonString());
+                    Log.d("AddPhotos", index.getURI());
+                    Log.d("AddPhotos",result.getJsonString());
                     if (result.isSucceeded()) {
-                        Log.d("AddBodyLocation", "Record successfully added.");
+                        Log.d("AddPhotos", "Record successfully added.");
                     }
                 } catch (IOException e) {
-                    Log.d("AddBodyLocation", "Failed to execute while adding a record.");
+                    Log.d("AddPhotos", "Failed to execute while adding a record.");
                     e.printStackTrace();
                 }
             }
@@ -69,7 +64,7 @@ public class ESBodyLocationManager extends ESManager{
     /**
      * Deletes a body location for a given fileId
      */
-    public static class DeleteABodyLocationTask extends AsyncTask<String, Void, Void>{
+    public static class DeletePhotosTask extends AsyncTask<String, Void, Void>{
         @Override
         protected Void doInBackground(String... params) {
             setClient();
@@ -77,18 +72,18 @@ public class ESBodyLocationManager extends ESManager{
                 String query = "{\"query\": {\"match\": {\"fileId\": \"" + fileId + "\"}}}";
                 DeleteByQuery delete = new DeleteByQuery.Builder(query)
                         .addIndex(teamIndex)
-                        .addType("bodylocation")
+                        .addType("Photos")
                         .build();
                 try {
                     JestResult result = client.execute(delete);
                     if(result.isSucceeded()) {
-                        Log.d("DeleteBodyLocationTask", "Body location deleted deleted.");
+                        Log.d("DeletePhotosTask", "Photo deleted deleted.");
                     }
                     else{
-                        Log.d("DeleteBodyLocationTask", "Problem deletion failed.");
+                        Log.d("DeletePhotosTask", "Problem deletion failed.");
                     }
                 } catch (IOException e) {
-                    Log.d("DeleteBodyLocationTask", "IOException");
+                    Log.d("DeletePhotosTask", "IOException");
                     e.printStackTrace();
                 }
             }
@@ -100,26 +95,26 @@ public class ESBodyLocationManager extends ESManager{
     /**
      * Task which loads a Record from the server when given a fileId.
      */
-    public static class GetABodyLocationTask extends AsyncTask<String, Void, BodyLocation> {
+    public static class GetPhotoTask extends AsyncTask<String, Void, Photos> {
         @Override
-        protected BodyLocation doInBackground(String... params) {
+        protected Photos doInBackground(String... params) {
             setClient();
             String query = "{\"query\": {\"match\": {\"fileId\": \"" + params[0] + "\"}}}";
-            BodyLocation matchingLocation = null;
-            Log.d("GetARecordTask Query: ", query);
+            Photos matchingLocation = null;
+            Log.d("GetPhotoTask: ", query);
 
             Search search = new Search.Builder(query)
                     .addIndex(teamIndex)
-                    .addType("bodylocation")
+                    .addType("Photos")
                     .build();
             try {
                 JestResult result = client.execute(search);
 
                 if (result.isSucceeded()) {
-                    List<BodyLocation> results;
-                    results = result.getSourceAsObjectList(BodyLocation.class);
-                    for(BodyLocation bodyLocation: results){
-                        Log.d("GetARecordTask Results: ", bodyLocation.toString());
+                    List<Photos> results;
+                    results = result.getSourceAsObjectList(Photos.class);
+                    for(Photos photo: results){
+                        Log.d("GetARecordTask Results: ", photo.toString());
                     }
                     matchingLocation = results.get(0);
 
