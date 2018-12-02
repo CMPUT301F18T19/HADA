@@ -87,17 +87,6 @@ public class AddRecordActivity extends AppCompatActivity {
         final String fileId = UUID.randomUUID().toString();
 
 
-        //Will open a new activity in order to take/add photos
-        Button addPhotos = findViewById(R.id.addRecordActivitySelectRecordPhotos);
-        addPhotos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO access photos and select them
-
-                Toast.makeText(AddRecordActivity.this, "Select photos", Toast.LENGTH_SHORT).show();
-            }
-        });
-
 
         Button takePhoto = findViewById(R.id.addRecordActivityTakePhoto);
         takePhoto.setOnClickListener(new View.OnClickListener() {

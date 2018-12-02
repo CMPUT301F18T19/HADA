@@ -19,7 +19,7 @@
         android:hint="@string/add_comment"
         android:inputType="text|textPersonName"
         android:singleLine="false"
-        app:layout_constraintBottom_toTopOf="@+id/addRecordActivityAddReferenceImage"
+        app:layout_constraintBottom_toTopOf="@+id/addRecordActivityTakePhoto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -36,17 +36,6 @@
         android:singleLine="false"
         app:layout_constraintBottom_toTopOf="@+id/addRecordActivityComment"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/addRecordActivitySelectRecordPhotos"
-        android:layout_width="250dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/select_photos"
-        app:layout_constraintBottom_toTopOf="@+id/AddRecordActivityLocationSelectedTitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent" />
 
 
@@ -83,7 +72,7 @@
         android:id="@+id/addRecordActivitySaveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="24dp"
         android:text="@string/generic_save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -105,7 +94,6 @@
         android:id="@+id/AddRecordActivityLocationSelectedTitle"
         android:layout_width="wrap_content"
         android:layout_height="19dp"
-        android:layout_marginBottom="8dp"
         android:text="@string/AddRecordActivity_current_selected_location"
         app:layout_constraintBottom_toTopOf="@+id/addRecordActivityAddGeoButton"
         app:layout_constraintEnd_toEndOf="parent"
@@ -114,27 +102,30 @@
 
     <Button
         android:id="@+id/addRecordActivityTakePhoto"
-        android:layout_width="wrap_content"
+        android:layout_width="218dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:text="@string/take_photo"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/addPhoto"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/addRecordActivitySelectRecordPhotos"
-        app:layout_constraintEnd_toStartOf="@+id/addRecordActivityAddReferenceImage"
-        app:layout_constraintHorizontal_bias="0.813"
+        app:layout_constraintBottom_toTopOf="@+id/addRecordActivityAddReferenceImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/addRecordActivityAddReferenceImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="20dp"
         android:layout_marginEnd="36dp"
+        android:layout_marginStart="8dp"
         android:text="@string/take_Reference_Photo"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/addRecordActivitySelectRecordPhotos"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/AddRecordActivityLocationSelectedTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.574"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
