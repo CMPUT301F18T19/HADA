@@ -34,7 +34,6 @@ public class Record{
     private LocalDateTime timestamp;
     private String title;
     private String comment;
-    private String Photos;
     private ArrayList<Double> location;
 
     /**
@@ -42,14 +41,6 @@ public class Record{
      */
     public Record() {
         this.timestamp = LocalDateTime.now();
-    }
-
-    public String getPhotos() {
-        return Photos;
-    }
-
-    public void setPhotos(String photos) {
-        Photos = photos;
     }
 
     /**
