@@ -24,7 +24,6 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
  * @see DBOpenHelper
  */
 public class DBProblemManager {
-    private Context context;
     private SQLiteDatabase db;
     // formatter used to parse LocalDateTime to/from string
     private DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
@@ -192,6 +191,46 @@ public class DBProblemManager {
                 new String[] { fileID }
         );
         return rowsUpdated;
+    }
+
+    public ArrayList<Problem> searchProblemsWithKeyword(String patientID, String keyword) {
+        ArrayList<Problem> resultList = new ArrayList<>();
+        String selection =
+                problemTable.COL_PARENTID + " =? " +
+                "AND ((" + problemTable.COL_TITLE + " LIKE ?) " +
+                "OR (" + problemTable.COL_DESC + " LIKE ?)" +
+                ")";
+        String[] selectionArgs = {
+                patientID,
+                "'%" + keyword + "%'",
+                "'%" + keyword + "%'",
+        };
+
+        Cursor c = db.query(
+                problemTable.TABLE_NAME,
+                null,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+        if (c.getCount() > 0) {         // if there is results, else return empty list
+            while (c.moveToNext()) {
+                Problem problem = new Problem(
+                        c.getString(c.getColumnIndexOrThrow(problemTable.COL_TITLE)),
+                        LocalDateTime.parse(
+                                c.getString(c.getColumnIndexOrThrow(problemTable.COL_DATE)),
+                                formatter),
+                        c.getString(c.getColumnIndexOrThrow(problemTable.COL_DESC))
+                );
+                problem.setParentId(patientID);
+                problem.setFileId(c.getString(c.getColumnIndexOrThrow(problemTable.COL_FILEID)));
+                resultList.add(problem);
+            }
+        }
+        c.close();
+        return resultList;
     }
 
     /**

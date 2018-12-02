@@ -38,7 +38,6 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
  * @see DBOpenHelper
  */
 public class DBUserManager {
-    private Context context;
     private SQLiteDatabase db;
 
     /**
@@ -51,7 +50,7 @@ public class DBUserManager {
 
     /**
      * Adds a patient to the patientTable
-     * @param patient, patient to be added
+     * @param patient patient to be added
      */
     public void addPatient(Patient patient) {
         if (existsPatient(patient.getUserID()))
@@ -68,7 +67,7 @@ public class DBUserManager {
     /**
      * deletes a patient from the patientTable if it exists, all problems and records
      * belonging to this patient is also deleted
-     * @param userID, patient's userID
+     * @param userID patient's userID
      * @return number of patients deleted
      */
     public int deletePatient(String userID) {
@@ -86,7 +85,7 @@ public class DBUserManager {
 
     /**
      * Loads a patient from the patientTable
-     * @param  userID, patient's userID
+     * @param  userID patient's userID
      * @return patient, null if the patient is not found in the table
      */
     public Patient getPatient(String userID) {
@@ -144,7 +143,7 @@ public class DBUserManager {
 
     /**
      * Adds a careProvider to the careProviderTable
-     * @param  careProvider, careProvider to be added
+     * @param  careProvider careProvider to be added
      */
     public void addCareProvider(CareProvider careProvider) {
         if (existsCP(careProvider.getUserID()))
@@ -160,7 +159,7 @@ public class DBUserManager {
     /**
      * Deletes a CareProvider from the careProviderTable
      * the careProvider's patients, their problems and records are also removed
-     * @param  userID, careProvider's userID
+     * @param  userID careProvider's userID
      * @return patient, null if the patient is not found in the table
      */
     public int deleteCareProvider(String userID) {
@@ -177,7 +176,7 @@ public class DBUserManager {
 
     /**
      * loads a CareProvider from the careProviderTable given its userID
-     * @param  userID, careProvider's userID
+     * @param  userID careProvider's userID
      * @return careProvider, null if the careProvider is not found
      */
     public CareProvider getCareProvider(String userID) {
@@ -205,7 +204,8 @@ public class DBUserManager {
 
     /**
      * edit a given patient's parentID(careProviderID)
-     * @param  patientID patient's userID, parentID new parentID to be set
+     * @param  patientID patient's userID
+     * @param parentID new parentID to be set
      * @return numbers of rows updated
      */
     public int editPatientParentID(String patientID, String parentID) {
@@ -223,7 +223,8 @@ public class DBUserManager {
 
     /**
      * edit a given patient's phone number
-     * @param  patientID patient's userID, newNumber new phone number to be set
+     * @param  patientID patient's userID
+     * @param newNumber new phone number to be set
      * @return numbers of rows updated
      */
     public int editPatientPhone(String patientID, String newNumber) {
@@ -241,7 +242,8 @@ public class DBUserManager {
 
     /**
      * edit a given patient's email address
-     * @param  patientID patient's userID, newEmail new email address to be set
+     * @param  patientID patient's userID
+     * @param  newEmail email address to be set
      * @return numbers of rows updated
      */
     public int editPatientEmail(String patientID, String newEmail) {
@@ -257,10 +259,30 @@ public class DBUserManager {
         return rowsUpdated;
     }
 
+    /**
+     * edit/set a given patient's short code
+     * @param  patientID patient's userID
+     * @param  newShortCode the new shortCode to be set in database
+     * @return numbers of rows updated
+     */
+    public int editPatientShortCode(String patientID, String newShortCode) {
+        int rowsUpdated = 0;
+        ContentValues values = new ContentValues();
+        values.put(patientTable.COL_SHORTCODE, newShortCode);
+        rowsUpdated = db.update(
+                patientTable.TABLE_NAME,
+                values,
+                patientTable.COL_USERID + " = ?",
+                new String[] { patientID }
+        );
+        return rowsUpdated;
+    }
+
 
     /**
      * edit a given careProvider's phone number
-     * @param  careProviderID careProvider's userID, newEmail new phone number to be set
+     * @param  careProviderID careProvider's userID
+     * @param newNumber new phone number to be set
      * @return numbers of rows updated
      */
     public int editCareProviderPhone(String careProviderID, String newNumber) {
@@ -279,7 +301,8 @@ public class DBUserManager {
 
     /**
      * edit a given careProvider's email address
-     * @param  careProviderID careProvider's userID, newEmail new email address to be set
+     * @param  careProviderID careProvider's userID
+     * @param newEmail new email address to be set
      * @return numbers of rows updated
      */
     public int editCareProviderEmail(String careProviderID, String newEmail) {

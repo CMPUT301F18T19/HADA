@@ -1,12 +1,31 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada.database;
 
+import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.DBUserManager;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.DBProblemManager;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.DBRecordManager;
 
+/**
+ * Contract class that defines the database schemas needed for the application,
+ * this class should never be instantiated. It is only a definition of schemas.
+ * The DB managers are the wrapper classes used to interact with the database
+ *
+ * @author Alex
+ * @see DBOpenHelper
+ * @see DBUserManager
+ * @see DBProblemManager
+ * @see DBRecordManager
+ */
 public class DBcontract {
 
-    // constructor is set to private since this class defines DB schema,
-    // it should never be instantiated
+    /**
+     * constructor is set to private as this class is a definition of DB schemas,
+     * it should never be instantiated
+     */
     private DBcontract() {}
 
+    /**
+     * definition of careProvider table
+     */
     public static final class careProviderTable {
         public static final String TABLE_NAME = "careProvider";
 
@@ -15,6 +34,9 @@ public class DBcontract {
         public static final String COL_EMAIL = "email";
     }
 
+    /**
+     * definition of patient table
+     */
     public static final class patientTable {
         public static final String TABLE_NAME = "patient";
 
@@ -22,8 +44,12 @@ public class DBcontract {
         public static final String COL_USERID = "userID";
         public static final String COL_PHONE = "phone";
         public static final String COL_EMAIL = "email";
+        public static final String COL_SHORTCODE = "shortCode";
     }
 
+    /**
+     * definition of problem table
+     */
     public static final class problemTable {
         public static final String TABLE_NAME = "problem";
 
@@ -34,6 +60,9 @@ public class DBcontract {
         public static final String COL_DESC = "description";
     }
 
+    /**
+     * definition of record table
+     */
     public static final class recordTable {
         public static final String TABLE_NAME = "record";
 
@@ -42,10 +71,9 @@ public class DBcontract {
         public static final String COL_TIMESTAMP = "timestamp";
         public static final String COL_TITLE = "title";
         public static final String COL_COMMENT = "comment";
-        public static final String COL_URI_PHOTOS = "uriPhotos";
-        public static final String COL_HTTP_PHOTOS = "httpPhotos";
-        public static final String COL_GEOLOCATION = "geoLocation";
-        public static final String COL_BODDLOC = "bodyLocation";
+        public static final String COL_PHOTOS = "photos";
+        public static final String COL_LOCATION = "location";
+        public static final String COL_BODYLOCATION = "bodyLocation";
     }
 
 }

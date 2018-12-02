@@ -8,15 +8,39 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBcontract.careProviderT
 import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBcontract.patientTable;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBcontract.problemTable;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBcontract.recordTable;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.DBUserManager;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.DBProblemManager;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.DBRecordManager;
 
+
+/**
+ * SQLiteOpenHelper class that opens up connection and check configuration of the database
+ * each time it is opened. This class should not be instantiated by any class other than
+ * the DB manager classes.
+ *
+ * @version 1
+ * @author Alex
+ * @see DBcontract
+ * @see DBUserManager
+ * @see DBProblemManager
+ * @see DBRecordManager
+ */
 public class DBOpenHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "hada.db";
 
+    /**
+     * constructor for a database open helper
+     * @param context
+     */
     public DBOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    /**
+     * This method is called when database is first created
+     * @param db SQLiteDatabase
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         // create careProvider table
@@ -36,6 +60,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                         patientTable.COL_USERID + " TEXT," +
                         patientTable.COL_PHONE + " TEXT," +
                         patientTable.COL_EMAIL + " TEXT," +
+                        patientTable.COL_SHORTCODE + " TEXT," +
                         "PRIMARY KEY (" + patientTable.COL_USERID + ")," +
                         "FOREIGN KEY (" + patientTable.COL_PARENTID + ") " +
                         "REFERENCES " + careProviderTable.TABLE_NAME +
@@ -67,10 +92,9 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                         recordTable.COL_TIMESTAMP + " TEXT," +
                         recordTable.COL_TITLE + " TEXT," +
                         recordTable.COL_COMMENT + " TEXT," +
-                        recordTable.COL_URI_PHOTOS + " TEXT," +
-                        recordTable.COL_HTTP_PHOTOS + " TEXT," +
-                        recordTable.COL_GEOLOCATION + " TEXT," +
-                        recordTable.COL_BODDLOC + " TEXT," +
+                        recordTable.COL_PHOTOS + " TEXT," +
+                        recordTable.COL_LOCATION + " TEXT," +
+                        recordTable.COL_BODYLOCATION + " TEXT," +
                         "PRIMARY KEY (" + recordTable.COL_FILEID + ")," +
                         "FOREIGN KEY (" + recordTable.COL_PARENTID + ") " +
                         "REFERENCES " + problemTable.TABLE_NAME +
@@ -80,12 +104,24 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * This method is called when database connection is configured
+     * @param db SQLiteDatabase
+     */
     @Override
     public void onConfigure(SQLiteDatabase db) {
         super.onConfigure(db);
         db.setForeignKeyConstraintsEnabled(true);
     }
 
+    /**
+     * This method is called when database schemas needs to be updated,
+     * can be used during application maintenance phase, currently not
+     * needed.
+     * @param db SQLiteDatabase
+     * @param oldVersion int
+     * @param newVersion int
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     }
