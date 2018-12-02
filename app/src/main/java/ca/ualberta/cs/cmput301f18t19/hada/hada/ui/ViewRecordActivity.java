@@ -35,6 +35,7 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.PhotoController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.RecordController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.UserController;
 
+import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.BitmapPhotoEncodeDecodeManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.BodyLocation;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Photos;
@@ -107,14 +108,19 @@ public class ViewRecordActivity extends AppCompatActivity {
         ImageView imagePreview = findViewById(R.id.viewRecordActivityImage);
         Photos recordPhotos = new PhotoController().getPhotos(recordFileId);
         if(recordPhotos!= null){
-            if(recordPhotos.getBitmaps().size() > 0) {
-                //https://stackoverflow.com/questions/3801760/android-code-to-convert-base64-string-to-bitmap
-                String photoString = recordPhotos.getBitmaps().get(0);
-                byte[] imageAsBytes = Base64.decode(photoString.getBytes(), Base64.DEFAULT);
-                Bitmap bitmap = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
-                imagePreview.setImageBitmap(bitmap);
-            }else{
-                Toast.makeText(this, "it's 0", Toast.LENGTH_SHORT).show();
+            try{
+                if(recordPhotos.getBitmaps().size() > 0) {
+                    //https://stackoverflow.com/questions/3801760/android-code-to-convert-base64-string-to-bitmap
+                    String photoString = recordPhotos.getBitmaps().get(0);
+                    Bitmap bitmap = new BitmapPhotoEncodeDecodeManager.DecodeBitmapTask().execute(photoString).get();
+//                  byte[] imageAsBytes = Base64.decode(photoString.getBytes(), Base64.DEFAULT);
+//                  Bitmap bitmap = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+                    imagePreview.setImageBitmap(bitmap);
+                }else{
+                    Toast.makeText(this, "it's 0", Toast.LENGTH_SHORT).show();
+                }
+            }catch (Exception e){
+                Log.d("ViewRecordActivity", "Failed to decode image");
             }
         }
         titleText.setText(record.getTitle());

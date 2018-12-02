@@ -48,6 +48,7 @@ import java.util.UUID;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.PhotoController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.RecordController;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.BitmapPhotoEncodeDecodeManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -197,18 +198,20 @@ public class AddRecordActivity extends AppCompatActivity {
         else if (requestCode == 100) {
             if (resultCode == RESULT_OK) {
                 imageURI = Uri.parse(intent.getStringExtra("URI"));
+                ImageView imagePreview = findViewById(R.id.addRecordActivityImagePreview);
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageURI);
-                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 70, byteArrayOutputStream);
-                    byte[] byteArray = byteArrayOutputStream .toByteArray();
-                    imageString = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                    String imageString = new BitmapPhotoEncodeDecodeManager.EncodeBitmapTask().execute(bitmap).get();
+                    Bitmap smallBitmap = new BitmapPhotoEncodeDecodeManager.DecodeBitmapTask().execute(imageString).get();
+                    imagePreview.setImageBitmap(smallBitmap);
+//                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//                    bitmap.compress(Bitmap.CompressFormat.JPEG, 70, byteArrayOutputStream);
+//                    byte[] byteArray = byteArrayOutputStream .toByteArray();
+//                    imageString = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
-                    ImageView imagePreview = findViewById(R.id.addRecordActivityImagePreview);
-                    byte[] decodedString = Base64.decode(imageString, Base64.DEFAULT);
-                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                    imagePreview.setImageBitmap(decodedByte);
-                    Log.d("AddRecordActivity", "Bitmap size = " + decodedByte.getRowBytes() * decodedByte.getHeight());
+
+//                    byte[] decodedString = Base64.decode(imageString, Base64.DEFAULT);
+//                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                 }catch ( Exception e){
                     Log.d("AddRecordActivity", "Got URI but couldn't convert");
                 }

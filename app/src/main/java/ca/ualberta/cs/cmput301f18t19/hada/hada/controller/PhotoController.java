@@ -1,25 +1,12 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada.controller;
 
-import android.content.Context;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.provider.ContactsContract;
-import android.util.Base64;
 import android.util.Log;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-
-import java.net.URI;
 import java.util.ArrayList;
 
-import java.util.concurrent.ExecutionException;
-
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESPhotoManager;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ImgurPhotoManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Photos;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
-import id.zelory.compressor.Compressor;
 
 public class PhotoController {
     public PhotoController(){}
@@ -74,18 +61,5 @@ public class PhotoController {
         //Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " timestamp=" +timestamp.format(formatter));
     }
 
-
-    // adapted from https://stackoverflow.com/questions/7111751/uploading-a-photo-via-imgur-on-android-programatically hrickards
-    public String uploadImage(Uri uri){
-        try{
-            String http = new ImgurPhotoManager.UploadPhotoTask().execute(uri).get();
-            return http;
-        }catch (InterruptedException e){
-            Log.d("uploadImage", "InterruptedException");
-        }catch (ExecutionException e){
-            Log.d("uploadImage", "ExecutionException");
-        }
-        return "DEBUG-STRING-UPLOADIMAGE-FAILED";
-    }
 
 }
