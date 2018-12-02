@@ -106,7 +106,7 @@ public class ESPhotoManager extends ESManager {
             Log.d("GetPhotoTask query", query);
             Search search = new Search.Builder(query)
                     .addIndex(teamIndex)
-                    .addType("photos")
+                    .addType("Photos")
                     .build();
             try {
                 JestResult result = client.execute(search);

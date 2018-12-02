@@ -25,7 +25,6 @@ public class PhotoController {
     public PhotoController(){}
 
     public Photos getPhotos(String parentID){
-        ArrayList<String> uriList = new ArrayList<>();
         Photos photos = null;
         try {
             ArrayList<Photos> photos_array = new ESPhotoManager.GetPhotoListTask().execute(parentID).get();
