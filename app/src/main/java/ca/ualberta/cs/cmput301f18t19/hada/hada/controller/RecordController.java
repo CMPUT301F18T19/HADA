@@ -3,6 +3,7 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.controller;
 
 import android.location.Location;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -66,8 +67,6 @@ public class RecordController {
         }
         return null;
     }
-
-
     /**
      * Add comment record for care provider use.
      *
@@ -154,6 +153,17 @@ public class RecordController {
         String lng = Double.toString(location.longitude);
         try {
             return new ESRecordManager.SearchUsingGeoLocationTask().execute(parentId, distance, lat, lng).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    public ArrayList<Record> searchRecordsWithBodyLocation(String parentId, String bodyLocation){
+        try {
+            return new ESRecordManager.SearchUsingBodyLocationTask().execute(parentId, bodyLocation).get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
