@@ -17,11 +17,13 @@ import android.Manifest;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.media.Image;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -127,7 +129,12 @@ public class AddRecordActivity extends AppCompatActivity {
                 //TODO: Saving photos
                 Record record = new Record();
                 record.setFileId(fileId);
-                new PhotoController().addPhoto(record.getFileId(),imageURI);
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(AddRecordActivity.this.getContentResolver(), imageURI);
+                    new PhotoController().addPhoto(record.getFileId(), imageURI, bitmap);
+                }catch (Exception e){
+                    Log.d("AddRecord", "Failed to add photo");
+                }
                 Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " timestamp=" +record.getTimestamp().toString());
                 record.setComment(comment);
                 record.setTitle(title);
