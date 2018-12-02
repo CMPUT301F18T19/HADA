@@ -16,6 +16,8 @@ import android.content.Intent;
 import android.location.Location;
 import android.support.annotation.NonNull;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import org.junit.Test;
 
 import java.time.LocalDateTime;
@@ -31,7 +33,7 @@ import static org.junit.Assert.*;
  */
 public class RecordTest{
 
-    private Location location = new Location("GeoTest");
+    private LatLng location = new LatLng(-1490.7240306939025, -3452.4085972491475);
 
     /**
      * Setup creates a pre defined Record to test getters
@@ -42,10 +44,10 @@ public class RecordTest{
                 Month.JANUARY, 31, 23, 59,59));
         record.setTitle("DefaultTitle");
         record.setComment("DefaultComment");
-        record.setBodyLocation(999,999);
+        record.setBodyLocation("test_uuid");
         String photoURL = "www.photo.URL";
-        record.addPhoto(photoURL);
-        record.setGeoLocation(this.location);
+        record.setPhotos(photoURL);
+        record.setLocation(this.location);
         return record;
     }
 
@@ -90,46 +92,52 @@ public class RecordTest{
     public void TestAddPhoto(){
         Record record = setup();
         String photo1 = "10101";
-        record.addPhoto(photo1);
-        assertEquals("Photo id should be first in list", photo1, record.getPhotos().get(1));
+        record.setPhotos(photo1);
+        assertEquals("Photo id should be first in list", photo1, record.getPhotos());
         String photo2 = "10102";
-        record.addPhoto(photo2);
-        assertEquals("Photo id added should be second in list", photo2, record.getPhotos().get(2));
+        record.setPhotos(photo2);
+        assertEquals("Photo id added should be second in list", photo2, record.getPhotos());
     }
 
     /**
-     * Remove photo test.
+     * Get geo location test.
      */
     @Test
-    public void TestRemovePhoto(){
+    public void TestGetLocation(){
         Record record = setup();
-        String exception= "Not thrown";
-        record.removePhoto("www.photo.URL");
-        assertTrue("Photo1 should no longer be in list" , record.getPhotos().size() == 0);
+        assertNotNull(record.getLocation());
+        assertEquals(this.location, record.getLocation());
     }
 
     /**
      * Set geo location test.
      */
     @Test
-    public void TestSetGeoLocation(){
+    public void TestSetLocation(){
         Record record = setup();
-        Location location  = new Location("test");
-        record.setGeoLocation(location);
-        assertEquals("Geolocation should be what was set", location, record.getGeoLocation());
+        LatLng location  = new LatLng(-1527.7943684329543,-3489.459182813189);
+        record.setLocation(location);
+        assertEquals("Geolocation should be what was set", location, record.getLocation());
     }
 
+
+    /**
+     * Get body location test.
+     */
+    @Test
+    public void TestGetBodyLocation(){
+        Record record = setup();
+        assertEquals("test_uuid", record.getBodyLocation());
+    }
+    
     /**
      * Set body location.
      */
     @Test
     public void TestSetBodyLocation(){
         Record record = setup();
-        int bodyX = 0;
-        int bodyY = 1;
-        record.setBodyLocation(bodyX, bodyY);
-        assertTrue("X coord should be set", bodyX == record.getBodyLocation().get(0));
-        assertTrue("y coord should be set", bodyY == record.getBodyLocation().get(1));
+        record.setBodyLocation("uuid goes here");
+        assertEquals("uuid goes here", record.getBodyLocation());
     }
 
     /**
@@ -170,35 +178,7 @@ public class RecordTest{
     @Test
     public void TestGetPhotos(){
         Record record = setup();
-        assertTrue(record.getPhotos().size() == 1);
-        String photo = "www.photo2.URL";
-        record.addPhoto(photo);
-        assertEquals(record.getPhotos().get(1), photo);
-        record.removePhoto("www.photo.URL");
-        assertEquals(record.getPhotos().get(0), photo);
+        assertEquals("www.photo.URL", record.getPhotos());
     }
 
-    /**
-     * Get geo location test.
-     */
-    @Test
-    public void TestGetGeoLocation(){
-        Record record = setup();
-        assertNotNull(record.getGeoLocation());
-        assertEquals(this.location, record.getGeoLocation());
-
-    }
-
-    /**
-     * Get body location test.
-     */
-    @Test
-    public void TestGetBodyLocation(){
-        Record record = setup();
-        long x = record.getBodyLocation().get(0);
-        long y = record.getBodyLocation().get(1);
-        assertEquals(999, x);
-        assertEquals(999, y);
-
-    }
 }
