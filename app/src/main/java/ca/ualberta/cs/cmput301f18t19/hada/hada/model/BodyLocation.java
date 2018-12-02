@@ -18,12 +18,10 @@ public class BodyLocation {
     private String photoUri;
     private String photoHTTP;
     private String bodyLocation;
-    private String parentID;
+    private String parentId;
     private String fileID;
 
-    public BodyLocation(){
-        this.setFileID(UUID.randomUUID().toString());
-    }
+    public BodyLocation(){}
 
     public String getFileID() {
         return fileID;
@@ -57,11 +55,11 @@ public class BodyLocation {
         this.bodyLocation = bodyLocation;
     }
 
-    public String getParentID() {
-        return parentID;
+    public String getParentId() {
+        return parentId;
     }
 
-    public void setParentID(String parentID) {
-        this.parentID = parentID;
+    public void setParentId(String parentID) {
+        this.parentId = parentID;
     }
 }
