@@ -42,6 +42,7 @@ import java.time.LocalDateTime;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.PhotoController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.RecordController;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ContextSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -161,6 +162,11 @@ public class AddRecordActivity extends AppCompatActivity {
 
             }
         });
+    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+        ContextSingleton.getInstance().setContext(this);
     }
 
     /**

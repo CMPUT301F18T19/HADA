@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.ProblemController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.UserController;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ContextSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
@@ -85,6 +86,7 @@ public class ViewPatientProblemsActivity extends AppCompatActivity {
     @Override
     protected  void onResume(){
         super.onResume();
+        ContextSingleton.getInstance().setContext(this);
         final String patientUserId = patient.getUserID();
         final ArrayList<Problem> problems = new ProblemController().getListOfProblems(patientUserId);
         ArrayAdapter<Problem> problemArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, problems);

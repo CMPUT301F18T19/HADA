@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBcontract;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBOpenHelper;
@@ -42,6 +43,12 @@ public class DBProblemManager {
      * @param problem, problem to be added
      */
     public void addProblem(Problem problem) {
+        if(problem.getFileId() == null){
+            if(problem.getFileId() == null) {
+                String fileId = UUID.randomUUID().toString();
+                problem.setFileId(fileId);
+            }
+        }
         if (existsProblem(problem.getFileId()))
             return;
         ContentValues values = new ContentValues();

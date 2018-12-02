@@ -39,6 +39,7 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.UserController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESUserManager;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ContextSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.User;
@@ -95,7 +96,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
+    @Override
+    protected void onResume(){
+        super.onResume();
+        ContextSingleton.getInstance().setContext(this);
+    }
     @Override
     protected void onDestroy(){
         unregisterReceiver(broadcastReceiver);

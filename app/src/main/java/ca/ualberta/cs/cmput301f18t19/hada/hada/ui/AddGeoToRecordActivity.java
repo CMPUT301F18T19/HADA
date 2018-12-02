@@ -32,6 +32,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ContextSingleton;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -65,7 +66,11 @@ public class AddGeoToRecordActivity extends FragmentActivity implements OnMapRea
 
         mapFragment.getMapAsync(this);
     }
-
+    @Override
+    protected void onResume(){
+        super.onResume();
+        ContextSingleton.getInstance().setContext(this);
+    }
     /**
      * Called to initialize the map, think of it as where OnCreate stuff normally goes.
      *

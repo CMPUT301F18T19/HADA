@@ -23,6 +23,7 @@ import android.widget.Toast;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESBodyLocationManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.BodyLocation;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ContextSingleton;
 
 public class GetBodyLocation extends AppCompatActivity {
 
@@ -144,6 +145,11 @@ public class GetBodyLocation extends AppCompatActivity {
 
 
 
+    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+        ContextSingleton.getInstance().setContext(this);
     }
     private void DoWork(String type){
         BodyLocation bodyLocation = new BodyLocation();

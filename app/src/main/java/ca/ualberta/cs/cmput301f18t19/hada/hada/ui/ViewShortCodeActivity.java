@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.UserController;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ContextSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
 
@@ -41,5 +42,10 @@ public class ViewShortCodeActivity extends AppCompatActivity {
         String shortCode = patient.getShortCode();
         shortCodeView.setText(shortCode);
 
+    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+        ContextSingleton.getInstance().setContext(this);
     }
 }

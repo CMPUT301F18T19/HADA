@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ContextSingleton;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -49,6 +50,11 @@ public class CameraActivity extends AppCompatActivity implements EasyPermissions
                 saveButton();
             }
         });
+    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+        ContextSingleton.getInstance().setContext(this);
     }
 
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;

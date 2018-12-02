@@ -15,6 +15,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -325,7 +326,11 @@ public class DBUserManager {
      * @return true if user exists, false otherwise
      */
     public Boolean userExists(String userID) {
-        return (!existsCP(userID) && !existsPatient(userID));
+        if(existsPatient(userID) == false && existsCP(userID) == false){
+            return false;
+        }else{
+            return true;
+        }
     }
 
 
@@ -346,6 +351,7 @@ public class DBUserManager {
         );
         int count = c.getCount();
         c.close();
+        Log.d("existsPatient", "Counted " + count +", so I return " + (count > 0));
         return  (count > 0);
     }
 
@@ -366,6 +372,7 @@ public class DBUserManager {
         );
         int count = c.getCount();
         c.close();
+        Log.d("existsCareProvider", "Counted " + count +", so I return " + (count > 0));
         return  (count > 0);
     }
 }
