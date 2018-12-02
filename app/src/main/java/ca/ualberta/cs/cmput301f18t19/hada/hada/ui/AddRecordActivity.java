@@ -127,7 +127,7 @@ public class AddRecordActivity extends AppCompatActivity {
                 //TODO: Saving photos
                 Record record = new Record();
                 record.setFileId(fileId);
-                record = new PhotoController().addPhoto(record,imageURI);
+                new PhotoController().addPhoto(record.getFileId(),imageURI);
                 Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " timestamp=" +record.getTimestamp().toString());
                 record.setComment(comment);
                 record.setTitle(title);
