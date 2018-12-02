@@ -55,7 +55,7 @@ public class ViewPhotosInRecordActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String recordFileId = intent.getStringExtra("recordFileId");
         Record record = new RecordController().getRecord(recordFileId);
-        imgs = new PhotoController().getPhotos(record);
+        //imgs = new PhotoController().getPhotos(record);
 
 
         

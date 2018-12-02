@@ -74,9 +74,7 @@
         <activity android:name=".ui.ViewPhotosInRecordActivity" />
         <activity android:name=".ui.GetBodyLocation" />
         <activity android:name=".ui.CareProviderAddCommentActivity" />
-        <activity android:name=".ui.ViewShortCodeActivity" /><![CDATA[
-        >>>>>>> origin/master
-        ]]>
+        <activity android:name=".ui.ViewShortCodeActivity" />
     </application>
 
 </manifest>
