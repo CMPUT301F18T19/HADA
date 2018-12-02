@@ -67,8 +67,6 @@ public class RecordController {
         }
         return null;
     }
-
-
     /**
      * Add comment record for care provider use.
      *

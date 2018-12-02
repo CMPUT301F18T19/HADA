@@ -25,9 +25,11 @@ import java.util.Date;
 import java.util.Locale;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.BodyLocationController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.RecordController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.UserController;
 
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.BodyLocation;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 
@@ -75,7 +77,8 @@ public class ViewRecordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //A check that bodyLocation has been set for the record
-                if(record.getBodyLocation() != null){
+                BodyLocation bodyLocation = new BodyLocationController().getABodyLocation(recordFileId);
+                if(bodyLocation != null){
 
                 }
                 else{

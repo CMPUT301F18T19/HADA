@@ -38,6 +38,7 @@ import android.widget.Toast;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.PhotoController;
@@ -59,7 +60,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  */
 public class AddRecordActivity extends AppCompatActivity {
     private Uri imageURI;
-    private String uuid;
+    private String fileId;
     private final int REQUEST_LOCATION_PERMISSION = 1;
     private String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION};
     private int requestCode = 1;
@@ -73,6 +74,10 @@ public class AddRecordActivity extends AppCompatActivity {
         //Gets parentId
         Intent intent = getIntent();
         final String parentId = intent.getStringExtra("problemFileId");
+
+
+        //Generates UUID so that we can save bodyLocation/photos etc and tie them back to the record.
+        final String fileId = UUID.randomUUID().toString();
 
 
         //Will open a new activity in order to take/add photos
@@ -102,6 +107,7 @@ public class AddRecordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AddRecordActivity.this, GetBodyLocation.class);
+                intent.putExtra("parentId", fileId);
                 startActivityForResult(intent,200);
             }
         });
@@ -120,6 +126,7 @@ public class AddRecordActivity extends AppCompatActivity {
                 String comment = addComment.getText().toString();
                 //TODO: Saving photos
                 Record record = new Record();
+                record.setFileId(fileId);
                 record = new PhotoController().addPhoto(record,imageURI);
                 Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " timestamp=" +record.getTimestamp().toString());
                 record.setComment(comment);
@@ -139,9 +146,6 @@ public class AddRecordActivity extends AppCompatActivity {
                     } catch (SecurityException e) {
                         Toast.makeText(AddRecordActivity.this, "Unable to save location. Please enable the location permissions.", Toast.LENGTH_SHORT).show();
                         }
-                }
-                if (uuid != null){
-                    record.setBodyLocation(uuid);
                 }
                 new RecordController().addRecord(record, parentId);
                 finish();
@@ -185,11 +189,7 @@ public class AddRecordActivity extends AppCompatActivity {
                 imageURI = Uri.parse(intent.getStringExtra("URI"));
             }
         }
-        else if (requestCode == 200) {
-            if (resultCode == RESULT_OK){
-                uuid = intent.getStringExtra("UUID");
-            }
-        } else {
+        else {
             Toast.makeText(this, "An error occurred. Please try again. Request code: " + requestCode, Toast.LENGTH_SHORT).show();
         }
     }

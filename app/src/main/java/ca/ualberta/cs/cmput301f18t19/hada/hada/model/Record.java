@@ -36,9 +36,6 @@ public class Record{
     private String comment;
     private String Photos;
     private ArrayList<Double> location;
-    //private ArrayList<Double> location;
-    private String bodyLocation;
-
 
     /**
      * Instantiates a new Record object with the current time as a timestamp.
@@ -124,19 +121,6 @@ public class Record{
         this.location.add(latLng.latitude);
     }
 
-    /**
-     * Set body location, represented by x and y coordinates.
-     *
-     * @param bodyLocation the uuid of bodylocation object (itemID)
-     *
-     */
-    public void setBodyLocation(String bodyLocation){
-        this.bodyLocation = bodyLocation;
-
-    }
-
-
-
     //getters
 
     /**
@@ -195,15 +179,6 @@ public class Record{
     }
 
     public ArrayList<Double> getLocationArrayList() { return this.location;}
-
-    /**
-     * Returns the x, y coords of the body location.
-     *
-     * @return the body location
-     */
-    public String getBodyLocation() {
-        return this.bodyLocation;
-    }
 
 
     /**

@@ -34,6 +34,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.BodyLocationController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESBodyLocationManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.BodyLocation;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -41,11 +42,15 @@ import pub.devrel.easypermissions.EasyPermissions;
 public class GetBodyLocation extends AppCompatActivity {
     Uri picture1;
     Uri picture2;
+    String parentId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_body_location);
+
+        Intent intent = getIntent();
+        String parentId = intent.getStringExtra("parentId");
 
         Button leftLegUpper = findViewById(R.id.getBodyLocationActivityRightLegUpper);
         leftLegUpper.setVisibility(View.VISIBLE);
@@ -163,7 +168,6 @@ public class GetBodyLocation extends AppCompatActivity {
     private void DoWork(String type){
         BodyLocation bodyLocation = new BodyLocation();
         bodyLocation.setBodyLocation(type);
-        String uuid = bodyLocation.getFileID();
         Intent intent = new Intent(GetBodyLocation.this, CameraActivity.class);
         intent.putExtra("TYPE","400");
         startActivityForResult(intent, 400);
@@ -177,9 +181,8 @@ public class GetBodyLocation extends AppCompatActivity {
         Uri comb = saveImage(combined);
         bodyLocation.setPhotoUri(comb.toString());
         //TODO Camera stuff
-        new ESBodyLocationManager.AddBodyLocationTask().execute(bodyLocation);
+        new BodyLocationController().addBodyLocation(bodyLocation, parentId);
         Intent intent2 = new Intent();
-        intent2.putExtra("UUID",uuid);
         setResult(RESULT_OK, intent2);
         finish();
     }

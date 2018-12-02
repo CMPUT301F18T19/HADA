@@ -48,7 +48,7 @@ public class ESBodyLocationManager extends ESManager{
                     Index index = new Index.Builder(bodyLocation)
                             .index(teamIndex)
                             .type("bodylocation")
-                            .id(bodyLocation.getParentID())
+                            .id(bodyLocation.getFileID())
                             .refresh(true)
                             .build();
                     DocumentResult result = client.execute(index);
@@ -104,7 +104,7 @@ public class ESBodyLocationManager extends ESManager{
         @Override
         protected BodyLocation doInBackground(String... params) {
             setClient();
-            String query = "{\"query\": {\"match\": {\"fileId\": \"" + params[0] + "\"}}}";
+            String query = "{\"query\": {\"match\": {\"parentId\": \"" + params[0] + "\"}}}";
             BodyLocation matchingLocation = null;
             Log.d("GetARecordTask Query: ", query);
 
