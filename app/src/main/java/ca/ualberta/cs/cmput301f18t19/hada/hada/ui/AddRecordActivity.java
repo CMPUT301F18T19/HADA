@@ -18,6 +18,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
@@ -27,6 +28,7 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -39,6 +41,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.ByteArrayOutputStream;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -62,6 +65,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  */
 public class AddRecordActivity extends AppCompatActivity {
     private Uri imageURI;
+    private String imageString;
     private String fileId;
     private final int REQUEST_LOCATION_PERMISSION = 1;
     private String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION};
@@ -130,8 +134,7 @@ public class AddRecordActivity extends AppCompatActivity {
                 Record record = new Record();
                 record.setFileId(fileId);
                 try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(AddRecordActivity.this.getContentResolver(), imageURI);
-                    new PhotoController().addPhoto(record.getFileId(), imageURI, bitmap);
+                    new PhotoController().addPhoto(record.getFileId(), imageURI, imageString);
                 }catch (Exception e){
                     Log.d("AddRecord", "Failed to add photo");
                 }
@@ -194,7 +197,22 @@ public class AddRecordActivity extends AppCompatActivity {
         else if (requestCode == 100) {
             if (resultCode == RESULT_OK) {
                 imageURI = Uri.parse(intent.getStringExtra("URI"));
-                Log.d("AddRecordActivity Image Taken", imageURI.toString());
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageURI);
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 70, byteArrayOutputStream);
+                    byte[] byteArray = byteArrayOutputStream .toByteArray();
+                    imageString = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+                    ImageView imagePreview = findViewById(R.id.addRecordActivityImagePreview);
+                    byte[] decodedString = Base64.decode(imageString, Base64.DEFAULT);
+                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                    imagePreview.setImageBitmap(decodedByte);
+                    Log.d("AddRecordActivity", "Bitmap size = " + decodedByte.getRowBytes() * decodedByte.getHeight());
+                }catch ( Exception e){
+                    Log.d("AddRecordActivity", "Got URI but couldn't convert");
+                }
+                //imageURI = Uri.parse(intent.getStringExtra("URI"));
             }
         }
         else {

@@ -3,6 +3,7 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.controller;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.util.Base64;
 import android.util.Log;
 
@@ -17,32 +18,29 @@ import java.util.concurrent.ExecutionException;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESPhotoManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ImgurPhotoManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Photos;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
+import id.zelory.compressor.Compressor;
 
 public class PhotoController {
     public PhotoController(){}
-/*
-    public ArrayList<String> getPhotos(String photosID){
+
+    public Photos getPhotos(String parentID){
         ArrayList<String> uriList = new ArrayList<>();
+        Photos photos = null;
         try {
-            Photos photo = new ESPhotoManager.GetPhotoTask().execute(photosID).get();
-            uriList = photo.getUriPhotos();
+            ArrayList<Photos> photos_array = new ESPhotoManager.GetPhotoListTask().execute(parentID).get();
+            if(photos_array.size() > 0){
+                photos = photos_array.get(0);
+            }
+            //uriList = photo.getUriPhotos();
         }catch (Exception e){
             Log.d("getPhoto","couldnt get photos");
             e.printStackTrace();
         }
-        if (uriList.size() != 0){
-            for(String photo : uriList){
-                File file = new File(URI.create(photo).getPath());
-                if (!(file.exists())) {
-                    int index = uriList.indexOf(photo);
-                    //TODO download not found photos
-                }
-            }
-        }
-        return uriList;
+        return photos;
     }
-*/
-    public void addPhoto(String parentId, Uri uri, Bitmap bitmap){
+
+    public void addPhoto(String parentId, Uri uri, String bitmapString){
         //TODO upload image to imgur
         ArrayList<Photos> photos;
         Photos photo = new Photos();
@@ -64,19 +62,9 @@ public class PhotoController {
         }
 
         uriList.add(uri.toString());
-        http = uploadImage(uri); //TODO uncomment this out when uploadImage works
+        //http = uploadImage(uri); //TODO uncomment this out when uploadImage works
         httpList.add(http);
-
-        //Compressor for saving smaller bitmap strings
-        try {
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 70, byteArrayOutputStream);
-            byte[] byteArray = byteArrayOutputStream .toByteArray();
-            String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
-            bitmaps.add(encoded);
-        }catch (Exception e){
-            Log.d("addPhoto", "Failed to compress bitmap");
-        }
+        bitmaps.add(bitmapString);
         photo.setHttpPhotos(httpList);
         photo.setUriPhotos(uriList);
         photo.setBitmaps(bitmaps);

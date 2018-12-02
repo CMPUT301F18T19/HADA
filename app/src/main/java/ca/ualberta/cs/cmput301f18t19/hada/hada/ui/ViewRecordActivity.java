@@ -1,12 +1,17 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -26,11 +31,13 @@ import java.util.Locale;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.BodyLocationController;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.PhotoController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.RecordController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.UserController;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.BodyLocation;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Photos;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 
 /**
@@ -97,11 +104,25 @@ public class ViewRecordActivity extends AppCompatActivity {
         TextView commentText = findViewById(R.id.viewRecordActivityComment);
         TextView timeText = findViewById(R.id.viewRecordActivityTimestamp);
 
+        ImageView imagePreview = findViewById(R.id.viewRecordActivityImage);
+        Photos recordPhotos = new PhotoController().getPhotos(recordFileId);
+        if(recordPhotos!= null){
+            if(recordPhotos.getBitmaps().size() > 0) {
+                //https://stackoverflow.com/questions/3801760/android-code-to-convert-base64-string-to-bitmap
+                String photoString = recordPhotos.getBitmaps().get(0);
+                byte[] imageAsBytes = Base64.decode(photoString.getBytes(), Base64.DEFAULT);
+                Bitmap bitmap = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+                imagePreview.setImageBitmap(bitmap);
+            }else{
+                Toast.makeText(this, "it's 0", Toast.LENGTH_SHORT).show();
+            }
+        }
         titleText.setText(record.getTitle());
         commentText.setText(record.getComment());
 
         DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
         LocalDateTime timestamp = record.getTimestamp();
         timeText.setText(timestamp.format(formatter));
-    }
+        }
+
 }
