@@ -8,9 +8,26 @@ import java.util.ArrayList;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESPhotoManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Photos;
 
+/**
+ * Controller for Photos objects.
+ *
+ * @author AndersJ, Jason, Joe
+ * @version 2.0
+ * @see Photos
+ * @see ESPhotoManager
+ */
 public class PhotoController {
+    /**
+     * Instantiates a new Photo controller.
+     */
     public PhotoController(){}
 
+    /**
+     * Get the photos object for a given parentId.
+     *
+     * @param parentID the parent id
+     * @return the photos
+     */
     public Photos getPhotos(String parentID){
         Photos photos = null;
         try {
@@ -18,7 +35,6 @@ public class PhotoController {
             if(photos_array.size() > 0){
                 photos = photos_array.get(0);
             }
-            //uriList = photo.getUriPhotos();
         }catch (Exception e){
             Log.d("getPhoto","couldnt get photos");
             e.printStackTrace();
@@ -26,7 +42,13 @@ public class PhotoController {
         return photos;
     }
 
-    public void addPhoto(String parentId, Uri uri, String bitmapString){
+    /**
+     * Add photo to a given parentId.
+     *
+     * @param parentId     the parent id
+     * @param bitmapString the bitmap string
+     */
+    public void addPhoto(String parentId, String bitmapString){
         //TODO upload image to imgur
         ArrayList<Photos> photos;
         Photos photo = new Photos();

@@ -114,8 +114,6 @@ public class ViewRecordActivity extends AppCompatActivity {
                     String photoString = recordPhotos.getBitmaps().get(0);
                     Log.d("ViewRecordActivity", "Photostring is " +photoString);
                     Bitmap bitmap = new BitmapPhotoEncodeDecodeManager.DecodeBitmapTask().execute(photoString).get();
-//                  byte[] imageAsBytes = Base64.decode(photoString.getBytes(), Base64.DEFAULT);
-//                  Bitmap bitmap = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
                     imagePreview.setImageBitmap(bitmap);
                 }else{
                     Toast.makeText(this, "it's 0", Toast.LENGTH_SHORT).show();

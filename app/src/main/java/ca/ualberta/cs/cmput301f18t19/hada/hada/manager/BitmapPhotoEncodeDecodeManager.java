@@ -20,8 +20,18 @@ import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
 
+/**
+ * Manager for encoding bitmaps to string and vice versa.
+ * Credit to: //https://stackoverflow.com/questions/3801760/android-code-to-convert-base64-string-to-bitmap
+ * @author AndersJ
+ * @version 1.0
+ * @see ca.ualberta.cs.cmput301f18t19.hada.hada.model.Photos
+ */
 public class BitmapPhotoEncodeDecodeManager {
 
+    /**
+     * Encodes a bitmap into a base64 string as an AsyncTask.
+     */
     public static class EncodeBitmapTask extends AsyncTask<Bitmap, Void, String>{
         @Override
         protected String doInBackground(Bitmap... params){
@@ -34,6 +44,9 @@ public class BitmapPhotoEncodeDecodeManager {
         }
     }
 
+    /**
+     * Decodes a bitmap into a base64 string as an AsyncTask.
+     */
     public static class DecodeBitmapTask extends AsyncTask<String, Void, Bitmap>{
         @Override
         protected Bitmap doInBackground(String... params){

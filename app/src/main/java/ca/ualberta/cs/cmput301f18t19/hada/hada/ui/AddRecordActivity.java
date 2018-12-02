@@ -135,7 +135,7 @@ public class AddRecordActivity extends AppCompatActivity {
                 Record record = new Record();
                 record.setFileId(fileId);
                 try {
-                    new PhotoController().addPhoto(record.getFileId(), imageURI, imageString);
+                    new PhotoController().addPhoto(record.getFileId(), imageString);
                 }catch (Exception e){
                     Log.d("AddRecord", "Failed to add photo");
                 }

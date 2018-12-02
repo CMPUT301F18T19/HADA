@@ -28,7 +28,7 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
  *
  * @author Joseph Potentier, Christopher Penner
  * @version 2.0
- * @see
+ * @see Problem
  */
 public class ProblemController {
 
