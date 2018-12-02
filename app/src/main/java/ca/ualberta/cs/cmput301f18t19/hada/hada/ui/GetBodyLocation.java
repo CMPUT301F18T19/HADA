@@ -25,6 +25,7 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -43,6 +44,7 @@ public class GetBodyLocation extends AppCompatActivity {
     Uri picture1;
     Uri picture2;
     String parentId;
+    String location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,25 +168,12 @@ public class GetBodyLocation extends AppCompatActivity {
 
     }
     private void DoWork(String type){
-        BodyLocation bodyLocation = new BodyLocation();
-        bodyLocation.setBodyLocation(type);
+        location = type;
         Intent intent = new Intent(GetBodyLocation.this, CameraActivity.class);
         intent.putExtra("TYPE","400");
         startActivityForResult(intent, 400);
         Toast.makeText(GetBodyLocation.this, "Take photos", Toast.LENGTH_SHORT).show();
-        Intent intent3 = new Intent(GetBodyLocation.this,CameraActivity.class);
-        intent3.putExtra("TYPE","500");
-        startActivityForResult(intent3, 500);
-        Bitmap bitmap1 = BitmapFactory.decodeFile(picture1.toString());
-        Bitmap bitmap2 = BitmapFactory.decodeFile(picture2.toString());
-        Bitmap combined = overlay(bitmap1,bitmap2);
-        Uri comb = saveImage(combined);
-        bodyLocation.setPhotoUri(comb.toString());
-        //TODO Camera stuff
-        new BodyLocationController().addBodyLocation(bodyLocation, parentId);
-        Intent intent2 = new Intent();
-        setResult(RESULT_OK, intent2);
-        finish();
+
     }
 
     @Override
@@ -193,13 +182,32 @@ public class GetBodyLocation extends AppCompatActivity {
         if (requestCode == 400) {
             if (resultCode == RESULT_OK) {
                 picture1 = Uri.parse(data.getStringExtra("URI"));
+                Intent intent = new Intent(GetBodyLocation.this,CameraActivity.class);
+                intent.putExtra("TYPE","500");
+                startActivityForResult(intent, 500);
             }
         }
         if (requestCode == 500) {
             if (resultCode == RESULT_OK) {
                 picture2 = Uri.parse(data.getStringExtra("URI"));
+                buildBody();
             }
         }
+    }
+
+    public void buildBody(){
+        BodyLocation bodyLocation = new BodyLocation();
+        bodyLocation.setBodyLocation(location);
+        Bitmap bitmap1 = BitmapFactory.decodeFile(picture1.toString());
+        Bitmap bitmap2 = BitmapFactory.decodeFile(picture2.toString());
+        Bitmap combined = overlay(bitmap1,bitmap2);
+        Uri comb = saveImage(combined);
+        bodyLocation.setPhotoUri(comb.toString());
+        new BodyLocationController().addBodyLocation(bodyLocation, parentId);
+        Intent intent2 = new Intent();
+        setResult(RESULT_OK, intent2);
+        finish();
+
     }
 
     public Uri saveImage(Bitmap bmp){
@@ -207,11 +215,13 @@ public class GetBodyLocation extends AppCompatActivity {
         File imageFile = new File(folder,String.valueOf(System.currentTimeMillis()) + ".jpg");
         String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         if (EasyPermissions.hasPermissions(this,perms)) {
+            Log.d("saveImage",imageFile.getAbsoluteFile().toString());
             try (FileOutputStream out = new FileOutputStream(imageFile.getAbsoluteFile().toString())) {
                 bmp.compress(Bitmap.CompressFormat.PNG, 100, out);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
         }else{
             EasyPermissions.requestPermissions(GetBodyLocation.this, "We need perms to take pictures", 600, perms);
             saveImage(bmp);
