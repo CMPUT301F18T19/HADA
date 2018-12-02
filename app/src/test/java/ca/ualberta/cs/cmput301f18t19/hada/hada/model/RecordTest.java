@@ -129,7 +129,7 @@ public class RecordTest{
         Record record = setup();
         assertEquals("test_uuid", record.getBodyLocation());
     }
-    
+
     /**
      * Set body location.
      */
