@@ -18,6 +18,7 @@ import java.util.List;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.ProblemController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.RecordController;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ContextSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
@@ -71,6 +72,7 @@ public class SearchResultsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         ListView resultsList = findViewById(R.id.searchResultsListView);
+        ContextSingleton.getInstance().setContext(this);
 
         //Setup List and ArrayAdapter
         if(searchObjectType.equals("problems")){

@@ -30,6 +30,7 @@ import java.util.ArrayList;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.UserController;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ContextSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
 
@@ -85,6 +86,7 @@ public class PatientListActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
+        ContextSingleton.getInstance().setContext(this);
         //Displays the list of problems
         ListView listView = findViewById(R.id.patientListListView);
         final ArrayList<Patient> patients = new UserController().getPatientList();
@@ -102,6 +104,7 @@ public class PatientListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
     }
 
 

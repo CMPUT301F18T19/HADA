@@ -17,7 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.DBProblemManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESProblemManager;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ContextSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 
@@ -48,7 +50,8 @@ public class ProblemController {
     public void addProblem(String title, LocalDateTime date, String description, String parentId) {
         Problem problem = new Problem(title, date, description);
         problem.setParentId(parentId);
-        new ESProblemManager.AddProblemTask().execute(problem);
+        new DBProblemManager(ContextSingleton.getInstance().getContext()).addProblem(problem);
+    //  new ESProblemManager.AddProblemTask().execute(problem);
     }
 
     /**
@@ -58,15 +61,16 @@ public class ProblemController {
      * @return a problem
      */
     public Problem getProblem(String fileId) {
-        try {
-            Problem problem = new ESProblemManager.GetAProblemTask().execute(fileId).get();
-            return problem;
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return new DBProblemManager(ContextSingleton.getInstance().getContext()).getProblem(fileId);
+//        try {
+//            Problem problem = new ESProblemManager.GetAProblemTask().execute(fileId).get();
+//            return problem;
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
     }
 
     /**
@@ -76,15 +80,16 @@ public class ProblemController {
      * @return arrayList of problems
      */
     public ArrayList<Problem> getListOfProblems(String parentId){
-        try {
-            ArrayList<Problem> problems = new ESProblemManager.GetProblemListTask().execute(parentId).get();
-            return problems;
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return new DBProblemManager(ContextSingleton.getInstance().getContext()).getProblemList(parentId);
+//        try {
+//            ArrayList<Problem> problems = new ESProblemManager.GetProblemListTask().execute(parentId).get();
+//            return problems;
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
     }
 
     /**
@@ -93,12 +98,15 @@ public class ProblemController {
      * @param fileId the problem
      */
     public void deleteProblem(String fileId) {
-        new ESProblemManager.DeleteProblemTask().execute(fileId);
+        new DBProblemManager(ContextSingleton.getInstance().getContext()).deleteProblem(fileId);
+        //new ESProblemManager.DeleteProblemTask().execute(fileId);
         //Getting records to delete based on the given parentId.
-        List<Record> recordsToDelete = new RecordController().getRecordList(fileId);
-        for(Record record: recordsToDelete){
-            new RecordController().deleteRecord(record.getFileId());
-        }
+
+        //TODO: WE NEED DBRECORDMANAGER TO DO THIS
+//        List<Record> recordsToDelete = new RecordController().getRecordList(fileId);
+//        for(Record record: recordsToDelete){
+//            new RecordController().deleteRecord(record.getFileId());
+//        }
     }
 
     /**
@@ -108,8 +116,10 @@ public class ProblemController {
      * @param title   the title
      */
     public void editProblemTitle(Problem problem, String title){
-        problem.setTitle(title);
-        new ESProblemManager.AddProblemTask().execute(problem);
+        String fileId = problem.getFileId();
+        new DBProblemManager(ContextSingleton.getInstance().getContext()).editProblemTitle(fileId, title);
+//        problem.setTitle(title);
+//        new ESProblemManager.AddProblemTask().execute(problem);
     }
 
     /**
@@ -119,8 +129,10 @@ public class ProblemController {
      * @param date    the date
      */
     public void editProblemDate(Problem problem, LocalDateTime date){
-        problem.setDate(date);
-        new ESProblemManager.AddProblemTask().execute(problem);
+        String fileId = problem.getFileId();
+        new DBProblemManager(ContextSingleton.getInstance().getContext()).editProblemDate(fileId, date);
+//        problem.setDate(date);
+//        new ESProblemManager.AddProblemTask().execute(problem);
     }
 
     /**
@@ -130,8 +142,10 @@ public class ProblemController {
      * @param description the description
      */
     public void editProblemDesc(Problem problem, String description){
-        problem.setDesc(description);
-        new ESProblemManager.AddProblemTask().execute(problem);
+        String fileId = problem.getFileId();
+        new DBProblemManager(ContextSingleton.getInstance().getContext()).editProblemDesc(fileId, description);
+//        problem.setDesc(description);
+//        new ESProblemManager.AddProblemTask().execute(problem);
     }
 
 
@@ -142,14 +156,15 @@ public class ProblemController {
      * @param keyword  the keyword to search for
      */
     public ArrayList<Problem> searchProblemsWithKeywords(String parentId, String keyword){
-        try {
-            return new ESProblemManager.SearchUsingKeywordTask().execute(parentId, keyword).get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return new DBProblemManager(ContextSingleton.getInstance().getContext()).searchProblemsWithKeyword(parentId, keyword);
+//        try {
+//            return new ESProblemManager.SearchUsingKeywordTask().execute(parentId, keyword).get();
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
     }
 
     public List<Problem> searchProblemWithGeoLocation(String parentId, LatLng location, String distance){

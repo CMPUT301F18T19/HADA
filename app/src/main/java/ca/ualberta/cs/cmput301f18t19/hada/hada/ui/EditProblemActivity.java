@@ -22,6 +22,7 @@ import java.util.Calendar;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.ProblemController;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ContextSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 
 /**
@@ -181,6 +182,11 @@ public class EditProblemActivity extends AppCompatActivity implements Serializab
                 finish();
             }
         });
+    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+        ContextSingleton.getInstance().setContext(this);
     }
 
 }

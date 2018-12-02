@@ -27,6 +27,7 @@ import java.util.Calendar;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.RecordController;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ContextSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -213,12 +214,14 @@ public class EditRecordActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
+        ContextSingleton.getInstance().setContext(this);
         //Check if record location has been set
         if(chosenLocation != null){
             geoLocationButton.setText("EDIT GEOLOCATION");
         }
         else {geoLocationButton.setText("ADD GEOLOCATION");
         }
+
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {

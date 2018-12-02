@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ContextSingleton;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -194,6 +195,11 @@ public class SearchInputActivity extends AppCompatActivity {
             }
         });
 
+    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+        ContextSingleton.getInstance().setContext(this);
     }
 
     /**

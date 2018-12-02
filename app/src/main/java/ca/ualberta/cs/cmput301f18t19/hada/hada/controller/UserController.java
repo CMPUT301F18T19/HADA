@@ -20,9 +20,11 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.DBUserManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESProblemManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESUserManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ContextSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
@@ -106,7 +108,9 @@ public class UserController {
 //Adds user types to ES and/or memory
     public void addPatient(String userID, String userPhone, String userEmail) {
         Patient patient = new Patient(userID, userPhone, userEmail);
-        new ESUserManager.AddPatientTask().execute(patient);
+        new DBUserManager(ContextSingleton.getInstance().getContext()).addPatient(patient);
+
+        //new ESUserManager.AddPatientTask().execute(patient);
     }
 
     /**
@@ -118,12 +122,14 @@ public class UserController {
      */
     public void addCareProvider(String userID, String userPhone, String userEmail) {
         CareProvider careProvider = new CareProvider(userID, userPhone, userEmail);
-        new ESUserManager.AddCareProviderTask().execute(careProvider);
+        new DBUserManager(ContextSingleton.getInstance().getContext()).addCareProvider(careProvider);
+        //new ESUserManager.AddCareProviderTask().execute(careProvider);
     }
 
 
     public void deletePatient(String userId) {
-        new ESUserManager.DeletePatientTask().execute(userId);
+        //new ESUserManager.DeletePatientTask().execute(userId);
+        new DBUserManager(ContextSingleton.getInstance().getContext()).deletePatient(userId);
         ArrayList<Problem> problemsToDelete = new ProblemController().getListOfProblems(userId);
         for (Problem problem : problemsToDelete) {
             new ProblemController().deleteProblem(problem.getFileId());
@@ -131,7 +137,8 @@ public class UserController {
     }
 
     public void deleteCareProvider(String userId) {
-        new ESUserManager.DeleteCareProviderTask().execute(userId);
+        new DBUserManager(ContextSingleton.getInstance().getContext()).deleteCareProvider(userId);
+        //new ESUserManager.DeleteCareProviderTask().execute(userId);
         //TODO: Delete care provider comments?
 
     }
@@ -144,18 +151,21 @@ public class UserController {
      */
 //Retrieves Patient or Care Provider
     public Patient getPatient(String userId) {
-        try {
-            Patient patient = new ESUserManager.GetAPatientTask().execute(userId).get();
-            return patient;
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return null;
+        Patient patient = new DBUserManager(ContextSingleton.getInstance().getContext()).getPatient(userId);
+        return patient;
+//        try {
+//            Patient patient = new ESUserManager.GetAPatientTask().execute(userId).get();
+//            return patient;
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
     }
 
     public Patient getPatientWithShortCode(String shortCode) {
+
         try {
             Patient patient = new ESUserManager.GetPatientWithShortCodeTask().execute(shortCode).get();
             if(patient == null){
@@ -187,15 +197,17 @@ public class UserController {
      * @return the care provider
      */
     public CareProvider getCareProvider(String userId) {
-        try {
-            CareProvider careProvider = new ESUserManager.GetACareProviderTask().execute(userId).get();
-            return careProvider;
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return null;
+        CareProvider careProvider = new DBUserManager(ContextSingleton.getInstance().getContext()).getCareProvider(userId);
+        return careProvider;
+//        try {
+//            CareProvider careProvider = new ESUserManager.GetACareProviderTask().execute(userId).get();
+//            return careProvider;
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
     }
 
     /**
@@ -205,17 +217,19 @@ public class UserController {
      * @return the boolean
      */
     public boolean userExists(String userId) {
-        Patient patient = getPatient(userId);
-        CareProvider careProvider = getCareProvider(userId);
-        if (patient == null && careProvider == null) {
-            return false;
-        } else {
-            return true;
-        }
+        return new DBUserManager(ContextSingleton.getInstance().getContext()).userExists(userId);
+//        Patient patient = getPatient(userId);
+//        CareProvider careProvider = getCareProvider(userId);
+//        if (patient == null && careProvider == null) {
+//            return false;
+//        } else {
+//            return true;
+//        }
     }
 
 
     public boolean shortCodeExists(String shortCode) {
+
         try{
             Patient patient = new ESUserManager.GetPatientWithShortCodeTask().execute(shortCode).get();
             if(patient != null){
@@ -240,7 +254,8 @@ public class UserController {
         if (patient != null) {
             CareProvider careProvider = getCareProvider(LoggedInSingleton.getInstance().getLoggedInID());
             patient.setParentId(careProvider.getUserID());
-            new ESUserManager.AddPatientTask().execute(patient);
+            new DBUserManager(ContextSingleton.getInstance().getContext()).addPatient(patient);
+            //new ESUserManager.AddPatientTask().execute(patient);
             return true;
         } else {
             Log.d("setParentOfPatient: ", "Failed to set patient parent.");
@@ -274,15 +289,18 @@ public class UserController {
 //Gets a list of patients for a given CareProvider
     public ArrayList<Patient> getPatientList() {
         String careProviderId = LoggedInSingleton.getInstance().getLoggedInID();
-        try {
-            ArrayList<Patient> patients = new ESUserManager.GetPatientListTask().execute(careProviderId).get();
-            return patients;
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return null;
+        ArrayList<Patient> patients =
+                new DBUserManager(ContextSingleton.getInstance().getContext()).getPatientList(careProviderId);
+        return patients;
+//        try {
+//            ArrayList<Patient> patients = new ESUserManager.GetPatientListTask().execute(careProviderId).get();
+//            return patients;
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
     }
 
     /**
@@ -293,8 +311,11 @@ public class UserController {
      */
 //Edits a given patients email address and updates it by overriding current ES index
     public void editPatientEmail(Patient patient, String email) {
-        patient.setEmailAddress(email);
-        new ESUserManager.AddPatientTask().execute(patient);
+        String patientId = patient.getUserID();
+        new DBUserManager(ContextSingleton.getInstance().getContext()).editPatientEmail(patientId, email);
+        //patient.setEmailAddress(email);
+
+        //new ESUserManager.AddPatientTask().execute(patient);
     }
 
     /**
@@ -305,8 +326,11 @@ public class UserController {
      */
 //Edits a given patients contact number and updates it by overriding current ES index
     public void editPatientContactNumber(Patient patient, String phoneNumber) {
-        patient.setPhoneNumber(phoneNumber);
-        new ESUserManager.AddPatientTask().execute(patient);
+        String patientId = patient.getUserID();
+        new DBUserManager(ContextSingleton.getInstance().getContext()).editPatientPhone(patientId, phoneNumber);
+
+//        patient.setPhoneNumber(phoneNumber);
+//        new ESUserManager.AddPatientTask().execute(patient);
     }
 
     /**
@@ -317,8 +341,11 @@ public class UserController {
      */
 //Edits a given care providers email address and updates it by overriding current ES index
     public void editCareProviderEmail(CareProvider careProvider, String email) {
-        careProvider.setEmailAddress(email);
-        new ESUserManager.AddCareProviderTask().execute(careProvider);
+        String careProviderId = careProvider.getUserID();
+        new DBUserManager(ContextSingleton.getInstance().getContext()).editCareProviderEmail(careProviderId, email);
+
+//        careProvider.setEmailAddress(email);
+//        new ESUserManager.AddCareProviderTask().execute(careProvider);
     }
 
     /**
@@ -329,21 +356,30 @@ public class UserController {
      */
 //Edits a given care providers contact number and updates it by overriding current ES index
     public void editCareProviderContactNumber(CareProvider careProvider, String phoneNumber) {
-        careProvider.setPhoneNumber(phoneNumber);
-        new ESUserManager.AddCareProviderTask().execute(careProvider);
+        String careProviderId = careProvider.getUserID();
+        new DBUserManager(ContextSingleton.getInstance().getContext()).editCareProviderPhone(careProviderId, phoneNumber);
+
+//        careProvider.setPhoneNumber(phoneNumber);
+//        new ESUserManager.AddCareProviderTask().execute(careProvider);
     }
 
 
     public Boolean isPatient(String userId) {
-        try {
-            Patient patient = new ESUserManager.GetAPatientTask().execute(userId).get();
-            if (patient != null) {
-                return true;
-            }
-        } catch (Exception e) {
-            Log.d("isPatient", "Failed checking if it was a patient");
-            e.printStackTrace();
+        if(new DBUserManager(ContextSingleton.getInstance().getContext()).getPatient(userId) == null){
+            return false;
         }
-        return false;
+        else{
+            return true;
+        }
+//        try {
+//            Patient patient = new ESUserManager.GetAPatientTask().execute(userId).get();
+//            if (patient != null) {
+//                return true;
+//            }
+//        } catch (Exception e) {
+//            Log.d("isPatient", "Failed checking if it was a patient");
+//            e.printStackTrace();
+//        }
+//        return false;
     }
 }

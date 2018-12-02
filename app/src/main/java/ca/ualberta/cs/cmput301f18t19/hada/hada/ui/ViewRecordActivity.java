@@ -28,6 +28,7 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.RecordController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.UserController;
 
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ContextSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 
@@ -88,7 +89,7 @@ public class ViewRecordActivity extends AppCompatActivity {
 
     protected void onResume() {
         super.onResume();
-
+        ContextSingleton.getInstance().setContext(this);
         record = new RecordController().getRecord(recordFileId);
         TextView titleText = findViewById(R.id.viewRecordActivityTitle);
         TextView commentText = findViewById(R.id.viewRecordActivityComment);

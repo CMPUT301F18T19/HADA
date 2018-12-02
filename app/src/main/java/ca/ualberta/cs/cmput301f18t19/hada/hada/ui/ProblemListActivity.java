@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.ProblemController;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ContextSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
@@ -68,6 +69,7 @@ public class ProblemListActivity extends AppCompatActivity implements Serializab
     @Override
     protected void onResume(){
         super.onResume();
+        ContextSingleton.getInstance().setContext(this);
         //Get listView
         ListView listView = findViewById(R.id.problemListListView);
 
@@ -97,6 +99,7 @@ public class ProblemListActivity extends AppCompatActivity implements Serializab
                 startActivity(intent);
             }
         });
+
 
     }
 }

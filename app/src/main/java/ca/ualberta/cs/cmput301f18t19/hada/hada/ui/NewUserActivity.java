@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.UserController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ContextSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
 
 /**
@@ -99,5 +100,10 @@ public class NewUserActivity extends AppCompatActivity {
             }
         });
 
+    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+        ContextSingleton.getInstance().setContext(this);
     }
 }
