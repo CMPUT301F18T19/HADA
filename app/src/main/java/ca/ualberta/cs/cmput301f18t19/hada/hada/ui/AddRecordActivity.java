@@ -194,6 +194,7 @@ public class AddRecordActivity extends AppCompatActivity {
         else if (requestCode == 100) {
             if (resultCode == RESULT_OK) {
                 imageURI = Uri.parse(intent.getStringExtra("URI"));
+                Log.d("AddRecordActivity Image Taken", imageURI.toString());
             }
         }
         else {

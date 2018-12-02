@@ -17,11 +17,10 @@ import java.util.concurrent.ExecutionException;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESPhotoManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ImgurPhotoManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Photos;
-import id.zelory.compressor.Compressor;
 
 public class PhotoController {
     public PhotoController(){}
-
+/*
     public ArrayList<String> getPhotos(String photosID){
         ArrayList<String> uriList = new ArrayList<>();
         try {
@@ -42,23 +41,28 @@ public class PhotoController {
         }
         return uriList;
     }
-
+*/
     public void addPhoto(String parentId, Uri uri, Bitmap bitmap){
         //TODO upload image to imgur
+        ArrayList<Photos> photos;
         Photos photo = new Photos();
         ArrayList<String> uriList = new ArrayList<>();
         ArrayList<String> httpList = new ArrayList<>();
         ArrayList<String> bitmaps = new ArrayList<>();
         String http = "None";
         try {
-            photo = new ESPhotoManager.GetPhotoTask().execute(parentId).get();
-            uriList = photo.getUriPhotos();
-            httpList = photo.getHttpPhotos();
-            bitmaps = photo.getBitmaps();
+            photos = new ESPhotoManager.GetPhotoListTask().execute(parentId).get();
+            if(photos.size()>0){
+                photo = photos.get(0);
+            }
+            else {
+                photo = new Photos();
+            }
         } catch (Exception e) {
             Log.d("addPhoto", "Couldn't retrieve record list from ES");
             e.printStackTrace();
         }
+
         uriList.add(uri.toString());
         http = uploadImage(uri); //TODO uncomment this out when uploadImage works
         httpList.add(http);

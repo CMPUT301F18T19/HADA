@@ -16,6 +16,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -94,16 +95,17 @@ public class ESPhotoManager extends ESManager {
     /**
      * Task which loads a Record from the server when given a fileId.
      */
-    public static class GetPhotoTask extends AsyncTask<String, Void, Photos> {
+    public static class GetPhotoListTask extends AsyncTask<String, Void, ArrayList<Photos>> {
         @Override
-        protected Photos doInBackground(String... params) {
+        protected ArrayList<Photos> doInBackground(String... params) {
             setClient();
-            String fileId = params[0];
-            String query = "{\"query\": {\"match\": {\"fileId\": \"" + fileId + "\"}}}";
-            Photos matchingProblem = null;
+            String parentId = params[0];
+            String query = "{\"query\": {\"match\": {\"parentId\": \"" + parentId + "\"}}}";
+            ArrayList<Photos> matchingPhotos = new ArrayList<>();
+            Log.d("GetPhotoTask query", query);
             Search search = new Search.Builder(query)
                     .addIndex(teamIndex)
-                    .addType("Photos")
+                    .addType("photos")
                     .build();
             try {
                 JestResult result = client.execute(search);
@@ -114,13 +116,13 @@ public class ESPhotoManager extends ESManager {
                     for (Photos photo : results) {
                         Log.d("GetProblemListTask", "Problem loaded:" + photo.toString());
                     }
-                    matchingProblem = results.get(0);
+                    matchingPhotos.addAll(results);
                 }
             } catch (IOException e) {
                 Log.d("GetAProblemTask", "IOException");
                 e.printStackTrace();
             }
-            return matchingProblem;
+            return matchingPhotos;
         }
 
     }
