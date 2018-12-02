@@ -72,7 +72,8 @@ public class DBcontract {
         public static final String COL_TITLE = "title";
         public static final String COL_COMMENT = "comment";
         public static final String COL_PHOTOS = "photos";
-        public static final String COL_LOCATION = "location";
+        public static final String COL_LAT = "loc_latitude";
+        public static final String COL_LON = "loc_longitude";
         public static final String COL_BODYLOCATION = "bodyLocation";
     }
 

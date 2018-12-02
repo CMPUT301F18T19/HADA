@@ -203,7 +203,7 @@ public class DBProblemManager {
         String[] selectionArgs = {
                 patientID,
                 "'%" + keyword + "%'",
-                "'%" + keyword + "%'",
+                "'%" + keyword + "%'"
         };
 
         Cursor c = db.query(
