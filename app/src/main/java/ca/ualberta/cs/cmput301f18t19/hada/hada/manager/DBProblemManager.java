@@ -1,6 +1,7 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada.manager;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -33,9 +34,8 @@ public class DBProblemManager {
     /**
      * Constructor that uses DBOpenHelper to open the database
      */
-    public DBProblemManager(){
-        db = new DBOpenHelper(ContextSingleton.getInstance().getContext())
-                .getWritableDatabase();
+    public DBProblemManager(Context context){
+        db = new DBOpenHelper(context).getWritableDatabase();
     }
 
     /**
