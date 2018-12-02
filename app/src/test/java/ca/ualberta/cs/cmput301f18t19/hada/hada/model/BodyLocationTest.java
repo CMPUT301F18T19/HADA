@@ -48,7 +48,7 @@ public class BodyLocationTest {
         this.bodyLocation.setPhotoUri("///:filesystem");
         this.bodyLocation.setPhotoHTTP("www.test.gov");
         this.bodyLocation.setBodyLocation("test_bodyLocation");
-        this.bodyLocation.setParentID("testParent");
+        this.bodyLocation.setParentId("testParent");
     }
 
 
@@ -126,7 +126,7 @@ public class BodyLocationTest {
      */
     @Test
     public void testGetParentID() {
-        assertEquals("testParent", this.bodyLocation.getParentID());
+        assertEquals("testParent", this.bodyLocation.getParentId());
     }
 
     /**
@@ -134,7 +134,7 @@ public class BodyLocationTest {
      */
     @Test
     public void testSetParentID() {
-        this.bodyLocation.setParentID("program_set_parent");
-        assertEquals("program_set_parent", this.bodyLocation.getParentID());
+        this.bodyLocation.setParentId("program_set_parent");
+        assertEquals("program_set_parent", this.bodyLocation.getParentId());
     }
 }

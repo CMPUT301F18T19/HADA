@@ -44,16 +44,6 @@ public class ESBodyLocationManagerTest {
     }
 
     /**
-     * Test get record list task.
-     */
-    @Test
-    public void TestGetRecordListTask() {
-        ESBodyLocationManager.GetRecordListTask getRecordListTask
-                = new ESBodyLocationManager.GetRecordListTask();
-        assertNotNull(getRecordListTask);
-    }
-
-    /**
      * Test get a body location task.
      */
     @Test

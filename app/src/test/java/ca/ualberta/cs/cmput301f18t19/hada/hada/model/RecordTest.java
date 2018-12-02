@@ -44,9 +44,6 @@ public class RecordTest{
                 Month.JANUARY, 31, 23, 59,59));
         record.setTitle("DefaultTitle");
         record.setComment("DefaultComment");
-        record.setBodyLocation("test_uuid");
-        String photoURL = "www.photo.URL";
-        record.setPhotos(photoURL);
         record.setLocation(this.location);
         return record;
     }
@@ -86,20 +83,6 @@ public class RecordTest{
     }
 
     /**
-     * Add photo test.
-     */
-    @Test
-    public void TestAddPhoto(){
-        Record record = setup();
-        String photo1 = "10101";
-        record.setPhotos(photo1);
-        assertEquals("Photo id should be first in list", photo1, record.getPhotos());
-        String photo2 = "10102";
-        record.setPhotos(photo2);
-        assertEquals("Photo id added should be second in list", photo2, record.getPhotos());
-    }
-
-    /**
      * Get geo location test.
      */
     @Test
@@ -118,26 +101,6 @@ public class RecordTest{
         LatLng location  = new LatLng(-1527.7943684329543,-3489.459182813189);
         record.setLocation(location);
         assertEquals("Geolocation should be what was set", location, record.getLocation());
-    }
-
-
-    /**
-     * Get body location test.
-     */
-    @Test
-    public void TestGetBodyLocation(){
-        Record record = setup();
-        assertEquals("test_uuid", record.getBodyLocation());
-    }
-
-    /**
-     * Set body location.
-     */
-    @Test
-    public void TestSetBodyLocation(){
-        Record record = setup();
-        record.setBodyLocation("uuid goes here");
-        assertEquals("uuid goes here", record.getBodyLocation());
     }
 
     /**
@@ -171,14 +134,4 @@ public class RecordTest{
         Record record = setup();
         assertEquals("DefaultComment", record.getComment());
     }
-
-    /**
-     * Get photos test.
-     */
-    @Test
-    public void TestGetPhotos(){
-        Record record = setup();
-        assertEquals("www.photo.URL", record.getPhotos());
-    }
-
 }
