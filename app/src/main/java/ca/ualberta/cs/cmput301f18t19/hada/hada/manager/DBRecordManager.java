@@ -46,7 +46,7 @@ public class DBRecordManager {
 
     public Record getRecord(String recordID) {
         Record record = null;
-        Cursor c = db.query(
+        Cursor cursor = db.query(
                 recordTable.TABLE_NAME,
                 null,
                 recordTable.COL_FILEID + " = ?",
@@ -55,29 +55,11 @@ public class DBRecordManager {
                 null,
                 null
         );
-        if (c.getCount() > 0) {     // If there is results, else return null
-            c.moveToFirst();        // get the first row, should be the only row
-
-            record = new Record();
-            record.setParentId(c.getString(c.getColumnIndexOrThrow(recordTable.COL_PARENTID)));
-            record.setFileId(c.getString(c.getColumnIndexOrThrow(recordTable.COL_FILEID)));
-            record.setTimestamp(
-                    LocalDateTime.parse(
-                            c.getString(c.getColumnIndexOrThrow(recordTable.COL_TIMESTAMP)),
-                            formatter)
-            );
-            record.setTitle(c.getString(c.getColumnIndexOrThrow(recordTable.COL_TITLE)));
-            record.setComment(c.getString(c.getColumnIndexOrThrow(recordTable.COL_COMMENT)));
-            record.setPhotos(c.getString(c.getColumnIndexOrThrow(recordTable.COL_PHOTOS)));
-            record.setLocation(
-                    new LatLng(
-                        c.getDouble(c.getColumnIndex(recordTable.COL_LAT)),
-                        c.getDouble(c.getColumnIndex(recordTable.COL_LON))
-                    )
-            );
-            record.setBodyLocation(c.getString(c.getColumnIndexOrThrow(recordTable.COL_BODYLOCATION)));
+        if (cursor.getCount() > 0) {     // If there is results, else return null
+            cursor.moveToFirst();        // get the first row, should be the only row
+            record = buildRecord(cursor);
         }
-        c.close();
+        cursor.close();
         return record;
     }
 
@@ -95,7 +77,7 @@ public class DBRecordManager {
 
     public ArrayList<Record> getRecordList(String problemID) {
         ArrayList<Record> recordList = new ArrayList<>();
-        Cursor c = db.query(
+        Cursor cursor = db.query(
                 recordTable.TABLE_NAME,
                 null,
                 recordTable.COL_PARENTID + " = ?",
@@ -104,30 +86,12 @@ public class DBRecordManager {
                 null,
                 null
         );
-        if (c.getCount() > 0) {         // if there is results, else return empty list
-            while (c.moveToNext()) {
-                Record record = new Record();
-                record.setParentId(c.getString(c.getColumnIndexOrThrow(recordTable.COL_PARENTID)));
-                record.setFileId(c.getString(c.getColumnIndexOrThrow(recordTable.COL_FILEID)));
-                record.setTimestamp(
-                        LocalDateTime.parse(
-                                c.getString(c.getColumnIndexOrThrow(recordTable.COL_TIMESTAMP)),
-                                formatter)
-                );
-                record.setTitle(c.getString(c.getColumnIndexOrThrow(recordTable.COL_TITLE)));
-                record.setComment(c.getString(c.getColumnIndexOrThrow(recordTable.COL_COMMENT)));
-                record.setPhotos(c.getString(c.getColumnIndexOrThrow(recordTable.COL_PHOTOS)));
-                record.setLocation(
-                        new LatLng(
-                                c.getDouble(c.getColumnIndex(recordTable.COL_LAT)),
-                                c.getDouble(c.getColumnIndex(recordTable.COL_LON))
-                        )
-                );
-                record.setBodyLocation(c.getString(c.getColumnIndexOrThrow(recordTable.COL_BODYLOCATION)));
-                recordList.add(record);
+        if (cursor.getCount() > 0) {         // if there is results, else return empty list
+            while (cursor.moveToNext()) {
+                recordList.add(buildRecord(cursor));
             }
         }
-        c.close();
+        cursor.close();
         return recordList;
     }
 
@@ -187,7 +151,7 @@ public class DBRecordManager {
                 "'%" + keyword + "%'"
         };
 
-        Cursor c = db.query(
+        Cursor cursor = db.query(
                 recordTable.TABLE_NAME,
                 null,
                 selection,
@@ -196,40 +160,22 @@ public class DBRecordManager {
                 null,
                 null
         );
-        if (c.getCount() > 0) {         // if there is results, else return empty list
-            while (c.moveToNext()) {
-                Record record = new Record();
-                record.setParentId(c.getString(c.getColumnIndexOrThrow(recordTable.COL_PARENTID)));
-                record.setFileId(c.getString(c.getColumnIndexOrThrow(recordTable.COL_FILEID)));
-                record.setTimestamp(
-                        LocalDateTime.parse(
-                                c.getString(c.getColumnIndexOrThrow(recordTable.COL_TIMESTAMP)),
-                                formatter)
-                );
-                record.setTitle(c.getString(c.getColumnIndexOrThrow(recordTable.COL_TITLE)));
-                record.setComment(c.getString(c.getColumnIndexOrThrow(recordTable.COL_COMMENT)));
-                record.setPhotos(c.getString(c.getColumnIndexOrThrow(recordTable.COL_PHOTOS)));
-                record.setLocation(
-                        new LatLng(
-                                c.getDouble(c.getColumnIndex(recordTable.COL_LAT)),
-                                c.getDouble(c.getColumnIndex(recordTable.COL_LON))
-                        )
-                );
-                record.setBodyLocation(c.getString(c.getColumnIndexOrThrow(recordTable.COL_BODYLOCATION)));
-                resultList.add(record);
+        if (cursor.getCount() > 0) {         // if there is results, else return empty list
+            while (cursor.moveToNext()) {
+                resultList.add(buildRecord(cursor));
             }
         }
-        c.close();
+        cursor.close();
         return resultList;
 
     }
 
-    public ArrayList<Record> searchRecordWtihGeo(String problemID, String distance, LatLng location) {
+    public ArrayList<Record> searchRecordWtihGeo(String problemID, String distanceStr, LatLng targetLoc) {
         ArrayList<Record> resultList = new ArrayList<>();
-        Double dist = Double.parseDouble(distance);
+        Double distance = Double.parseDouble(distanceStr);
 
-        // TODO: query all records with problemID
-        Cursor c = db.query(
+        // query all records with matching parentID
+        Cursor cursor = db.query(
                 recordTable.TABLE_NAME,
                 null,
                 recordTable.COL_PARENTID + " = ?",
@@ -238,9 +184,25 @@ public class DBRecordManager {
                 null,
                 null
         );
-        // TODO: get their latitude and longitude, if either one is +/- distance, add to resultList
 
+        if (cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                // get LatLng from this record (the record being walked)
+                LatLng thisLoc = new LatLng(
+                        cursor.getDouble(cursor.getColumnIndexOrThrow(recordTable.COL_LAT)),
+                        cursor.getDouble(cursor.getColumnIndexOrThrow(recordTable.COL_LON))
+                );
 
+                // if this record's location is within the proximity
+                // of the target location, build record and add it to result
+                if (thisLoc.latitude < (targetLoc.latitude + distance)              // Eastbound
+                        && thisLoc.latitude > (targetLoc.latitude - distance)       // Westbound
+                        && thisLoc.longitude < (targetLoc.longitude + distance)     // Northbound
+                        && thisLoc.longitude > (targetLoc.longitude - distance))    // Southbound
+                    resultList.add(buildRecord(cursor));
+            }
+        }
+        cursor.close();
         return resultList;
     }
 
@@ -269,6 +231,28 @@ public class DBRecordManager {
         int count = c.getCount();
         c.close();
         return  (count > 0);
+    }
+
+    private Record buildRecord(Cursor c) {
+        Record record = new Record();
+        record.setParentId(c.getString(c.getColumnIndexOrThrow(recordTable.COL_PARENTID)));
+        record.setFileId(c.getString(c.getColumnIndexOrThrow(recordTable.COL_FILEID)));
+        record.setTimestamp(
+                LocalDateTime.parse(
+                        c.getString(c.getColumnIndexOrThrow(recordTable.COL_TIMESTAMP)),
+                        formatter)
+        );
+        record.setTitle(c.getString(c.getColumnIndexOrThrow(recordTable.COL_TITLE)));
+        record.setComment(c.getString(c.getColumnIndexOrThrow(recordTable.COL_COMMENT)));
+        record.setPhotos(c.getString(c.getColumnIndexOrThrow(recordTable.COL_PHOTOS)));
+        record.setLocation(
+                new LatLng(
+                        c.getDouble(c.getColumnIndex(recordTable.COL_LAT)),
+                        c.getDouble(c.getColumnIndex(recordTable.COL_LON))
+                )
+        );
+        record.setBodyLocation(c.getString(c.getColumnIndexOrThrow(recordTable.COL_BODYLOCATION)));
+        return record;
     }
 
 }
