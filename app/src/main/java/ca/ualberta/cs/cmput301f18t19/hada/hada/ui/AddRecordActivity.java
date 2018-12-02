@@ -135,7 +135,7 @@ public class AddRecordActivity extends AppCompatActivity {
                 Record record = new Record();
                 record.setFileId(fileId);
                 try {
-                    new PhotoController().addPhoto(record.getFileId(), imageURI, imageString);
+                    new PhotoController().addPhoto(record.getFileId(), imageString);
                 }catch (Exception e){
                     Log.d("AddRecord", "Failed to add photo");
                 }
@@ -201,7 +201,7 @@ public class AddRecordActivity extends AppCompatActivity {
                 ImageView imagePreview = findViewById(R.id.addRecordActivityImagePreview);
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageURI);
-                    String imageString = new BitmapPhotoEncodeDecodeManager.EncodeBitmapTask().execute(bitmap).get();
+                    imageString = new BitmapPhotoEncodeDecodeManager.EncodeBitmapTask().execute(bitmap).get();
                     Bitmap smallBitmap = new BitmapPhotoEncodeDecodeManager.DecodeBitmapTask().execute(imageString).get();
                     imagePreview.setImageBitmap(smallBitmap);
 //                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
