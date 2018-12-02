@@ -277,4 +277,44 @@ public class ESRecordManager extends ESManager{
             return matchingRecords;
         }
     }
+
+    public static class SearchUsingBodyLocationTask extends AsyncTask<String, Void, ArrayList<Record>> {
+        @Override
+        protected ArrayList<Record> doInBackground(String... params) {
+            setClient();
+            String parentId = params[0];
+            String bodyLocation = params[1];
+            String query = "{\n" +
+                    "\t\"query\" : {\n" +
+                    "\t\t\"bool\" : {\n" +
+                    "\t\t\t\"must\" : {\n" +
+                    "\t\t\t\t\"match\" : {\n" +
+                    "\t\t\t\t\t{\"parentId\" : \""+parentId+"\"},\n" +
+                    "\t\t\t\t\t{\"bodyLocation\" : \""+bodyLocation+"\"}\n" +
+                    "\t\t\t\t}\n" +
+                    "\t\t\t}\n" +
+                    "\t\t}\n" +
+                    "\t}\n" +
+                    "}";
+            Log.d("SearchUsingKeywordTask Query", query);
+            ArrayList<Record> matchingRecords = new ArrayList<>();
+            Search search = new Search.Builder(query)
+                    .addIndex(teamIndex)
+                    .addType("record")
+                    .build();
+            try{
+                JestResult result = client.execute(search);
+
+                if(result.isSucceeded()){
+                    List<Record> results;
+                    results = result.getSourceAsObjectList(Record.class);
+                    matchingRecords.addAll(results);
+                }
+            }catch(IOException e){
+                Log.d("SearchUsingKeywordTask", "IOException");
+                e.printStackTrace();
+            }
+            return matchingRecords;
+        }
+    }
 }
