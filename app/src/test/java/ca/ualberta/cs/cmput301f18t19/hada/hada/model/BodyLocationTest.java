@@ -32,8 +32,8 @@ import static org.mockito.Mockito.withSettings;
 /**
  * Tests for the class BodyLocation.
  *
- * @see BodyLocation
  * @author Christopher Penner
+ * @see BodyLocation
  */
 public class BodyLocationTest {
 
@@ -52,11 +52,17 @@ public class BodyLocationTest {
     }
 
 
+    /**
+     * Test get file id.
+     */
     @Test
     public void testGetFileID() {
         assertNotNull(this.bodyLocation.getFileID());
     }
 
+    /**
+     * Test set file id.
+     */
     @Test
     public void testSetFileID() {
         String uuid = UUID.randomUUID().toString();
@@ -64,44 +70,68 @@ public class BodyLocationTest {
         assertEquals(uuid, this.bodyLocation.getFileID());
     }
 
+    /**
+     * Test get photo uri.
+     */
     @Test
     public void testGetPhotoUri() {
         assertEquals("///:filesystem", this.bodyLocation.getPhotoUri());
     }
 
+    /**
+     * Test set photo uri.
+     */
     @Test
     public void testSetPhotoUri() {
         this.bodyLocation.setPhotoUri("///:SDcard/folder");
         assertEquals("///:SDcard/folder", this.bodyLocation.getPhotoUri());
     }
 
+    /**
+     * Test get photo http.
+     */
     @Test
     public void testGetPhotoHTTP() {
         assertEquals("www.test.gov", this.bodyLocation.getPhotoHTTP());
     }
 
+    /**
+     * Test set photo http.
+     */
     @Test
     public void testSetPhotoHTTP() {
         this.bodyLocation.setPhotoHTTP("www.elasticSearch.com");
         assertEquals("www.elasticSearch.com", this.bodyLocation.getPhotoHTTP());
     }
 
+    /**
+     * Test get body location.
+     */
     @Test
     public void testGetBodyLocation() {
         assertEquals("test_bodyLocation", this.bodyLocation.getBodyLocation());
     }
 
+    /**
+     * Test set body location.
+     */
     @Test
     public void testSetBodyLocation() {
         this.bodyLocation.setBodyLocation("program_set_BL");
         assertEquals("program_set_BL", this.bodyLocation.getBodyLocation());
     }
 
+    /**
+     * Test get parent id.
+     */
     @Test
     public void testGetParentID() {
         assertEquals("testParent", this.bodyLocation.getParentID());
     }
 
+    /**
+     * Test set parent id.
+     */
     @Test
     public void testSetParentID() {
         this.bodyLocation.setParentID("program_set_parent");
