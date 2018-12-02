@@ -12,7 +12,6 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada.manager;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -23,6 +22,7 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBcontract;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBcontract.careProviderTable;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBcontract.patientTable;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBOpenHelper;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ContextSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.User;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
@@ -43,10 +43,10 @@ public class DBUserManager {
 
     /**
      * Constructor that uses DBOpenHelper to open the database
-     * @param context
      */
-    public DBUserManager(Context context){
-        db = new DBOpenHelper(context).getWritableDatabase();
+    public DBUserManager(){
+        db = new DBOpenHelper(ContextSingleton.getInstance().getContext())
+                .getWritableDatabase();
     }
 
     /**

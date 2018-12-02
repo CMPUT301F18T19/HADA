@@ -1,7 +1,6 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada.manager;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -14,8 +13,18 @@ import java.util.ArrayList;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBOpenHelper;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBcontract;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBcontract.recordTable;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ContextSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 
+/**
+ * Manager class that provides an interface for interacting with SQLite database.
+ * Used for saving, loading, deleting records from/to the database.
+ *
+ * @author Alex
+ * @see Record
+ * @see DBcontract
+ * @see DBOpenHelper
+ */
 public class DBRecordManager {
     private SQLiteDatabase db;
     // formatter used to parse LocalDateTime to/from string
@@ -24,12 +33,16 @@ public class DBRecordManager {
 
     /**
      * Constructor that uses DBOpenHelper to open the database
-     * @param context
      */
-    public DBRecordManager(Context context){
-        db = new DBOpenHelper(context).getWritableDatabase();
+    public DBRecordManager(){
+        db = new DBOpenHelper(ContextSingleton.getInstance().getContext())
+                .getWritableDatabase();
     }
 
+    /**
+     * Adds a record to the record table in DB
+     * @param newRecord record to be added to DB
+     */
     public void addRecord(Record newRecord) {
         ContentValues values = new ContentValues();
         values.put(recordTable.COL_PARENTID, newRecord.getParentId());
@@ -44,6 +57,11 @@ public class DBRecordManager {
         db.insert(recordTable.TABLE_NAME, null, values);
     }
 
+    /**
+     * Loads a record from the record table
+     * @param  recordID record's fileID
+     * @return record, null if the record is not found in the table
+     */
     public Record getRecord(String recordID) {
         Record record = null;
         Cursor cursor = db.query(
@@ -63,6 +81,11 @@ public class DBRecordManager {
         return record;
     }
 
+    /**
+     * Delete a record with given recordID from the record table
+     * @param  recordID record's fileID
+     * @return number of rows deleted
+     */
     public int deleteRecord(String recordID) {
         int numRowsDeleted = 0;
         if (!existsRecord(recordID))
@@ -75,6 +98,11 @@ public class DBRecordManager {
         return numRowsDeleted;
     }
 
+    /**
+     * Loads all records of a given problem from the record table
+     * @param  problemID a problem's fileID
+     * @return a list of records, empty list if no record is found
+     */
     public ArrayList<Record> getRecordList(String problemID) {
         ArrayList<Record> recordList = new ArrayList<>();
         Cursor cursor = db.query(
@@ -95,6 +123,11 @@ public class DBRecordManager {
         return recordList;
     }
 
+    /**
+     * edit a record's title given the recordID of the record.
+     * @param recordID a record's fileID, newTitle is the new title to be set
+     * @return number of rows modified.
+     */
     public int editRecordTitle(String recordID, String newTitle) {
         int rowsUpdated = 0;
         ContentValues values = new ContentValues();
@@ -109,6 +142,11 @@ public class DBRecordManager {
         return rowsUpdated;
     }
 
+    /**
+     * edit a record's comment given the recordID of the record.
+     * @param recordID a record's fileID, newComment is the new comment to be set
+     * @return number of rows modified.
+     */
     public int editRecordComment(String recordID, String newComment) {
         int rowsUpdated = 0;
         ContentValues values = new ContentValues();
@@ -123,11 +161,16 @@ public class DBRecordManager {
         return rowsUpdated;
     }
 
-    public int editRecordGeoLocation(String recordID, LatLng location) {
+    /**
+     * edit a record's stored location given the recordID of the record.
+     * @param recordID a record's fileID, newLocation the new location to be set
+     * @return number of rows modified.
+     */
+    public int editRecordGeoLocation(String recordID, LatLng newLocation) {
         int rowsUpdated = 0;
         ContentValues values = new ContentValues();
-        values.put(recordTable.COL_LAT, location.latitude);
-        values.put(recordTable.COL_LON, location.longitude);
+        values.put(recordTable.COL_LAT, newLocation.latitude);
+        values.put(recordTable.COL_LON, newLocation.longitude);
 
         rowsUpdated = db.update(
                 recordTable.TABLE_NAME,
@@ -138,6 +181,14 @@ public class DBRecordManager {
         return rowsUpdated;
     }
 
+    /**
+     * Given the problem's fileID, matches keyword in all records belonging to this
+     * problem, keyword is matched in the title and comment section of the record.
+     * A list of matching records is returned.
+     * @param problemID a problem's fileID
+     * @param keyword the keyword to be matched in the record title and comment.
+     * @return .
+     */
     public ArrayList<Record> searchRecordWtihKeyword(String problemID, String keyword) {
         ArrayList<Record> resultList = new ArrayList<>();
         String selection =
@@ -170,6 +221,14 @@ public class DBRecordManager {
 
     }
 
+    /**
+     * Given the problem's fileID,
+     * @param problemID a problem's fileID
+     * @param distanceStr the radius of the proximity to be searched.
+     *                    distance as a string, to follow the conventions used in controllers
+     * @param targetLoc the center of the proximity to be searched
+     * @return .
+     */
     public ArrayList<Record> searchRecordWtihGeo(String problemID, String distanceStr, LatLng targetLoc) {
         ArrayList<Record> resultList = new ArrayList<>();
         Double distance = Double.parseDouble(distanceStr);
@@ -206,18 +265,25 @@ public class DBRecordManager {
         return resultList;
     }
 
+    //TODO
     public int editRecordPhoto(){
         //TODO
         return -1;
 
     }
 
+    //TODO
     public int editRecordBodyLocation() {
         //TODO
         return -1;
 
     }
 
+    /**
+     * check if a record with fileID exists in the database
+     * @param  fileID a record's fileID
+     * @return true if record exists, false otherwise
+     */
     private Boolean existsRecord(String fileID) {
         Cursor c = db.query(
                 recordTable.TABLE_NAME,
@@ -233,25 +299,31 @@ public class DBRecordManager {
         return  (count > 0);
     }
 
-    private Record buildRecord(Cursor c) {
+    /**
+     * given a cursor, build a record using the row
+     * the cursor is currently pointing to
+     * @param  cursor a cursor object
+     * @return a record object
+     */
+    private Record buildRecord(Cursor cursor) {
         Record record = new Record();
-        record.setParentId(c.getString(c.getColumnIndexOrThrow(recordTable.COL_PARENTID)));
-        record.setFileId(c.getString(c.getColumnIndexOrThrow(recordTable.COL_FILEID)));
+        record.setParentId(cursor.getString(cursor.getColumnIndexOrThrow(recordTable.COL_PARENTID)));
+        record.setFileId(cursor.getString(cursor.getColumnIndexOrThrow(recordTable.COL_FILEID)));
         record.setTimestamp(
                 LocalDateTime.parse(
-                        c.getString(c.getColumnIndexOrThrow(recordTable.COL_TIMESTAMP)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(recordTable.COL_TIMESTAMP)),
                         formatter)
         );
-        record.setTitle(c.getString(c.getColumnIndexOrThrow(recordTable.COL_TITLE)));
-        record.setComment(c.getString(c.getColumnIndexOrThrow(recordTable.COL_COMMENT)));
-        record.setPhotos(c.getString(c.getColumnIndexOrThrow(recordTable.COL_PHOTOS)));
+        record.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(recordTable.COL_TITLE)));
+        record.setComment(cursor.getString(cursor.getColumnIndexOrThrow(recordTable.COL_COMMENT)));
+        record.setPhotos(cursor.getString(cursor.getColumnIndexOrThrow(recordTable.COL_PHOTOS)));
         record.setLocation(
                 new LatLng(
-                        c.getDouble(c.getColumnIndex(recordTable.COL_LAT)),
-                        c.getDouble(c.getColumnIndex(recordTable.COL_LON))
+                        cursor.getDouble(cursor.getColumnIndex(recordTable.COL_LAT)),
+                        cursor.getDouble(cursor.getColumnIndex(recordTable.COL_LON))
                 )
         );
-        record.setBodyLocation(c.getString(c.getColumnIndexOrThrow(recordTable.COL_BODYLOCATION)));
+        record.setBodyLocation(cursor.getString(cursor.getColumnIndexOrThrow(recordTable.COL_BODYLOCATION)));
         return record;
     }
 

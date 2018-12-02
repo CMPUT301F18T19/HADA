@@ -1,7 +1,6 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada.manager;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -13,6 +12,7 @@ import java.util.UUID;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBcontract;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBOpenHelper;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBcontract.problemTable;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ContextSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 
 /**
@@ -32,10 +32,10 @@ public class DBProblemManager {
 
     /**
      * Constructor that uses DBOpenHelper to open the database
-     * @param context
      */
-    public DBProblemManager(Context context){
-        db = new DBOpenHelper(context).getWritableDatabase();
+    public DBProblemManager(){
+        db = new DBOpenHelper(ContextSingleton.getInstance().getContext())
+                .getWritableDatabase();
     }
 
     /**
@@ -78,15 +78,7 @@ public class DBProblemManager {
         );
         if (c.getCount() > 0) {     // If there is results, else return null
             c.moveToFirst();        // get the first row, should be the only row
-            problem = new Problem(
-                    c.getString(c.getColumnIndexOrThrow(problemTable.COL_TITLE)),
-                    LocalDateTime.parse(
-                            c.getString(c.getColumnIndexOrThrow(problemTable.COL_DATE)),
-                            formatter),
-                    c.getString(c.getColumnIndexOrThrow(problemTable.COL_DESC))
-            );
-            problem.setParentId(c.getString(c.getColumnIndexOrThrow(problemTable.COL_PARENTID)));
-            problem.setFileId(fileID);
+            problem = buildProblem(c);
         }
         c.close();
         return problem;
@@ -110,16 +102,7 @@ public class DBProblemManager {
         );
         if (c.getCount() > 0) {         // if there is results, else return empty list
             while (c.moveToNext()) {
-                Problem problem = new Problem(
-                        c.getString(c.getColumnIndexOrThrow(problemTable.COL_TITLE)),
-                        LocalDateTime.parse(
-                                c.getString(c.getColumnIndexOrThrow(problemTable.COL_DATE)),
-                                formatter),
-                        c.getString(c.getColumnIndexOrThrow(problemTable.COL_DESC))
-                );
-                problem.setParentId(patientID);
-                problem.setFileId(c.getString(c.getColumnIndexOrThrow(problemTable.COL_FILEID)));
-                problemList.add(problem);
+                problemList.add(buildProblem(c));
             }
         }
         c.close();
@@ -144,8 +127,9 @@ public class DBProblemManager {
     }
 
     /**
-     * edit a problem's title column given the fileID of the problem.
-     * @param fileID a problem's fileID(primary key), newTitle the new title to be set
+     * edit a problem's stored title given the fileID of the problem.
+     * @param fileID a problem's fileID
+     * @param  newTitle the new title to be set
      * @return number of rows modified.
      */
     public int editProblemTitle(String fileID, String newTitle) {
@@ -163,8 +147,9 @@ public class DBProblemManager {
     }
 
     /**
-     * edit a problem's date column given the fileID of the problem.
-     * @param fileID a problem's fileID(primary key), newDate a LocalDateTime obj of the new date
+     * edit a problem's stored date given the fileID of the problem.
+     * @param fileID a problem's fileID
+     * @param newDate a LocalDateTime obj of the new date
      * @return number of rows modified.
      */
     public int editProblemDate(String fileID, LocalDateTime newDate) {
@@ -182,8 +167,9 @@ public class DBProblemManager {
     }
 
     /**
-     * edit a problem's description column given the fileID of the problem.
-     * @param fileID a problem's fileID(primary key), newDesc the new description to be set
+     * edit a problem's stored description given the fileID of the problem.
+     * @param fileID a problem's fileID
+     * @param newDesc the new description to be set
      * @return number of rows modified.
      */
     public int editProblemDesc(String fileID, String newDesc) {
@@ -200,6 +186,15 @@ public class DBProblemManager {
         return rowsUpdated;
     }
 
+    /**
+     * Given the patient's userID, matches keyword in all problems belonging to this
+     * patient, keyword is matched in the title and description section. A list of
+     * matching problems is returned.
+     * NOTE: the method DOES NOT match keyword in each problem's records.
+     * @param patientID a patient's userID
+     * @param keyword the keyword to be matched in the problem title and description.
+     * @return .
+     */
     public ArrayList<Problem> searchProblemsWithKeyword(String patientID, String keyword) {
         ArrayList<Problem> resultList = new ArrayList<>();
         String selection =
@@ -224,16 +219,7 @@ public class DBProblemManager {
         );
         if (c.getCount() > 0) {         // if there is results, else return empty list
             while (c.moveToNext()) {
-                Problem problem = new Problem(
-                        c.getString(c.getColumnIndexOrThrow(problemTable.COL_TITLE)),
-                        LocalDateTime.parse(
-                                c.getString(c.getColumnIndexOrThrow(problemTable.COL_DATE)),
-                                formatter),
-                        c.getString(c.getColumnIndexOrThrow(problemTable.COL_DESC))
-                );
-                problem.setParentId(patientID);
-                problem.setFileId(c.getString(c.getColumnIndexOrThrow(problemTable.COL_FILEID)));
-                resultList.add(problem);
+                resultList.add(buildProblem(c));
             }
         }
         c.close();
@@ -258,6 +244,25 @@ public class DBProblemManager {
         int count = c.getCount();
         c.close();
         return  (count > 0);
+    }
+
+    /**
+     * given a cursor, build a problem using the row
+     * the cursor is currently pointing to
+     * @param  cursor a cursor object
+     * @return a problem object
+     */
+    private Problem buildProblem(Cursor cursor) {
+        Problem problem = new Problem(
+                cursor.getString(cursor.getColumnIndexOrThrow(problemTable.COL_TITLE)),
+                LocalDateTime.parse(
+                        cursor.getString(cursor.getColumnIndexOrThrow(problemTable.COL_DATE)),
+                        formatter),
+                cursor.getString(cursor.getColumnIndexOrThrow(problemTable.COL_DESC))
+        );
+        problem.setParentId(cursor.getString(cursor.getColumnIndexOrThrow(problemTable.COL_PARENTID)));
+        problem.setFileId(cursor.getString(cursor.getColumnIndexOrThrow(problemTable.COL_FILEID)));
+        return problem;
     }
 
 }
