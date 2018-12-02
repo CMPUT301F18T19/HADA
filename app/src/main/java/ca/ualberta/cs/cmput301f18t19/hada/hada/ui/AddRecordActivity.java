@@ -201,7 +201,7 @@ public class AddRecordActivity extends AppCompatActivity {
                 ImageView imagePreview = findViewById(R.id.addRecordActivityImagePreview);
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageURI);
-                    String imageString = new BitmapPhotoEncodeDecodeManager.EncodeBitmapTask().execute(bitmap).get();
+                    imageString = new BitmapPhotoEncodeDecodeManager.EncodeBitmapTask().execute(bitmap).get();
                     Bitmap smallBitmap = new BitmapPhotoEncodeDecodeManager.DecodeBitmapTask().execute(imageString).get();
                     imagePreview.setImageBitmap(smallBitmap);
 //                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
