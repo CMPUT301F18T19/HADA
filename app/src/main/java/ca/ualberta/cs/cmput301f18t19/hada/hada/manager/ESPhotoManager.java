@@ -45,7 +45,7 @@ public class ESPhotoManager extends ESManager {
                     Index index = new Index.Builder(photo)
                             .index(teamIndex)
                             .type("Photos")
-                            .id(photo.getParentId())
+                            .id(photo.getFileID())
                             .refresh(true)
                             .build();
                     DocumentResult result = client.execute(index);

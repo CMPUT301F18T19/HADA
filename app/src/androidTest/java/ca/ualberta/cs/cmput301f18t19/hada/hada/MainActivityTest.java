@@ -1,5 +1,7 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,6 +11,7 @@ import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.UserController;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.User;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.ui.MainActivity;
 
 
@@ -22,6 +25,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static androidx.test.espresso.matcher.RootMatchers.withDecorView;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.core.IsNot.not;
 
 
@@ -30,6 +34,18 @@ public class MainActivityTest {
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule =
             new ActivityTestRule<>(MainActivity.class);
+
+    @Before
+    public void setUp(){
+        new UserController().addPatient("intenttestpatient", "780-867-5309", "email@email.com");
+        new UserController().addCareProvider("intenttestdoctor", "7", "email");
+    }
+
+    @After
+    public void deleteTestStuff(){
+        new UserController().deletePatient("intenttestpatient");
+        new UserController().deleteCareProvider("intenttestdoctor");
+    }
 
     @Test
     public void testNoSavedUser(){
@@ -43,22 +59,39 @@ public class MainActivityTest {
 
     @Test
     public void testValidPatientLogin(){
-        new UserController().addPatient("mainactivitytest_pat", "7", "e");
         Espresso.onView(withId(R.id.mainActivityUsernameText))
-                .perform(typeText("mainactivitytest_pat"), closeSoftKeyboard());
+                .perform(typeText("intenttestpatient"), closeSoftKeyboard());
         Espresso.onView(withId(R.id.mainActivityPatientLogin)).perform(click());
-        checkToastDoesNotExist("Username does not exist. Create a new user instead?");
+        Espresso.onView(withId(R.id.problemListUsername)).check(matches(isDisplayed()));
 
     }
 
     @Test
     public void testValidCareProviderLogin(){
-        new UserController().addCareProvider("mainactivitytest_doc", "7", "e");
         Espresso.onView(withId(R.id.mainActivityUsernameText))
-                .perform(typeText("mainactivitytest_doc"), closeSoftKeyboard());
+                .perform(typeText("intenttestdoctor"), closeSoftKeyboard());
         Espresso.onView(withId(R.id.mainActivityPatientLogin)).perform(click());
-        checkToastDoesNotExist("Username does not exist. Create a new user instead?");
+        Espresso.onView(withId(R.id.patientListUserSettingsButton)).check(matches(isDisplayed()));
 
+    }
+
+    @Test
+    public void testValidShortCodeLogin(){
+        String shortCode = new UserController().getPatient("intenttestpatient").getShortCode();
+        Espresso.onView(withId(R.id.mainActivityUsernameText))
+                .perform(typeText(shortCode), closeSoftKeyboard());
+        Espresso.onView(withId(R.id.mainActivityShortCodeRadioButton)).perform(click());
+        Espresso.onView(withId(R.id.mainActivityPatientLogin)).perform(click());
+        Espresso.onView(withId(R.id.problemListUsername)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void testInvalidShortCodeLogin(){
+        Espresso.onView(withId(R.id.mainActivityUsernameText))
+                .perform(typeText("notashortcode"), closeSoftKeyboard());
+        Espresso.onView(withId(R.id.mainActivityShortCodeRadioButton)).perform(click());
+        Espresso.onView(withId(R.id.mainActivityPatientLogin)).perform(click());
+        checkToastExists("Shortcode not valid. Try again.");
     }
 
     @Test
@@ -66,25 +99,8 @@ public class MainActivityTest {
         Espresso.onView(withId(R.id.mainActivityPatientLogin)).perform(click());
         checkToastExists("Username does not exist. Create a new user instead?");
 
-        Espresso.onView(withId(R.id.mainActivityPatientLogin)).perform(click());
-        checkToastExists("Username does not exist. Create a new user instead?");
-
     }
 
-    @Test
-    public void testWrongLogin(){
-        new UserController().addCareProvider("mainactivitytest_doc", "7", "e");
-        Espresso.onView(withId(R.id.mainActivityUsernameText))
-                .perform(typeText("mainactivitytest_doc"), closeSoftKeyboard());
-        Espresso.onView(withId(R.id.mainActivityPatientLogin)).perform(click());
-        checkToastExists("Username does not exist. Create a new user instead?");
-
-        Espresso.onView(withId(R.id.mainActivityUsernameText))
-                .perform(replaceText("testPatient"), closeSoftKeyboard());
-        Espresso.onView(withId(R.id.mainActivityPatientLogin)).perform(click());
-        checkToastExists("Username does not exist. Create a new user instead?");
-
-    }
     public void checkToastExists(String message){
         //Thanks to user StefanTo on StackOverflow https://stackoverflow.com/questions/28390574/checking-toast-message-in-android-espresso#comment56063447_28606603
         Espresso.onView(withText(message)).inRoot(withDecorView(not(mActivityRule.getActivity().getWindow().getDecorView()))).check(matches(isDisplayed()));
