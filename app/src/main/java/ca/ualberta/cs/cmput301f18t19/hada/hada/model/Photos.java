@@ -17,8 +17,6 @@ import java.util.ArrayList;
 public class Photos {
     private String parentId;
     private String fileID;
-    private ArrayList<String> uriPhotos;
-    private ArrayList<String> httpPhotos;
     private ArrayList<String> bitmaps;
 
     public String getFileID() {
@@ -35,22 +33,6 @@ public class Photos {
 
     public void setParentId(String parentId) {
         this.parentId = parentId;
-    }
-
-    public ArrayList<String> getUriPhotos() {
-        return uriPhotos;
-    }
-
-    public void setUriPhotos(ArrayList<String> uriPhotos) {
-        this.uriPhotos = uriPhotos;
-    }
-
-    public ArrayList<String> getHttpPhotos() {
-        return httpPhotos;
-    }
-
-    public void setHttpPhotos(ArrayList<String> httpPhotos) {
-        this.httpPhotos = httpPhotos;
     }
 
     public ArrayList<String> getBitmaps(){

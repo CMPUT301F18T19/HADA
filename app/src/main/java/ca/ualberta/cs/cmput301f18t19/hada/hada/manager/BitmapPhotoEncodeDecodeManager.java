@@ -16,6 +16,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Base64;
+import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
 
@@ -37,7 +38,8 @@ public class BitmapPhotoEncodeDecodeManager {
         @Override
         protected Bitmap doInBackground(String... params){
             String imageString = params[0];
-            byte[] decodedString = Base64.decode(imageString, Base64.DEFAULT);
+            Log.d("DecodeBitmapTask", "Decoding string " +imageString);
+            byte[] decodedString = Base64.decode(imageString.getBytes(), Base64.DEFAULT);
             Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             return bitmap;
         }

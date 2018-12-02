@@ -112,6 +112,7 @@ public class ViewRecordActivity extends AppCompatActivity {
                 if(recordPhotos.getBitmaps().size() > 0) {
                     //https://stackoverflow.com/questions/3801760/android-code-to-convert-base64-string-to-bitmap
                     String photoString = recordPhotos.getBitmaps().get(0);
+                    Log.d("ViewRecordActivity", "Photostring is " +photoString);
                     Bitmap bitmap = new BitmapPhotoEncodeDecodeManager.DecodeBitmapTask().execute(photoString).get();
 //                  byte[] imageAsBytes = Base64.decode(photoString.getBytes(), Base64.DEFAULT);
 //                  Bitmap bitmap = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);

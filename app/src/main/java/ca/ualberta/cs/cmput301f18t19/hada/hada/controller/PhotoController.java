@@ -30,29 +30,18 @@ public class PhotoController {
         //TODO upload image to imgur
         ArrayList<Photos> photos;
         Photos photo = new Photos();
-        ArrayList<String> uriList = new ArrayList<>();
-        ArrayList<String> httpList = new ArrayList<>();
         ArrayList<String> bitmaps = new ArrayList<>();
-        String http = "None";
         try {
             photos = new ESPhotoManager.GetPhotoListTask().execute(parentId).get();
             if(photos.size()>0){
                 photo = photos.get(0);
-            }
-            else {
-                photo = new Photos();
+                bitmaps = photo.getBitmaps();
             }
         } catch (Exception e) {
             Log.d("addPhoto", "Couldn't retrieve record list from ES");
             e.printStackTrace();
         }
-
-        uriList.add(uri.toString());
-        //http = uploadImage(uri); //TODO uncomment this out when uploadImage works
-        httpList.add(http);
         bitmaps.add(bitmapString);
-        photo.setHttpPhotos(httpList);
-        photo.setUriPhotos(uriList);
         photo.setBitmaps(bitmaps);
         photo.setParentId(parentId);
         new ESPhotoManager.AddPhotosTask().execute(photo);
