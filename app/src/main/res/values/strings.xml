@@ -52,6 +52,7 @@
     <string name="EditUserSettings_UploadImageButton">Upload body reference image</string>
     <string name="EditUserSettings_SaveButton">Save Settings</string>
     <string name="EditUserSettings_CancelButton">Cancel</string>
+    <string name="EditUserSettings_GetShortCodeButton">Get ShortCode</string>
 
 
     <!-- AddProblemActivity Layout-->
@@ -77,13 +78,40 @@
 
     <!-- AddRecordActivity Layout -->
     <string name="AddRecordActivity_navigation_title">Add Record</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_add_geo_to_record">Map</string>
+    <string name="AddRecordActivity_set_location">Set Location</string>
+    <string name="AddRecordActivity_current_selected_location">Location: No Location Selected</string>
+    <string name="maps_activity_select_current_location">Select Current Location</string>
+    <string name="title_activity_view_record_locations">Map</string>
 
 
-    <!-- ViewRecordActivity Layout -->
-    <string name="ViewRecordActivity_view_geolocation">View GeoLocation</string>
-    <string name="ViewRecordActivity_view_photos">View Photos</string>
-    <string name="ViewRecordActivity_timestamp_title">Time: </string>
-    <string name="ViewRecordActivity_comment_title">Comment: </string>
-    <string name="ViewRecordActivity_activity_title">Record</string>
+    <!-- editRecordActivity Layout -->
+    <string name="editRecordActivity_view_photos">View Photos</string>
+    <string name="editRecordActivity_activity_title">Record</string>
+    <string name="editRecordActivity_save_all">Save Changes</string>
+    <string name="editRecordActivity_save_comment">Save Comment</string>
 
+    <!-- viewRecordActivity Layout -->
+    <string name="viewRecordActivity_view_geolocation">View GeoLocation</string>
+    <string name="viewRecordActivity_view_body_location">View Body Location</string>
+    <string name="viewRecordActivity_timestamp_title">Time: </string>
+    <string name="viewRecordActivity_comment_title">Comment: </string>
+    <string name="viewRecordActivity_title">Title</string>
+
+    <string name="title_activity_view_record_locations_for_user">Map</string>
+    <string name="title_activity_view_single_record_location">Map</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="take_Reference_Photo">Take Reference Photo</string>
+    <string name="camera_save">Save</string>
+    <string name="camera_text_View">Click HADA to take photo</string>
+
+    <string name="generic_login">Login</string>
+    <string name="generic_shortcode">ShortCode</string>
+    <string name="title_activity_view_short_code">ViewShortCodeActivity</string>
+
+    <string name="ViewShortCodeActivity_title">ShortCode</string>
+    <string name="ViewShortCode_placeholder">gGgGgG</string>
+
+    <string name="addPatientShortCode_hint">Patient ShortCode:</string>
 </resources>

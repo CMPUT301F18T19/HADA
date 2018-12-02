@@ -14,12 +14,15 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 
 import android.content.Intent;
+import android.media.Image;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -67,6 +70,15 @@ public class PatientListActivity extends AppCompatActivity {
             }
         });
 
+        //Opens EditUserSettings activity
+        ImageButton settings = findViewById(R.id.patientListUserSettingsButton);
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(PatientListActivity.this, EditUserSettingsActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 

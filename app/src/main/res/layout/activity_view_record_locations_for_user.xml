@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~  CMPUT 301 - Fall 2018
+  ~
+  ~  activity_view_record_locations_for_user.xml
+  ~
+  ~  11/27/18 8:32 PM
+  ~
+  ~  This is a group project for CMPUT 301 course at the University of Alberta
+  ~  Copyright (C) 2018  Austin Goebel, Anders Johnson, Alex Li,
+  ~  Cristopher Penner, Joseph Potentier-Neal, Jason Robock
+  -->
+
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/map"
+    android:name="com.google.android.gms.maps.SupportMapFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.ViewRecordLocationsForUserActivity" />

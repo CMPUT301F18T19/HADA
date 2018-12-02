@@ -17,8 +17,12 @@ import android.Manifest;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.Image;
+import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,12 +30,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.maps.model.LatLng;
 
 import java.time.LocalDateTime;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.PhotoController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.RecordController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 import pub.devrel.easypermissions.AfterPermissionGranted;
@@ -41,7 +50,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * Adds a new record with selected photos and, depending on the position of the geo location
  * switch, geographical data can also be included. Multiple photos can be selected and an
  * optional comment can be included.
- *
+ * <p>
  * Location permissions based off example by Yashas on StackOverFlow
  *
  * @author Christopher Penner
@@ -49,9 +58,13 @@ import pub.devrel.easypermissions.EasyPermissions;
  * @see <a href="https://stackoverflow.com/a/51350622">StackOverflow example by Yashas</a>
  */
 public class AddRecordActivity extends AppCompatActivity {
-
-    private boolean saveLocationBoolean;
+    private Uri imageURI;
+    private String uuid;
     private final int REQUEST_LOCATION_PERMISSION = 1;
+    private String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION};
+    private int requestCode = 1;
+    private LatLng chosenLocation = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,26 +81,34 @@ public class AddRecordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO access photos and select them
+
                 Toast.makeText(AddRecordActivity.this, "Select photos", Toast.LENGTH_SHORT).show();
             }
         });
 
-        //A switch that check if the user would like to save the geo location
-        Switch geoLocation = findViewById(R.id.addRecordActivityGeoLocationSwitch);
-        geoLocation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+        Button takePhoto = findViewById(R.id.addRecordActivityTakePhoto);
+        takePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    requestLocationPermission();
-                    saveLocationBoolean = true;
-                } else {
-                    saveLocationBoolean = false;
-                }
+            public void onClick(View v) {
+                Intent intent = new Intent(AddRecordActivity.this, CameraActivity.class);
+                startActivityForResult(intent, 100);
+                Toast.makeText(AddRecordActivity.this, "Take photos", Toast.LENGTH_SHORT).show();
+            }
+        });
+        Button refPhoto = findViewById(R.id.addRecordActivityAddReferenceImage);
+        refPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddRecordActivity.this, GetBodyLocation.class);
+                startActivityForResult(intent,200);
             }
         });
 
+
         //Saves the record
         Button saveRecord = findViewById(R.id.addRecordActivitySaveButton);
+        Button addGeoLocation = findViewById(R.id.addRecordActivityAddGeoButton);
         final EditText addTitle = findViewById(R.id.addRecordActivityTitle);
         final EditText addComment = findViewById(R.id.addRecordActivityComment);
         final LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
@@ -97,39 +118,84 @@ public class AddRecordActivity extends AppCompatActivity {
                 String title = addTitle.getText().toString();
                 String comment = addComment.getText().toString();
                 //TODO: Saving photos
-                if(saveLocationBoolean){
+                Record record = new Record();
+                record = new PhotoController().addPhoto(record,imageURI);
+                Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " timestamp=" +record.getTimestamp().toString());
+                record.setComment(comment);
+                record.setTitle(title);
+                Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " comment=" +record.getComment()+ " timestamp=" +record.getTimestamp().toString());
+                if (chosenLocation != null) {
                     try {
-                        Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                        Record record = new Record();
-                        record.setComment(comment);
-                        record.setTitle(title);
-                        record.setGeoLocation(lastKnownLocation);
+                        record.setLocation(chosenLocation);
+
                         record.setTimestamp(LocalDateTime.now());
-                        //TODO: Photos
-                        Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " comment=" +record.getComment() + " location="+record.getGeoLocation().toString());
+                      
+                        Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " comment=" +record.getComment() + " location="+record.getLocation().toString()+ " timestamp=" +record.getTimestamp().toString());
+
                         new RecordController().addRecord(record, parentId);
                         finish();
-                    }catch(SecurityException e){
+                      
+                    } catch (SecurityException e) {
                         Toast.makeText(AddRecordActivity.this, "Unable to save location. Please enable the location permissions.", Toast.LENGTH_SHORT).show();
+                        }
+                }
+                if (uuid != null){
+                    record.setBodyLocation(uuid);
+                }
+                new RecordController().addRecord(record, parentId);
+                finish();
 
-                    }
+            }
+        });
+
+        addGeoLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //We check for location permissions here before we load AddGeoToRecordActivity
+                if (!EasyPermissions.hasPermissions(AddRecordActivity.this, perms)) {
+                    requestLocationPermission();
+                } else {
+                    Intent intent = new Intent(AddRecordActivity.this, AddGeoToRecordActivity.class);
+                    startActivityForResult(intent, requestCode);
                 }
-                else{
-                    Record record = new Record();
-                    record.setComment(comment);
-                    record.setTitle(title);
-                    //TODO: Photos
-                    Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " comment=" +record.getComment());
-                    new RecordController().addRecord(record, parentId);
-                    finish();
-                }
+
             }
         });
     }
 
+    /**
+     * Deals with retrieving the location set by the user.
+     *
+     * @param requestCode: The code we specified when starting the activity
+     * @param resultCode:  The result we got from AddGeoToRecordActivity
+     * @param intent:      The intent retrieved from AddGeoToRecordActivity
+     */
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                chosenLocation = intent.getExtras().getParcelable("Location");
+                TextView selectedLoc = findViewById(R.id.AddRecordActivityLocationSelectedTitle);
+                selectedLoc.setText("Location: " + chosenLocation.toString());
+            }
+        }
+        else if (requestCode == 100) {
+            if (resultCode == RESULT_OK) {
+                imageURI = Uri.parse(intent.getStringExtra("URI"));
+            }
+        }
+        else if (requestCode == 200) {
+            if (resultCode == RESULT_OK){
+                uuid = intent.getStringExtra("UUID");
+            }
+        } else {
+            Toast.makeText(this, "An error occurred. Please try again. Request code: " + requestCode, Toast.LENGTH_SHORT).show();
+        }
+    }
+
     //based off of Yasha's answer on StackOverflow https://stackoverflow.com/a/51350622
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantresults){
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantresults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantresults);
 
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantresults, this);
@@ -137,12 +203,14 @@ public class AddRecordActivity extends AppCompatActivity {
 
     //based off of Yasha's answer on StackOverflow https://stackoverflow.com/a/51350622
     @AfterPermissionGranted(REQUEST_LOCATION_PERMISSION)
-    public void requestLocationPermission(){
+    public void requestLocationPermission() {
         String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION};
-        if(EasyPermissions.hasPermissions(this, perms)){
+        if (EasyPermissions.hasPermissions(this, perms)) {
             Toast.makeText(this, "Permission granted!", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             EasyPermissions.requestPermissions(this, "Please grant the location permission", REQUEST_LOCATION_PERMISSION, perms);
         }
     }
+
+
 }

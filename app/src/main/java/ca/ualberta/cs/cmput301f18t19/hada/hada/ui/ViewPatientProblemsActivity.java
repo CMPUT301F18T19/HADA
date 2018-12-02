@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -55,11 +56,23 @@ public class ViewPatientProblemsActivity extends AppCompatActivity {
         titleTextView.setText(titleText);
 
         //Goes to EditUserSettingsActivity
-        ImageButton settingsButton = findViewById(R.id.viewPAtientProblemsSettingsButton);
+        ImageButton settingsButton = findViewById(R.id.viewPatientProblemsSettingsButton);
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ViewPatientProblemsActivity.this, EditUserSettingsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //Opens SearchInputActivity
+        Button searchButton = findViewById(R.id.viewPatientProblemsSearchButton);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ViewPatientProblemsActivity.this, SearchInputActivity.class);
+                intent.putExtra("searchObjectType", "problems");
+                intent.putExtra("parentId", patient.getUserID());
                 startActivity(intent);
             }
         });
@@ -82,7 +95,7 @@ public class ViewPatientProblemsActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int problemPosition, long id) {
-                Intent intent = new Intent(ViewPatientProblemsActivity.this, PatientProblemCommentActivity.class);
+                Intent intent = new Intent(ViewPatientProblemsActivity.this, ViewProblemActivity.class);
                 String problemFileId = problems.get(problemPosition).getFileId();
                 intent.putExtra("patientUserId", patientUserId);
                 intent.putExtra("problemFileId", problemFileId);

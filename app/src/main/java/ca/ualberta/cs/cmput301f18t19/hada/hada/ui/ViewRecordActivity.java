@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.lang.reflect.Type;
 import java.sql.Time;
@@ -30,12 +31,17 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.UserController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 
+/**
+ * Activity to view a single record from a problem.
+ *
+ * @author Austin
+ * @see Record
+ *
+ */
 public class ViewRecordActivity extends AppCompatActivity {
 
-    private int recordPosition;
-    private int problemPosition;
-    private ArrayList<Record> records;
     private Record record;
+    private String recordFileId;
 
 
     @Override
@@ -43,39 +49,56 @@ public class ViewRecordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_record);
         Intent intent = getIntent();
-        final String recordFileId = intent.getStringExtra("recordFileId");
-        record = new RecordController().getRecord(recordFileId);
         String LoggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
+        recordFileId = intent.getStringExtra("recordFileId");
+        record = new RecordController().getRecord(recordFileId);
 
-        TextView titleText = (TextView) findViewById(R.id.viewRecordActivityTitle);
-        TextView commentText = (TextView) findViewById(R.id.viewRecordActivityComment);
-        TextView timeText = (TextView) findViewById(R.id.viewRecordActivityTimestamp);
-        ImageButton recordSettings = (ImageButton) findViewById(R.id.viewRecordActivitySettings);
-
-        titleText.setText(record.getTitle());
-
-        commentText.setText(record.getComment());
-
-        //TODO FIX TIMESTAMP ISSUES - TIMESTAMP FROM RECORDCONTROLLER DOES NOT RETURN VALID VALUE
-/*
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-
-        LocalDateTime timestamp = record.getTimestamp();
-
-        timeText.setText(timestamp.format(formatter)); // Gives null error
-
-        timeText.setText(LocalDateTime.now().format(formatter)); // Works fine
-*/
-        recordSettings.setOnClickListener(new View.OnClickListener() {
+        // Goes to view GeoLocation
+        Button viewGeoLocation = findViewById(R.id.viewRecordActivityGeolocation);
+        viewGeoLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ViewRecordActivity.this, EditRecordActivity.class);
-                intent.putExtra("recordFileId", recordFileId);
-                startActivity(intent);
+                if(record.getLocationArrayList() != null) {
+                    Intent intent = new Intent(ViewRecordActivity.this, ViewSingleRecordLocationActivity.class);
+                    intent.putExtra("recordFileId", recordFileId);
+                    startActivity(intent);
+                }
+                else{
+                    Toast.makeText(ViewRecordActivity.this, "This record does not have a geo location.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
+        // Goes to view BodyLocation
+        Button viewBodyLocation = findViewById(R.id.viewRecordActivityViewBodyLocation);
+        viewBodyLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //A check that bodyLocation has been set for the record
+                if(record.getBodyLocation() != null){
 
+                }
+                else{
+                    Toast.makeText(ViewRecordActivity.this, "This record does not have a body location.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
+    }
+
+    protected void onResume() {
+        super.onResume();
+
+        record = new RecordController().getRecord(recordFileId);
+        TextView titleText = findViewById(R.id.viewRecordActivityTitle);
+        TextView commentText = findViewById(R.id.viewRecordActivityComment);
+        TextView timeText = findViewById(R.id.viewRecordActivityTimestamp);
+
+        titleText.setText(record.getTitle());
+        commentText.setText(record.getComment());
+
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        LocalDateTime timestamp = record.getTimestamp();
+        timeText.setText(timestamp.format(formatter));
     }
 }
