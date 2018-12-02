@@ -16,8 +16,17 @@ import java.util.ArrayList;
 
 public class Photos {
     private String parentId;
+    private String fileID;
     private ArrayList<String> uriPhotos;
     private ArrayList<String> httpPhotos;
+
+    public String getFileID() {
+        return fileID;
+    }
+
+    public void setFileID(String fileID) {
+        this.fileID = fileID;
+    }
 
     public String getParentId() {
         return parentId;

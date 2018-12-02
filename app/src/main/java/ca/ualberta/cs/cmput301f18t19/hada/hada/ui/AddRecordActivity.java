@@ -92,6 +92,7 @@ public class AddRecordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AddRecordActivity.this, CameraActivity.class);
+                intent.putExtra("Type","100");
                 startActivityForResult(intent, 100);
                 Toast.makeText(AddRecordActivity.this, "Take photos", Toast.LENGTH_SHORT).show();
             }
