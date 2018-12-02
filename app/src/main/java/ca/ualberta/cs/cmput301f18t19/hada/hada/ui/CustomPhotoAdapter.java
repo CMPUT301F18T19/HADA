@@ -27,12 +27,13 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 
 public class CustomPhotoAdapter extends PagerAdapter {
 
-    private ArrayList<Uri> imgs;
     private LayoutInflater inflater;
     private Context ctx;
+    private ArrayList<Uri> imgs;
 
     public CustomPhotoAdapter(Context ctx){
         this.ctx = ctx;
+
     }
 
     @Override
@@ -59,4 +60,5 @@ public class CustomPhotoAdapter extends PagerAdapter {
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.invalidate();
     }
+
 }
