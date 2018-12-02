@@ -176,8 +176,9 @@ public class SearchInputActivity extends AppCompatActivity {
 
                 }
                 else if(bodyLocationRadio.isChecked()){
-                    //toPassToIntent = bodyLocationInput.getSelectedItem().getID; //TODO Get item from the spinner
-                    Toast.makeText(SearchInputActivity.this,"Body-Location searching is currently not supported.", Toast.LENGTH_SHORT).show();
+                    String bodyLocToSearch = bodyLocationInput.getSelectedItem().toString();
+                    intent.putExtra("bodyLocation", bodyLocToSearch);
+                    valid =true;
                 }
                 else{ //Run if something went wrong in the activity and closes it.
                     Toast.makeText(SearchInputActivity.this,"Something went wrong. Try again.", Toast.LENGTH_SHORT).show();

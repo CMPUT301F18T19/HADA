@@ -10,6 +10,8 @@
  */
 package ca.ualberta.cs.cmput301f18t19.hada.hada.controller;
 
+import android.widget.ArrayAdapter;
+
 import com.google.android.gms.maps.model.LatLng;
 
 import java.time.LocalDateTime;
@@ -152,11 +154,27 @@ public class ProblemController {
         return null;
     }
 
-    public List<Problem> searchProblemWithGeoLocation(String parentId, LatLng location, String distance){
+    public ArrayList<Problem> searchProblemWithGeoLocation(String parentId, LatLng location, String distance){
         ArrayList<Problem> problems = getListOfProblems(parentId);
         ArrayList<String> validProblems = new ArrayList<>();
         for(Problem problem: problems){
             ArrayList<Record> records = new RecordController().searchRecordsWithGeo(problem.getFileId(), distance, location);
+            if(!records.isEmpty()){validProblems.add(problem.getFileId());}
+        }
+        problems.clear(); //Done with problems above so reusing
+        for(String fileId: validProblems){
+            Problem problemMatch = new ProblemController().getProblem(fileId);
+            problems.add(problemMatch);
+
+        }
+        return problems;
+    }
+
+    public ArrayList<Problem> searchProblemWithBodyLocation(String parentId, String bodyLocation){
+        ArrayList<Problem> problems = getListOfProblems(parentId);
+        ArrayList<String> validProblems = new ArrayList<>();
+        for(Problem problem: problems){
+            ArrayList<Record> records = new RecordController().searchRecordsWithBodyLocation(parentId, bodyLocation);
             if(!records.isEmpty()){validProblems.add(problem.getFileId());}
         }
         problems.clear(); //Done with problems above so reusing
