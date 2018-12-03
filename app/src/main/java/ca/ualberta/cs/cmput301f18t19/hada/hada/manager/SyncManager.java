@@ -1,5 +1,10 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada.manager;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.util.Log;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -46,10 +51,15 @@ public class SyncManager {
         DBRecordManager = new DBRecordManager(ContextSingleton.getInstance().getContext());
         DBPhotoManager = new DBPhotoManager(ContextSingleton.getInstance().getContext());
 
+        Log.d("SyncManager", "Syncing care providers");
         syncCareProviderTable();
+        Log.d("SyncManager", "Syncing patients");
         syncPatientTable();
+        Log.d("SyncManager", "Syncing problems");
         syncProblemTable();
+        Log.d("SyncManager", "Syncing records");
         syncRecordTable();
+        Log.d("SyncManager", "Syncing photos");
         syncPhotoTable();
 
     }
@@ -133,20 +143,17 @@ public class SyncManager {
      * by Musculaa
      */
     public boolean isConnectedINET() {
-        Runtime runtime = Runtime.getRuntime();
-        try {
-            // ES server's respond to ping is too slow, pinging google instead.
-            // Process ping = runtime.exec("ping -c 1 cmput301.softwareprocess.es");
-            // With timeout set to 1 sec
-            // Process ping = runtime.exec("ping -W 1 -c 1 cmput301.softwareprocess.es");
-            Process ping = runtime.exec("ping -c 1 8.8.8.8");
-            int exitValue = ping.waitFor();
-            return (exitValue == 0);
+
+        //Based off user Bidhan A's answer on StackOverflow: https://stackoverflow.com/a/30343108
+        ConnectivityManager manager = (ConnectivityManager) ContextSingleton.getInstance().getContext()
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+        boolean isAvailable = false;
+        if (networkInfo != null && networkInfo.isConnected()) {
+            // Network is present and connected
+            isAvailable = true;
         }
-        catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        return false;
+        return isAvailable;
     }
 
 }
