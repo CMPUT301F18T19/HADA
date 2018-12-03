@@ -14,6 +14,7 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.manager;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.awt.font.TextAttribute;
 import java.io.IOException;
@@ -124,6 +125,40 @@ public class ESPhotoManager extends ESManager {
                 e.printStackTrace();
             }
             return matchingPhotos;
+        }
+    }
+
+    /**
+     * Task which loads a Record from the server when given a fileId.
+     */
+    public static class GetAPhotoTask extends AsyncTask<String, Void, Photos> {
+        @Override
+        protected Photos doInBackground(String... params) {
+            setClient();
+            String fileId = params[0];
+            String query = "{\"query\": {\"match\": {\"fileID\": \"" + fileId + "\"}}}";
+            Photos matchingPhoto = null;
+            Log.d("GetPhotoTask query", query);
+            Search search = new Search.Builder(query)
+                    .addIndex(teamIndex)
+                    .addType("Photos")
+                    .build();
+            try {
+                JestResult result = client.execute(search);
+
+                if (result.isSucceeded()) {
+                    List<Photos> results;
+                    results = result.getSourceAsObjectList(Photos.class);
+                    for (Photos photo : results) {
+                        Log.d("GetProblemListTask", "Problem loaded:" + photo.toString());
+                    }
+                    if(results.size() > 0){matchingPhoto = results.get(0);}
+                }
+            } catch (IOException e) {
+                Log.d("GetAProblemTask", "IOException");
+                e.printStackTrace();
+            }
+            return matchingPhoto;
         }
 
     }
