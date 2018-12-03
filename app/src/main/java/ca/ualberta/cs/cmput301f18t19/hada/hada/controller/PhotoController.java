@@ -1,17 +1,15 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada.controller;
 
-import android.net.Uri;
 import android.util.Log;
 
 import java.util.ArrayList;
 
-import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.DBPhotoManager;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.LSPhotoManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESPhotoManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.SyncManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ContextSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Photos;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.ui.CameraActivity;
 
 /**
  * Controller for Photos objects.
@@ -51,7 +49,7 @@ public class PhotoController {
             }
             return photos;
         }else{
-            return new DBPhotoManager(ContextSingleton.getInstance().getContext()).getPhoto(parentID);
+            return new LSPhotoManager(ContextSingleton.getInstance().getContext()).getPhoto(parentID);
         }
 
     }
@@ -64,9 +62,9 @@ public class PhotoController {
      */
     public void addPhoto(String parentId, String bitmapString){
 
-        Photos photos = new DBPhotoManager(ContextSingleton.getInstance().getContext()).getPhoto(parentId);
-        if(!new DBPhotoManager(ContextSingleton.getInstance().getContext()).existsPhoto(photos.getFileID())){
-            new DBPhotoManager(ContextSingleton.getInstance().getContext()).addPhoto(photos);
+        Photos photos = new LSPhotoManager(ContextSingleton.getInstance().getContext()).getPhoto(parentId);
+        if(!new LSPhotoManager(ContextSingleton.getInstance().getContext()).existsPhoto(photos.getFileID())){
+            new LSPhotoManager(ContextSingleton.getInstance().getContext()).addPhoto(photos);
         }
         if(photos.getBitmaps() != null){
             ArrayList<String> bitmaps = photos.getBitmaps();
@@ -79,9 +77,9 @@ public class PhotoController {
             photos.setBitmaps(bitmaps);
         }
 
-        String newBitmapString = new DBPhotoManager(ContextSingleton.getInstance().getContext())
+        String newBitmapString = new LSPhotoManager(ContextSingleton.getInstance().getContext())
                 .bitmaps2json(photos.getBitmaps());
-        new DBPhotoManager(ContextSingleton.getInstance().getContext())
+        new LSPhotoManager(ContextSingleton.getInstance().getContext())
                 .editPhotoBitmap(photos.getFileID(), newBitmapString);
         syncManager.syncDB2ES();
 //        ArrayList<Photos> photos;

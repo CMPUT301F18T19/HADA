@@ -105,19 +105,6 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                         "(" + problemTable.COL_FILEID + ")" +
                         " ON DELETE CASCADE)"
         );
-
-        // create photo table
-        db.execSQL(
-                "CREATE TABLE " + photoTable.TABLE_NAME + " (" +
-                        photoTable.COL_PARENTID + " TEXT," +
-                        photoTable.COL_FILEID + " TEXT," +
-                        photoTable.COL_BITMAP + " TEXT," +
-                        careProviderTable.COL_SYNCED + " INTEGER," +
-                        "PRIMARY KEY (" + photoTable.COL_FILEID + ")" +
-                        ")"
-        );
-
-
     }
 
     /**

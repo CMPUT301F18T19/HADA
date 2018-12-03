@@ -5,7 +5,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
@@ -28,7 +27,7 @@ public class SyncManager {
     private DBUserManager DBUserManager;
     private DBProblemManager DBProblemManager;
     private DBRecordManager DBRecordManager;
-    private DBPhotoManager DBPhotoManager;
+    private LSPhotoManager LSPhotoManager;
 
 
 
@@ -49,7 +48,7 @@ public class SyncManager {
         DBUserManager = new DBUserManager(ContextSingleton.getInstance().getContext());
         DBProblemManager = new DBProblemManager(ContextSingleton.getInstance().getContext());
         DBRecordManager = new DBRecordManager(ContextSingleton.getInstance().getContext());
-        DBPhotoManager = new DBPhotoManager(ContextSingleton.getInstance().getContext());
+        LSPhotoManager = new LSPhotoManager(ContextSingleton.getInstance().getContext());
 
         Log.d("SyncManager", "Syncing care providers");
         syncCareProviderTable();
@@ -60,7 +59,7 @@ public class SyncManager {
         Log.d("SyncManager", "Syncing records");
         syncRecordTable();
         Log.d("SyncManager", "Syncing photos");
-        syncPhotoTable();
+        syncPhotoFiles();
 
     }
 
@@ -124,13 +123,12 @@ public class SyncManager {
      * sync each un-synced photo from database to ElasticSearch server, and set their
      * syncFlag in database to true
      */
-    private void syncPhotoTable(){
-        ArrayList<Photos> unSyncedList = DBPhotoManager.getUnSyncedPhotos();
+    private void syncPhotoFiles(){
+        ArrayList<Photos> unSyncedList = LSPhotoManager.getUnSyncedPhotos();
         for (Photos photo:unSyncedList) {
             // sync each un-synced patient to ES server
             // then set their syncFlag to true(1 in DB)
             new ESPhotoManager.AddPhotosTask().execute(photo);
-            DBPhotoManager.setPhotosSyncFlag(photo.getFileID(), true);
         }
     }
 

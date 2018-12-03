@@ -74,21 +74,9 @@ public class DBcontract {
         public static final String COL_TIMESTAMP = "timestamp";
         public static final String COL_TITLE = "title";
         public static final String COL_COMMENT = "comment";
-        public static final String COL_PHOTOS = "photos";
         public static final String COL_LAT = "loc_latitude";
         public static final String COL_LON = "loc_longitude";
         public static final String COL_SYNCED = "syncFlag";
     }
 
-    /**
-     * definition of photo table
-     */
-    public static final class photoTable {
-        public static final String TABLE_NAME = "photo";
-
-        public static final String COL_PARENTID = "parentID";
-        public static final String COL_FILEID = "fileID";
-        public static final String COL_BITMAP = "bitmap";
-        public static final String COL_SYNCED = "syncFlag";
-    }
 }
