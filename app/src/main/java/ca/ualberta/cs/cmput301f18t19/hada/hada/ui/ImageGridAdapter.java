@@ -12,6 +12,13 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 
+/**
+ * Adapter used to create a grid of images for the record being viewed
+ *
+ * @author Austin, Joe
+ *
+ */
+
 public class ImageGridAdapter extends BaseAdapter {
 
     private Context ctx;

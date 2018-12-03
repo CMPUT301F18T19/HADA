@@ -75,7 +75,7 @@
         <activity android:name=".ui.GetBodyLocation" />
         <activity android:name=".ui.CareProviderAddCommentActivity" />
         <activity android:name=".ui.ViewShortCodeActivity" />
-        <activity android:name=".ui.ViewSlideshow"></activity>
+        <activity android:name=".ui.ViewSlideshowActivity"></activity>
     </application>
 
 </manifest>

@@ -19,7 +19,14 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.BitmapPhotoEncodeDecodeMa
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Photos;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 
-public class ViewSlideshow extends AppCompatActivity {
+/**
+ * Activity to scroll through the images of a Problem by viewing the first image of each record
+ *
+ * @author Austin
+ * @see Record
+ */
+// Adapted from https://stackoverflow.com/questions/30995446/what-is-the-role-of-isviewfromobject-view-view-object-object-in-fragmentst
+public class ViewSlideshowActivity extends AppCompatActivity {
 
     private ArrayList<Bitmap> bitmaps = new ArrayList<>();
 
