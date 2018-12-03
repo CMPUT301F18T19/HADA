@@ -132,8 +132,9 @@ public class ESBodyLocationManager extends ESManager{
                     for(BodyLocation returnedBodyLocation: results){
                         Log.d("GetABodyLocationTask Results: ", returnedBodyLocation.toString());
                     }
-                    matchingLocation = results.get(0);
-
+                    if(results.size() > 0) {
+                        matchingLocation = results.get(0);
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
