@@ -10,9 +10,11 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
+import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESBodyLocationManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESProblemManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESRecordManager;
 
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.BodyLocation;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 
@@ -162,13 +164,17 @@ public class RecordController {
     }
 
     public ArrayList<Record> searchRecordsWithBodyLocation(String parentId, String bodyLocation){
-        try {
-            return new ESRecordManager.SearchUsingBodyLocationTask().execute(parentId, bodyLocation).get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        ArrayList<Record> records = new RecordController().getRecordList(parentId);
+        ArrayList<Record> validRecords = new ArrayList<>();
+        for(Record record : records){
+            BodyLocation returnBodyLocation = new BodyLocationController().getABodyLocation(record.getFileId());
+            if(returnBodyLocation != null){
+                Log.d("searchRecordsWithBodyLocation returnedBodyLoc type", returnBodyLocation.getBodyLocation() + " vs. " + bodyLocation);
+                if(returnBodyLocation.getBodyLocation().equals(bodyLocation)){
+                    validRecords.add(record);
+                }
+            }
         }
-        return new ArrayList<>();
+        return validRecords;
     }
 }
