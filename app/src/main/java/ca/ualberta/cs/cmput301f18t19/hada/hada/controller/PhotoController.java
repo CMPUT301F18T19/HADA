@@ -47,9 +47,9 @@ public class PhotoController {
      * Add photo to a given parentId.
      *
      * @param parentId     the parent id
-     * @param bitmapString the bitmap string
+     * @param bitmapStrings the bitmap strings to be added
      */
-    public void addPhoto(String parentId, String bitmapString){
+    public void addPhoto(String parentId, ArrayList<String> bitmapStrings){
         //TODO upload image to imgur
         ArrayList<Photos> photos;
         Photos photo = new Photos();
@@ -58,13 +58,15 @@ public class PhotoController {
             photos = new ESPhotoManager.GetPhotoListTask().execute(parentId).get();
             if(photos.size()>0){
                 photo = photos.get(0);
+                Log.d("addPhoto ", "Photos already saved count: " + photos.size());
                 bitmaps = photo.getBitmaps();
             }
         } catch (Exception e) {
             Log.d("addPhoto", "Couldn't retrieve record list from ES");
             e.printStackTrace();
         }
-        bitmaps.add(bitmapString);
+        bitmaps.addAll(bitmapStrings);
+        Log.d("addPhoto ", "New bitmap size: " + bitmaps.size());
         photo.setBitmaps(bitmaps);
         photo.setParentId(parentId);
         new ESPhotoManager.AddPhotosTask().execute(photo);

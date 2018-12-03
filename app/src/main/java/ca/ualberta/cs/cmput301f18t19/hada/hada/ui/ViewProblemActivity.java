@@ -16,7 +16,6 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -31,7 +30,6 @@ import android.widget.TextView;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.ProblemController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.RecordController;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
@@ -102,9 +100,9 @@ public class ViewProblemActivity extends AppCompatActivity {
         viewSlideshow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /**
-                 * Go to slideshow
-                 */
+                Intent intent = new Intent(ViewProblemActivity.this, ViewSlideshowActivity.class);
+                intent.putExtra("problemFileId", problemFileId);
+                startActivity(intent);
 
             }
         });

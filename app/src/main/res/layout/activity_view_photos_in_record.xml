@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~  CMPUT 301 - Fall 2018
+  ~
+  ~  activity_view_photos_in_record.xml
+  ~
+<<<<<<< HEAD
+  ~  29/11/18 12:56 AM
+=======
+  ~  27/11/18 7:24 PM
+>>>>>>> e2f0f6d6d37dcbfe4030bd53eee3000a805aeb53
+  ~
+  ~  This is a group project for CMPUT 301 course at the University of Alberta
+  ~  Copyright (C) 2018  Austin Goebel, Anders Johnson, Alex Li,
+  ~  Cristopher Penner, Joseph Potentier-Neal, Jason Robock
+  -->
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.ViewPhotosInRecordActivity">
+
+
+    <GridView
+        android:id="@+id/viewPhotosInRecordActivityGridView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="2"
+        android:columnWidth="100dp"
+        android:gravity="center"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:stretchMode="columnWidth">
+
+
+
+    </GridView>
+
+</android.support.constraint.ConstraintLayout>
