@@ -43,6 +43,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.io.ByteArrayOutputStream;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
@@ -66,8 +67,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  */
 public class AddRecordActivity extends AppCompatActivity {
     private Uri imageURI;
-    private String imageString;
-    private String fileId;
+    private ArrayList<String> imageStrings;
     private final int REQUEST_LOCATION_PERMISSION = 1;
     private String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION};
     private int requestCode = 1;
@@ -77,6 +77,7 @@ public class AddRecordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_record);
+        imageStrings = new ArrayList<>();
 
         //Gets parentId
         Intent intent = getIntent();
@@ -124,7 +125,10 @@ public class AddRecordActivity extends AppCompatActivity {
                 Record record = new Record();
                 record.setFileId(fileId);
                 try {
-                    new PhotoController().addPhoto(record.getFileId(), imageString);
+
+                    new PhotoController().addPhoto(record.getFileId(), imageStrings);
+
+
                 }catch (Exception e){
                     Log.d("AddRecord", "Failed to add photo");
                 }
@@ -190,8 +194,9 @@ public class AddRecordActivity extends AppCompatActivity {
                 ImageView imagePreview = findViewById(R.id.addRecordActivityImagePreview);
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageURI);
-                    imageString = new BitmapPhotoEncodeDecodeManager.EncodeBitmapTask().execute(bitmap).get();
-                    Bitmap smallBitmap = new BitmapPhotoEncodeDecodeManager.DecodeBitmapTask().execute(imageString).get();
+                    String fullSizeImage = new BitmapPhotoEncodeDecodeManager.EncodeBitmapTask().execute(bitmap).get();
+                    imageStrings.add(fullSizeImage);
+                    Bitmap smallBitmap = new BitmapPhotoEncodeDecodeManager.DecodeBitmapTask().execute(fullSizeImage).get();
                     imagePreview.setImageBitmap(smallBitmap);
 //                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 //                    bitmap.compress(Bitmap.CompressFormat.JPEG, 70, byteArrayOutputStream);

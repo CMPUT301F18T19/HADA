@@ -54,7 +54,7 @@ public class ImageGridAdapter extends BaseAdapter {
         }
 
 
-        imageView.setImageBitmap(bitmaps.get(0));
+        imageView.setImageBitmap(bitmaps.get(position));
         Log.v("2", "Just assigned imageview");
         return imageView;
 

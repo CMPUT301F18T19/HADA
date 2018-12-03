@@ -14,45 +14,32 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.provider.MediaStore;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
-import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.Resource;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.PhotoController;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.RecordController;
+
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.BitmapPhotoEncodeDecodeManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Photos;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 
-import static android.graphics.drawable.Drawable.createFromStream;
-
+/**
+ * The type View photos in record activity.
+ *
+ * @Author Austin Goebel, Joseph Potentier
+ */
 public class ViewPhotosInRecordActivity extends AppCompatActivity {
 
     private Photos photos_array;
     private ArrayList<Bitmap> bitmaps = new ArrayList<>();
-    private CustomPhotoAdapter customPhotoAdapter;
-    ViewPager viewPager;
+    /**
+     * The Grid view.
+     */
     GridView gridView;
-    private ImageGridAdapter imageGridAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,13 +62,7 @@ public class ViewPhotosInRecordActivity extends AppCompatActivity {
             }
             bitmaps.add(bp);
         }
-
         gridView = findViewById(R.id.viewPhotosInRecordActivityGridView);
         gridView.setAdapter(new ImageGridAdapter(this, bitmaps));
-
-
-
-
-
     }
 }
