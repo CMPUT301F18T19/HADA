@@ -13,7 +13,6 @@ import java.util.UUID;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBcontract;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBOpenHelper;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBcontract.problemTable;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ContextSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 
 /**
@@ -58,6 +57,7 @@ public class DBProblemManager {
         values.put(problemTable.COL_DATE, problem.getDate().toString());
         values.put(problemTable.COL_DESC, problem.getDesc());
         db.insert(problemTable.TABLE_NAME, null, values);
+        setProblemSyncFlag(problem.getFileId(), false);
     }
 
     /**
@@ -143,6 +143,7 @@ public class DBProblemManager {
                 problemTable.COL_FILEID + " = ?",
                 new String[] { fileID }
         );
+        setProblemSyncFlag(fileID, false);
         return rowsUpdated;
     }
 
@@ -163,6 +164,7 @@ public class DBProblemManager {
                 problemTable.COL_FILEID + " = ?",
                 new String[] { fileID }
         );
+        setProblemSyncFlag(fileID, false);
         return rowsUpdated;
     }
 
@@ -183,6 +185,7 @@ public class DBProblemManager {
                 problemTable.COL_FILEID + " = ?",
                 new String[] { fileID }
         );
+        setProblemSyncFlag(fileID, false);
         return rowsUpdated;
     }
 
@@ -265,4 +268,47 @@ public class DBProblemManager {
         return problem;
     }
 
+    /**
+     * set the sync column for a given problem to syncVal
+     * @param  problemID a problem's fileID
+     * @param syncVal a boolean to set the sync column to
+     */
+    public void setProblemSyncFlag(String problemID, Boolean syncVal) {
+        ContentValues value = new ContentValues();
+        if (syncVal)                                // syncVal == true
+            value.put(problemTable.COL_SYNCED, 1);
+        else                                        // syncVal == false
+            value.put(problemTable.COL_SYNCED, 0);
+        db.update(
+                problemTable.TABLE_NAME,
+                value,
+                problemTable.COL_FILEID + " =?",
+                new String[] { problemID }
+        );
+    }
+
+    /**
+     * get a list of problems in the database that are not synced to
+     * the ES server
+     * @return list of problems that are not synced to the ES server
+     */
+    public ArrayList<Problem> getUnSyncedProblems() {
+        ArrayList<Problem> resultList = new ArrayList<>();
+        Cursor c = db.query(
+                problemTable.TABLE_NAME,
+                null,
+                problemTable.COL_SYNCED + " = ?",
+                new String[] { Integer.toString(0) },   // query rows with syncFlag of 0
+                null,
+                null,
+                null
+        );
+        if (c.getCount() > 0) {         // if there is results, else return empty list
+            while (c.moveToNext()) {
+                resultList.add(buildProblem(c));
+            }
+        }
+        c.close();
+        return resultList;
+    }
 }

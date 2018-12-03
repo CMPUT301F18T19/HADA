@@ -23,7 +23,6 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBcontract;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBcontract.careProviderTable;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBcontract.patientTable;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBOpenHelper;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ContextSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.User;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
@@ -62,7 +61,9 @@ public class DBUserManager {
         values.put(patientTable.COL_USERID, patient.getUserID());
         values.put(patientTable.COL_PHONE, patient.getPhoneNumber());
         values.put(patientTable.COL_EMAIL, patient.getEmailAddress());
+        values.put(patientTable.COL_SHORTCODE, patient.getShortCode());
         db.insert(patientTable.TABLE_NAME, null, values);
+        setPatientSyncFlag(patient.getUserID(), false);
     }
 
     /**
@@ -107,6 +108,8 @@ public class DBUserManager {
                     c.getString(c.getColumnIndexOrThrow(patientTable.COL_PHONE)),
                     c.getString(c.getColumnIndexOrThrow(patientTable.COL_EMAIL))
             );
+            patient.setParentId(c.getString(c.getColumnIndexOrThrow(patientTable.COL_PARENTID)));
+            patient.setShortCode(c.getString(c.getColumnIndexOrThrow(patientTable.COL_SHORTCODE)));
         }
         c.close();
         return patient;
@@ -130,12 +133,14 @@ public class DBUserManager {
         );
         if (c.getCount() > 0) {         // if there is results, else return empty list
             while (c.moveToNext()) {
-                patientList.add(
-                    new Patient(
-                    c.getString(c.getColumnIndexOrThrow(patientTable.COL_USERID)),
-                    c.getString(c.getColumnIndexOrThrow(patientTable.COL_PHONE)),
-                    c.getString(c.getColumnIndexOrThrow(patientTable.COL_EMAIL))
-                ));
+                Patient patient = new Patient(
+                        c.getString(c.getColumnIndexOrThrow(patientTable.COL_USERID)),
+                        c.getString(c.getColumnIndexOrThrow(patientTable.COL_PHONE)),
+                        c.getString(c.getColumnIndexOrThrow(patientTable.COL_EMAIL))
+                );
+                patient.setParentId(c.getString(c.getColumnIndexOrThrow(patientTable.COL_PARENTID)));
+                patient.setShortCode(c.getString(c.getColumnIndexOrThrow(patientTable.COL_SHORTCODE)));
+                patientList.add(patient);
             }
         }
         c.close();
@@ -155,6 +160,7 @@ public class DBUserManager {
         values.put(careProviderTable.COL_PHONE, careProvider.getPhoneNumber());
         values.put(careProviderTable.COL_EMAIL, careProvider.getEmailAddress());
         db.insert(careProviderTable.TABLE_NAME, null, values);
+        setCareProviderSyncFlag(careProvider.getUserID(), false);
     }
 
     /**
@@ -219,6 +225,7 @@ public class DBUserManager {
                 patientTable.COL_USERID + " = ?",
                 new String[] { patientID }
         );
+        setPatientSyncFlag(patientID, false);
         return rowsUpdated;
     }
 
@@ -238,6 +245,7 @@ public class DBUserManager {
                 patientTable.COL_USERID + " = ?",
                 new String[] { patientID }
         );
+        setPatientSyncFlag(patientID, false);
         return rowsUpdated;
     }
 
@@ -257,6 +265,7 @@ public class DBUserManager {
                 patientTable.COL_USERID + " = ?",
                 new String[] { patientID }
         );
+        setPatientSyncFlag(patientID, false);
         return rowsUpdated;
     }
 
@@ -276,6 +285,7 @@ public class DBUserManager {
                 patientTable.COL_USERID + " = ?",
                 new String[] { patientID }
         );
+        setPatientSyncFlag(patientID, false);
         return rowsUpdated;
     }
 
@@ -296,6 +306,7 @@ public class DBUserManager {
                 careProviderTable.COL_USERID + " = ?",
                 new String[] { careProviderID }
         );
+        setCareProviderSyncFlag(careProviderID, false);
         return rowsUpdated;
 
     }
@@ -316,6 +327,7 @@ public class DBUserManager {
                 careProviderTable.COL_USERID + " = ?",
                 new String[] { careProviderID }
         );
+        setCareProviderSyncFlag(careProviderID, false);
         return rowsUpdated;
 
     }
@@ -374,5 +386,105 @@ public class DBUserManager {
         c.close();
         Log.d("existsCareProvider", "Counted " + count +", so I return " + (count > 0));
         return  (count > 0);
+    }
+
+    /**
+     * set the sync column for a given patient to syncVal
+     * @param  userID a patient's userID
+     * @param syncVal a boolean to set the sync column to
+     */
+    public void setPatientSyncFlag(String userID, Boolean syncVal) {
+        ContentValues value = new ContentValues();
+        if (syncVal)                                // syncVal == true
+            value.put(patientTable.COL_SYNCED, 1);
+        else                                        // syncVal == false
+            value.put(patientTable.COL_SYNCED, 0);
+        db.update(
+                patientTable.TABLE_NAME,
+                value,
+                patientTable.COL_USERID + " =?",
+                new String[] { userID }
+                );
+    }
+
+    /**
+     * set the sync column for a given careProvider to syncVal
+     * @param  userID a careProvider's userID
+     * @param syncVal a boolean to set the sync column to
+     */
+    public void setCareProviderSyncFlag(String userID, Boolean syncVal) {
+        ContentValues value = new ContentValues();
+        if (syncVal)                                // syncVal == true
+            value.put(careProviderTable.COL_SYNCED, 1);
+        else                                        // syncVal == false
+            value.put(careProviderTable.COL_SYNCED, 0);
+        db.update(
+                careProviderTable.TABLE_NAME,
+                value,
+                careProviderTable.COL_USERID + " =?",
+                new String[] { userID }
+        );
+    }
+
+    /**
+     * get a list of patients in the database that are not synced to
+     * the ES server
+     * @return list of patients that are not synced to the ES server
+     */
+    public ArrayList<Patient> getUnSyncedPatients() {
+        ArrayList<Patient> resultList = new ArrayList<>();
+        Cursor c = db.query(
+                patientTable.TABLE_NAME,
+                null,
+                patientTable.COL_SYNCED + " = ?",
+                new String[] { Integer.toString(0) },   // query rows with syncFlag of 0
+                null,
+                null,
+                null
+        );
+        if (c.getCount() > 0) {         // if there is results, else return empty list
+            while (c.moveToNext()) {
+                Patient patient = new Patient(
+                        c.getString(c.getColumnIndexOrThrow(patientTable.COL_USERID)),
+                        c.getString(c.getColumnIndexOrThrow(patientTable.COL_PHONE)),
+                        c.getString(c.getColumnIndexOrThrow(patientTable.COL_EMAIL))
+                );
+                patient.setParentId(c.getString(c.getColumnIndexOrThrow(patientTable.COL_PARENTID)));
+                patient.setShortCode(c.getString(c.getColumnIndexOrThrow(patientTable.COL_SHORTCODE)));
+                resultList.add(patient);
+            }
+        }
+        c.close();
+        return resultList;
+    }
+
+    /**
+     * get a list of careProviders in the database that are not synced to
+     * the ES server
+     * @return list of careProviders that are not synced to the ES server
+     */
+    public ArrayList<CareProvider> getUnSyncedCareProviders() {
+        ArrayList<CareProvider> resultList = new ArrayList<>();
+        Cursor c = db.query(
+                careProviderTable.TABLE_NAME,
+                null,
+                careProviderTable.COL_SYNCED + " = ?",
+                new String[] { Integer.toString(0) },   // query rows with syncFlag of 0
+                null,
+                null,
+                null
+        );
+        if (c.getCount() > 0) {         // if there is results, else return empty list
+            while (c.moveToNext()) {
+                CareProvider cp = new CareProvider(
+                        c.getString(c.getColumnIndexOrThrow(careProviderTable.COL_USERID)),
+                        c.getString(c.getColumnIndexOrThrow(careProviderTable.COL_PHONE)),
+                        c.getString(c.getColumnIndexOrThrow(careProviderTable.COL_EMAIL))
+                );
+                resultList.add(cp);
+            }
+        }
+        c.close();
+        return resultList;
     }
 }

@@ -49,6 +49,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                         careProviderTable.COL_USERID + " TEXT," +
                         careProviderTable.COL_PHONE + " TEXT," +
                         careProviderTable.COL_EMAIL + " TEXT," +
+                        careProviderTable.COL_SYNCED + " INTEGER," +
                         "PRIMARY KEY (" + careProviderTable.COL_USERID + ")" +
                         ")"
         );
@@ -61,6 +62,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                         patientTable.COL_PHONE + " TEXT," +
                         patientTable.COL_EMAIL + " TEXT," +
                         patientTable.COL_SHORTCODE + " TEXT," +
+                        careProviderTable.COL_SYNCED + " INTEGER," +
                         "PRIMARY KEY (" + patientTable.COL_USERID + ")," +
                         "FOREIGN KEY (" + patientTable.COL_PARENTID + ") " +
                         "REFERENCES " + careProviderTable.TABLE_NAME +
@@ -76,6 +78,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                         problemTable.COL_TITLE + " TEXT," +
                         problemTable.COL_DATE + " TEXT," +
                         problemTable.COL_DESC + " TEXT," +
+                        careProviderTable.COL_SYNCED + " INTEGER," +
                         "PRIMARY KEY (" + problemTable.COL_FILEID + ")," +
                         "FOREIGN KEY (" + problemTable.COL_PARENTID + ") " +
                         "REFERENCES " + patientTable.TABLE_NAME +
@@ -96,6 +99,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                         recordTable.COL_LAT + " REAL," +
                         recordTable.COL_LON + " REAL," +
                         recordTable.COL_BODYLOCATION + " TEXT," +
+                        careProviderTable.COL_SYNCED + " INTEGER," +
                         "PRIMARY KEY (" + recordTable.COL_FILEID + ")," +
                         "FOREIGN KEY (" + recordTable.COL_PARENTID + ") " +
                         "REFERENCES " + problemTable.TABLE_NAME +

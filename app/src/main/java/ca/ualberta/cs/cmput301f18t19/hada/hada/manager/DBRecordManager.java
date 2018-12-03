@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBOpenHelper;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBcontract;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBcontract.recordTable;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ContextSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 
 /**
@@ -55,6 +54,7 @@ public class DBRecordManager {
         values.put(recordTable.COL_LON, newRecord.getLocation().longitude);
         values.put(recordTable.COL_BODYLOCATION, newRecord.getBodyLocation());
         db.insert(recordTable.TABLE_NAME, null, values);
+        setRecordSyncFlag(newRecord.getFileId(), false);
     }
 
     /**
@@ -139,6 +139,7 @@ public class DBRecordManager {
                 recordTable.COL_FILEID + " = ?",
                 new String[] { recordID }
         );
+        setRecordSyncFlag(recordID, false);
         return rowsUpdated;
     }
 
@@ -158,6 +159,7 @@ public class DBRecordManager {
                 recordTable.COL_FILEID + " = ?",
                 new String[] { recordID }
         );
+        setRecordSyncFlag(recordID, false);
         return rowsUpdated;
     }
 
@@ -178,6 +180,7 @@ public class DBRecordManager {
                 recordTable.COL_FILEID + " = ?",
                 new String[] { recordID }
         );
+        setRecordSyncFlag(recordID, false);
         return rowsUpdated;
     }
 
@@ -268,6 +271,7 @@ public class DBRecordManager {
     //TODO
     public int editRecordPhoto(){
         //TODO
+        // setRecordSyncFlag(recordID, false);
         return -1;
 
     }
@@ -275,6 +279,7 @@ public class DBRecordManager {
     //TODO
     public int editRecordBodyLocation() {
         //TODO
+        // setRecordSyncFlag(recordID, false);
         return -1;
 
     }
@@ -327,4 +332,47 @@ public class DBRecordManager {
         return record;
     }
 
+    /**
+     * set the sync column for a given record to syncVal
+     * @param  recordID a record's fileID
+     * @param syncVal a boolean to set the sync column to
+     */
+    public void setRecordSyncFlag(String recordID, Boolean syncVal) {
+        ContentValues value = new ContentValues();
+        if (syncVal)                                // syncVal == true
+            value.put(recordTable.COL_SYNCED, 1);
+        else                                        // syncVal == false
+            value.put(recordTable.COL_SYNCED, 0);
+        db.update(
+                recordTable.TABLE_NAME,
+                value,
+                recordTable.COL_FILEID + " =?",
+                new String[] { recordID }
+        );
+    }
+
+    /**
+     * get a list of records in the database that are not synced to
+     * the ES server
+     * @return list of records that are not synced to the ES server
+     */
+    public ArrayList<Record> getUnSyncedRecords() {
+        ArrayList<Record> resultList = new ArrayList<>();
+        Cursor c = db.query(
+                recordTable.TABLE_NAME,
+                null,
+                recordTable.COL_SYNCED + " = ?",
+                new String[] { Integer.toString(0) },   // query rows with syncFlag of 0
+                null,
+                null,
+                null
+        );
+        if (c.getCount() > 0) {         // if there is results, else return empty list
+            while (c.moveToNext()) {
+                resultList.add(buildRecord(c));
+            }
+        }
+        c.close();
+        return resultList;
+    }
 }

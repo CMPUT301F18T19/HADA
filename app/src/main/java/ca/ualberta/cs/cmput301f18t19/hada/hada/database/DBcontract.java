@@ -32,6 +32,7 @@ public class DBcontract {
         public static final String COL_USERID = "userID";
         public static final String COL_PHONE = "phone";
         public static final String COL_EMAIL = "email";
+        public static final String COL_SYNCED = "syncFlag";
     }
 
     /**
@@ -45,6 +46,7 @@ public class DBcontract {
         public static final String COL_PHONE = "phone";
         public static final String COL_EMAIL = "email";
         public static final String COL_SHORTCODE = "shortCode";
+        public static final String COL_SYNCED = "syncFlag";
     }
 
     /**
@@ -58,6 +60,7 @@ public class DBcontract {
         public static final String COL_TITLE = "title";
         public static final String COL_DATE = "date";
         public static final String COL_DESC = "description";
+        public static final String COL_SYNCED = "syncFlag";
     }
 
     /**
@@ -75,6 +78,7 @@ public class DBcontract {
         public static final String COL_LAT = "loc_latitude";
         public static final String COL_LON = "loc_longitude";
         public static final String COL_BODYLOCATION = "bodyLocation";
+        public static final String COL_SYNCED = "syncFlag";
     }
 
 }
