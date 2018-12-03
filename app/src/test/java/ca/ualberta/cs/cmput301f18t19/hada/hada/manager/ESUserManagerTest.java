@@ -28,18 +28,48 @@ import io.searchbox.core.Search;
 import static org.junit.Assert.*;
 
 /**
- * Test class for ESUserManager. Not completed as of now.
+ * Tests for ESUserManager class.
  *
  * @author Christopher Penner
- * @version 0.1
+ * @see ESUserManager
  */
 public class ESUserManagerTest {
 
+    /**
+     * Test get patient task.
+     */
     @Test
-    public void GetPatientTask() {
-        // TODO GetPatientTask
+    public void TestAGetPatientTask() {
+        ESUserManager.GetAPatientTask getPatientTask = new ESUserManager.GetAPatientTask();
+        assertNotNull(getPatientTask);
     }
-    // TODO public void AddPatientTask() {}
-    // TODO public void AddCareProviderTask() {}
-    // TODO public void GetCareProviderTask() {}
+
+    /**
+     * Test add patient task.
+     */
+    @Test
+    public void TestAddPatientTask() {
+        ESUserManager.AddPatientTask addPatientTask = new ESUserManager.AddPatientTask();
+        assertNotNull(addPatientTask);
+    }
+
+    /**
+     * Test get care provider task.
+     */
+    @Test
+    public void TestGetACareProviderTask() {
+        ESUserManager.GetACareProviderTask getACareProviderTask
+                = new ESUserManager.GetACareProviderTask();
+        assertNotNull(getACareProviderTask);
+    }
+
+    /**
+     * Test add care provider task.
+     */
+    @Test
+    public void TestAddCareProviderTask() {
+        ESUserManager.AddCareProviderTask addCareProviderTask
+                = new ESUserManager.AddCareProviderTask();
+        assertNotNull(addCareProviderTask);
+    }
 }
