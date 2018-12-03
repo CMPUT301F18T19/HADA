@@ -14,9 +14,7 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -38,11 +36,31 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.BodyLocation;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Photos;
 
+/**
+ * The type Get body location.
+ *
+ * @author Jason Robok, Joe Potentier
+ */
 public class GetBodyLocation extends AppCompatActivity {
+    /**
+     * The front photo of the new ref image.
+     */
     Uri picture1;
+    /**
+     * The back photo of the new ref image.
+     */
     Uri picture2;
+    /**
+     * The Parent id, IE the record fileId.
+     */
     String parentId;
+    /**
+     * The location, which represents the area on the body to be chosen.
+     */
     String location;
+    /**
+     * The logged in user.
+     */
     String loggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
 
     @Override
@@ -166,6 +184,14 @@ public class GetBodyLocation extends AppCompatActivity {
 
 
     }
+
+    /**
+     * Do work.
+     *
+     * Decides whether or not to take new pics or use previously saved ref picture.
+     *
+     * @param type the body location
+     */
     private void DoWork(String type){
         location = type;
         Photos photo = new PhotoController().getRefPhoto(loggedInUser + type);
@@ -206,6 +232,11 @@ public class GetBodyLocation extends AppCompatActivity {
         }
     }
 
+    /**
+     * Build body.
+     *
+     * Builds the new refPhoto and body location objects
+     */
     public void buildBody(){
         BodyLocation bodyLocation = new BodyLocation();
         bodyLocation.setBodyLocation(location);
@@ -218,8 +249,6 @@ public class GetBodyLocation extends AppCompatActivity {
             Bitmap combined = overlay(bitmap1,bitmap2);
              refImageBitmapString = new BitmapPhotoEncodeDecodeManager.EncodeBitmapTask().execute(combined).get();
              Log.d("buildBody", refImageBitmapString);
-            //Uri comb = saveImage(combined);
-            //bodyLocation.setPhotoUri(comb.toString()); set coords instead
         } catch (IOException e) {
             e.printStackTrace();
         }catch (ExecutionException e){
@@ -237,6 +266,13 @@ public class GetBodyLocation extends AppCompatActivity {
 
     }
 
+    /**
+     * Overlay bitmap.
+     *
+     * @param bmp1 a bitmap to be stitched
+     * @param bmp2 the bitmap to be stitched to bmp1
+     * @return the stitched bitmap
+     */
     public static Bitmap overlay(Bitmap bmp1, Bitmap bmp2) {
         //Courtesy of Stackoverflow user xil3 (Original author - https://stackoverflow.com/users/380579/xil3)
         // and adneal (Editor - https://stackoverflow.com/users/420015/adneal)  - Post: https://stackoverflow.com/a/4863551/10454730
