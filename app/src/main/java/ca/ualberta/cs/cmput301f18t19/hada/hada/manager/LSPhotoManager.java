@@ -23,6 +23,7 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Photos;
  * @see Photos
  */
 public class LSPhotoManager {
+    private final String TAG = "photoController";
     private File INTERNAL_DIR;
 
     /**
@@ -44,6 +45,7 @@ public class LSPhotoManager {
                 photo.setFileID(fileId);
             }
             File file = new File(INTERNAL_DIR, photo.getFileID());
+            Log.d(TAG, "addPhoto: " + file.getAbsolutePath());
             FileOutputStream fos= new FileOutputStream(file);
             ObjectOutputStream oos= new ObjectOutputStream(fos);
             oos.writeObject(photo);
@@ -63,6 +65,7 @@ public class LSPhotoManager {
     public Photos getPhotoByFileID(String fileID) {
         try {
             File file = new File(INTERNAL_DIR, fileID);
+            Log.d(TAG, "getPhotoByFileID: " + file.getAbsolutePath());
             FileInputStream fos = new FileInputStream(file);
             ObjectInputStream ois = new ObjectInputStream(fos);
             Photos photo = (Photos) ois.readObject();
@@ -85,12 +88,15 @@ public class LSPhotoManager {
         File files[] = INTERNAL_DIR.listFiles();
         for (File file:files){
             try {
+                Log.d(TAG, "getPhotoByParentID: " + file.getAbsolutePath());
                 FileInputStream fos = new FileInputStream(file);
                 ObjectInputStream ois = new ObjectInputStream(fos);
                 Photos photo = (Photos) ois.readObject();
                 fos.close(); ois.close();
-                if (photo.getParentId().equals(parentID))
+                Log.d(TAG, "getPhotoByParentID: " + photo.getParentId() + "==" + parentID);
+                if (photo.getParentId().equals(parentID)){
                     return photo;
+                }
             } catch (IOException | ClassNotFoundException e) { e.printStackTrace(); }
         }
         return null;

@@ -12,6 +12,7 @@
 
 package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -22,7 +23,7 @@ import java.util.ArrayList;
  * @version 2.0
  * @see Record
  */
-public class Photos {
+public class Photos implements Serializable {
     private String parentId;
     private String fileID;
     private ArrayList<String> bitmaps;

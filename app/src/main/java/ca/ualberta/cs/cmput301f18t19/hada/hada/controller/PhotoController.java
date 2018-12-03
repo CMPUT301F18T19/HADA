@@ -21,6 +21,7 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Photos;
  * @see ESPhotoManager
  */
 public class PhotoController {
+    private final String TAG = "photoController";
     private SyncManager syncManager;
     private Context context = ContextSingleton.getInstance().getContext();
 
@@ -39,6 +40,7 @@ public class PhotoController {
      * @return the photos
      */
     public Photos getPhotos(String parentID){
+        Log.d(TAG, "getPhotos: ");
         if(syncManager.isConnectedINET()){
             Photos photos = null;
             try {
@@ -52,6 +54,7 @@ public class PhotoController {
             }
             return photos;
         }else{
+            Log.d(TAG, "getPhotos: using LS");
             return new LSPhotoManager(context).getPhotoByParentID(parentID);
         }
     }
@@ -63,6 +66,7 @@ public class PhotoController {
      * @param bitmapString the bitmap string
      */
     public void addPhoto(String parentId, String bitmapString){
+        Log.d(TAG, "addPhoto: ");
         Photos newPhoto = new Photos();
         newPhoto.setParentId(parentId);
         ArrayList<String> bitmaps = new ArrayList<>();
@@ -78,6 +82,7 @@ public class PhotoController {
     }
 
     public void addRefPhoto(String bitmapString, String bodyLocation){
+        Log.d(TAG, "addRefPhoto: ");
         String username = LoggedInSingleton.getInstance().getLoggedInID();
         ArrayList<String> bitmap = new ArrayList<>();
         bitmap.add(bitmapString);
@@ -97,6 +102,7 @@ public class PhotoController {
     }
 
     public Photos getRefPhoto(String refImageFileId){
+        Log.d(TAG, "getRefPhoto: ");
         Photos photo = null;
         if (syncManager.isConnectedINET()){
             try {
