@@ -1,5 +1,6 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada.controller;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -20,7 +21,9 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Photos;
  * @see ESPhotoManager
  */
 public class PhotoController {
-    SyncManager syncManager;
+    private SyncManager syncManager;
+    private Context context = ContextSingleton.getInstance().getContext();
+
     /**
      * Instantiates a new Photo controller.
      */
@@ -49,9 +52,8 @@ public class PhotoController {
             }
             return photos;
         }else{
-            return new LSPhotoManager(ContextSingleton.getInstance().getContext()).getPhoto(parentID);
+            return new LSPhotoManager(context).getPhotoByParentID(parentID);
         }
-
     }
 
     /**
@@ -61,45 +63,18 @@ public class PhotoController {
      * @param bitmapString the bitmap string
      */
     public void addPhoto(String parentId, String bitmapString){
+        Photos newPhoto = new Photos();
+        newPhoto.setParentId(parentId);
+        ArrayList<String> bitmaps = new ArrayList<>();
+        bitmaps.add(bitmapString);
+        newPhoto.setBitmaps(bitmaps);
 
-        Photos photos = new LSPhotoManager(ContextSingleton.getInstance().getContext()).getPhoto(parentId);
-        if(!new LSPhotoManager(ContextSingleton.getInstance().getContext()).existsPhoto(photos.getFileID())){
-            new LSPhotoManager(ContextSingleton.getInstance().getContext()).addPhoto(photos);
+        if (syncManager.isConnectedINET()){
+            new ESPhotoManager.AddPhotosTask().execute(newPhoto);
         }
-        if(photos.getBitmaps() != null){
-            ArrayList<String> bitmaps = photos.getBitmaps();
-            bitmaps.add(bitmapString);
-            photos.setBitmaps(bitmaps);
-
-        }else{
-            ArrayList<String> bitmaps = new ArrayList<>();
-            bitmaps.add(bitmapString);
-            photos.setBitmaps(bitmaps);
+        else {
+            new LSPhotoManager(context).addPhoto(newPhoto);
         }
-
-        String newBitmapString = new LSPhotoManager(ContextSingleton.getInstance().getContext())
-                .bitmaps2json(photos.getBitmaps());
-        new LSPhotoManager(ContextSingleton.getInstance().getContext())
-                .editPhotoBitmap(photos.getFileID(), newBitmapString);
-        syncManager.syncDB2ES();
-//        ArrayList<Photos> photos;
-//        Photos photo = new Photos();
-//        ArrayList<String> bitmaps = new ArrayList<>();
-//        try {
-//            photos = new ESPhotoManager.GetPhotoListTask().execute(parentId).get();
-//            if(photos.size()>0){
-//                photo = photos.get(0);
-//                bitmaps = photo.getBitmaps();
-//            }
-//        } catch (Exception e) {
-//            Log.d("addPhoto", "Couldn't retrieve record list from ES");
-//            e.printStackTrace();
-//        }
-//        bitmaps.add(bitmapString);
-//        photo.setBitmaps(bitmaps);
-//        photo.setParentId(parentId);
-//        new ESPhotoManager.AddPhotosTask().execute(photo);
-
     }
 
     public void addRefPhoto(String bitmapString, String bodyLocation){
@@ -111,19 +86,29 @@ public class PhotoController {
         refPhoto.setParentId(username); //the patient that is logged in
         String fileId = username + bodyLocation; //we append the bodyLocation to the username, creating a unique fileId.
         refPhoto.setFileID(fileId);
-        new ESPhotoManager.AddPhotosTask().execute(refPhoto);
+
+        if (syncManager.isConnectedINET()){
+            new ESPhotoManager.AddPhotosTask().execute(refPhoto);
+        }
+        else {
+            new LSPhotoManager(context).addPhoto(refPhoto);
+        }
+
     }
 
     public Photos getRefPhoto(String refImageFileId){
         Photos photo = null;
-        try {
-            photo = new ESPhotoManager.GetAPhotoTask().execute(refImageFileId).get();
-        }catch (Exception e){
-            Log.d("getRefPhoto","couldn't get photos");
-            e.printStackTrace();
+        if (syncManager.isConnectedINET()){
+            try {
+                photo = new ESPhotoManager.GetAPhotoTask().execute(refImageFileId).get();
+            }catch (Exception e){
+                Log.d("getRefPhoto","couldn't get photos");
+                e.printStackTrace();
+            }
+        }
+        else {
+            photo = new LSPhotoManager(context).getPhotoByFileID(refImageFileId);
         }
         return photo;
     }
-
-
 }
