@@ -131,15 +131,15 @@ public class SearchInputActivity extends AppCompatActivity {
         ArrayList<String> bodyParts = new ArrayList<>();
         bodyParts.add("Head");
         bodyParts.add("Chest");
-        bodyParts.add("left arm upper");
-        bodyParts.add("right arm upper");
-        bodyParts.add("left arm lower");
-        bodyParts.add("right arm lower");
+        bodyParts.add("Left arm upper");
+        bodyParts.add("Right arm upper");
+        bodyParts.add("Left arm lower");
+        bodyParts.add("Right arm lower");
         bodyParts.add("Stomach");
-        bodyParts.add("left leg upper");
-        bodyParts.add("right leg upper");
-        bodyParts.add("left leg lower");
-        bodyParts.add("right leg lower");
+        bodyParts.add("Left leg upper");
+        bodyParts.add("Right leg upper");
+        bodyParts.add("Left leg lower");
+        bodyParts.add("Right leg lower");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, bodyParts);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         bodyLocationInput.setAdapter(dataAdapter);
@@ -176,8 +176,9 @@ public class SearchInputActivity extends AppCompatActivity {
 
                 }
                 else if(bodyLocationRadio.isChecked()){
-                    //toPassToIntent = bodyLocationInput.getSelectedItem().getID; //TODO Get item from the spinner
-                    Toast.makeText(SearchInputActivity.this,"Body-Location searching is currently not supported.", Toast.LENGTH_SHORT).show();
+                    String bodyLocToSearch = bodyLocationInput.getSelectedItem().toString();
+                    intent.putExtra("bodyLocation", bodyLocToSearch);
+                    valid =true;
                 }
                 else{ //Run if something went wrong in the activity and closes it.
                     Toast.makeText(SearchInputActivity.this,"Something went wrong. Try again.", Toast.LENGTH_SHORT).show();

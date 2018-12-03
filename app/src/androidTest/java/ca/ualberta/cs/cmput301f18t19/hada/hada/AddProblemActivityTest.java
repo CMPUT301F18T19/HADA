@@ -37,16 +37,16 @@ public class AddProblemActivityTest {
     @Before
     public void loginTestPatient(){
         new UserController()
-                .addPatient("patient_problemlistactivity", "789789", "no@email.com");
+                .addPatient("intenttestpatient", "789789", "no@email.com");
         Espresso.onView(withId(R.id.mainActivityUsernameText))
-                .perform(typeText("patient_problemlistactivity"), closeSoftKeyboard());
+                .perform(typeText("intenttestpatient"), closeSoftKeyboard());
         Espresso.onView(withId(R.id.mainActivityPatientLogin)).perform(click());
         Espresso.onView(withId(R.id.problemListFloatingButton)).perform(click());
     }
 
     @After
     public void deleteTestPatient(){
-        new UserController().deletePatient("patient_problemlistactivity");
+        new UserController().deletePatient("intenttestpatient");
     }
     @Test
     public void testNoInput(){
@@ -70,7 +70,7 @@ public class AddProblemActivityTest {
         Espresso.onView(withId(R.id.addProblemDescription))
                 .perform(typeText("testDesc"), closeSoftKeyboard());
         Espresso.onView(withId(R.id.addProblemButton)).perform(click());
-        Espresso.onView(withText(testTitle)).check(matches(isDisplayed()));
+        Espresso.onView(withText(containsString(testTitle))).check(matches(isDisplayed()));
     }
 
     @Test
@@ -107,7 +107,7 @@ public class AddProblemActivityTest {
         Espresso.onView(withText("OK")).perform(click());
         Espresso.onView(withId(R.id.addProblemDate)).check(matches(withText(containsString("1998-02-11T01:01"))));
         Espresso.onView(withId(R.id.addProblemButton)).perform(click());
-        Espresso.onView(withText(testTitle)).check(matches(isDisplayed()));
+        Espresso.onView(withText(containsString(testTitle))).check(matches(isDisplayed()));
 
     }
 

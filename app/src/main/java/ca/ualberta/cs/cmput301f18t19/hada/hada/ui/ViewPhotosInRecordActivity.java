@@ -14,13 +14,18 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
+import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.Resource;
@@ -29,22 +34,37 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.PhotoController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.RecordController;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.BitmapPhotoEncodeDecodeManager;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Photos;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 
 import static android.graphics.drawable.Drawable.createFromStream;
 
 public class ViewPhotosInRecordActivity extends AppCompatActivity {
 
-    public ArrayList<Uri> imgs;
-    private ArrayList<Bitmap> bitmaps;
+    private Photos photos_array;
+    private ArrayList<Bitmap> bitmaps = new ArrayList<>();
     private CustomPhotoAdapter customPhotoAdapter;
     ViewPager viewPager;
     GridView gridView;
     private ImageGridAdapter imageGridAdapter;
+
+    private ImageView image1 = null;
+    private ImageView image2 = null;
+    private ImageView image3 = null;
+    private ImageView image4 = null;
+    private ImageView image5 = null;
+    private ImageView image6 = null;
+    private ImageView image7 = null;
+    private ImageView image8 = null;
+    private ImageView image9 = null;
+    private ImageView image10 = null;
+
 
 
     @Override
@@ -54,31 +74,24 @@ public class ViewPhotosInRecordActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String recordFileId = intent.getStringExtra("recordFileId");
-        Record record = new RecordController().getRecord(recordFileId);
-        //imgs = new PhotoController().getPhotos(record);
-
-
+        photos_array = new PhotoController().getPhotos(recordFileId);
         
-        for (int i  = 0; i < imgs.size(); i++) {
+        for (int i  = 0; i < photos_array.getBitmaps().size(); i++) {
+            String imgString = photos_array.getBitmaps().get(i);
+            Bitmap bp = null;
             try {
-                bitmaps.add(MediaStore.Images.Media.getBitmap(this.getContentResolver(), imgs.get(i)));
-            } catch (IOException e) {
+                bp = new BitmapPhotoEncodeDecodeManager.DecodeBitmapTask().execute(imgString).get();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            bitmaps.add(bp);
         }
 
         gridView = findViewById(R.id.viewPhotosInRecordActivityGridView);
-        imageGridAdapter = new ImageGridAdapter(this, bitmaps);
-        gridView.setAdapter(imageGridAdapter);
-
-        /*
-        viewPager = findViewById(R.id.viewPhotosInRecordActivityViewPager);
-        customPhotoAdapter = new CustomPhotoAdapter(this);
-        viewPager.setAdapter(customPhotoAdapter);
-*/
-
-
-
+        gridView.setAdapter(new ImageGridAdapter(this, bitmaps));
+        
 
 
 

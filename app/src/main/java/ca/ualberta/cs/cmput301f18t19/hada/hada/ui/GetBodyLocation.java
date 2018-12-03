@@ -12,24 +12,47 @@
 
 package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 
+import android.Manifest;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.BodyLocationController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESBodyLocationManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.BodyLocation;
+import pub.devrel.easypermissions.EasyPermissions;
 
 public class GetBodyLocation extends AppCompatActivity {
+    Uri picture1;
+    Uri picture2;
+    String parentId;
+    String location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_body_location);
+
+        Intent intent = getIntent();
+        String parentId = intent.getStringExtra("parentId");
 
         Button leftLegUpper = findViewById(R.id.getBodyLocationActivityRightLegUpper);
         leftLegUpper.setVisibility(View.VISIBLE);
@@ -37,8 +60,8 @@ public class GetBodyLocation extends AppCompatActivity {
         leftLegUpper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GetBodyLocation.this, "right leg upper",Toast.LENGTH_SHORT).show();
-                DoWork("RightLegUpper");
+                Toast.makeText(GetBodyLocation.this, "Right leg upper",Toast.LENGTH_SHORT).show();
+                DoWork("Right leg upper");
             }
         });
         Button rightLegUpper = findViewById(R.id.getBodyLocationActivityLeftLegUpper);
@@ -47,8 +70,8 @@ public class GetBodyLocation extends AppCompatActivity {
         rightLegUpper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GetBodyLocation.this, "left leg upper",Toast.LENGTH_SHORT).show();
-                DoWork("LeftLegUpper");
+                Toast.makeText(GetBodyLocation.this, "Left leg upper",Toast.LENGTH_SHORT).show();
+                DoWork("Left leg upper");
             }
         });
         Button rightLegLower = findViewById(R.id.getBodyLocationActivityRightLegLower);
@@ -57,8 +80,8 @@ public class GetBodyLocation extends AppCompatActivity {
         rightLegLower.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GetBodyLocation.this, "right leg lower",Toast.LENGTH_SHORT).show();
-                DoWork("RightLegLower");
+                Toast.makeText(GetBodyLocation.this, "Right leg lower",Toast.LENGTH_SHORT).show();
+                DoWork("Right leg lower");
             }
         });
         Button leftLegLower = findViewById(R.id.getBodyLocationActivityLeftLegLower);
@@ -67,8 +90,8 @@ public class GetBodyLocation extends AppCompatActivity {
         leftLegLower.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GetBodyLocation.this, "left leg lower",Toast.LENGTH_SHORT).show();
-                DoWork("LeftLegLower");
+                Toast.makeText(GetBodyLocation.this, "Left leg lower",Toast.LENGTH_SHORT).show();
+                DoWork("Left leg lower");
             }
         });
         Button stomach = findViewById(R.id.getBodyLocationActivityStomach);
@@ -107,8 +130,8 @@ public class GetBodyLocation extends AppCompatActivity {
         rightArmLower.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GetBodyLocation.this, "right arm lower",Toast.LENGTH_SHORT).show();
-                DoWork("RightArmLower");
+                Toast.makeText(GetBodyLocation.this, "Right arm lower",Toast.LENGTH_SHORT).show();
+                DoWork("Right arm lower");
             }
         });
         Button rightArmUpper = findViewById(R.id.getBodyLocationActivityRightArmUpper);
@@ -117,8 +140,8 @@ public class GetBodyLocation extends AppCompatActivity {
         rightArmUpper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GetBodyLocation.this, "right arm upper",Toast.LENGTH_SHORT).show();
-                DoWork("RightArmUpper");
+                Toast.makeText(GetBodyLocation.this, "Right arm upper",Toast.LENGTH_SHORT).show();
+                DoWork("Right arm upper");
             }
         });
         Button leftArmLower = findViewById(R.id.getBodyLocationActivityLeftArmLower);
@@ -127,8 +150,8 @@ public class GetBodyLocation extends AppCompatActivity {
         leftArmLower.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GetBodyLocation.this, "left arm lower",Toast.LENGTH_SHORT).show();
-                DoWork("LeftArmLower");
+                Toast.makeText(GetBodyLocation.this, "Left arm lower",Toast.LENGTH_SHORT).show();
+                DoWork("Left arm lower");
             }
         });
         Button leftArmUpper = findViewById(R.id.getBodyLocationActivityLeftArmUpper);
@@ -137,23 +160,79 @@ public class GetBodyLocation extends AppCompatActivity {
         leftArmUpper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GetBodyLocation.this, "left arm upper",Toast.LENGTH_SHORT).show();
-                DoWork("LeftArmUpper");
+                Toast.makeText(GetBodyLocation.this, "Left arm upper",Toast.LENGTH_SHORT).show();
+                DoWork("Left arm upper");
             }
         });
 
 
-
     }
     private void DoWork(String type){
+        location = type;
+        Intent intent = new Intent(GetBodyLocation.this, CameraActivity.class);
+        intent.putExtra("TYPE","400");
+        startActivityForResult(intent, 400);
+        Toast.makeText(GetBodyLocation.this, "Take photos", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 400) {
+            if (resultCode == RESULT_OK) {
+                picture1 = Uri.parse(data.getStringExtra("URI"));
+                Intent intent = new Intent(GetBodyLocation.this,CameraActivity.class);
+                intent.putExtra("TYPE","500");
+                startActivityForResult(intent, 500);
+            }
+        }
+        if (requestCode == 500) {
+            if (resultCode == RESULT_OK) {
+                picture2 = Uri.parse(data.getStringExtra("URI"));
+                buildBody();
+            }
+        }
+    }
+
+    public void buildBody(){
         BodyLocation bodyLocation = new BodyLocation();
-        bodyLocation.setBodyLocation(type);
-        String uuid = bodyLocation.getFileID();
-        //TODO Camera stuff
-        new ESBodyLocationManager.AddBodyLocationTask().execute(bodyLocation);
-        Intent intent = new Intent();
-        intent.putExtra("UUID",uuid);
-        setResult(RESULT_OK, intent);
+        bodyLocation.setBodyLocation(location);
+        Bitmap bitmap1 = BitmapFactory.decodeFile(picture1.toString());
+        Bitmap bitmap2 = BitmapFactory.decodeFile(picture2.toString());
+        Bitmap combined = overlay(bitmap1,bitmap2);
+        Uri comb = saveImage(combined);
+        bodyLocation.setPhotoUri(comb.toString());
+        new BodyLocationController().addBodyLocation(bodyLocation, parentId);
+        Intent intent2 = new Intent();
+        setResult(RESULT_OK, intent2);
         finish();
+
+    }
+
+    public Uri saveImage(Bitmap bmp){
+        String folder = Environment.getExternalStorageDirectory().getAbsolutePath() + "/images";
+        File imageFile = new File(folder,String.valueOf(System.currentTimeMillis()) + ".jpg");
+        String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        if (EasyPermissions.hasPermissions(this,perms)) {
+            Log.d("saveImage",imageFile.getAbsoluteFile().toString());
+            try (FileOutputStream out = new FileOutputStream(imageFile.getAbsoluteFile().toString())) {
+                bmp.compress(Bitmap.CompressFormat.PNG, 100, out);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }else{
+            EasyPermissions.requestPermissions(GetBodyLocation.this, "We need perms to take pictures", 600, perms);
+            saveImage(bmp);
+        }
+        return Uri.fromFile(imageFile);
+    }
+    public static Bitmap overlay(Bitmap bmp1, Bitmap bmp2) {
+        Bitmap bmOverlay = Bitmap.createBitmap(bmp1.getWidth(), bmp1.getHeight(), bmp1.getConfig());
+        Canvas canvas = new Canvas(bmOverlay);
+        canvas.drawBitmap(bmp1, new Matrix(), null);
+        canvas.drawBitmap(bmp2, 0, 0, null);
+        return bmOverlay;
     }
 }
