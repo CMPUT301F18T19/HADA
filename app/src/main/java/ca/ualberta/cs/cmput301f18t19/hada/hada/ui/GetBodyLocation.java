@@ -14,6 +14,7 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -79,7 +80,7 @@ public class GetBodyLocation extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(GetBodyLocation.this, "Right leg upper",Toast.LENGTH_SHORT).show();
-                DoWork("Right leg upper");
+                DoWork("RightLegUpper");
             }
         });
         Button rightLegUpper = findViewById(R.id.getBodyLocationActivityLeftLegUpper);
@@ -89,7 +90,7 @@ public class GetBodyLocation extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(GetBodyLocation.this, "Left leg upper",Toast.LENGTH_SHORT).show();
-                DoWork("Left leg upper");
+                DoWork("LeftLegUpper");
             }
         });
         Button rightLegLower = findViewById(R.id.getBodyLocationActivityRightLegLower);
@@ -99,7 +100,7 @@ public class GetBodyLocation extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(GetBodyLocation.this, "Right leg lower",Toast.LENGTH_SHORT).show();
-                DoWork("Right leg lower");
+                DoWork("RightLegLower");
             }
         });
         Button leftLegLower = findViewById(R.id.getBodyLocationActivityLeftLegLower);
@@ -109,7 +110,7 @@ public class GetBodyLocation extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(GetBodyLocation.this, "Left leg lower",Toast.LENGTH_SHORT).show();
-                DoWork("Left leg lower");
+                DoWork("LeftLegLower");
             }
         });
         Button stomach = findViewById(R.id.getBodyLocationActivityStomach);
@@ -149,7 +150,7 @@ public class GetBodyLocation extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(GetBodyLocation.this, "Right arm lower",Toast.LENGTH_SHORT).show();
-                DoWork("Right arm lower");
+                DoWork("RightArmLower");
             }
         });
         Button rightArmUpper = findViewById(R.id.getBodyLocationActivityRightArmUpper);
@@ -159,7 +160,7 @@ public class GetBodyLocation extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(GetBodyLocation.this, "Right arm upper",Toast.LENGTH_SHORT).show();
-                DoWork("Right arm upper");
+                DoWork("RightArmUpper");
             }
         });
         Button leftArmLower = findViewById(R.id.getBodyLocationActivityLeftArmLower);
@@ -169,7 +170,7 @@ public class GetBodyLocation extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(GetBodyLocation.this, "Left arm lower",Toast.LENGTH_SHORT).show();
-                DoWork("Left arm lower");
+                DoWork("LeftArmLower");
             }
         });
         Button leftArmUpper = findViewById(R.id.getBodyLocationActivityLeftArmUpper);
@@ -179,7 +180,7 @@ public class GetBodyLocation extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(GetBodyLocation.this, "Left arm upper",Toast.LENGTH_SHORT).show();
-                DoWork("Left arm upper");
+                DoWork("LeftArmUpper");
             }
         });
 
@@ -283,8 +284,9 @@ public class GetBodyLocation extends AppCompatActivity {
     public static Bitmap overlay(Bitmap bmp1, Bitmap bmp2) {
         //Courtesy of Stackoverflow user xil3 (Original author - https://stackoverflow.com/users/380579/xil3)
         // and adneal (Editor - https://stackoverflow.com/users/420015/adneal)  - Post: https://stackoverflow.com/a/4863551/10454730
-        Bitmap comboBitmap;
-        int width, height;
+        Bitmap cs = null;
+
+        int width, height = 0;
 
         if(bmp1.getWidth() > bmp2.getWidth()) {
             width = bmp1.getWidth() + bmp2.getWidth();
@@ -294,6 +296,12 @@ public class GetBodyLocation extends AppCompatActivity {
             height = bmp1.getHeight();
         }
 
-        return Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        cs = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+
+        Canvas comboImage = new Canvas(cs);
+
+        comboImage.drawBitmap(bmp1, 0f, 0f, null);
+        comboImage.drawBitmap(bmp2, bmp1.getWidth(), 0f, null);
+        return cs;
     }
 }
