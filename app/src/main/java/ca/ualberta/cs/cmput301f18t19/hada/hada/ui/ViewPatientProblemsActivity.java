@@ -76,10 +76,6 @@ public class ViewPatientProblemsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-
-
     }
 
     @Override
