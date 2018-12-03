@@ -26,6 +26,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
@@ -264,6 +265,10 @@ public class GetBodyLocation extends AppCompatActivity {
         Intent intent2 = new Intent();
         setResult(RESULT_OK, intent2);
         finish();
+
+    }
+
+    public void pickADot(Bitmap combined){
 
     }
 

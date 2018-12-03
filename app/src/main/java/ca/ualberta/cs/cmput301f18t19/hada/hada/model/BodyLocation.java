@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class BodyLocation {
     private String bodyLocation;
-    private ArrayList<String> coords;
+    private ArrayList<Integer> coords;
     private String refImageFileId;
     private String parentId;
     private String fileID;
@@ -31,11 +31,11 @@ public class BodyLocation {
         this.fileID = fileID;
     }
 
-    public ArrayList<String> getCoords() {
+    public ArrayList<Integer> getCoords() {
         return coords;
     }
 
-    public void setCoords(ArrayList<String> coords) {
+    public void setCoords(ArrayList<Integer> coords) {
         this.coords = coords;
     }
     public String getRefImageFileId(){

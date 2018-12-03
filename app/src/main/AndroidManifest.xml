@@ -76,6 +76,7 @@
         <activity android:name=".ui.CareProviderAddCommentActivity" />
         <activity android:name=".ui.ViewShortCodeActivity" />
         <activity android:name=".ui.ViewSlideshowActivity"></activity>
+        <activity android:name=".ui.PickBodyDotActivity"></activity>
     </application>
 
 </manifest>
