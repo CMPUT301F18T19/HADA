@@ -13,40 +13,69 @@
 
 package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
+import android.content.Intent;
+import android.util.Log;
+
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+/**
+ * Tests for the class LoggedInSingleton.
+ *
+ * @author Christopher Penner
+ * @see LoggedInSingleton
+ */
 public class LoggedInSingletonTest {
 
+    private LoggedInSingleton instance;
+
+    /**
+     * Setup creates a instance of LoggedInSingleton to test getters
+     */
+    @Before
+    public void setup() {
+        this.instance = LoggedInSingleton.getInstance();
+        instance.setLoggedInID("TestUID");
+        instance.setIsCareProvider(false);
+    }
+
+    /**
+     * Test set logged in id.
+     */
     @Test
     public void testSetLoggedInID() {
-        LoggedInSingleton instance = LoggedInSingleton.getInstance();
         assertNotEquals(null, instance);
-        instance.setLoggedInID("UID");
-        assertEquals("UID", instance.getLoggedInID());
+        instance.setLoggedInID("OverrideUID");
+        assertEquals("OverrideUID", instance.getLoggedInID());
     }
 
+    /**
+     * Test get logged in id.
+     */
     @Test
     public void testGetLoggedInID() {
-        LoggedInSingleton instance = LoggedInSingleton.getInstance();
-        assertNotEquals("UID1", instance.getLoggedInID());
-        instance.setLoggedInID("UID1");
-        assertEquals("UID1", instance.getLoggedInID());
-        assertNotEquals("uid", instance.getLoggedInID());
+        assertEquals("TestUID", instance.getLoggedInID());
+        assertNotEquals("OverrideUID", instance.getLoggedInID());
     }
 
+    /**
+     * Test set is care provider.
+     */
     @Test
     public void testSetIsCareProvider() {
-        LoggedInSingleton instance = LoggedInSingleton.getInstance();
         instance.setIsCareProvider(true);
         assertTrue(instance.getIsCareProvider());
     }
 
+    /**
+     * Test get is care provider.
+     */
     @Test
     public void testGetIsCareProvider() {
-        LoggedInSingleton instance = LoggedInSingleton.getInstance();
         assertFalse(instance.getIsCareProvider());
         instance.setIsCareProvider(true);
+        assertTrue(instance.getIsCareProvider());
     }
 }
