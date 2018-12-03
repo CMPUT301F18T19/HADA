@@ -22,28 +22,29 @@
             android:required="false" />
         <uses-library android:name="com.google.android.maps" />
 
-        <activity android:name=".ui.MainActivity">
+        <activity android:name=".ui.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.NewUserActivity" />
-        <activity android:name=".ui.ViewPatientProblemsActivity" />
-        <activity android:name=".ui.ViewProblemActivity" />
-        <activity android:name=".ui.PatientListActivity" />
-        <activity android:name=".ui.AddRecordActivity" />
-        <activity android:name=".ui.AddPatientActivity" />
-        <activity android:name=".ui.ViewRecordActivity" />
-        <activity android:name=".ui.EditUserSettingsActivity" />
-        <activity android:name=".ui.ProblemListActivity" />
-        <activity android:name=".ui.AddProblemActivity" />
-        <activity android:name=".ui.EditProblemActivity" />
-        <activity android:name=".ui.CameraActivity" />
-        <activity android:name=".ui.SearchInputActivity" />
-        <activity android:name=".ui.SearchResultsActivity" />
-        <activity android:name=".ui.EditRecordActivity" />
+        <activity android:name=".ui.NewUserActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.ViewPatientProblemsActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.ViewProblemActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.PatientListActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.AddRecordActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.AddPatientActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.ViewRecordActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.EditUserSettingsActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.ProblemListActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.AddProblemActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.EditProblemActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.CameraActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.SearchInputActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.SearchResultsActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.EditRecordActivity" android:screenOrientation="portrait"/>
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -62,19 +63,19 @@
 
         <activity
             android:name=".ui.AddGeoToRecordActivity"
-            android:label="@string/title_activity_add_geo_to_record" />
+            android:label="@string/title_activity_add_geo_to_record" android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.ViewRecordLocationsActivity"
-            android:label="@string/title_activity_view_record_locations" />
+            android:label="@string/title_activity_view_record_locations" android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.ViewRecordLocationsForUserActivity"
-            android:label="@string/title_activity_view_record_locations_for_user" />
+            android:label="@string/title_activity_view_record_locations_for_user" android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.ViewSingleRecordLocationActivity"
-            android:label="@string/title_activity_view_single_record_location" />
-        <activity android:name=".ui.GetBodyLocation" />
-        <activity android:name=".ui.CareProviderAddCommentActivity" />
-        <activity android:name=".ui.ViewShortCodeActivity"></activity>
+            android:label="@string/title_activity_view_single_record_location" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.GetBodyLocation" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.CareProviderAddCommentActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.ViewShortCodeActivity" android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
