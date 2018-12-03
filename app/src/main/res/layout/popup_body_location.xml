@@ -62,4 +62,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/popupBodyLocTitle"
         tools:srcCompat="@tools:sample/avatars" />
+
+    <RelativeLayout
+        android:id="@+id/popupBodyLocRLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/popupBodyLocMarker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:srcCompat="@android:drawable/ic_delete" />
+
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

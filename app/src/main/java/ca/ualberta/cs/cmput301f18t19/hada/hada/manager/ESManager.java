@@ -35,7 +35,7 @@ public abstract class ESManager {
     /**
      * The index of the team's ES node.
      */
-    static String teamIndex = "cmput301f18t19test";
+    static String teamIndex = "cmput301f18t19";
 
     /**
      * Sets the client to be the defined server..
@@ -43,7 +43,7 @@ public abstract class ESManager {
     public static void setClient(){
         if(client == null){
             DroidClientConfig config = new DroidClientConfig
-                    .Builder("http://138.197.201.26:8080/")
+                    .Builder("http://cmput301.softwareprocess.es:8080/")
                     .build();
 
             JestClientFactory factory = new JestClientFactory();

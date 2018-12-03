@@ -16,10 +16,10 @@ import java.util.ArrayList;
 
 public class BodyLocation {
     private String bodyLocation;
-    private ArrayList<Integer> coords;
     private String refImageFileId;
     private String parentId;
     private String fileID;
+    private ArrayList<Integer> coords;
 
     public BodyLocation(){}
 
@@ -38,9 +38,11 @@ public class BodyLocation {
     public void setCoords(ArrayList<Integer> coords) {
         this.coords = coords;
     }
+
     public String getRefImageFileId(){
         return refImageFileId;
     }
+
     public void setRefImageFileId(String refImage){
         this.refImageFileId = refImage;
     }

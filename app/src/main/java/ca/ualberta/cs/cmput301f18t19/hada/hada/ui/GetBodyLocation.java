@@ -60,15 +60,20 @@ public class GetBodyLocation extends AppCompatActivity {
      * The location, which represents the area on the body to be chosen.
      */
     String location;
+
+    ArrayList<Integer> touchCoords;
     /**
      * The logged in user.
      */
     String loggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
 
+    BodyLocation bodyLocation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_body_location);
+        bodyLocation = new BodyLocation();
 
         Intent intent = getIntent();
         parentId = intent.getStringExtra("parentId");
@@ -207,10 +212,7 @@ public class GetBodyLocation extends AppCompatActivity {
             BodyLocation bodyLocation = new BodyLocation();
             bodyLocation.setRefImageFileId(photo.getFileID());
             bodyLocation.setBodyLocation(type);
-            new BodyLocationController().addBodyLocation(bodyLocation, parentId);
-            Intent intent2 = new Intent();
-            setResult(RESULT_OK, intent2);
-            finish();
+            pickADot(bodyLocation.getRefImageFileId());
         }
 
     }
@@ -229,7 +231,16 @@ public class GetBodyLocation extends AppCompatActivity {
         if (requestCode == 500) {
             if (resultCode == RESULT_OK) {
                 picture2 = Uri.parse(data.getStringExtra("URI"));
-                buildBody();
+                buildBitmap();
+            }
+        }
+        if (requestCode == 750){
+            if(resultCode == RESULT_OK){
+                touchCoords = new ArrayList<>();
+                touchCoords.add(Integer.parseInt(data.getStringExtra("touchX")));
+                touchCoords.add( Integer.parseInt(data.getStringExtra("touchY")));
+                Log.d("GetBodyLocation Request code 750", "X: " + touchCoords.get(0).toString() + " Y: " + touchCoords.get(1).toString());
+                finalize();
             }
         }
     }
@@ -239,9 +250,8 @@ public class GetBodyLocation extends AppCompatActivity {
      *
      * Builds the new refPhoto and body location objects
      */
-    public void buildBody(){
-        BodyLocation bodyLocation = new BodyLocation();
-        bodyLocation.setBodyLocation(location);
+    public void buildBitmap(){
+
         Bitmap bitmap1;
         Bitmap bitmap2;
         String refImageBitmapString = null;
@@ -249,8 +259,8 @@ public class GetBodyLocation extends AppCompatActivity {
             bitmap1 = MediaStore.Images.Media.getBitmap(this.getContentResolver(), picture1);
             bitmap2 = MediaStore.Images.Media.getBitmap(this.getContentResolver(), picture2);
             Bitmap combined = overlay(bitmap1,bitmap2);
-             refImageBitmapString = new BitmapPhotoEncodeDecodeManager.EncodeBitmapTask().execute(combined).get();
-             Log.d("buildBody", refImageBitmapString);
+            refImageBitmapString = new BitmapPhotoEncodeDecodeManager.EncodeBitmapTask().execute(combined).get();
+            Log.d("buildBody", refImageBitmapString);
         } catch (IOException e) {
             e.printStackTrace();
         }catch (ExecutionException e){
@@ -259,17 +269,26 @@ public class GetBodyLocation extends AppCompatActivity {
             e.printStackTrace();
         }
         String refImageFileID = loggedInUser + location;
-        bodyLocation.setRefImageFileId(refImageFileID);
         new PhotoController().addRefPhoto(refImageBitmapString,location);
+        pickADot(refImageFileID);
+    }
+
+    public void finalize(){
+        String refImageFileID = loggedInUser + location;
+        bodyLocation.setRefImageFileId(refImageFileID);
+        bodyLocation.setCoords(touchCoords);
+        bodyLocation.setBodyLocation(location);
+        Log.d("GetBodyLocation Setting coords", "X: " + touchCoords.get(0).toString() + " Y: " + touchCoords.get(1).toString());
         new BodyLocationController().addBodyLocation(bodyLocation, parentId);
         Intent intent2 = new Intent();
         setResult(RESULT_OK, intent2);
         finish();
-
     }
 
-    public void pickADot(Bitmap combined){
-
+    public void pickADot(String refImageFileId){
+        Intent intent = new Intent(GetBodyLocation.this,PickBodyDotActivity.class);
+        intent.putExtra("refImageFileId", refImageFileId);
+        startActivityForResult(intent, 750);
     }
 
     /**
