@@ -49,6 +49,20 @@ public class DBPhotoManager {
         setPhotosSyncFlag(photo.getFileID(), false);
     }
 
+    public int editPhotoBitmap(String fileId, String newBitmapString){
+        int rowsUpdated = 0;
+        ContentValues values = new ContentValues();
+        values.put(photoTable.COL_BITMAP, newBitmapString);
+
+        rowsUpdated = db.update(
+                photoTable.TABLE_NAME,
+                values,
+                photoTable.COL_FILEID + " = ?",
+                new String[] { fileId }
+        );
+        setPhotosSyncFlag(fileId, false);
+        return rowsUpdated;
+    }
     /**
      * Loads a photo from the database
      * @param  parentID a photo's fileID
@@ -200,7 +214,7 @@ public class DBPhotoManager {
      * @param bitmaps
      * @return json a parsed json string
      */
-    private String bitmaps2json(ArrayList<String> bitmaps) {
+    public String bitmaps2json(ArrayList<String> bitmaps) {
         return new Gson().toJson(bitmaps, new TypeToken<ArrayList<String>>() {}.getType());
     }
 

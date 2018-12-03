@@ -64,26 +64,44 @@ public class PhotoController {
      */
     public void addPhoto(String parentId, String bitmapString){
 
-        ArrayList<Photos> photos;
-        Photos photo = new Photos();
-        ArrayList<String> bitmaps = new ArrayList<>();
-        try {
-            photos = new ESPhotoManager.GetPhotoListTask().execute(parentId).get();
-            if(photos.size()>0){
-                photo = photos.get(0);
-                bitmaps = photo.getBitmaps();
-            }
-        } catch (Exception e) {
-            Log.d("addPhoto", "Couldn't retrieve record list from ES");
-            e.printStackTrace();
+        Photos photos = new DBPhotoManager(ContextSingleton.getInstance().getContext()).getPhoto(parentId);
+        if(!new DBPhotoManager(ContextSingleton.getInstance().getContext()).existsPhoto(photos.getFileID())){
+            new DBPhotoManager(ContextSingleton.getInstance().getContext()).addPhoto(photos);
         }
-        bitmaps.add(bitmapString);
-        photo.setBitmaps(bitmaps);
-        photo.setParentId(parentId);
-        new ESPhotoManager.AddPhotosTask().execute(photo);
-        //DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-        //LocalDateTime timestamp = record.getTimestamp();
-        //Log.d("AddRecord", "New Record: title=" + record.getTitle()+ " timestamp=" +timestamp.format(formatter));
+        if(photos.getBitmaps() != null){
+            ArrayList<String> bitmaps = photos.getBitmaps();
+            bitmaps.add(bitmapString);
+            photos.setBitmaps(bitmaps);
+
+        }else{
+            ArrayList<String> bitmaps = new ArrayList<>();
+            bitmaps.add(bitmapString);
+            photos.setBitmaps(bitmaps);
+        }
+
+        String newBitmapString = new DBPhotoManager(ContextSingleton.getInstance().getContext())
+                .bitmaps2json(photos.getBitmaps());
+        new DBPhotoManager(ContextSingleton.getInstance().getContext())
+                .editPhotoBitmap(photos.getFileID(), newBitmapString);
+        syncManager.syncDB2ES();
+//        ArrayList<Photos> photos;
+//        Photos photo = new Photos();
+//        ArrayList<String> bitmaps = new ArrayList<>();
+//        try {
+//            photos = new ESPhotoManager.GetPhotoListTask().execute(parentId).get();
+//            if(photos.size()>0){
+//                photo = photos.get(0);
+//                bitmaps = photo.getBitmaps();
+//            }
+//        } catch (Exception e) {
+//            Log.d("addPhoto", "Couldn't retrieve record list from ES");
+//            e.printStackTrace();
+//        }
+//        bitmaps.add(bitmapString);
+//        photo.setBitmaps(bitmaps);
+//        photo.setParentId(parentId);
+//        new ESPhotoManager.AddPhotosTask().execute(photo);
+
     }
 
     public void addRefPhoto(String bitmapString, String bodyLocation){
