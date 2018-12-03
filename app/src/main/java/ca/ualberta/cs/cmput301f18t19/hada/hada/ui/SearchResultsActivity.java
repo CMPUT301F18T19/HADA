@@ -48,7 +48,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         geoLocation = intent.getExtras().getParcelable("location");
         geoDistance = intent.getStringExtra("distance");
         //For body location search
-        bodyLocation = intent.getStringExtra("bodyLocation");//TODO pass this in
+        bodyLocation = intent.getStringExtra("bodyLocation");
 
         if(keyword != null){
             searchType = "keyword";

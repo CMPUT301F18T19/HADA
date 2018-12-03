@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -60,6 +61,18 @@ public class ProblemListActivity extends AppCompatActivity implements Serializab
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ProblemListActivity.this, EditUserSettingsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //Opens searchInputActivity
+        Button searchButton = findViewById(R.id.problemListSearchInput);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProblemListActivity.this, SearchInputActivity.class);
+                intent.putExtra("searchObjectType", "problems");
+                intent.putExtra("parentId", loggedInUser);
                 startActivity(intent);
             }
         });
