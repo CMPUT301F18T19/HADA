@@ -176,9 +176,10 @@ public class SearchInputActivity extends AppCompatActivity {
 
                 }
                 else if(bodyLocationRadio.isChecked()){
-                    String bodyLocToSearch = bodyLocationInput.getSelectedItem().toString();
-                    intent.putExtra("bodyLocation", bodyLocToSearch);
-                    valid =true;
+                    //String bodyLocToSearch = bodyLocationInput.getSelectedItem().toString();
+                    //intent.putExtra("bodyLocation", bodyLocToSearch);
+                    //valid =true;
+                    Toast.makeText(SearchInputActivity.this, "Body Location search is not yet supported.", Toast.LENGTH_SHORT).show();
                 }
                 else{ //Run if something went wrong in the activity and closes it.
                     Toast.makeText(SearchInputActivity.this,"Something went wrong. Try again.", Toast.LENGTH_SHORT).show();

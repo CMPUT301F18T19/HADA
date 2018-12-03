@@ -12,39 +12,37 @@
 
 package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 
-import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.net.Uri;
-import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.BodyLocationController;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESBodyLocationManager;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.PhotoController;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.BitmapPhotoEncodeDecodeManager;
+
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.BodyLocation;
-import pub.devrel.easypermissions.EasyPermissions;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Photos;
 
 public class GetBodyLocation extends AppCompatActivity {
     Uri picture1;
     Uri picture2;
     String parentId;
     String location;
+    String loggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,10 +167,22 @@ public class GetBodyLocation extends AppCompatActivity {
     }
     private void DoWork(String type){
         location = type;
-        Intent intent = new Intent(GetBodyLocation.this, CameraActivity.class);
-        intent.putExtra("TYPE","400");
-        startActivityForResult(intent, 400);
-        Toast.makeText(GetBodyLocation.this, "Take photos", Toast.LENGTH_SHORT).show();
+        Photos photo = new PhotoController().getRefPhoto(loggedInUser + type);
+        if(photo == null) { //if no ref photo is present - DO this
+            Intent intent = new Intent(GetBodyLocation.this, CameraActivity.class);
+            intent.putExtra("TYPE", "400");
+            startActivityForResult(intent, 400);
+            Toast.makeText(GetBodyLocation.this, "Take photos", Toast.LENGTH_SHORT).show();
+        }
+        else{ //If the ref image is already saved for the user, just make a new record linking to that ref image.
+            BodyLocation bodyLocation = new BodyLocation();
+            bodyLocation.setRefImageFileId(photo.getFileID());
+            bodyLocation.setBodyLocation(type);
+            new BodyLocationController().addBodyLocation(bodyLocation, parentId);
+            Intent intent2 = new Intent();
+            setResult(RESULT_OK, intent2);
+            finish();
+        }
 
     }
 
@@ -198,11 +208,26 @@ public class GetBodyLocation extends AppCompatActivity {
     public void buildBody(){
         BodyLocation bodyLocation = new BodyLocation();
         bodyLocation.setBodyLocation(location);
-        Bitmap bitmap1 = BitmapFactory.decodeFile(picture1.toString());
-        Bitmap bitmap2 = BitmapFactory.decodeFile(picture2.toString());
-        Bitmap combined = overlay(bitmap1,bitmap2);
-        Uri comb = saveImage(combined);
-        bodyLocation.setPhotoUri(comb.toString());
+        Bitmap bitmap1;
+        Bitmap bitmap2;
+        String refImageBitmapString = null;
+        try {
+            bitmap1 = MediaStore.Images.Media.getBitmap(this.getContentResolver(), picture1);
+            bitmap2 = MediaStore.Images.Media.getBitmap(this.getContentResolver(), picture2);
+            Bitmap combined = overlay(bitmap1,bitmap2);
+             refImageBitmapString = new BitmapPhotoEncodeDecodeManager.EncodeBitmapTask().execute(combined).get();
+            //Uri comb = saveImage(combined);
+            //bodyLocation.setPhotoUri(comb.toString()); set coords instead
+        } catch (IOException e) {
+            e.printStackTrace();
+        }catch (ExecutionException e){
+            e.printStackTrace();
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
+        String refImageFileID = loggedInUser + location;
+        bodyLocation.setRefImageFileId(refImageFileID);
+        new PhotoController().addRefPhoto(refImageBitmapString,location);
         new BodyLocationController().addBodyLocation(bodyLocation, parentId);
         Intent intent2 = new Intent();
         setResult(RESULT_OK, intent2);
@@ -210,24 +235,6 @@ public class GetBodyLocation extends AppCompatActivity {
 
     }
 
-    public Uri saveImage(Bitmap bmp){
-        String folder = Environment.getExternalStorageDirectory().getAbsolutePath() + "/images";
-        File imageFile = new File(folder,String.valueOf(System.currentTimeMillis()) + ".jpg");
-        String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        if (EasyPermissions.hasPermissions(this,perms)) {
-            Log.d("saveImage",imageFile.getAbsoluteFile().toString());
-            try (FileOutputStream out = new FileOutputStream(imageFile.getAbsoluteFile().toString())) {
-                bmp.compress(Bitmap.CompressFormat.PNG, 100, out);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }else{
-            EasyPermissions.requestPermissions(GetBodyLocation.this, "We need perms to take pictures", 600, perms);
-            saveImage(bmp);
-        }
-        return Uri.fromFile(imageFile);
-    }
     public static Bitmap overlay(Bitmap bmp1, Bitmap bmp2) {
         Bitmap bmOverlay = Bitmap.createBitmap(bmp1.getWidth(), bmp1.getHeight(), bmp1.getConfig());
         Canvas canvas = new Canvas(bmOverlay);

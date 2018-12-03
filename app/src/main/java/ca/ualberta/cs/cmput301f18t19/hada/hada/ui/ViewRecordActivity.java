@@ -78,7 +78,7 @@ public class ViewRecordActivity extends AppCompatActivity {
                 }
             }
         });
-
+/*
         // Goes to view BodyLocation
         Button viewBodyLocation = findViewById(R.id.viewRecordActivityViewBodyLocation);
         viewBodyLocation.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +94,7 @@ public class ViewRecordActivity extends AppCompatActivity {
                 }
             }
         });
-
+*/
     }
 
     protected void onResume() {

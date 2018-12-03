@@ -218,6 +218,9 @@ public class AddRecordActivity extends AppCompatActivity {
                 //imageURI = Uri.parse(intent.getStringExtra("URI"));
             }
         }
+        else if (requestCode == 200){
+            Toast.makeText(this, "Body location added!", Toast.LENGTH_SHORT).show();
+        }
         else {
             Toast.makeText(this, "An error occurred. Please try again. Request code: " + requestCode, Toast.LENGTH_SHORT).show();
         }
