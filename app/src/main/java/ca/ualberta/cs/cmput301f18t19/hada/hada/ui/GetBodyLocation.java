@@ -21,6 +21,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -50,7 +51,7 @@ public class GetBodyLocation extends AppCompatActivity {
         setContentView(R.layout.activity_get_body_location);
 
         Intent intent = getIntent();
-        String parentId = intent.getStringExtra("parentId");
+        parentId = intent.getStringExtra("parentId");
 
         Button leftLegUpper = findViewById(R.id.getBodyLocationActivityRightLegUpper);
         leftLegUpper.setVisibility(View.VISIBLE);
@@ -216,6 +217,7 @@ public class GetBodyLocation extends AppCompatActivity {
             bitmap2 = MediaStore.Images.Media.getBitmap(this.getContentResolver(), picture2);
             Bitmap combined = overlay(bitmap1,bitmap2);
              refImageBitmapString = new BitmapPhotoEncodeDecodeManager.EncodeBitmapTask().execute(combined).get();
+             Log.d("buildBody", refImageBitmapString);
             //Uri comb = saveImage(combined);
             //bodyLocation.setPhotoUri(comb.toString()); set coords instead
         } catch (IOException e) {
