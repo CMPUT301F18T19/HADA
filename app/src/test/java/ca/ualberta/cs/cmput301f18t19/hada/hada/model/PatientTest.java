@@ -1,4 +1,18 @@
+/*
+ *  CMPUT 301 - Fall 2018
+ *
+ *  PatientTest.java
+ *
+ *  11/27/18 3:25 PM
+ *
+ *  This is a group project for CMPUT 301 course at the University of Alberta
+ *  Copyright (C) 2018  Austin Goebel, Anders Johnson, Alex Li,
+ *  Cristopher Penner, Joseph Potentier-Neal, Jason Robock
+ */
+
 package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
+
+import android.support.annotation.NonNull;
 
 import org.junit.Test;
 
@@ -6,113 +20,82 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
+/**
+ * Tests for the class Patient.
+ *
+ * @see Patient
+ * @author Christopher Penner
+ */
 public class PatientTest {
 
+    /**
+     * Setup creates a pre defined Patient to test getters
+     */
+    @NonNull
+    private Patient setup() {
+        return new Patient("TestUID",
+                "7809991234",
+                "test@ualberta.ca");
+    }
+
+    /**
+     * Test set user id.
+     */
     @Test
     public void testSetUserID(){
-        Patient patient = new Patient();
-        patient.setUserID("Test User Id");
-        assertEquals("Test User Id",patient.getUserID());
+        Patient patient = setup();
+        patient.setUserID("UserID123");
+        assertEquals("UserID123",patient.getUserID());
     }
 
+    /**
+     * Test get user id.
+     */
     @Test
     public void testGetUserID(){
-        Patient patient = new Patient();
-        patient.setUserID("Test User Id");
+        Patient patient = setup();
         String returnedID = patient.getUserID();
-        assertEquals("Test User Id",returnedID);
+        assertEquals("TestUID",returnedID);
     }
 
 
+    /**
+     * Test set phone number.
+     */
     @Test
     public void testSetPhoneNumber(){
-        Patient patient = new Patient();
-        patient.setPhoneNumber("7801234567");
-        assertEquals("7801234567", patient.getPhoneNumber());
+        Patient patient = setup();
+        patient.setPhoneNumber("1809994466");
+        assertEquals("1809994466", patient.getPhoneNumber());
     }
 
+    /**
+     * Test get phone number.
+     */
     @Test
     public void testGetPhoneNumber(){
-        Patient patient = new Patient();
-        patient.setPhoneNumber("7801234567");
+        Patient patient = setup();
         String returnedPhoneNumber = patient.getPhoneNumber();
-        assertEquals("7801234567", returnedPhoneNumber);
+        assertEquals("7809991234", returnedPhoneNumber);
     }
 
+    /**
+     * Test set email address.
+     */
     @Test
     public void testSetEmailAddress(){
-        Patient patient = new Patient();
-        patient.setEmailAddress("test@ualberta.ca");
-        assertEquals("test@ualberta.ca", patient.getEmailAddress());
+        Patient patient = setup();
+        patient.setEmailAddress("testSet@ualberta.ca");
+        assertEquals("testSet@ualberta.ca", patient.getEmailAddress());
     }
 
+    /**
+     * Test get email address.
+     */
     @Test
     public void testGetEmailAddress(){
-        Patient patient = new Patient();
-        patient.setEmailAddress("test@ualberta.ca");
+        Patient patient = setup();
         String returnedEmailAddress = patient.getEmailAddress();
         assertEquals("test@ualberta.ca", returnedEmailAddress);
-    }
-
-    @Test
-    public void testSetProblemList(){
-        Patient patient = new Patient();
-        ArrayList<Problem> problemList  = new ArrayList<Problem>();
-        problemList.add(new Problem());
-        patient.setProblemList(problemList);
-        assertEquals("Should be the ProblemListController we set it to",
-                problemList, patient.getProblemList());
-    }
-
-    @Test
-    public void testGetProblemList(){
-        Patient patient = new Patient();
-        ArrayList<Problem> problemList = new ArrayList<Problem>();
-        problemList.add(new Problem());
-        patient.setProblemList(problemList);
-        assertEquals("Should be the ProblemListController we set it to", problemList, patient.getProblemList());
-    }
-
-    @Test
-    public void testGetProblem(){
-        Patient patient = new Patient();
-        ArrayList<Problem> problemList  = new ArrayList<Problem>();
-        Problem newProblem = new Problem();
-        problemList.add(newProblem);
-        patient.setProblemList(problemList);       // setProblemList works since it's tested
-        assertEquals("The first item in problemList should be the same as newProblem",
-                newProblem, patient.getProblem(0));
-    }
-
-
-    @Test
-    public void testAddProblem(){
-        Patient patient = new Patient();
-        Problem newProblem = new Problem();
-        patient.addProblem(newProblem);
-        assertEquals("The only problem in problemList should equal to the new problem" +
-                " that was just added", newProblem, patient.getProblem(0));
-
-    }
-
-    @Test
-    public void testSetProblem(){
-        Patient patient = new Patient();
-        Problem oldProblem = new Problem(); Problem newProblem = new Problem();
-        patient.addProblem(oldProblem);
-        patient.setProblem(0, newProblem);
-        assertEquals("The problem at index 0 should equal to the newProblem just got set",
-                newProblem, patient.getProblem(0));
-
-    }
-
-    @Test
-    public void testRemoveProblem(){
-        Patient patient = new Patient();
-        Problem newProblem = new Problem();
-        patient.addProblem(newProblem);
-        patient.removeProblem(newProblem);
-        ArrayList<Problem> emptyList = patient.getProblemList();
-        assertTrue(emptyList.isEmpty());
     }
 }

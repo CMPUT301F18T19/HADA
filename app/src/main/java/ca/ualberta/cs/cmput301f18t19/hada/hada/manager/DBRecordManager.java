@@ -49,10 +49,8 @@ public class DBRecordManager {
         values.put(recordTable.COL_TIMESTAMP, newRecord.getTitle());
         values.put(recordTable.COL_TITLE, newRecord.getTimestamp().toString());
         values.put(recordTable.COL_COMMENT, newRecord.getComment());
-        values.put(recordTable.COL_PHOTOS, newRecord.getPhotos());
         values.put(recordTable.COL_LAT, newRecord.getLocation().latitude);
         values.put(recordTable.COL_LON, newRecord.getLocation().longitude);
-        values.put(recordTable.COL_BODYLOCATION, newRecord.getBodyLocation());
         db.insert(recordTable.TABLE_NAME, null, values);
         setRecordSyncFlag(newRecord.getFileId(), false);
     }
@@ -321,14 +319,12 @@ public class DBRecordManager {
         );
         record.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(recordTable.COL_TITLE)));
         record.setComment(cursor.getString(cursor.getColumnIndexOrThrow(recordTable.COL_COMMENT)));
-        record.setPhotos(cursor.getString(cursor.getColumnIndexOrThrow(recordTable.COL_PHOTOS)));
         record.setLocation(
                 new LatLng(
                         cursor.getDouble(cursor.getColumnIndex(recordTable.COL_LAT)),
                         cursor.getDouble(cursor.getColumnIndex(recordTable.COL_LON))
                 )
         );
-        record.setBodyLocation(cursor.getString(cursor.getColumnIndexOrThrow(recordTable.COL_BODYLOCATION)));
         return record;
     }
 

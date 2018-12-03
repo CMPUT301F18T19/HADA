@@ -95,10 +95,8 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                         recordTable.COL_TIMESTAMP + " TEXT," +
                         recordTable.COL_TITLE + " TEXT," +
                         recordTable.COL_COMMENT + " TEXT," +
-                        recordTable.COL_PHOTOS + " TEXT," +
                         recordTable.COL_LAT + " REAL," +
                         recordTable.COL_LON + " REAL," +
-                        recordTable.COL_BODYLOCATION + " TEXT," +
                         careProviderTable.COL_SYNCED + " INTEGER," +
                         "PRIMARY KEY (" + recordTable.COL_FILEID + ")," +
                         "FOREIGN KEY (" + recordTable.COL_PARENTID + ") " +

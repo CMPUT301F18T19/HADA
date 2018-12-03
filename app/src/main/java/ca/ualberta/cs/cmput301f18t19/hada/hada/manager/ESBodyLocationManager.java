@@ -48,7 +48,7 @@ public class ESBodyLocationManager extends ESManager{
                     Index index = new Index.Builder(bodyLocation)
                             .index(teamIndex)
                             .type("bodylocation")
-                            .id(bodyLocation.getParentID())
+                            .id(bodyLocation.getFileID())
                             .refresh(true)
                             .build();
                     DocumentResult result = client.execute(index);
@@ -104,9 +104,20 @@ public class ESBodyLocationManager extends ESManager{
         @Override
         protected BodyLocation doInBackground(String... params) {
             setClient();
-            String query = "{\"query\": {\"match\": {\"fileId\": \"" + params[0] + "\"}}}";
+            String parentId = params[0];
+            String query = "{\n" +
+                    "\t\"query\" : {\n" +
+                    "\t\t\"bool\" : {\n" +
+                    "\t\t\t\"must\" : {\n" +
+                    "\t\t\t\t\"match\" : {\n" +
+                    "\t\t\t\t\t\"parentId\" : \""+parentId+"\"\n" +
+                    "\t\t\t\t}\n" +
+                    "\t\t\t}\n" +
+                    "\t\t}\n" +
+                    "\t}\n" +
+                    "}";
             BodyLocation matchingLocation = null;
-            Log.d("GetARecordTask Query: ", query);
+            Log.d("GetABodyLocationTask Query: ", query);
 
             Search search = new Search.Builder(query)
                     .addIndex(teamIndex)
@@ -118,11 +129,12 @@ public class ESBodyLocationManager extends ESManager{
                 if (result.isSucceeded()) {
                     List<BodyLocation> results;
                     results = result.getSourceAsObjectList(BodyLocation.class);
-                    for(BodyLocation bodyLocation: results){
-                        Log.d("GetARecordTask Results: ", bodyLocation.toString());
+                    for(BodyLocation returnedBodyLocation: results){
+                        Log.d("GetABodyLocationTask Results: ", returnedBodyLocation.toString());
                     }
-                    matchingLocation = results.get(0);
-
+                    if(results.size() > 0) {
+                        matchingLocation = results.get(0);
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -131,46 +143,4 @@ public class ESBodyLocationManager extends ESManager{
         }
     }
 
-
-    /**
-     * Task which loads all records from server with a matching parentId.
-     */
-    public static class GetRecordListTask extends AsyncTask<String, Void, ArrayList<Record>> {
-        @Override
-        protected ArrayList<Record> doInBackground(String... params){
-            setClient();
-
-            String query = "{\"query\": {\"match\": {\"parentId\": \"" + params[0] + "\"}}}";
-            Log.d("GetRecordListTask Query: ", query);
-            //String query = "{\"query\": {\"match\": {\"patient\": {\"userID\": "+ params[0] + "\"}}}}";
-
-            //We use an array to store all matching records given the userID -- in case we get duplicates
-            ArrayList<Record> matchingRecords = new ArrayList<>();
-            Search search = new Search.Builder(query)
-                    .addIndex(teamIndex)
-                    .addType("record")
-                    .build();
-
-            try {
-                JestResult result = client.execute(search);
-
-                if (result.isSucceeded()) {
-                    List<Record> results;
-                    results = result.getSourceAsObjectList(Record.class);
-
-                    for(Record record:results) {
-                        //Log.d("GetRecordListTask Results: ", record.toString());
-                    }
-                    matchingRecords.addAll(results);
-
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            for(Record record: matchingRecords){
-                //Log.d("GetRecordListTask Records: ", record.toString());
-            }
-            return matchingRecords;
-        }
-    }
 }

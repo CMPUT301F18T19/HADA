@@ -2,6 +2,8 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 
 import android.Manifest;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Camera;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
@@ -11,6 +13,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -23,6 +27,7 @@ import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.util.List;
@@ -35,8 +40,18 @@ public class CameraActivity extends AppCompatActivity implements EasyPermissions
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+        Intent intent = getIntent();
+        String type = intent.getStringExtra("TYPE");
 
-        ImageButton button = (ImageButton) findViewById(R.id.cameraImageButton);
+        TextView tv = (TextView) findViewById(R.id.cameraStatus);
+        if (type.equals("400")){
+            tv.setText("Take front image by clicking HADA");
+        }
+        if (type.equals("500")){
+            tv.setText("Take Rear facing image by clicking HADA");
+        }
+
+        final ImageButton button = (ImageButton) findViewById(R.id.cameraImageButton);
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v){
                 takeAPhoto();
@@ -44,10 +59,11 @@ public class CameraActivity extends AppCompatActivity implements EasyPermissions
         };
         button.setOnClickListener(listener);
         final Button savePhoto = findViewById(R.id.cameraActivtySave);
+
         savePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveButton();
+                    saveButton();
             }
         });
     }
@@ -82,7 +98,6 @@ public class CameraActivity extends AppCompatActivity implements EasyPermissions
             }
             File imageFile = new File(folder,String.valueOf(System.currentTimeMillis()) + ".jpg");
             imageFileUri = Uri.fromFile(imageFile);
-
             intent.putExtra(MediaStore.EXTRA_OUTPUT, imageFileUri);
             startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         }
@@ -115,23 +130,28 @@ public class CameraActivity extends AppCompatActivity implements EasyPermissions
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             TextView tv = (TextView) findViewById(R.id.cameraStatus);
-            Toast.makeText(CameraActivity.this, Integer.toString(resultCode), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(CameraActivity.this, Integer.toString(resultCode), Toast.LENGTH_SHORT).show();
             if (resultCode == RESULT_OK) {
                 tv.setText("Photo OK!");
                 ImageButton button = (ImageButton) findViewById(R.id.cameraImageButton);
                 button.setImageDrawable(Drawable.createFromPath(imageFileUri.getPath()));
             } else if (resultCode == RESULT_CANCELED) {
                 tv.setText("Photo canceled");
+                imageFileUri = null;
             } else {
                 tv.setText("Not sure what happened!" + resultCode);
             }
         }
     }
     private void saveButton (){
-        Intent intent = new Intent();
-        intent.putExtra("URI",imageFileUri.toString());
-        setResult(RESULT_OK, intent);
-        finish();
+        if(imageFileUri==null){
+            Toast.makeText(this, "You have to take a photo to save!", Toast.LENGTH_SHORT).show();
+        }else {
+            Intent intent = new Intent();
+            intent.putExtra("URI", imageFileUri.toString());
+            setResult(RESULT_OK, intent);
+            finish();
+        }
     }
 
 }

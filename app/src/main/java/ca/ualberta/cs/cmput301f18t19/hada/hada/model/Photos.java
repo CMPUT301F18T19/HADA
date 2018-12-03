@@ -14,32 +14,70 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
 import java.util.ArrayList;
 
+/**
+ * A photos object, which has a fileId, a parentId, and an array of strings which can be made
+ * to bitmaps.
+ *
+ * @author AndersJ , Jason
+ * @version 2.0
+ * @see Record
+ */
 public class Photos {
     private String parentId;
-    private ArrayList<String> uriPhotos;
-    private ArrayList<String> httpPhotos;
+    private String fileID;
+    private ArrayList<String> bitmaps;
 
+    /**
+     * Gets file id.
+     *
+     * @return the file id
+     */
+    public String getFileID() {
+        return fileID;
+    }
+
+    /**
+     * Sets file id.
+     *
+     * @param fileID the file id
+     */
+    public void setFileID(String fileID) {
+        this.fileID = fileID;
+    }
+
+    /**
+     * Gets parent id.
+     *
+     * @return the parent id
+     */
     public String getParentId() {
         return parentId;
     }
 
+    /**
+     * Sets parent id.
+     *
+     * @param parentId the parent id
+     */
     public void setParentId(String parentId) {
         this.parentId = parentId;
     }
 
-    public ArrayList<String> getUriPhotos() {
-        return uriPhotos;
+    /**
+     * Get bitmaps array list.
+     *
+     * @return the array list
+     */
+    public ArrayList<String> getBitmaps(){
+        return this.bitmaps;
     }
 
-    public void setUriPhotos(ArrayList<String> uriPhotos) {
-        this.uriPhotos = uriPhotos;
-    }
-
-    public ArrayList<String> getHttpPhotos() {
-        return httpPhotos;
-    }
-
-    public void setHttpPhotos(ArrayList<String> httpPhotos) {
-        this.httpPhotos = httpPhotos;
+    /**
+     * Set bitmaps.
+     *
+     * @param bitmaps the bitmaps
+     */
+    public void setBitmaps(ArrayList<String> bitmaps){
+        this.bitmaps = bitmaps;
     }
 }

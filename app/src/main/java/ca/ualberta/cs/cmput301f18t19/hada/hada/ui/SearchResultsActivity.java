@@ -87,8 +87,7 @@ public class SearchResultsActivity extends AppCompatActivity {
                 problemsReturned = new ProblemController().searchProblemWithGeoLocation(parentId, geoLocation, geoDistance);
             }
             else if(searchType == "body-location"){
-                //TODO get records from body location search
-                problemsReturned = new ArrayList<>();
+                problemsReturned = new ProblemController().searchProblemWithBodyLocation(parentId, bodyLocation);
             }
             else {
                 problemsReturned = null;
@@ -133,7 +132,7 @@ public class SearchResultsActivity extends AppCompatActivity {
             }
             else if(searchType == "body-location"){
                 //TODO get records from body location search
-                recordsReturned = new ArrayList<>();
+                recordsReturned = new RecordController().searchRecordsWithBodyLocation(parentId,bodyLocation);
             }
             else {
                 recordsReturned = null;

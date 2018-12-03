@@ -77,7 +77,6 @@ public class DBcontract {
         public static final String COL_PHOTOS = "photos";
         public static final String COL_LAT = "loc_latitude";
         public static final String COL_LON = "loc_longitude";
-        public static final String COL_BODYLOCATION = "bodyLocation";
         public static final String COL_SYNCED = "syncFlag";
     }
 
