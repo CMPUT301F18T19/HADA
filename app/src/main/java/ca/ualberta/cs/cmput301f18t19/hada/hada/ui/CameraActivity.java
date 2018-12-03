@@ -21,6 +21,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import id.zelory.compressor.Compressor;
 import pub.devrel.easypermissions.AfterPermissionGranted;
@@ -93,6 +95,7 @@ public class CameraActivity extends AppCompatActivity implements EasyPermissions
             }
             File imageFile = new File(folder,String.valueOf(System.currentTimeMillis()) + ".jpg");
             imageFileUri = Uri.fromFile(imageFile);
+            Log.d("CameraActivity", "imageFileUri is "+ imageFileUri.toString());
             intent.putExtra(MediaStore.EXTRA_OUTPUT, imageFileUri);
             startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         }
