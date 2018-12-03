@@ -45,8 +45,6 @@ public class BodyLocationTest {
     @Before
     public void setup() {
         this.bodyLocation = new BodyLocation();
-        this.bodyLocation.setPhotoUri("///:filesystem");
-        this.bodyLocation.setPhotoHTTP("www.test.gov");
         this.bodyLocation.setBodyLocation("test_bodyLocation");
         this.bodyLocation.setParentId("testParent");
     }
@@ -68,40 +66,6 @@ public class BodyLocationTest {
         String uuid = UUID.randomUUID().toString();
         this.bodyLocation.setFileID(uuid);
         assertEquals(uuid, this.bodyLocation.getFileID());
-    }
-
-    /**
-     * Test get photo uri.
-     */
-    @Test
-    public void testGetPhotoUri() {
-        assertEquals("///:filesystem", this.bodyLocation.getPhotoUri());
-    }
-
-    /**
-     * Test set photo uri.
-     */
-    @Test
-    public void testSetPhotoUri() {
-        this.bodyLocation.setPhotoUri("///:SDcard/folder");
-        assertEquals("///:SDcard/folder", this.bodyLocation.getPhotoUri());
-    }
-
-    /**
-     * Test get photo http.
-     */
-    @Test
-    public void testGetPhotoHTTP() {
-        assertEquals("www.test.gov", this.bodyLocation.getPhotoHTTP());
-    }
-
-    /**
-     * Test set photo http.
-     */
-    @Test
-    public void testSetPhotoHTTP() {
-        this.bodyLocation.setPhotoHTTP("www.elasticSearch.com");
-        assertEquals("www.elasticSearch.com", this.bodyLocation.getPhotoHTTP());
     }
 
     /**
