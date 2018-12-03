@@ -5,9 +5,13 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.DBPhotoManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESPhotoManager;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.SyncManager;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ContextSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Photos;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.ui.CameraActivity;
 
 /**
  * Controller for Photos objects.
@@ -18,10 +22,14 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Photos;
  * @see ESPhotoManager
  */
 public class PhotoController {
+    SyncManager syncManager;
     /**
      * Instantiates a new Photo controller.
      */
-    public PhotoController(){}
+    public PhotoController(){
+        syncManager = new SyncManager();
+        syncManager.syncDB2ES();
+    }
 
     /**
      * Get the photos object for a given parentId.
@@ -30,17 +38,22 @@ public class PhotoController {
      * @return the photos
      */
     public Photos getPhotos(String parentID){
-        Photos photos = null;
-        try {
-            ArrayList<Photos> photos_array = new ESPhotoManager.GetPhotoListTask().execute(parentID).get();
-            if(photos_array.size() > 0){
-                photos = photos_array.get(0);
+        if(syncManager.isConnectedINET()){
+            Photos photos = null;
+            try {
+                ArrayList<Photos> photos_array = new ESPhotoManager.GetPhotoListTask().execute(parentID).get();
+                if(photos_array.size() > 0){
+                    photos = photos_array.get(0);
+                }
+            }catch (Exception e){
+                Log.d("getPhoto","couldnt get photos");
+                e.printStackTrace();
             }
-        }catch (Exception e){
-            Log.d("getPhoto","couldnt get photos");
-            e.printStackTrace();
+            return photos;
+        }else{
+            return new DBPhotoManager(ContextSingleton.getInstance().getContext()).getPhoto(parentID);
         }
-        return photos;
+
     }
 
     /**
@@ -50,7 +63,7 @@ public class PhotoController {
      * @param bitmapString the bitmap string
      */
     public void addPhoto(String parentId, String bitmapString){
-        //TODO upload image to imgur
+
         ArrayList<Photos> photos;
         Photos photo = new Photos();
         ArrayList<String> bitmaps = new ArrayList<>();

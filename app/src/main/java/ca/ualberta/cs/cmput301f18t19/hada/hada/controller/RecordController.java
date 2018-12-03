@@ -10,11 +10,14 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
+import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.DBRecordManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESBodyLocationManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESProblemManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESRecordManager;
 
+import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.SyncManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.BodyLocation;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ContextSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 
@@ -26,6 +29,12 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
  */
 public class RecordController {
 
+    SyncManager syncManager;
+
+    public RecordController(){
+        syncManager = new SyncManager();
+        syncManager.syncDB2ES();
+    }
     /**
      * Get record for given fileId.
      *
@@ -33,14 +42,19 @@ public class RecordController {
      * @return the record
      */
     public Record getRecord(String fileId){
-        try{
-            Record record = new ESRecordManager.GetARecordTask().execute(fileId).get();
-            return record;
-        }catch (Exception e){
-            Log.d("getRecord","Couldn't retrieve record from ES");
-            e.printStackTrace();
+        if(syncManager.isConnectedINET()){
+            try{
+                Record record = new ESRecordManager.GetARecordTask().execute(fileId).get();
+                return record;
+            }catch (Exception e){
+                Log.d("getRecord","Couldn't retrieve record from ES");
+                e.printStackTrace();
+            }
+            return null;
+        }else{
+            return new DBRecordManager(ContextSingleton.getInstance().getContext()).getRecord(fileId);
         }
-        return null;
+
     }
 
     /**
@@ -51,7 +65,9 @@ public class RecordController {
      */
     public void addRecord(Record record, String parentId){
         record.setParentId(parentId);
-        new ESRecordManager.AddRecordTask().execute(record);
+        new DBRecordManager(ContextSingleton.getInstance().getContext()).addRecord(record);
+        syncManager.syncDB2ES();
+        //new ESRecordManager.AddRecordTask().execute(record);
     }
 
     /**
@@ -61,13 +77,18 @@ public class RecordController {
      * @return the record list
      */
     public ArrayList<Record> getRecordList(String parentId) {
-        try {
-            return new ESRecordManager.GetRecordListTask().execute(parentId).get();
-        } catch (Exception e) {
-            Log.d("getRecordList","Couldn't retrieve record list from ES");
-            e.printStackTrace();
+        if(syncManager.isConnectedINET()){
+            try {
+                return new ESRecordManager.GetRecordListTask().execute(parentId).get();
+            } catch (Exception e) {
+                Log.d("getRecordList","Couldn't retrieve record list from ES");
+                e.printStackTrace();
+            }
+            return null;
+        }else{
+            return new DBRecordManager(ContextSingleton.getInstance().getContext()).getRecordList(parentId);
         }
-        return null;
+
     }
     /**
      * Add comment record for care provider use.
@@ -80,7 +101,9 @@ public class RecordController {
         commentRecord.setTitle("-- Care Provider Comment --");
         commentRecord.setComment(comment);
         commentRecord.setParentId(parentId);
-        new ESRecordManager.AddRecordTask().execute(commentRecord);
+        new DBRecordManager(ContextSingleton.getInstance().getContext()).addRecord(commentRecord);
+        syncManager.syncDB2ES();
+        //new ESRecordManager.AddRecordTask().execute(commentRecord);
     }
 
     /**
@@ -89,7 +112,9 @@ public class RecordController {
      * @param fileId the file id
      */
     public void deleteRecord(String fileId){
-        new ESRecordManager.DeleteARecordTask().execute(fileId);
+        new DBRecordManager(ContextSingleton.getInstance().getContext()).deleteRecord(fileId);
+        syncManager.syncDB2ES();
+        //new ESRecordManager.DeleteARecordTask().execute(fileId);
     }
 
     /**
@@ -99,8 +124,11 @@ public class RecordController {
      * @param title  the title
      */
     public void editRecordTitle(Record record, String title){
-        record.setTitle(title);
-        new ESRecordManager.AddRecordTask().execute(record);
+        String recordId = record.getFileId();
+        new DBRecordManager(ContextSingleton.getInstance().getContext()).editRecordTitle(recordId, title);
+        syncManager.syncDB2ES();
+
+        //new ESRecordManager.AddRecordTask().execute(record);
     }
 
     /**
@@ -110,8 +138,9 @@ public class RecordController {
      * @param comment the comment
      */
     public void editRecordComment(Record record, String comment){
-        record.setComment(comment);
-        new ESRecordManager.AddRecordTask().execute(record);
+        String recordId = record.getFileId();
+        new DBRecordManager(ContextSingleton.getInstance().getContext()).editRecordComment(recordId, comment);
+        //new ESRecordManager.AddRecordTask().execute(record);
     }
 
     /**
@@ -135,32 +164,43 @@ public class RecordController {
      * @param geoLocation the geo location
      */
     public void editRecordGeoLocation(Record record, LatLng geoLocation){
-        record.setLocation(geoLocation);
-        new ESRecordManager.AddRecordTask().execute(record);
+        String recordId = record.getFileId();
+        new DBRecordManager(ContextSingleton.getInstance().getContext()).editRecordGeoLocation(recordId, geoLocation);
+        //new ESRecordManager.AddRecordTask().execute(record);
     }
 
     public ArrayList<Record> searchRecordsWithKeywords(String parentId, String keyword){
-        try {
-            return new ESRecordManager.SearchUsingKeywordTask().execute(parentId, keyword).get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if(syncManager.isConnectedINET()){
+            try {
+                return new ESRecordManager.SearchUsingKeywordTask().execute(parentId, keyword).get();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }else{
+            return new DBRecordManager(ContextSingleton.getInstance().getContext()).searchRecordWtihKeyword(parentId, keyword);
         }
-        return null;
+
     }
 
     public ArrayList<Record> searchRecordsWithGeo(String parentId, String distance, LatLng location){
-        String lat = Double.toString(location.latitude);
-        String lng = Double.toString(location.longitude);
-        try {
-            return new ESRecordManager.SearchUsingGeoLocationTask().execute(parentId, distance, lat, lng).get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if(syncManager.isConnectedINET()){
+            String lat = Double.toString(location.latitude);
+            String lng = Double.toString(location.longitude);
+            try {
+                return new ESRecordManager.SearchUsingGeoLocationTask().execute(parentId, distance, lat, lng).get();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return new ArrayList<>();
+        }else{
+            return new DBRecordManager(ContextSingleton.getInstance().getContext()).searchRecordWtihGeo(parentId, distance, location);
         }
-        return new ArrayList<>();
+
     }
 
     public ArrayList<Record> searchRecordsWithBodyLocation(String parentId, String bodyLocation){

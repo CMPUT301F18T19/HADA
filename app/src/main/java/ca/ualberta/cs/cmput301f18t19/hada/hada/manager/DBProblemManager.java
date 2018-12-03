@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -42,8 +43,13 @@ public class DBProblemManager {
      * @param problem, problem to be added
      */
     public void addProblem(Problem problem) {
-        if (existsProblem(problem.getFileId()))
+        if(problem.getFileId() == null){
+            String fileId = UUID.randomUUID().toString();
+            problem.setFileId(fileId);
+        }
+        if (existsProblem(problem.getFileId())){
             return;
+        }
         ContentValues values = new ContentValues();
         values.put(problemTable.COL_PARENTID, problem.getParentId());
         values.put(problemTable.COL_FILEID, problem.getFileId());
@@ -240,6 +246,7 @@ public class DBProblemManager {
         );
         int count = c.getCount();
         c.close();
+        Log.d("existsProblem", "Counted " + count +", so I return " + (count > 0));
         return  (count > 0);
     }
 

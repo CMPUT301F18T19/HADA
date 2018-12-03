@@ -15,10 +15,15 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.controller;
 import java.util.concurrent.ExecutionException;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESBodyLocationManager;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.SyncManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.BodyLocation;
 
 public class BodyLocationController {
-
+    SyncManager syncManager;
+    public BodyLocationController(){
+        SyncManager syncManager = new SyncManager();
+        syncManager.syncDB2ES();
+    }
     public BodyLocation getABodyLocation(String parentId){
         try {
             return new ESBodyLocationManager.GetABodyLocationTask().execute(parentId).get();

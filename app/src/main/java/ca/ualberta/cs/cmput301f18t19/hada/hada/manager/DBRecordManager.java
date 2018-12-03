@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -48,11 +49,18 @@ public class DBRecordManager {
         ContentValues values = new ContentValues();
         values.put(recordTable.COL_PARENTID, newRecord.getParentId());
         values.put(recordTable.COL_FILEID, newRecord.getFileId());
-        values.put(recordTable.COL_TIMESTAMP, newRecord.getTitle());
+        if(newRecord.getTitle() != null){
+            values.put(recordTable.COL_TIMESTAMP, newRecord.getTitle());
+        }
         values.put(recordTable.COL_TITLE, newRecord.getTimestamp().toString());
-        values.put(recordTable.COL_COMMENT, newRecord.getComment());
-        values.put(recordTable.COL_LAT, newRecord.getLocation().latitude);
-        values.put(recordTable.COL_LON, newRecord.getLocation().longitude);
+        if(newRecord.getComment() != null){
+            values.put(recordTable.COL_COMMENT, newRecord.getComment());
+        }
+        if(newRecord.getLocationArrayList() != null){
+            values.put(recordTable.COL_LAT, newRecord.getLocation().latitude);
+            values.put(recordTable.COL_LON, newRecord.getLocation().longitude);
+        }
+        Log.d("addRecord", "fileId: " + newRecord.getFileId() + " parentId: "+ newRecord.getParentId());
         db.insert(recordTable.TABLE_NAME, null, values);
         setRecordSyncFlag(newRecord.getFileId(), false);
     }

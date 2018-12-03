@@ -51,17 +51,17 @@ public class DBPhotoManager {
 
     /**
      * Loads a photo from the database
-     * @param  fileID a photo's fileID
+     * @param  parentID a photo's fileID
      * @return a photo, a Photos class obj.
      * Null if the photo is not found
      */
-    public Photos getPhoto(String fileID) {
+    public Photos getPhoto(String parentID) {
         Photos photo = null;
         Cursor cursor = db.query(
                 photoTable.TABLE_NAME,
                 null,
-                photoTable.COL_FILEID + " = ?",
-                new String[] { fileID },
+                photoTable.COL_PARENTID + " = ?",
+                new String[] { parentID },
                 null,
                 null,
                 null

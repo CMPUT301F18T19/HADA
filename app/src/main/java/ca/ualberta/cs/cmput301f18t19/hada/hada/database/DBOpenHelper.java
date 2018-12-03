@@ -113,9 +113,10 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                         photoTable.COL_FILEID + " TEXT," +
                         photoTable.COL_BITMAP + " TEXT," +
                         careProviderTable.COL_SYNCED + " INTEGER," +
-                        "PRIMARY KEY (" + photoTable.COL_FILEID + ")," +
+                        "PRIMARY KEY (" + photoTable.COL_FILEID + ")" +
                         ")"
         );
+
 
     }
 

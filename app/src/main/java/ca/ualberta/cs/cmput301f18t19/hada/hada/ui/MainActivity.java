@@ -37,6 +37,7 @@ import java.util.concurrent.ExecutionException;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.BuildConfig;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.UserController;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.SyncManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESUserManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ContextSingleton;
@@ -129,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
 
                     if (state == NetworkInfo.State.CONNECTED) {
                         //INSERT SYNC FUNCTION HERE
+                        new SyncManager().syncDB2ES();
                         Log.d("networktest", "Network connected!");
 
                     } else {

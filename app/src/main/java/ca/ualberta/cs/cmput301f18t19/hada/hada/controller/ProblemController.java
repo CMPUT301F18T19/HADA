@@ -21,6 +21,7 @@ import java.util.concurrent.ExecutionException;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.DBProblemManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.ESProblemManager;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.SyncManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ContextSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
@@ -33,12 +34,12 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
  * @see Problem
  */
 public class ProblemController {
-
+    SyncManager syncManager;
     /**
      * Instantiates a new Problem controller with an empty list of problems.
      */
     public ProblemController() {
-
+        syncManager = new SyncManager();
     }
 
     /**
@@ -53,6 +54,7 @@ public class ProblemController {
         Problem problem = new Problem(title, date, description);
         problem.setParentId(parentId);
         new DBProblemManager(ContextSingleton.getInstance().getContext()).addProblem(problem);
+        syncManager.syncDB2ES();
     //  new ESProblemManager.AddProblemTask().execute(problem);
     }
 
@@ -63,16 +65,19 @@ public class ProblemController {
      * @return a problem
      */
     public Problem getProblem(String fileId) {
-        return new DBProblemManager(ContextSingleton.getInstance().getContext()).getProblem(fileId);
-//        try {
-//            Problem problem = new ESProblemManager.GetAProblemTask().execute(fileId).get();
-//            return problem;
-//        } catch (ExecutionException e) {
-//            e.printStackTrace();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
+        if(syncManager.isConnectedINET()){
+            try {
+                Problem problem = new ESProblemManager.GetAProblemTask().execute(fileId).get();
+                return problem;
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }else{
+            return new DBProblemManager(ContextSingleton.getInstance().getContext()).getProblem(fileId);
+        }
     }
 
     /**
@@ -82,16 +87,20 @@ public class ProblemController {
      * @return arrayList of problems
      */
     public ArrayList<Problem> getListOfProblems(String parentId){
-        return new DBProblemManager(ContextSingleton.getInstance().getContext()).getProblemList(parentId);
-//        try {
-//            ArrayList<Problem> problems = new ESProblemManager.GetProblemListTask().execute(parentId).get();
-//            return problems;
-//        } catch (ExecutionException e) {
-//            e.printStackTrace();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
+        if(syncManager.isConnectedINET()){
+            try {
+                ArrayList<Problem> problems = new ESProblemManager.GetProblemListTask().execute(parentId).get();
+                return problems;
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }else{
+            return new DBProblemManager(ContextSingleton.getInstance().getContext()).getProblemList(parentId);
+        }
+
     }
 
     /**
@@ -109,6 +118,7 @@ public class ProblemController {
 //        for(Record record: recordsToDelete){
 //            new RecordController().deleteRecord(record.getFileId());
 //        }
+        syncManager.syncDB2ES();
     }
 
     /**
@@ -120,6 +130,7 @@ public class ProblemController {
     public void editProblemTitle(Problem problem, String title){
         String fileId = problem.getFileId();
         new DBProblemManager(ContextSingleton.getInstance().getContext()).editProblemTitle(fileId, title);
+        syncManager.syncDB2ES();
 //        problem.setTitle(title);
 //        new ESProblemManager.AddProblemTask().execute(problem);
     }
@@ -133,6 +144,7 @@ public class ProblemController {
     public void editProblemDate(Problem problem, LocalDateTime date){
         String fileId = problem.getFileId();
         new DBProblemManager(ContextSingleton.getInstance().getContext()).editProblemDate(fileId, date);
+        syncManager.syncDB2ES();
 //        problem.setDate(date);
 //        new ESProblemManager.AddProblemTask().execute(problem);
     }
@@ -146,6 +158,7 @@ public class ProblemController {
     public void editProblemDesc(Problem problem, String description){
         String fileId = problem.getFileId();
         new DBProblemManager(ContextSingleton.getInstance().getContext()).editProblemDesc(fileId, description);
+        syncManager.syncDB2ES();
 //        problem.setDesc(description);
 //        new ESProblemManager.AddProblemTask().execute(problem);
     }
@@ -158,15 +171,17 @@ public class ProblemController {
      * @param keyword  the keyword to search for
      */
     public ArrayList<Problem> searchProblemsWithKeywords(String parentId, String keyword){
+        if(syncManager.isConnectedINET()){
+            try {
+                return new ESProblemManager.SearchUsingKeywordTask().execute(parentId, keyword).get();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
         return new DBProblemManager(ContextSingleton.getInstance().getContext()).searchProblemsWithKeyword(parentId, keyword);
-//        try {
-//            return new ESProblemManager.SearchUsingKeywordTask().execute(parentId, keyword).get();
-//        } catch (ExecutionException e) {
-//            e.printStackTrace();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
     }
 
     public ArrayList<Problem> searchProblemWithGeoLocation(String parentId, LatLng location, String distance){
