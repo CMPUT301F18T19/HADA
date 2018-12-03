@@ -55,7 +55,7 @@ public class ESBodyLocationManager extends ESManager{
                     Log.d("AddBodyLocation", index.getURI());
                     Log.d("AddBodyLocation",result.getJsonString());
                     if (result.isSucceeded()) {
-                        Log.d("AddBodyLocation", "Record successfully added.");
+                        Log.d("AddBodyLocation", "bodylocation successfully added.");
                     }
                 } catch (IOException e) {
                     Log.d("AddBodyLocation", "Failed to execute while adding a record.");

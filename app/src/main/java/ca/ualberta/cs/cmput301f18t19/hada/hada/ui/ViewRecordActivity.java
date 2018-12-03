@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
@@ -40,6 +42,8 @@ public class ViewRecordActivity extends AppCompatActivity {
 
     private Record record;
     private String recordFileId;
+    private ArrayList<Integer> touchCoords;
+    ImageView marker;
     /**
      * The Body location popup.
      */
@@ -108,8 +112,6 @@ public class ViewRecordActivity extends AppCompatActivity {
                     Log.d("ViewRecordActivity", "Photostring is " +photoString);
                     Bitmap bitmap = new BitmapPhotoEncodeDecodeManager.DecodeBitmapTask().execute(photoString).get();
                     imagePreview.setImageBitmap(bitmap);
-                }else{
-                    Toast.makeText(this, "it's 0", Toast.LENGTH_SHORT).show();
                 }
             }catch (Exception e){
                 Log.d("ViewRecordActivity", "Failed to decode image");
@@ -136,6 +138,20 @@ public class ViewRecordActivity extends AppCompatActivity {
 
         }
 
+    private void placeImage(float X, float Y) {
+        int touchX = (int) X;
+        int touchY = (int) Y;
+
+        //placing at center of touch
+        int viewWidth = marker.getWidth();
+        int viewHeight = marker.getHeight();
+        viewWidth = viewWidth / 2;
+        viewHeight = viewHeight / 2;
+        marker.layout(touchX - viewWidth, touchY - viewHeight, touchX + viewWidth, touchY + viewHeight);
+
+
+    }
+
     /**
      * Show a popup that displays the body location if the user
      *
@@ -149,6 +165,8 @@ public class ViewRecordActivity extends AppCompatActivity {
         title = bodyLocationPopup.findViewById(R.id.popupBodyLocTitle);
         exit = bodyLocationPopup.findViewById(R.id.popupBodyLocExitButton);
         imageView = bodyLocationPopup.findViewById(R.id.popupBodyLocImageView);
+        RelativeLayout relativeLayout = bodyLocationPopup.findViewById(R.id.popupBodyLocRLayout);
+        marker = relativeLayout.findViewById(R.id.popupBodyLocMarker);
 
         //Setup exit button
         exit.setOnClickListener(new View.OnClickListener() {
@@ -176,6 +194,12 @@ public class ViewRecordActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         imageView.setImageBitmap(bitmap);
+
+        ArrayList coords = bodyLocation.getCoords();
+        Integer coordX = (int) coords.get(0);
+        Integer coordY = (int) coords.get(1);
         bodyLocationPopup.show();
+        //marker.setVisibility(View.VISIBLE);
+        placeImage(coordX, coordY);
     }
 }
