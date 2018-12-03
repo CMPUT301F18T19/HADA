@@ -42,6 +42,7 @@ public class CameraActivity extends AppCompatActivity implements EasyPermissions
         setContentView(R.layout.activity_camera);
         Intent intent = getIntent();
         String type = intent.getStringExtra("TYPE");
+
         TextView tv = (TextView) findViewById(R.id.cameraStatus);
         if (type.equals("400")){
             tv.setText("Take front image by clicking HADA");
@@ -50,7 +51,7 @@ public class CameraActivity extends AppCompatActivity implements EasyPermissions
             tv.setText("Take Rear facing image by clicking HADA");
         }
 
-        ImageButton button = (ImageButton) findViewById(R.id.cameraImageButton);
+        final ImageButton button = (ImageButton) findViewById(R.id.cameraImageButton);
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v){
                 takeAPhoto();
@@ -58,10 +59,11 @@ public class CameraActivity extends AppCompatActivity implements EasyPermissions
         };
         button.setOnClickListener(listener);
         final Button savePhoto = findViewById(R.id.cameraActivtySave);
+
         savePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveButton();
+                    saveButton();
             }
         });
     }
@@ -123,23 +125,28 @@ public class CameraActivity extends AppCompatActivity implements EasyPermissions
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             TextView tv = (TextView) findViewById(R.id.cameraStatus);
-            Toast.makeText(CameraActivity.this, Integer.toString(resultCode), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(CameraActivity.this, Integer.toString(resultCode), Toast.LENGTH_SHORT).show();
             if (resultCode == RESULT_OK) {
                 tv.setText("Photo OK!");
                 ImageButton button = (ImageButton) findViewById(R.id.cameraImageButton);
                 button.setImageDrawable(Drawable.createFromPath(imageFileUri.getPath()));
             } else if (resultCode == RESULT_CANCELED) {
                 tv.setText("Photo canceled");
+                imageFileUri = null;
             } else {
                 tv.setText("Not sure what happened!" + resultCode);
             }
         }
     }
     private void saveButton (){
-        Intent intent = new Intent();
-        intent.putExtra("URI",imageFileUri.toString());
-        setResult(RESULT_OK, intent);
-        finish();
+        if(imageFileUri==null){
+            Toast.makeText(this, "You have to take a photo to save!", Toast.LENGTH_SHORT).show();
+        }else {
+            Intent intent = new Intent();
+            intent.putExtra("URI", imageFileUri.toString());
+            setResult(RESULT_OK, intent);
+            finish();
+        }
     }
 
 }
