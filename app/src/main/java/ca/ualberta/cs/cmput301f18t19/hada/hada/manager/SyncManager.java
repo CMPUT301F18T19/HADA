@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.CareProvider;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.ContextSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Patient;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Photos;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Problem;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 
@@ -22,15 +23,14 @@ public class SyncManager {
     private DBUserManager DBUserManager;
     private DBProblemManager DBProblemManager;
     private DBRecordManager DBRecordManager;
+    private DBPhotoManager DBPhotoManager;
 
 
 
     /**
      * SyncManager constructor
      */
-    public SyncManager(){
-
-    }
+    public SyncManager(){}
 
     /**
      * instantiates each database manager and sync each un-synced object from database
@@ -44,11 +44,13 @@ public class SyncManager {
         DBUserManager = new DBUserManager(ContextSingleton.getInstance().getContext());
         DBProblemManager = new DBProblemManager(ContextSingleton.getInstance().getContext());
         DBRecordManager = new DBRecordManager(ContextSingleton.getInstance().getContext());
+        DBPhotoManager = new DBPhotoManager(ContextSingleton.getInstance().getContext());
 
         syncCareProviderTable();
         syncPatientTable();
         syncProblemTable();
         syncRecordTable();
+        syncPhotoTable();
 
     }
 
@@ -108,10 +110,27 @@ public class SyncManager {
         }
     }
 
+    /**
+     * sync each un-synced photo from database to ElasticSearch server, and set their
+     * syncFlag in database to true
+     */
+    private void syncPhotoTable(){
+        ArrayList<Photos> unSyncedList = DBPhotoManager.getUnSyncedPhotos();
+        for (Photos photo:unSyncedList) {
+            // sync each un-synced patient to ES server
+            // then set their syncFlag to true(1 in DB)
+            new ESPhotoManager.AddPhotosTask().execute(photo);
+            DBPhotoManager.setPhotosSyncFlag(photo.getFileID(), true);
+        }
+    }
+
 
     /**
      * check if the app have internet connection by pinging(send 1 ECHO_REQUEST packet)
      * google's public DNS server, return true if there's a response, false otherwise.
+     * Referenced code from
+     * https://stackoverflow.com/questions/17717749/check-for-active-internet-connection-android
+     * by Musculaa
      */
     public boolean isConnectedINET() {
         Runtime runtime = Runtime.getRuntime();

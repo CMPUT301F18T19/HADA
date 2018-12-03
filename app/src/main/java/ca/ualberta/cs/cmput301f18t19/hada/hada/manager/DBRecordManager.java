@@ -43,6 +43,8 @@ public class DBRecordManager {
      * @param newRecord record to be added to DB
      */
     public void addRecord(Record newRecord) {
+        if (existsRecord(newRecord.getFileId()))
+            return;
         ContentValues values = new ContentValues();
         values.put(recordTable.COL_PARENTID, newRecord.getParentId());
         values.put(recordTable.COL_FILEID, newRecord.getFileId());

@@ -42,12 +42,6 @@ public class DBProblemManager {
      * @param problem, problem to be added
      */
     public void addProblem(Problem problem) {
-        if(problem.getFileId() == null){
-            if(problem.getFileId() == null) {
-                String fileId = UUID.randomUUID().toString();
-                problem.setFileId(fileId);
-            }
-        }
         if (existsProblem(problem.getFileId()))
             return;
         ContentValues values = new ContentValues();

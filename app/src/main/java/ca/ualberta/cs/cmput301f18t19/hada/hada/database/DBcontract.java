@@ -80,4 +80,15 @@ public class DBcontract {
         public static final String COL_SYNCED = "syncFlag";
     }
 
+    /**
+     * definition of photo table
+     */
+    public static final class photoTable {
+        public static final String TABLE_NAME = "photo";
+
+        public static final String COL_PARENTID = "parentID";
+        public static final String COL_FILEID = "fileID";
+        public static final String COL_BITMAP = "bitmap";
+        public static final String COL_SYNCED = "syncFlag";
+    }
 }

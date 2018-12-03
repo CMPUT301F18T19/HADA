@@ -8,6 +8,7 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBcontract.careProviderT
 import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBcontract.patientTable;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBcontract.problemTable;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBcontract.recordTable;
+import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBcontract.photoTable;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.DBUserManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.DBProblemManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.DBRecordManager;
@@ -54,7 +55,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                         ")"
         );
 
-        // create patients table
+        // create patient table
         db.execSQL(
                 "CREATE TABLE " + patientTable.TABLE_NAME + " (" +
                         patientTable.COL_PARENTID + " TEXT," +
@@ -70,7 +71,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                         " ON DELETE CASCADE)"
         );
 
-        // create problems table
+        // create problem table
         db.execSQL(
                 "CREATE TABLE " + problemTable.TABLE_NAME + " (" +
                         problemTable.COL_PARENTID + " TEXT," +
@@ -87,7 +88,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
         );
 
-        // create records table
+        // create record table
         db.execSQL(
                 "CREATE TABLE " + recordTable.TABLE_NAME + " (" +
                         recordTable.COL_PARENTID + " TEXT," +
@@ -103,6 +104,17 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                         "REFERENCES " + problemTable.TABLE_NAME +
                         "(" + problemTable.COL_FILEID + ")" +
                         " ON DELETE CASCADE)"
+        );
+
+        // create photo table
+        db.execSQL(
+                "CREATE TABLE " + photoTable.TABLE_NAME + " (" +
+                        photoTable.COL_PARENTID + " TEXT," +
+                        photoTable.COL_FILEID + " TEXT," +
+                        photoTable.COL_BITMAP + " TEXT," +
+                        careProviderTable.COL_SYNCED + " INTEGER," +
+                        "PRIMARY KEY (" + photoTable.COL_FILEID + ")," +
+                        ")"
         );
 
     }
