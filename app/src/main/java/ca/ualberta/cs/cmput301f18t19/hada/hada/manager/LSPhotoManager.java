@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Photos;
 
@@ -38,6 +39,10 @@ public class LSPhotoManager {
      */
     public void addPhoto(Photos photo) {
         try{
+            if (photo.getFileID() == null) {
+                String fileId = UUID.randomUUID().toString();
+                photo.setFileID(fileId);
+            }
             File file = new File(INTERNAL_DIR, photo.getFileID());
             FileOutputStream fos= new FileOutputStream(file);
             ObjectOutputStream oos= new ObjectOutputStream(fos);
@@ -55,17 +60,62 @@ public class LSPhotoManager {
      * @return a photo, a Photos class obj.
      * Null if the photo is not found
      */
-    public Photos getPhoto(String fileID) {
+    public Photos getPhotoByFileID(String fileID) {
         try {
             File file = new File(INTERNAL_DIR, fileID);
             FileInputStream fos = new FileInputStream(file);
             ObjectInputStream ois = new ObjectInputStream(fos);
             Photos photo = (Photos) ois.readObject();
+            fos.close();
+            ois.close();
             return photo;
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    /**
+     * Loads a photo from the database
+     * @param  parentID a photo's fileID
+     * @return a photo, a Photos class obj.
+     * Null if the photo is not found
+     */
+    public Photos getPhotoByParentID(String parentID) {
+        File files[] = INTERNAL_DIR.listFiles();
+        for (File file:files){
+            try {
+                FileInputStream fos = new FileInputStream(file);
+                ObjectInputStream ois = new ObjectInputStream(fos);
+                Photos photo = (Photos) ois.readObject();
+                fos.close(); ois.close();
+                if (photo.getParentId().equals(parentID))
+                    return photo;
+            } catch (IOException | ClassNotFoundException e) { e.printStackTrace(); }
+        }
+        return null;
+    }
+
+    /**
+     * get photos for a given parentID
+     * @param  parentID A record's fileID
+     * @return a list of photos
+     * empty list if the photo is not found
+     */
+    public ArrayList<Photos> getPhotoList(String parentID) {
+        ArrayList<Photos> resultList = new ArrayList<>();
+        File files[] = INTERNAL_DIR.listFiles();
+        for (File file:files){
+            try {
+                FileInputStream fos = new FileInputStream(file);
+                ObjectInputStream ois = new ObjectInputStream(fos);
+                Photos photo = (Photos) ois.readObject();
+                fos.close(); ois.close();
+                if (photo.getParentId().equals(parentID))
+                    resultList.add(photo);
+            } catch (IOException | ClassNotFoundException e) { e.printStackTrace(); }
+        }
+        return resultList;
     }
 
     /**

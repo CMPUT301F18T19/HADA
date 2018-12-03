@@ -8,7 +8,6 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBcontract.careProviderT
 import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBcontract.patientTable;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBcontract.problemTable;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBcontract.recordTable;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.database.DBcontract.photoTable;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.DBUserManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.DBProblemManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.DBRecordManager;
