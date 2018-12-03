@@ -1,4 +1,18 @@
+/*
+ *  CMPUT 301 - Fall 2018
+ *
+ *  CareProviderTest.java
+ *
+ *  11/27/18 3:30 PM
+ *
+ *  This is a group project for CMPUT 301 course at the University of Alberta
+ *  Copyright (C) 2018  Austin Goebel, Anders Johnson, Alex Li,
+ *  Cristopher Penner, Joseph Potentier-Neal, Jason Robock
+ */
+
 package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
+
+import android.support.annotation.NonNull;
 
 import org.junit.Test;
 
@@ -8,70 +22,82 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
+/**
+ * Tests for the class CareProvider.
+ *
+ * @see CareProvider
+ * @author Christopher Penner
+ */
 public class CareProviderTest {
 
+    /**
+     * Setup creates a pre defined CareProvider to test getters
+     */
+    @NonNull
+    private CareProvider setup() {
+        return new CareProvider("TestCID",
+                "7801234567",
+                "test@ualberta.ca");
+    }
+
+    /**
+     * Test set user id.
+     */
     @Test
     public void testSetUserID(){
-        CareProvider careProvider = new CareProvider();
+        CareProvider careProvider = setup();
         careProvider.setUserID("Test CP User ID");
         assertEquals("Test CP User ID", careProvider.getUserID());
     }
 
+    /**
+     * Test get user id.
+     */
     @Test
     public void testGetUserID(){
-        CareProvider careProvider = new CareProvider();
-        careProvider.setUserID("Test User Id");
+        CareProvider careProvider = setup();
         String returnedID = careProvider.getUserID();
-        assertEquals("Test User Id",returnedID);
+        assertEquals("TestCID",returnedID);
     }
 
 
+    /**
+     * Test set phone number.
+     */
     @Test
     public void testSetPhoneNumber(){
-        CareProvider careProvider = new CareProvider();
-        careProvider.setPhoneNumber("7801234567");
-        assertEquals("7801234567", careProvider.getPhoneNumber());
+        CareProvider careProvider = setup();
+        careProvider.setPhoneNumber("1809994466");
+        assertEquals("1809994466", careProvider.getPhoneNumber());
     }
 
+    /**
+     * Test get phone number.
+     */
     @Test
     public void testGetPhoneNumber(){
-        CareProvider careProvider = new CareProvider();
-        careProvider.setPhoneNumber("7801234567");
+        CareProvider careProvider = setup();
         String returnedPhoneNumber = careProvider.getPhoneNumber();
         assertEquals("7801234567", returnedPhoneNumber);
     }
 
+    /**
+     * Test set email address.
+     */
     @Test
     public void testSetEmailAddress(){
-        CareProvider careProvider = new CareProvider();
-        careProvider.setEmailAddress("test@ualberta.ca");
-        assertEquals("test@ualberta.ca", careProvider.getEmailAddress());
+        CareProvider careProvider = setup();
+        careProvider.setEmailAddress("testSet@ualberta.ca");
+        assertEquals("testSet@ualberta.ca", careProvider.getEmailAddress());
     }
 
+    /**
+     * Test get email address.
+     */
     @Test
     public void testGetEmailAddress(){
-        CareProvider careProvider = new CareProvider();
-        careProvider.setEmailAddress("test@ualberta.ca");
+        CareProvider careProvider = setup();
         String returnedEmailAddress = careProvider.getEmailAddress();
         assertEquals("test@ualberta.ca", returnedEmailAddress);
     }
-
-    @Test
-    public void testSetPatients(){
-        CareProvider careProvider = new CareProvider();
-        ArrayList<Patient> patients = new ArrayList<Patient>();
-        Patient patient = new Patient();
-        careProvider.setPatients(patients);
-        assertEquals("Should return the PatientListController we added", patients, careProvider.getPatients());
-    }
-
-    @Test
-    public void testGetPatients(){
-        CareProvider careProvider = new CareProvider();
-        ArrayList<Patient> patients = new ArrayList<Patient>();
-        Patient patient = new Patient();
-        careProvider.setPatients(patients);
-        assertEquals("Should return the PatientListController we added", patients, careProvider.getPatients());
-    }
-
 }

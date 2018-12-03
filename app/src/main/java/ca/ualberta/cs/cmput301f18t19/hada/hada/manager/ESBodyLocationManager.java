@@ -104,9 +104,20 @@ public class ESBodyLocationManager extends ESManager{
         @Override
         protected BodyLocation doInBackground(String... params) {
             setClient();
-            String query = "{\"query\": {\"match\": {\"parentId\": \"" + params[0] + "\"}}}";
+            String parentId = params[0];
+            String query = "{\n" +
+                    "\t\"query\" : {\n" +
+                    "\t\t\"bool\" : {\n" +
+                    "\t\t\t\"must\" : {\n" +
+                    "\t\t\t\t\"match\" : {\n" +
+                    "\t\t\t\t\t\"parentId\" : \""+parentId+"\"\n" +
+                    "\t\t\t\t}\n" +
+                    "\t\t\t}\n" +
+                    "\t\t}\n" +
+                    "\t}\n" +
+                    "}";
             BodyLocation matchingLocation = null;
-            Log.d("GetARecordTask Query: ", query);
+            Log.d("GetABodyLocationTask Query: ", query);
 
             Search search = new Search.Builder(query)
                     .addIndex(teamIndex)
@@ -118,11 +129,12 @@ public class ESBodyLocationManager extends ESManager{
                 if (result.isSucceeded()) {
                     List<BodyLocation> results;
                     results = result.getSourceAsObjectList(BodyLocation.class);
-                    for(BodyLocation bodyLocation: results){
-                        Log.d("GetARecordTask Results: ", bodyLocation.toString());
+                    for(BodyLocation returnedBodyLocation: results){
+                        Log.d("GetABodyLocationTask Results: ", returnedBodyLocation.toString());
                     }
-                    matchingLocation = results.get(0);
-
+                    if(results.size() > 0) {
+                        matchingLocation = results.get(0);
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
