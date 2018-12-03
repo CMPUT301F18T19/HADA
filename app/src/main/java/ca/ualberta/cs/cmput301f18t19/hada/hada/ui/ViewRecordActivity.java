@@ -112,8 +112,6 @@ public class ViewRecordActivity extends AppCompatActivity {
                     Log.d("ViewRecordActivity", "Photostring is " +photoString);
                     Bitmap bitmap = new BitmapPhotoEncodeDecodeManager.DecodeBitmapTask().execute(photoString).get();
                     imagePreview.setImageBitmap(bitmap);
-                }else{
-                    Toast.makeText(this, "it's 0", Toast.LENGTH_SHORT).show();
                 }
             }catch (Exception e){
                 Log.d("ViewRecordActivity", "Failed to decode image");
