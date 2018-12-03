@@ -54,9 +54,9 @@
         android:id="@+id/viewRecordActivityTimestamp"
         android:layout_width="244dp"
         android:layout_height="31dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:text="Date/Time"
         android:textColor="#020E13"
         android:textSize="20sp"
@@ -100,15 +100,11 @@
     <TextView
         android:id="@+id/viewRecordActivityTimestampTitle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="40dp"
         android:text="@string/viewRecordActivity_timestamp_title"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/viewRecordActivityViewBodyLocation"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/viewRecordActivityTimestamp"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/viewRecordActivityTimestamp"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

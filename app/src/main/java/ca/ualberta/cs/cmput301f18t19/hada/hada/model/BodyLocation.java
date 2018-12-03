@@ -12,14 +12,14 @@
 
 package ca.ualberta.cs.cmput301f18t19.hada.hada.model;
 
-import java.util.UUID;
+import java.util.ArrayList;
 
 public class BodyLocation {
-    private String photoUri;
-    private String photoHTTP;
     private String bodyLocation;
+    private String refImageFileId;
     private String parentId;
     private String fileID;
+    private ArrayList<Integer> coords;
 
     public BodyLocation(){}
 
@@ -31,20 +31,20 @@ public class BodyLocation {
         this.fileID = fileID;
     }
 
-    public String getPhotoUri() {
-        return photoUri;
+    public ArrayList<Integer> getCoords() {
+        return coords;
     }
 
-    public void setPhotoUri(String photoUri) {
-        this.photoUri = photoUri;
+    public void setCoords(ArrayList<Integer> coords) {
+        this.coords = coords;
     }
 
-    public String getPhotoHTTP() {
-        return photoHTTP;
+    public String getRefImageFileId(){
+        return refImageFileId;
     }
 
-    public void setPhotoHTTP(String photoHTTP) {
-        this.photoHTTP = photoHTTP;
+    public void setRefImageFileId(String refImage){
+        this.refImageFileId = refImage;
     }
 
     public String getBodyLocation() {

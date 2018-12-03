@@ -120,6 +120,7 @@ public class ProblemController {
      * @param problem the problem
      * @param date    the date
      */
+
     public void editProblemDate(Problem problem, LocalDateTime date){
         problem.setDate(date);
         new ESProblemManager.AddProblemTask().execute(problem);
@@ -156,34 +157,22 @@ public class ProblemController {
 
     public ArrayList<Problem> searchProblemWithGeoLocation(String parentId, LatLng location, String distance){
         ArrayList<Problem> problems = getListOfProblems(parentId);
-        ArrayList<String> validProblems = new ArrayList<>();
+        ArrayList<Problem> validProblems = new ArrayList<>();
         for(Problem problem: problems){
             ArrayList<Record> records = new RecordController().searchRecordsWithGeo(problem.getFileId(), distance, location);
-            if(!records.isEmpty()){validProblems.add(problem.getFileId());}
+            if(!records.isEmpty()){validProblems.add(problem);}
         }
-        problems.clear(); //Done with problems above so reusing
-        for(String fileId: validProblems){
-            Problem problemMatch = new ProblemController().getProblem(fileId);
-            problems.add(problemMatch);
-
-        }
-        return problems;
+        return validProblems;
     }
 
     public ArrayList<Problem> searchProblemWithBodyLocation(String parentId, String bodyLocation){
-        ArrayList<Problem> problems = getListOfProblems(parentId);
-        ArrayList<String> validProblems = new ArrayList<>();
+        ArrayList<Problem> problems = new ProblemController().getListOfProblems(parentId);
+        ArrayList<Problem> validProblems = new ArrayList<>();
         for(Problem problem: problems){
-            ArrayList<Record> records = new RecordController().searchRecordsWithBodyLocation(parentId, bodyLocation);
-            if(!records.isEmpty()){validProblems.add(problem.getFileId());}
+            ArrayList<Record> records = new RecordController().searchRecordsWithBodyLocation(problem.getFileId(), bodyLocation);
+            if(!records.isEmpty()){validProblems.add(problem);}
         }
-        problems.clear(); //Done with problems above so reusing
-        for(String fileId: validProblems){
-            Problem problemMatch = new ProblemController().getProblem(fileId);
-            problems.add(problemMatch);
-
-        }
-        return problems;
+        return validProblems;
     }
 
 }

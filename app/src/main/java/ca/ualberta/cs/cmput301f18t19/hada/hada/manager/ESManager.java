@@ -35,7 +35,7 @@ public abstract class ESManager {
     /**
      * The index of the team's ES node.
      */
-    static String teamIndex = "cmput301f18t19test";
+    static String teamIndex = "cmput301f18t19";
 
     /**
      * Sets the client to be the defined server..

@@ -176,9 +176,35 @@ public class SearchInputActivity extends AppCompatActivity {
 
                 }
                 else if(bodyLocationRadio.isChecked()){
-                    String bodyLocToSearch = bodyLocationInput.getSelectedItem().toString();
+                    String textFromSpinner = bodyLocationInput.getSelectedItem().toString();
+                    String bodyLocToSearch = null;
+                    switch(textFromSpinner){
+                        case "Head": bodyLocToSearch = "Head";
+                            break;
+                        case "Chest": bodyLocToSearch = "Chest";
+                            break;
+                        case "Left arm upper": bodyLocToSearch = "LeftArmUpper";
+                            break;
+                        case "Right arm upper": bodyLocToSearch = "RightArmUpper";
+                            break;
+                        case "Left arm lower": bodyLocToSearch = "LeftArmLower";
+                            break;
+                        case "Right arm lower": bodyLocToSearch = "RightArmLower";
+                            break;
+                        case "Stomach": bodyLocToSearch = "Stomach";
+                            break;
+                        case "Left leg upper": bodyLocToSearch = "LeftLegUpper";
+                            break;
+                        case "Right leg upper": bodyLocToSearch = "RightLegUpper";
+                            break;
+                        case "Left leg lower": bodyLocToSearch = "LeftLegLower";
+                            break;
+                        case "Right leg lower": bodyLocToSearch = "RightLegLower";
+                            break;
+                    }
                     intent.putExtra("bodyLocation", bodyLocToSearch);
                     valid =true;
+                    //Toast.makeText(SearchInputActivity.this, "Body Location search is not yet supported.", Toast.LENGTH_SHORT).show();
                 }
                 else{ //Run if something went wrong in the activity and closes it.
                     Toast.makeText(SearchInputActivity.this,"Something went wrong. Try again.", Toast.LENGTH_SHORT).show();
