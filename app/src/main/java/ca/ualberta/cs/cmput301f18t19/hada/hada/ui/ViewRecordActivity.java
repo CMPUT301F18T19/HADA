@@ -1,5 +1,6 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -28,6 +29,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.BodyLocationController;
@@ -52,6 +54,7 @@ public class ViewRecordActivity extends AppCompatActivity {
 
     private Record record;
     private String recordFileId;
+    Dialog bodyLocationPopup;
 
 
     @Override
@@ -59,6 +62,7 @@ public class ViewRecordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_record);
         Intent intent = getIntent();
+        bodyLocationPopup = new Dialog(this);
         String LoggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
         recordFileId = intent.getStringExtra("recordFileId");
         record = new RecordController().getRecord(recordFileId);
@@ -78,23 +82,15 @@ public class ViewRecordActivity extends AppCompatActivity {
                 }
             }
         });
-/*
+
         // Goes to view BodyLocation
         Button viewBodyLocation = findViewById(R.id.viewRecordActivityViewBodyLocation);
         viewBodyLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //A check that bodyLocation has been set for the record
-                BodyLocation bodyLocation = new BodyLocationController().getABodyLocation(recordFileId);
-                if(bodyLocation != null){
-
-                }
-                else{
-                    Toast.makeText(ViewRecordActivity.this, "This record does not have a body location.", Toast.LENGTH_SHORT).show();
-                }
+                showPopup(v);
             }
         });
-*/
     }
 
     protected void onResume() {
@@ -109,7 +105,7 @@ public class ViewRecordActivity extends AppCompatActivity {
         Photos recordPhotos = new PhotoController().getPhotos(recordFileId);
         if(recordPhotos!= null){
             try{
-                if(recordPhotos.getBitmaps().size() > 0) {
+                if(recordPhotos.getBitmaps().size() > 0 && recordPhotos.getBitmaps().get(0) != null) {
                     //https://stackoverflow.com/questions/3801760/android-code-to-convert-base64-string-to-bitmap
                     String photoString = recordPhotos.getBitmaps().get(0);
                     Log.d("ViewRecordActivity", "Photostring is " +photoString);
@@ -130,4 +126,41 @@ public class ViewRecordActivity extends AppCompatActivity {
         timeText.setText(timestamp.format(formatter));
         }
 
+    public void showPopup(View v){
+        TextView title;
+        ImageButton exit;
+        ImageView imageView;
+        bodyLocationPopup.setContentView(R.layout.popup_body_location);
+        title = bodyLocationPopup.findViewById(R.id.popupBodyLocTitle);
+        exit = bodyLocationPopup.findViewById(R.id.popupBodyLocExitButton);
+        imageView = bodyLocationPopup.findViewById(R.id.popupBodyLocImageView);
+
+        //Setup exit button
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bodyLocationPopup.dismiss();
+            }
+        });
+
+        BodyLocation bodyLocation = new BodyLocationController().getABodyLocation(recordFileId);
+        String bodyLocationType = bodyLocation.getBodyLocation();
+
+        //Setup title
+        title.setText(bodyLocationType);
+
+        //Setup image
+        Photos photos = new PhotoController().getRefPhoto(bodyLocation.getRefImageFileId());
+        String photoString = photos.getBitmaps().get(0);
+        Bitmap bitmap = null;
+        try {
+            bitmap = new BitmapPhotoEncodeDecodeManager.DecodeBitmapTask().execute(photoString).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        imageView.setImageBitmap(bitmap);
+        bodyLocationPopup.show();
+    }
 }

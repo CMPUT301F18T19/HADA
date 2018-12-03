@@ -19,9 +19,9 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.BodyLocation;
 
 public class BodyLocationController {
 
-    public BodyLocation getABodyLocation(String parentId, String bodyLocationString){
+    public BodyLocation getABodyLocation(String parentId){
         try {
-            return new ESBodyLocationManager.GetABodyLocationTask().execute(parentId, bodyLocationString).get();
+            return new ESBodyLocationManager.GetABodyLocationTask().execute(parentId).get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

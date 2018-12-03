@@ -110,14 +110,14 @@ public class ESBodyLocationManager extends ESManager{
                     "\t\t\"bool\" : {\n" +
                     "\t\t\t\"must\" : {\n" +
                     "\t\t\t\t\"match\" : {\n" +
-                    "\t\t\t\t\t{\"parentId\" : \""+parentId+"\"}\n" +
+                    "\t\t\t\t\t\"parentId\" : \""+parentId+"\"\n" +
                     "\t\t\t\t}\n" +
                     "\t\t\t}\n" +
                     "\t\t}\n" +
                     "\t}\n" +
                     "}";
             BodyLocation matchingLocation = null;
-            Log.d("GetARecordTask Query: ", query);
+            Log.d("GetABodyLocationTask Query: ", query);
 
             Search search = new Search.Builder(query)
                     .addIndex(teamIndex)
@@ -130,7 +130,7 @@ public class ESBodyLocationManager extends ESManager{
                     List<BodyLocation> results;
                     results = result.getSourceAsObjectList(BodyLocation.class);
                     for(BodyLocation returnedBodyLocation: results){
-                        Log.d("GetARecordTask Results: ", returnedBodyLocation.toString());
+                        Log.d("GetABodyLocationTask Results: ", returnedBodyLocation.toString());
                     }
                     matchingLocation = results.get(0);
 
