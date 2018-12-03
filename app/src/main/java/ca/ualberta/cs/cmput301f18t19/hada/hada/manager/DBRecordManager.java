@@ -327,14 +327,22 @@ public class DBRecordManager {
                         cursor.getString(cursor.getColumnIndexOrThrow(recordTable.COL_TIMESTAMP)),
                         formatter)
         );
-        record.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(recordTable.COL_TITLE)));
-        record.setComment(cursor.getString(cursor.getColumnIndexOrThrow(recordTable.COL_COMMENT)));
-        record.setLocation(
-                new LatLng(
-                        cursor.getDouble(cursor.getColumnIndex(recordTable.COL_LAT)),
-                        cursor.getDouble(cursor.getColumnIndex(recordTable.COL_LON))
-                )
-        );
+        if(cursor.getString(cursor.getColumnIndexOrThrow(recordTable.COL_TITLE)) != null){
+            record.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(recordTable.COL_TITLE)));
+        }
+        if(cursor.getString(cursor.getColumnIndexOrThrow(recordTable.COL_COMMENT))!= null){
+            record.setComment(cursor.getString(cursor.getColumnIndexOrThrow(recordTable.COL_COMMENT)));
+        }
+        Double testDouble = new Double(cursor.getDouble(cursor.getColumnIndex(recordTable.COL_LAT)));
+        if(testDouble != null){
+            record.setLocation(
+                    new LatLng(
+                            cursor.getDouble(cursor.getColumnIndex(recordTable.COL_LAT)),
+                            cursor.getDouble(cursor.getColumnIndex(recordTable.COL_LON))
+                    )
+            );
+        }
+
         return record;
     }
 
