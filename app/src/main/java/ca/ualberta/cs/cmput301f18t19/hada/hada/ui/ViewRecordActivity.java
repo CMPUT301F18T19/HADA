@@ -85,6 +85,9 @@ public class ViewRecordActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+
     }
 
     protected void onResume() {
@@ -118,6 +121,19 @@ public class ViewRecordActivity extends AppCompatActivity {
         DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
         LocalDateTime timestamp = record.getTimestamp();
         timeText.setText(timestamp.format(formatter));
+
+        imagePreview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ViewRecordActivity.this, ViewPhotosInRecordActivity.class);
+                intent.putExtra("recordFileId", recordFileId);
+                startActivity(intent);
+
+            }
+        });
+
+
+
         }
 
     /**

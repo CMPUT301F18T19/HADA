@@ -106,6 +106,9 @@
     <string name="camera_save">Save</string>
     <string name="camera_text_View">Click HADA to take photo</string>
 
+    <!-- viewPhotosInRecord Layout -->
+    <string name="viewPhotosInRecord_title">Title</string>
+
     <string name="generic_login">Login</string>
     <string name="generic_shortcode">ShortCode</string>
     <string name="title_activity_view_short_code">ViewShortCodeActivity</string>
