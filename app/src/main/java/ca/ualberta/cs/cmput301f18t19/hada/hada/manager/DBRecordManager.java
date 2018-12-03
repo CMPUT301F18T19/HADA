@@ -50,9 +50,9 @@ public class DBRecordManager {
         values.put(recordTable.COL_PARENTID, newRecord.getParentId());
         values.put(recordTable.COL_FILEID, newRecord.getFileId());
         if(newRecord.getTitle() != null){
-            values.put(recordTable.COL_TIMESTAMP, newRecord.getTitle());
+            values.put(recordTable.COL_TITLE, newRecord.getTitle());
         }
-        values.put(recordTable.COL_TITLE, newRecord.getTimestamp().toString());
+        values.put(recordTable.COL_TIMESTAMP, newRecord.getTimestamp().toString());
         if(newRecord.getComment() != null){
             values.put(recordTable.COL_COMMENT, newRecord.getComment());
         }
@@ -333,8 +333,7 @@ public class DBRecordManager {
         if(cursor.getString(cursor.getColumnIndexOrThrow(recordTable.COL_COMMENT))!= null){
             record.setComment(cursor.getString(cursor.getColumnIndexOrThrow(recordTable.COL_COMMENT)));
         }
-        Double testDouble = new Double(cursor.getDouble(cursor.getColumnIndex(recordTable.COL_LAT)));
-        if(testDouble != null){
+        if(cursor.getDouble(cursor.getColumnIndex(recordTable.COL_LAT))!= 0.0 &&cursor.getDouble(cursor.getColumnIndex(recordTable.COL_LON))!=0.0){
             record.setLocation(
                     new LatLng(
                             cursor.getDouble(cursor.getColumnIndex(recordTable.COL_LAT)),
