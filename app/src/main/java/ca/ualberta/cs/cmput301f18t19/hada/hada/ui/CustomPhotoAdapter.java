@@ -13,6 +13,7 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
@@ -22,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+import java.util.BitSet;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 
@@ -29,16 +31,17 @@ public class CustomPhotoAdapter extends PagerAdapter {
 
     private LayoutInflater inflater;
     private Context ctx;
-    private ArrayList<Uri> imgs;
+    private ArrayList<Bitmap> bitmaps;
 
-    public CustomPhotoAdapter(Context ctx){
+    public CustomPhotoAdapter(Context ctx, ArrayList<Bitmap> bitmaps){
         this.ctx = ctx;
+        this.bitmaps = bitmaps;
 
     }
 
     @Override
     public int getCount() {
-        return imgs.size();
+        return bitmaps.size();
     }
 
     @Override
@@ -49,9 +52,13 @@ public class CustomPhotoAdapter extends PagerAdapter {
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
+
+
+
+
         inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View v = inflater.inflate(R.layout.activity_swipe_images,container,false);
-        ImageView imageView = v.findViewById(R.id.swipe_images_image);
+        View v = inflater.inflate(R.layout.activity_swipe_image,container,false);
+        ImageView imageView = v.findViewById(R.id.swipeImageActivityImage);
         container.addView(v);
         return v;
     }

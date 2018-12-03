@@ -102,9 +102,9 @@ public class ViewProblemActivity extends AppCompatActivity {
         viewSlideshow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /**
-                 * Go to slideshow
-                 */
+                Intent intent = new Intent(ViewProblemActivity.this, ViewSlideshow.class);
+                intent.putExtra("problemFileId", problemFileId);
+                startActivity(intent);
 
             }
         });

@@ -54,19 +54,6 @@ public class ViewPhotosInRecordActivity extends AppCompatActivity {
     GridView gridView;
     private ImageGridAdapter imageGridAdapter;
 
-    private ImageView image1 = null;
-    private ImageView image2 = null;
-    private ImageView image3 = null;
-    private ImageView image4 = null;
-    private ImageView image5 = null;
-    private ImageView image6 = null;
-    private ImageView image7 = null;
-    private ImageView image8 = null;
-    private ImageView image9 = null;
-    private ImageView image10 = null;
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
