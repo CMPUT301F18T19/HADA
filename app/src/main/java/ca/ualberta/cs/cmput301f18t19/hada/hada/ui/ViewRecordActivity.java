@@ -1,12 +1,10 @@
 package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,30 +12,21 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import java.lang.reflect.Type;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.text.Format;
-import java.text.SimpleDateFormat;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
+
+import java.util.concurrent.ExecutionException;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.R;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.BodyLocationController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.PhotoController;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.RecordController;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.controller.UserController;
 
 import ca.ualberta.cs.cmput301f18t19.hada.hada.manager.BitmapPhotoEncodeDecodeManager;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.BodyLocation;
-import ca.ualberta.cs.cmput301f18t19.hada.hada.model.LoggedInSingleton;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Photos;
 import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
 
@@ -46,12 +35,15 @@ import ca.ualberta.cs.cmput301f18t19.hada.hada.model.Record;
  *
  * @author Austin
  * @see Record
- *
  */
 public class ViewRecordActivity extends AppCompatActivity {
 
     private Record record;
     private String recordFileId;
+    /**
+     * The Body location popup.
+     */
+    Dialog bodyLocationPopup;
 
 
     @Override
@@ -59,7 +51,7 @@ public class ViewRecordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_record);
         Intent intent = getIntent();
-        String LoggedInUser = LoggedInSingleton.getInstance().getLoggedInID();
+        bodyLocationPopup = new Dialog(this);
         recordFileId = intent.getStringExtra("recordFileId");
         record = new RecordController().getRecord(recordFileId);
 
@@ -84,10 +76,9 @@ public class ViewRecordActivity extends AppCompatActivity {
         viewBodyLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //A check that bodyLocation has been set for the record
                 BodyLocation bodyLocation = new BodyLocationController().getABodyLocation(recordFileId);
-                if(bodyLocation != null){
-
+                if(bodyLocation != null) {
+                    showPopup(v);
                 }
                 else{
                     Toast.makeText(ViewRecordActivity.this, "This record does not have a body location.", Toast.LENGTH_SHORT).show();
@@ -95,15 +86,7 @@ public class ViewRecordActivity extends AppCompatActivity {
             }
         });
 
-        Button viewPhotos = findViewById(R.id.viewRecordActivityViewPhotos);
-        viewPhotos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ViewRecordActivity.this, ViewPhotosInRecordActivity.class);
-                intent.putExtra("recordFileId", recordFileId);
-                startActivity(intent);
-            }
-        });
+
 
     }
 
@@ -119,7 +102,7 @@ public class ViewRecordActivity extends AppCompatActivity {
         Photos recordPhotos = new PhotoController().getPhotos(recordFileId);
         if(recordPhotos!= null){
             try{
-                if(recordPhotos.getBitmaps().size() > 0) {
+                if(recordPhotos.getBitmaps().size() > 0 && recordPhotos.getBitmaps().get(0) != null) {
                     //https://stackoverflow.com/questions/3801760/android-code-to-convert-base64-string-to-bitmap
                     String photoString = recordPhotos.getBitmaps().get(0);
                     Log.d("ViewRecordActivity", "Photostring is " +photoString);
@@ -138,6 +121,61 @@ public class ViewRecordActivity extends AppCompatActivity {
         DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
         LocalDateTime timestamp = record.getTimestamp();
         timeText.setText(timestamp.format(formatter));
+
+        imagePreview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ViewRecordActivity.this, ViewPhotosInRecordActivity.class);
+                intent.putExtra("recordFileId", recordFileId);
+                startActivity(intent);
+
+            }
+        });
+
+
+
         }
 
+    /**
+     * Show a popup that displays the body location if the user
+     *
+     * @param v the v
+     */
+    public void showPopup(View v){
+        TextView title;
+        ImageButton exit;
+        ImageView imageView;
+        bodyLocationPopup.setContentView(R.layout.popup_body_location);
+        title = bodyLocationPopup.findViewById(R.id.popupBodyLocTitle);
+        exit = bodyLocationPopup.findViewById(R.id.popupBodyLocExitButton);
+        imageView = bodyLocationPopup.findViewById(R.id.popupBodyLocImageView);
+
+        //Setup exit button
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bodyLocationPopup.dismiss();
+            }
+        });
+
+        BodyLocation bodyLocation = new BodyLocationController().getABodyLocation(recordFileId);
+        String bodyLocationType = bodyLocation.getBodyLocation();
+
+        //Setup title
+        title.setText(bodyLocationType);
+
+        //Setup image
+        Photos photos = new PhotoController().getRefPhoto(bodyLocation.getRefImageFileId());
+        String photoString = photos.getBitmaps().get(0);
+        Bitmap bitmap = null;
+        try {
+            bitmap = new BitmapPhotoEncodeDecodeManager.DecodeBitmapTask().execute(photoString).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        imageView.setImageBitmap(bitmap);
+        bodyLocationPopup.show();
+    }
 }

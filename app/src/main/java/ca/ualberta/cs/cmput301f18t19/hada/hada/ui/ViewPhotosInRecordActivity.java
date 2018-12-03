@@ -91,7 +91,7 @@ public class ViewPhotosInRecordActivity extends AppCompatActivity {
 
         gridView = findViewById(R.id.viewPhotosInRecordActivityGridView);
         gridView.setAdapter(new ImageGridAdapter(this, bitmaps));
-        
+
 
 
 
