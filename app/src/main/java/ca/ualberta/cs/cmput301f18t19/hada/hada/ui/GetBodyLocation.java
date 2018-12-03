@@ -14,6 +14,7 @@ package ca.ualberta.cs.cmput301f18t19.hada.hada.ui;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.net.Uri;
 import android.provider.MediaStore;
